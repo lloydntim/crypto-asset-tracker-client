@@ -1,0 +1,243 @@
+// Color
+$green: #006462;
+$dark-green: #003635;
+$blue: #0087BA;
+$dark-blue: #004964;
+$light-blue: #CBE9F5;
+$yellow: #F7CE00;
+$dark-yellow: #887100;
+$light-yellow: #f5eec6;
+$red: #B10000;
+$light-red: #F6C3C3;
+$dark-red: #360000;
+$white: #FFF;
+$grey: #EEE;
+$dark-grey: #AAA;
+
+// fonts
+
+$normal: 400;
+$bold: 700;
+
+body {
+  padding: 0;
+  margin: 0;
+  background-color: $green;
+  color: $white;
+  font-family: Arial, Helvetica, sans-serif;
+
+  * {
+    box-sizing: border-box;
+
+    &:after,
+    &:before {
+      box-sizing: border-box;
+    }
+  }
+
+  ;
+
+  a {
+    color: $white;
+    text-decoration: underline;
+  }
+
+  label span {
+    display: none;
+  }
+
+  textarea,
+  input[type=search],
+  input[type=text],
+  input[type=email],
+  input[type=password] {
+    outline: none;
+    background-color: $green;
+    border: 1px solid $white;
+    border-radius: 8px;
+    padding: 12px;
+    margin: 0 0 16px;
+    font-size: 18px;
+    width: 100%;
+    color: $white;
+
+    &::placeholder {
+      color: $white;
+    }
+  }
+
+  // Removes `x` icon from search input; reference: https://medium.com/@rion.mrk/how-to-remove-x-icon-from-search-input-field-or-input-type-search-db3c808405fb
+  /* clears the ‘X’ from Internet Explorer */
+  input[type=search]::-ms-clear {
+    display: none;
+    width: 0;
+    height: 0;
+  }
+
+  input[type=search]::-ms-reveal {
+    display: none;
+    width: 0;
+    height: 0;
+  }
+
+  /* clears the ‘X’ from Chrome */
+  input[type="search"]::-webkit-search-decoration,
+  input[type="search"]::-webkit-search-cancel-button,
+  input[type="search"]::-webkit-search-results-button,
+  input[type="search"]::-webkit-search-results-decoration {
+    display: none;
+  }
+
+  button[type=submit] {
+    outline: none;
+    color: $green;
+    padding: 12px;
+    border-radius: 8px;
+    margin: 0 0 16px;
+    border: 0;
+    font-size: 18px;
+    width: 100%;
+  }
+
+  .page {
+    display: flex;
+    flex-direction: column;
+    padding: 0 12px;
+    max-width: 464px;
+    margin: 0 auto;
+  }
+
+  .content {
+    background-color: $white;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin: 0 0 8px 0;
+    color: $dark-green;
+    box-shadow: 0 2px 4px $dark-green;
+
+    h1,
+    h3,
+    h4,
+    h5 {
+      text-align: center;
+      border-bottom: $grey 1px solid;
+    }
+
+    h1 {
+      font-size: 24px;
+      padding: 0 0 10px;
+      margin: 0 0 8px;
+    }
+
+    h3 {
+      padding: 0 0 16px;
+      margin: 0 0 20px;
+    }
+
+    p {
+      margin: 0 8px;
+    }
+  }
+
+  .button {
+    outline: none;
+    color: $green;
+    padding: 12px;
+    border-radius: 8px;
+    margin: 0 0 8px;
+    border: 1px solid;
+    font-size: 18px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+
+    &.is-disabled {
+      opacity: .5;
+    }
+
+    &.button-primary {
+      color: $green;
+      background-color: $white;
+    }
+
+    &.button-secondary {
+      color: $white;
+      background-color: $green;
+      border-color: $dark-green;
+    }
+
+    &.button-tertiary {
+      color: $white;
+      background-color: $dark-blue;
+    }
+  }
+
+  .button-circle {
+    outline: none;
+    padding: 12px;
+    border-radius: 100%;
+    border: solid 1px $green;
+    cursor: pointer;
+
+    &.is-disabled {
+      opacity: .5;
+    }
+
+    &.button-circle-primary {
+      border-color: $dark-green;
+      background-color: $green;
+      color: $white;
+
+      path,
+      polygon {
+        fill: $white;
+      }
+    }
+
+    &.button-circle-secondary {
+      border: solid 1px $green;
+      color: $green;
+      background-color: transparent;
+
+      path,
+      polygon {
+        fill: $green;
+      }
+    }
+  }
+
+  ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    justify-content: space-between;
+
+    >li {
+      display: inline-flex;
+    }
+  }
+
+  @media (min-width: 768px) {
+    h1 {
+      font-size: 32px;
+      padding: 0 0 20px;
+      margin: 0 0 12px;
+    }
+
+    textarea,
+    input[type=search],
+    input[type=text],
+    input[type=email],
+    input[type=password] {
+      font-size: 16px;
+    }
+
+    .content {
+      margin: 0 0 16px 0;
+      padding: 24px 16px;
+    }
+  }
+}
