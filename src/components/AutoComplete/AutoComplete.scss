@@ -1,0 +1,25 @@
+@import '../../styles.scss';
+@import '../DataList/DataList.scss';
+
+.auto-complete-item-button {
+  position: relative;
+  z-index: 10;
+  text-align: left;
+  width: 100%;
+  height: 100%;
+  border-radius: 0;
+  background-color: $white;
+  padding: 12px;
+  border: none;
+  font-size: 16px;
+  outline: none;
+
+  span {
+    font-weight: $bold;
+    display: inline-flex;
+
+    &:last-of-type {
+      font-weight: $normal;
+    }
+  }
+}
