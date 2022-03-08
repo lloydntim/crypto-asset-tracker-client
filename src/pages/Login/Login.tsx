@@ -60,6 +60,8 @@ const Login: FC = (): ReactElement => {
 
   const languageChangeHandler = (language: string) => () => changeLanguage(language);
 
+  const languageChangeHandler = (language: string) => () => changeLanguage(language);
+
   return (
     <Page name="login">
       {/* <Input
