@@ -1,11 +1,13 @@
-import React, { FC, MouseEventHandler, TouchEventHandler } from 'react';
+import React, { FC, MouseEventHandler, TouchEventHandler, memo } from 'react';
+
+import { withLocalisation } from '../../hoc';
+import { LocalisationProps } from '../../hoc/withLocalisation';
 
 import './Button.scss';
 
 type ButtonType = 'submit' | 'button' | 'reset';
 
-interface ButtonProps {
-  text: string;
+interface ButtonProps extends LocalisationProps {
   type?: ButtonType;
   tabIndex?: number;
   rank?: string;
@@ -18,7 +20,7 @@ interface ButtonProps {
 };
 
 const Button: FC<ButtonProps> = ({
-  text,
+  children,
   type = 'submit',
   rank = 'primary',
   tabIndex,
@@ -28,26 +30,28 @@ const Button: FC<ButtonProps> = ({
   onMouseDown,
   onTouchStart,
   onTouchEnd,
-}) => (
-  /* eslint-disable react/button-has-type */
-  <button
-    type={type}
-    tabIndex={tabIndex}
-    className={`button button-rank-${rank} ${disabled ? 'is-disabled' : ''}`}
-    disabled={disabled}
-    onClick={(event) => {
-      if (type === 'submit') {
-        event.preventDefault();
-      }
-      onClick(event);
-    }}
-    onMouseUp={onMouseUp}
-    onMouseDown={onMouseDown}
-    onTouchStart={onTouchStart}
-    onTouchEnd={onTouchEnd}
-  >
-    {text}
-  </button>
-);
+}) => {
+  return (
+    /* eslint-disable react/button-has-type */
+    <button
+      type={type}
+      tabIndex={tabIndex}
+      className={`button button-rank-${rank} ${disabled ? 'is-disabled' : ''}`}
+      disabled={disabled}
+      onClick={(event) => {
+        if (type === 'submit') {
+          event.preventDefault();
+        }
+        onClick(event);
+      }}
+      onMouseUp={onMouseUp}
+      onMouseDown={onMouseDown}
+      onTouchStart={onTouchStart}
+      onTouchEnd={onTouchEnd}
+    >
+      {children}
+    </button>
+  );
+};
 
-export default Button;
+export default memo(withLocalisation<ButtonProps>(Button));

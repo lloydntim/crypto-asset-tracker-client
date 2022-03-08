@@ -4,7 +4,6 @@ import { DataListItemType } from '../DataList/DataList';
 
 export type InputChangeEvent = { name?: string, value?: string, files?: FileList | File[], error?: string, required?: boolean };
 export type InputChangeEventHandler = (arg: InputChangeEvent) => void;
-
 export interface InputProps {
   inputRef?: LegacyRef<HTMLInputElement>;
   label?: string;

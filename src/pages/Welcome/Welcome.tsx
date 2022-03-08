@@ -14,9 +14,11 @@ const Welcome: FC = (): ReactElement => {
 
   return (
     <Page name="welcome">
-      <Header title="Welcome" />
+      <Header titleTKey="welcome:title" />
       <Body>
-        <Text i18n='testKey' />
+        <Text tKey='welcome text' />
+        <br />
+        <Text tKey='testKey' />
         <br />
         <Text type="dd">Welcome Page</Text>
         <br />
