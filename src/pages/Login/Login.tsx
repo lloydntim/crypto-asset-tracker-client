@@ -1,6 +1,7 @@
 import React, { ReactElement, FC, useState, MouseEventHandler } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button, Input, Message } from '../../components';
+import { useTranslation } from "react-i18next";
+import { Button, Input, Message, Headline } from '../../components';
 import { Page } from '../../layouts';
 import { useForm } from '../../hooks';
 import { useAuthentication } from '../../providers/AuthenticationProvider';
@@ -14,6 +15,7 @@ const errorMessage = { type: 'error', text: 'Password is wrong' };
 
 const Login: FC = (): ReactElement => {
   const navigate = useNavigate();
+  const { t, i18n: { changeLanguage } } = useTranslation();
   const [message, setMessage] = useState(null);
   // const [color, setColor] = useState('');
   const { setLoginToken } = useAuthentication();
@@ -31,6 +33,8 @@ const Login: FC = (): ReactElement => {
     navigate('/welcome');
   };
 
+  const languageChangeHandler = (language: string) => () => changeLanguage(language);
+
   return (
     <Page name="login">
       {/* <Input
@@ -47,10 +51,18 @@ const Login: FC = (): ReactElement => {
         ]}
         onChange={({ value }) => setColor(value)}
       /> */}
+      <Headline tKey="login:title" />
+
+      <br />
+      <button onClick={languageChangeHandler('en')}>EN</button>
+      <button onClick={languageChangeHandler('de')}>DE</button>
+      <br />
+
       <form>
         <Input
           name="username"
-          label="username"
+          label={t('input.label.username')}
+          placeholder={t('input.placeholder.enterUsername')}
           required={username.required}
           value={username.value}
           onChange={formFieldChangeHandler}
@@ -59,7 +71,8 @@ const Login: FC = (): ReactElement => {
         <br />
         <Input
           name="password"
-          label="password"
+          label={t('input.label.password')}
+          placeholder={t('input.placeholder.enterPassword')}
           type="password"
           required={password.required}
           value={password.value}
@@ -71,7 +84,7 @@ const Login: FC = (): ReactElement => {
 
         <Button
           disabled={!isFormValid}
-          text="Submit"
+          tKey="button.login"
           type="submit"
           onClick={submitForm}
         />

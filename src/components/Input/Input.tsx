@@ -28,6 +28,7 @@ const Input: FC<InputProps> = (props: InputProps) => {
   const [dynamicInputType, setDynamicInputType] = useState(type);
   const [isDataListVisible, setIsDataListVisible] = useState(false);
   const [inputMessage, setInputMessage] = useState(null);
+  const validationProps = { ...props, type: dynamicInputType };
 
   return (
     <label
@@ -47,7 +48,7 @@ const Input: FC<InputProps> = (props: InputProps) => {
         placeholder={placeholder}
         value={value}
         onChange={({ target: { value, files } }) => {
-          const error = validateInput({ value, files }, props);
+          const error = validateInput({ value, files }, validationProps);
 
           setInputMessage(files ? { text: files[0].name, type: 'info' } : null);
           onChange({ name, value, files, error, required });
@@ -58,7 +59,7 @@ const Input: FC<InputProps> = (props: InputProps) => {
         }}
         onBlur={(event) => {
           const { target: { value, files } } = event;
-          const error = validateInput({ value, files }, props);
+          const error = validateInput({ value, files }, validationProps);
 
           setInputMessage(error ? { text: error, type: 'error' } : null);
 
@@ -81,7 +82,7 @@ const Input: FC<InputProps> = (props: InputProps) => {
       {type === 'search' && <Icon type="search" />}
 
       {isDataListVisible && <AutoComplete items={dataList} value={value} onListItemClick={(item) => {
-        const error = validateInput({ value }, props);
+        const error = validateInput({ value }, validationProps);
 
         setInputMessage(error ? { text: error, type: 'error' } : null);
         onChange({ name, value: item.text, error, required });

@@ -1,0 +1,18 @@
+{
+  "button": {
+    "save": "Speichern",
+    "submit": "Submit",
+    "login": "Einloggen",
+    "logout": "Ausloggen"
+  },
+  "input": {
+    "label": {
+      "username": "Benutzername",
+      "password": "Passwort"
+    },
+    "placeholder": {
+      "enterUsername": "Bitte Benutzername eingeben",
+      "enterPassword": "Bitte Passwort eingeben"
+    }
+  }
+}

@@ -1,7 +1,7 @@
 import React, { ReactNode, ComponentType, ReactElement } from 'react';
-
+import { useTranslation } from "react-i18next";
 export interface LocalisationProps {
-  i18n?: string;
+  tKey?: string;
   children?: ReactNode;
 }
 
@@ -10,8 +10,9 @@ type LocalisationHOC = <T extends LocalisationProps>(Component: ComponentType<T>
 /* eslint-disable  */
 const withLocalisation: LocalisationHOC = (Component) => {
   return (props) => {
-    const { i18n, children } = props;
-    const content = i18n || children;
+    const { t } = useTranslation();
+    const { tKey, children } = props;
+    const content = t(tKey) || children;
 
     if (!content) return null;
 

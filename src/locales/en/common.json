@@ -1,0 +1,18 @@
+{
+  "button": {
+    "save": "Save",
+    "submit": "Submit",
+    "login": "Login",
+    "logout": "Logout"
+  },
+  "input": {
+    "label": {
+      "username": "Username",
+      "password": "Password"
+    },
+    "placeholder": {
+      "enterUsername": "Please enter username",
+      "enterPassword": "Please enter password"
+    }
+  }
+}
