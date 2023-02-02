@@ -1,21 +1,59 @@
 import React from 'react';
-import { RouteObject, useRoutes } from 'react-router-dom';
+import {RouteObject, useRoutes} from 'react-router-dom';
 
-import { Login, Welcome } from '../pages';
+import {
+  Home,
+  Login,
+  Signup,
+  Welcome,
+  Sample,
+  About,
+  Verify,
+  Forgot,
+  Reset,
+} from '../pages';
 import AuthenticationRoute from './AuthenticationRoute';
 
-export { AuthenticationRoute };
+export {AuthenticationRoute};
 
 export default () => {
   const routes: RouteObject[] = [
     {
       path: '/',
+      element: <Home />,
+    },
+    {
+      path: 'login',
       element: <Login />,
+    },
+    {
+      path: 'signup',
+      element: <Signup />,
     },
     {
       path: 'welcome',
       element: <AuthenticationRoute component={<Welcome />} />,
     },
+    {
+      path: 'sample',
+      element: <AuthenticationRoute component={<Sample />} />,
+    },
+    {
+      path: 'about',
+      element: <About />,
+    },
+    {
+      path: 'verify',
+      element: <Verify />,
+    },
+    {
+      path: 'forgot',
+      element: <Forgot />,
+    },
+    {
+      path: 'reset',
+      element: <Reset />,
+    },
   ];
   return useRoutes(routes);
-}
+};

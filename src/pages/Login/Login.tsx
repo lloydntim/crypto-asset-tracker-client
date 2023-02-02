@@ -1,17 +1,20 @@
-import React, { ReactElement, FC, useState, MouseEventHandler } from 'react';
+import React, { ReactElement, FC, useState, MouseEventHandler, useCallback } from 'react';
+import { useMutation } from '@apollo/client';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from "react-i18next";
-import { Button, Input, Message, Headline } from '../../components';
-import { Page } from '../../layouts';
+
+import { LOGIN } from '../../graphql';
 import { useForm } from '../../hooks';
 import { useAuthentication } from '../../providers/AuthenticationProvider';
+import { Page } from '../../layouts';
+import { Button, Input, Message, Headline } from '../../components';
 
-const authorisedUser = {
-  username: 'admin',
-  password: 'admin',
-}
-const data = { login: { token: 'abcd' } };
-const errorMessage = { type: 'error', text: 'Password is wrong' };
+// const authorisedUser = {
+// username: 'admin',
+// password: 'admin',
+// }
+// const data = { login: { token: 'abcd' } };
+// const errorMessage = { type: 'error', text: 'Password is wrong' };
 
 const Login: FC = (): ReactElement => {
   const navigate = useNavigate();
@@ -21,17 +24,39 @@ const Login: FC = (): ReactElement => {
   const { setLoginToken } = useAuthentication();
   const { form: hookedForm, formFieldChangeHandler, isFormValid } = useForm('username*', 'password*', 'language');
   const { username, password } = hookedForm;
+  const [login, { loading }] = useMutation(LOGIN, {
+    onCompleted: (data) => {
+      /* eslint-disable no-undef */
+      setLoginToken(data.login.token);
+      navigate('/welcome');
+      // localStorage.setItem('token', data.login.token);
+      // push('/vocablists');
+    },
+    onError: (error) => {
+      // Sentry.captureException(error);
+      // console.log('Login:  ', error);
+      setMessage(error.message.split(':')[1].trim());
+    },
+  });
 
-  const formFieldFocusHandler = () => setMessage(null);
-  const submitForm: MouseEventHandler<Element> = (event) => {
+  const formFieldFocusHandler = useCallback(() => setMessage(null), []);
+
+  const submitForm: MouseEventHandler<Element> = useCallback((event) => {
     event.preventDefault();
 
-    if (username.value !== authorisedUser.username) return setMessage({ ...errorMessage, text: 'This user does not exist' });
-    if (password.value !== authorisedUser.password) return setMessage(errorMessage);
+    login({
+      variables: {
+        username: username.value.toLowerCase(),
+        password: password.value,
+      },
+    });
 
-    setLoginToken(data.login.token);
-    navigate('/welcome');
-  };
+    // if (username.value !== authorisedUser.username) return setMessage({ ...errorMessage, text: 'This user does not exist' });
+    // if (password.value !== authorisedUser.password) return setMessage(errorMessage);
+
+    // setLoginToken(data.login.token);
+    // navigate('/welcome');
+  }, [username, password]);// eslint-disable-line react-hooks/exhaustive-deps
 
   const languageChangeHandler = (language: string) => () => changeLanguage(language);
 
@@ -89,10 +114,11 @@ const Login: FC = (): ReactElement => {
           onClick={submitForm}
         />
       </form>
-
       <br />
 
-      <Message type={message?.type}>{message?.text}</Message>
+      <Message type={loading ? 'info' : message?.type}>{
+        loading ? 'Loading' : message?.text
+      }</Message>
     </Page>
   );
 };

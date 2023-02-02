@@ -2,13 +2,13 @@ import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 
-import commonEn from './locales/en/common.json';
-import loginEn from './locales/en/login.json';
-import welcomeEn from './locales/en/welcome.json';
+import commonEn from './en/common.json';
+import loginEn from './en/login.json';
+import welcomeEn from './en/welcome.json';
 
-import commonDe from './locales/de/common.json';
-import loginDe from './locales/de/login.json';
-import welcomeDe from './locales/de/welcome.json';
+import commonDe from './de/common.json';
+import loginDe from './de/login.json';
+import welcomeDe from './de/welcome.json';
 
 i18n
   .use(initReactI18next)

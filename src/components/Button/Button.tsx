@@ -1,4 +1,5 @@
-import React, { FC, MouseEventHandler, TouchEventHandler, memo } from 'react';
+import React, { FC, MouseEventHandler, TouchEventHandler } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { withLocalisation } from '../../hoc';
 import { LocalisationProps } from '../../hoc/withLocalisation';
@@ -12,6 +13,8 @@ interface ButtonProps extends LocalisationProps {
   tabIndex?: number;
   rank?: string;
   disabled?: boolean;
+  isLink?: boolean;
+  to?: string;
   onClick?: MouseEventHandler;
   onMouseUp?: MouseEventHandler;
   onMouseDown?: MouseEventHandler;
@@ -25,12 +28,15 @@ const Button: FC<ButtonProps> = ({
   rank = 'primary',
   tabIndex,
   disabled,
+  isLink = false,
+  to = '',
   onClick,
   onMouseUp,
   onMouseDown,
   onTouchStart,
   onTouchEnd,
 }) => {
+  const navigate = useNavigate();
   return (
     /* eslint-disable react/button-has-type */
     <button
@@ -39,9 +45,9 @@ const Button: FC<ButtonProps> = ({
       className={`button button-rank-${rank} ${disabled ? 'is-disabled' : ''}`}
       disabled={disabled}
       onClick={(event) => {
-        if (type === 'submit') {
-          event.preventDefault();
-        }
+        if (isLink) return navigate(to);
+        if (type === 'submit') event.preventDefault();
+
         onClick(event);
       }}
       onMouseUp={onMouseUp}
@@ -54,4 +60,4 @@ const Button: FC<ButtonProps> = ({
   );
 };
 
-export default memo(withLocalisation<ButtonProps>(Button));
+export default withLocalisation<ButtonProps>(Button);
