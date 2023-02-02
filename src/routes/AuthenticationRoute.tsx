@@ -11,10 +11,12 @@ const AuthenticationRoute: FC<AunthenticationRouteProps> = ({ component }): Reac
   const location = useLocation();
   const { currentUser } = useAuthentication();
 
+  console.log("currentUser", currentUser());
+
   const state = location.state as { from: string };
   const path = state?.from || '/';
 
-  return currentUser ? component : <Navigate to={path} replace />;
+  return currentUser() ? component : <Navigate to={path} replace />;
 };
 
 export default AuthenticationRoute;
