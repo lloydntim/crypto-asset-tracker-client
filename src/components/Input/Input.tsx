@@ -1,7 +1,7 @@
-import React, { FC, useState } from 'react';
+import React, {FC, useState} from 'react';
 
-import { AutoComplete, IconButton, Message, Icon } from '../../components';
-import { validateInput, InputProps } from './InputHelper';
+import {AutoComplete, IconButton, Message, Icon} from '../../components';
+import {validateInput, InputProps} from './InputHelper';
 
 import './Input.scss';
 
@@ -28,11 +28,13 @@ const Input: FC<InputProps> = (props: InputProps) => {
   const [dynamicInputType, setDynamicInputType] = useState(type);
   const [isDataListVisible, setIsDataListVisible] = useState(false);
   const [inputMessage, setInputMessage] = useState(null);
-  const validationProps = { ...props, type: dynamicInputType };
+  const validationProps = {...props, type: dynamicInputType};
 
   return (
     <label
-      className={`input input-type-${dynamicInputType} input-is-${inputMessage?.type !== 'error' ? 'valid' : 'invalid'}`}
+      className={`input input-type-${dynamicInputType} input-is-${
+        inputMessage?.type !== 'error' ? 'valid' : 'invalid'
+      }`}
       htmlFor={name}
     >
       <span className="input-label">{label}</span>
@@ -47,21 +49,23 @@ const Input: FC<InputProps> = (props: InputProps) => {
         type={dynamicInputType}
         placeholder={placeholder}
         value={value}
-        onChange={({ target: { value, files } }) => {
-          const error = validateInput({ value, files }, validationProps);
+        onChange={({target: {value, files}}) => {
+          const error = validateInput({value, files}, validationProps);
 
-          setInputMessage(files ? { text: files[0].name, type: 'info' } : null);
-          onChange({ name, value, files, error, required });
+          setInputMessage(files ? {text: files[0].name, type: 'info'} : null);
+          onChange({name, value, files, error, required});
         }}
         onFocus={(event) => {
           if (dataList?.length) setIsDataListVisible(true);
           if (onFocus) onFocus(event);
         }}
         onBlur={(event) => {
-          const { target: { value, files } } = event;
-          const error = validateInput({ value, files }, validationProps);
+          const {
+            target: {value, files},
+          } = event;
+          const error = validateInput({value, files}, validationProps);
 
-          setInputMessage(error ? { text: error, type: 'error' } : null);
+          setInputMessage(error ? {text: error, type: 'error'} : null);
 
           if (onBlur) onBlur(event);
         }}
@@ -72,24 +76,32 @@ const Input: FC<InputProps> = (props: InputProps) => {
           type={isTypePassword ? 'view' : 'close'}
           tabIndex={-1}
           onClick={() =>
-            (isTypePassword)
-              ? setDynamicInputType(dynamicInputType === 'password' ? 'text' : 'password')
-              : onChange({ name, value: '' })
+            isTypePassword
+              ? setDynamicInputType(
+                  dynamicInputType === 'password' ? 'text' : 'password',
+                )
+              : onChange({name, value: ''})
           }
         />
       )}
 
       {type === 'search' && <Icon type="search" />}
 
-      {isDataListVisible && <AutoComplete items={dataList} value={value} onListItemClick={(item) => {
-        const error = validateInput({ value }, validationProps);
+      {isDataListVisible && (
+        <AutoComplete
+          items={dataList}
+          value={value}
+          onListItemClick={(item) => {
+            const error = validateInput({value}, validationProps);
 
-        setInputMessage(error ? { text: error, type: 'error' } : null);
-        onChange({ name, value: item.text, error, required });
-        setIsDataListVisible(false);
+            setInputMessage(error ? {text: error, type: 'error'} : null);
+            onChange({name, value: item.text, error, required});
+            setIsDataListVisible(false);
 
-        if (onDataListClick) onDataListClick(item);
-      }} />}
+            if (onDataListClick) onDataListClick(item);
+          }}
+        />
+      )}
 
       <Message type={inputMessage?.type}>{inputMessage?.text}</Message>
     </label>

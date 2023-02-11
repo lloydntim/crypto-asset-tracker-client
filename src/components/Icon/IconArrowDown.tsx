@@ -1,9 +1,9 @@
 import React from 'react';
 import {BLACK} from '../../constants/Colors';
 
-const IconDelete = ({
+const IconArrowDown = ({
   w = 22,
-  h = 22,
+  h = 14,
   sz = 22,
   color = BLACK,
 }: {
@@ -14,15 +14,17 @@ const IconDelete = ({
 }) => {
   return (
     <svg
-      viewBox="0 0 48 48"
       xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 320 192"
       width={sz || w}
       height={sz || h}
       fill={color}
     >
-      <path d="M12 38c0 2.21 1.79 4 4 4h16c2.21 0 4-1.79 4-4v-24h-24v24zm26-30h-7l-2-2h-10l-2 2h-7v4h28v-4z" />
+      <g>
+        <polygon points="19.4 0 0 20.7 160 192 320 20.7 300.7 0 160 150.5 19.4 0" />
+      </g>
     </svg>
   );
 };
 
-export default IconDelete;
+export default IconArrowDown;

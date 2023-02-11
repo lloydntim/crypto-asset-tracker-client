@@ -1,62 +1,109 @@
+import {ComponentType} from 'react';
 import styled from 'styled-components';
 
 export interface StyledProps {
-  w?: number | string;
-  h?: number | string;
+  w?: number | string | undefined;
+  h?: number | string | undefined;
 
-  ['max-h']?: number | string;
-  ['max-w']?: number | string;
-  ['min-h']?: number | string;
-  ['min-w']?: number | string;
+  ['max-h']?: number | string | undefined;
+  ['max-w']?: number | string | undefined;
+  ['min-h']?: number | string | undefined;
+  ['min-w']?: number | string | undefined;
 
-  sz?: number | string;
-  br?: number;
+  sz?: number | string | undefined;
+  br?: number | undefined;
 
-  p?: number | string;
-  ph?: number | string;
-  pv?: number | string;
-  m?: number | string;
-  mh?: number | string;
-  mv?: number | string;
+  ['br-tl']?: number | undefined;
+  ['br-tr']?: number | undefined;
+  ['br-bl']?: number | undefined;
+  ['br-br']?: number | undefined;
 
-  color?: number | string;
-  bgcolor?: number | string;
-  opacity?: number | string;
+  ['bcolor']?: number | string | undefined;
+  bw?: number | string | undefined;
 
-  cover?: boolean;
-  crop?: boolean;
+  p?: number | string | undefined;
+  ph?: number | string | undefined;
+  pv?: number | string | undefined;
+  pt?: number | string | undefined;
+  pb?: number | string | undefined;
+  pl?: number | string | undefined;
+  pr?: number | string | undefined;
+  m?: number | string | undefined;
+  mh?: number | string | undefined;
+  mv?: number | string | undefined;
+  mt?: number | string | undefined;
+  mb?: number | string | undefined;
+  ml?: number | string | undefined;
+  mr?: number | string | undefined;
 
-  ['pos-abs']?: boolean;
-  ['pos-rel']?: boolean;
+  color?: number | string | undefined;
+  bgcolor?: number | string | undefined;
+  opacity?: number | string | undefined;
 
-  flex?: string;
+  cover?: boolean | undefined;
+  crop?: boolean | undefined;
+  hide?: boolean | undefined;
 
-  ['flex-col']?: boolean;
-  ['flex-row']?: boolean;
-  ['flex-col-r']?: boolean;
-  ['flex-row-r']?: boolean;
+  ['pos-abs']?: boolean | undefined;
+  ['pos-rel']?: boolean | undefined;
 
-  ['spc-btw']?: boolean;
-  ['spc-arnd']?: boolean;
+  ['pos-t']?: number | string | undefined;
+  ['pos-r']?: number | string | undefined;
+  ['pos-b']?: number | string | undefined;
+  ['pos-l']?: number | string | undefined;
 
-  ['align-l']?: boolean;
-  ['align-r']?: boolean;
-  ['align-c']?: boolean;
+  flex?: string | undefined;
 
-  ['align-t']?: boolean;
-  ['align-b']?: boolean;
-  ['align-m']?: boolean;
+  ['flex-col']?: boolean | undefined;
+  ['flex-row']?: boolean | undefined;
+  ['flex-col-r']?: boolean | undefined;
+  ['flex-row-r']?: boolean | undefined;
+
+  ['spc-btw']?: boolean | undefined;
+  ['spc-arnd']?: boolean | undefined;
+
+  ['align-l']?: boolean | undefined;
+  ['align-r']?: boolean | undefined;
+  ['align-c']?: boolean | undefined;
+
+  ['align-t']?: boolean | undefined;
+  ['align-b']?: boolean | undefined;
+  ['align-m']?: boolean | undefined;
+
+  ['font-sz']?: string | number | undefined;
 }
 
-export const getUnit = (value: string | number) =>
-  value ? (value.toString().includes('%') ? value : `${value}px`) : 0;
+export const isDefined = (prop: unknown) => typeof prop !== 'undefined';
 
-const createStylesProps = (
-  element: 'div' | 'button' | 'span' | 'section' | 'p' | 'a' | 'input',
+export const getUnit = (value: string | number | undefined) =>
+  value ? (typeof value === 'string' ? value : `${value}px`) : 0;
+
+const createStylesProps = <T extends ComponentType>(
+  element:
+    | T
+    | 'div'
+    | 'button'
+    | 'span'
+    | 'section'
+    | 'p'
+    | 'a'
+    | 'input'
+    | 'img'
+    | 'h1'
+    | 'h2'
+    | 'h3'
+    | 'h4'
+    | 'h5'
+    | 'label'
+    | 'form'
+    | 'input',
 ) => styled(element)`
     ${({sz}: StyledProps) =>
       sz && `width: ${getUnit(sz)}; height: ${getUnit(sz)};`}
+
+      ${({h}) => h && `height: ${getUnit(h)};`}
     ${({w}: StyledProps) => w && `width: ${getUnit(w)};`}
+
     ${(props: StyledProps) =>
       props['max-h'] && `height: ${getUnit(props['max-h'])};`}
     ${(props: StyledProps) =>
@@ -66,31 +113,61 @@ const createStylesProps = (
     ${(props: StyledProps) =>
       props['min-w'] && `height: ${getUnit(props['min-w'])};`}
 
-    ${({h}) => h && `height: ${getUnit(h)};`}
+    ${({br}: StyledProps) => `border-radius: ${getUnit(br)};`}
+    ${(props: StyledProps) =>
+      props['br-tl'] && `border-top-left-radius: ${getUnit(props['br-tl'])};`}
+    ${(props: StyledProps) =>
+      props['br-tr'] && `border-top-right-radius: ${getUnit(props['br-tr'])};`}
+    ${(props: StyledProps) =>
+      props['br-bl'] &&
+      `border-bottom-left-radius: ${getUnit(props['br-bl'])};`}
+    ${(props: StyledProps) =>
+      props['br-br'] &&
+      `border-bottom-right-radius: ${getUnit(props['br-br'])};`}
+    ${({bcolor}: StyledProps) => bcolor && `border-color: ${bcolor};`}
+    ${({bw}: StyledProps) => bw && `border-width: ${getUnit(bw)};`}
 
-    ${({br}: StyledProps) => br && `border-radius: ${getUnit(br)};`}
-
-    ${({p}: StyledProps) => p && `padding: ${getUnit(p)};`}
+    ${({p}: StyledProps) => isDefined(p) && `padding: ${getUnit(p)};`}
     ${({ph}: StyledProps) =>
       ph && `padding-left: ${getUnit(ph)}; padding-right: ${getUnit(ph)};`}
     ${({pv}: StyledProps) =>
       pv && `padding-top: ${pv}px; padding-bottom: ${getUnit(pv)};`}
-    ${({m}: StyledProps) => m && `margin: ${getUnit(m)};`}
+    ${({pt}: StyledProps) => isDefined(pt) && `padding-top: ${getUnit(pt)};`}
+    ${({pb}: StyledProps) => isDefined(pb) && `padding-bottom: ${getUnit(pb)};`}
+    ${({pl}: StyledProps) => isDefined(pl) && `padding-left: ${getUnit(pl)};`}
+    ${({pr}: StyledProps) => isDefined(pr) && `padding-right: ${getUnit(pr)};`}
 
+    ${({m}: StyledProps) => isDefined(m) && `margin: ${getUnit(m)};`}
     ${({mh}: StyledProps) =>
       mh && `margin-left: ${getUnit(mh)}; margin-right: ${getUnit(mh)};`}
     ${({mv}: StyledProps) =>
       mv && `margin-top: ${getUnit(mv)}; margin-bottom: ${getUnit(mv)};`}
 
+    ${({mt}: StyledProps) => isDefined(mt) && `margin-top: ${getUnit(mt)};`}
+    ${({mb}: StyledProps) => isDefined(mb) && `margin-bottom: ${getUnit(mb)};`}
+    ${({ml}: StyledProps) => isDefined(ml) && `margin-left: ${getUnit(ml)};`}
+    ${({mr}: StyledProps) => isDefined(mr) && `margin-right: ${getUnit(mr)};`}
+
+
     ${({color}: StyledProps) => color && `color: ${color};`}
     ${({bgcolor}: StyledProps) => bgcolor && `background-color: ${bgcolor};`}
     ${({opacity}: StyledProps) => opacity && `opacity: ${opacity};`}
 
-    ${({cover}: StyledProps) => cover && 'overflow: hidden;'}
-    ${({crop}: StyledProps) => crop && 'width: 100%; height: 100%;'}
+    ${({crop}: StyledProps) => crop && 'overflow: hidden;'}
+    ${({cover}: StyledProps) => cover && 'width: 100%; height: 100%;'}
+    ${({hide}: StyledProps) => hide && 'display: none;'}
 
     ${(props: StyledProps) => props['pos-abs'] && 'position: absolute;'}
     ${(props: StyledProps) => props['pos-rel'] && 'position: relative;'}
+
+     ${(props: StyledProps) =>
+       props['pos-t'] && `top: ${getUnit(props['pos-t'])};`}
+    ${(props: StyledProps) =>
+      props['pos-r'] && `right: ${getUnit(props['pos-r'])};`}
+    ${(props: StyledProps) =>
+      props['pos-b'] && `bottom: ${getUnit(props['pos-b'])};`}
+    ${(props: StyledProps) =>
+      props['pos-l'] && `left: ${getUnit(props['pos-l'])};`}
 
     ${({flex}: StyledProps) => flex && `flex: ${flex};`}
     ${(props: StyledProps) =>
@@ -118,6 +195,18 @@ const createStylesProps = (
     ${(props: StyledProps) => props['align-c'] && 'justify-content: center;'}
     ${(props: StyledProps) => props['align-r'] && 'justify-content: flex-end;'}
 
+    ${(props: StyledProps) =>
+      props['font-sz'] && `font-size: ${getUnit(props['font-sz'])};`}
 `;
+
+export interface StyledTextProps {
+  color?: number | string | undefined;
+}
+
+export const createTextStylesProps = (element: 'p' | 'h5') => {
+  return styled(element)`
+    ${({color}) => color && `color: ${color};`}
+  `;
+};
 
 export default createStylesProps;

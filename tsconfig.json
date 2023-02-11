@@ -12,6 +12,6 @@
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true
   },
-  "include": ["**/*.ts"],
+  "include": ["**/*.ts", "src/**/*.json"],
   "exclude": ["./src/cypress/**/*"]
 }

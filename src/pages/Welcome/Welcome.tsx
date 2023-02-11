@@ -33,6 +33,7 @@ const currencies = [
 const Welcome: FC = (): ReactElement => {
   const {currentUser} = useAuthentication();
   const [currency, setCurrency] = useState(currencies[0].value);
+  const [editMode, setEditMode] = useState(false);
 
   const {
     data: coins,
@@ -45,20 +46,19 @@ const Welcome: FC = (): ReactElement => {
     .map((coin: {symbol: string}) => coin.symbol)
     .join(',');
 
-  console.log('symbols', symbols);
-  const {data: coinListings, loading, error: coinListingsError} = useQuery(
-    GET_COIN_LISTINGS,
-    {
-      variables: {
-        symbols,
-        convert: currency,
-        // convert: currency.value,
-      },
+  const {
+    data: coinListings,
+    refetch,
+    loading,
+    error: coinListingsError,
+  } = useQuery(GET_COIN_LISTINGS, {
+    variables: {
+      symbols,
+      convert: currency,
     },
-  );
-  console.log('coinListing', coinListings);
+  });
 
-  const coinListData: {coins: CoinData[]; convert: string} = useMemo(() => {
+  const coinListData: {coins: CoinData[]} = useMemo(() => {
     const processedData = coins?.getCoins.map((coin: CoinData) => {
       const listing = coinListings?.getCoinListings.find(
         (listing: CoinData) => listing.symbol === coin.symbol,
@@ -70,11 +70,8 @@ const Welcome: FC = (): ReactElement => {
     });
     return {
       coins: processedData,
-      convert: currency,
     };
-  }, [coins, coinListings, currency]);
-
-  console.log('coinListData', coinListData);
+  }, [coins, coinListings]);
 
   const [addCoin, {loading: addCoinLoading, error: addCoinError}] = useMutation(
     ADD_COIN,
@@ -115,7 +112,6 @@ const Welcome: FC = (): ReactElement => {
           })
         : false;
 
-      console.log('existing coins', existingCoins);
       if (newCoin && existingCoins && creatorId) {
         cache.writeQuery({
           query: GET_COINS,
@@ -207,7 +203,7 @@ const Welcome: FC = (): ReactElement => {
   }
 
   if (coinListingsError) {
-    return <Box>{coinListingsError.message.split(':')[1].trim()}</Box>;
+    return <Box>{coinListingsError.message.split(':')[1]?.trim()}</Box>;
   }
 
   console.log('current coins', coins);
@@ -217,8 +213,6 @@ const Welcome: FC = (): ReactElement => {
       <Body>
         <Headline tKey="welcome:title" />
 
-        <Select options={currencies} onChange={(value) => setCurrency(value)} />
-
         <CoinList
           data={coinListData}
           onChange={() => console.log('test')}
@@ -227,6 +221,13 @@ const Welcome: FC = (): ReactElement => {
           onAddCoinHolding={addCoinHoldingHandler}
           onUpdateCoinHolding={updateCoinHoldingHandler}
           onRemoveCoinHolding={removeCoinHoldingHandler}
+          onToggleEditMode={(args: boolean) => setEditMode(args)}
+          onChangeCurrency={(value: string) => {
+            setCurrency(value);
+            refetch({convert: value});
+          }}
+          editMode={editMode}
+          convert={currency}
         />
 
         {loading && <Message type="info">Loading</Message>}

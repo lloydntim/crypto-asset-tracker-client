@@ -1,14 +1,14 @@
-import React, { FC, ReactElement } from 'react';
+import React, {FC, ReactElement} from 'react';
+import Box from '../Box/Box';
 
 import './Body.scss';
 
-const Body: FC = ({ children }): ReactElement => {
+interface BodyProps {
+  children: JSX.Element | JSX.Element[];
+}
 
-  return (
-    <div className="body">
-      {children}
-    </div>
-  );
+const Body: FC<BodyProps> = ({children}): ReactElement => {
+  return <Box className="body">{children}</Box>;
 };
 
 export default Body;
