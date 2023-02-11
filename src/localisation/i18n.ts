@@ -1,5 +1,5 @@
 import i18n from 'i18next';
-import { initReactI18next } from 'react-i18next';
+import {initReactI18next} from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 
 import commonEn from './en/common.json';
@@ -9,6 +9,16 @@ import welcomeEn from './en/welcome.json';
 import commonDe from './de/common.json';
 import loginDe from './de/login.json';
 import welcomeDe from './de/welcome.json';
+
+export const defaultNS = 'common';
+
+export const resources = {
+  en: {
+    common: 'common',
+    welcome: 'welcome',
+    login: 'login',
+  },
+} as const;
 
 i18n
   .use(initReactI18next)
@@ -24,7 +34,7 @@ i18n
         common: commonDe,
         login: loginDe,
         welcome: welcomeDe,
-      }
+      },
     },
     detection: {
       order: [

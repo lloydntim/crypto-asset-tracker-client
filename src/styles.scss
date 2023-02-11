@@ -134,20 +134,20 @@ body {
 
   button[type=submit] {
     outline: none;
-    color: $green;
-    padding: 12px;
-    border-radius: 8px;
-    margin: 0 0 16px;
-    border: 0;
-    font-size: 18px;
-    width: 100%;
+    // color: $green;
+    // padding: 12px;
+    // border-radius: 8px;
+    // margin: 0 0 16px;
+    // border: 0;
+    // font-size: 18px;
+    // width: 100%;
   }
 
   .page {
     display: flex;
     flex-direction: column;
     padding: 0 12px;
-    max-width: 464px;
+    max-width: 664px;
     margin: 0 auto;
   }
 
@@ -165,6 +165,8 @@ body {
     h5 {
       text-align: center;
       border-bottom: $grey 1px solid;
+      margin: 0;
+      padding: 0;
     }
 
     h1 {
@@ -183,18 +185,22 @@ body {
     }
   }
 
+  button {
+    outline: none;
+  }
+
   .button {
     outline: none;
-    color: $green;
-    padding: 12px;
-    border-radius: 8px;
-    margin: 0 0 8px;
-    border: 1px solid;
-    font-size: 18px;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    cursor: pointer;
+    // color: $green;
+    // padding: 12px;
+    // border-radius: 8px;
+    // margin: 0 0 8px;
+    // border: 1px solid;
+    // font-size: 18px;
+    // width: 100%;
+    // display: flex;
+    // justify-content: center;
+    // cursor: pointer;
 
     &.is-disabled {
       opacity: .5;

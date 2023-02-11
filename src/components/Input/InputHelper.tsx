@@ -1,8 +1,14 @@
-import { FocusEventHandler, LegacyRef } from 'react';
+import {FocusEventHandler, LegacyRef} from 'react';
 
-import { DataListItemType } from '../DataList/DataList';
+import {DataListItemType} from '../DataList/DataList';
 
-export type InputChangeEvent = { name?: string, value?: string, files?: FileList | File[], error?: string, required?: boolean };
+export type InputChangeEvent = {
+  name: string;
+  value?: string;
+  files?: FileList | File[];
+  error?: string;
+  required?: boolean;
+};
 export type InputChangeEventHandler = (arg: InputChangeEvent) => void;
 export interface InputProps {
   inputRef?: LegacyRef<HTMLInputElement>;
@@ -30,18 +36,21 @@ export interface InputProps {
 }
 
 export type MockFile = {
-  name: string,
-}
+  name: string;
+};
 
 export type InputChangeEventTarget = {
-  value?: string,
-  files?: FileList | MockFile[],
-}
+  value?: string;
+  files?: FileList | MockFile[];
+};
 
 export const emailPattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-export const validateInput = (eventTarget: InputChangeEventTarget, props: InputProps) => {
-  const { value, files } = eventTarget;
+export const validateInput = (
+  eventTarget: InputChangeEventTarget,
+  props: InputProps,
+) => {
+  const {value, files} = eventTarget;
   const {
     type,
     pattern,
@@ -62,9 +71,9 @@ export const validateInput = (eventTarget: InputChangeEventTarget, props: InputP
     return requiredErrorMessage || `${type} input is required`;
   else if (inputPattern && !input?.match(inputPattern))
     return patternErrorMessage || `${type} input pattern not valid`;
-  else if (minLength && value.length < minLength)
+  else if (minLength && value && value.length < minLength)
     return minLengthErrorMessage || `${type} input min length is ${minLength}`;
-  else if (maxLength && value.length > maxLength)
+  else if (maxLength && value && value.length > maxLength)
     return maxLengthErrorMessage || `${type} input max length is ${maxLength}`;
   else return '';
 };

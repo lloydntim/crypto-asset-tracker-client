@@ -29,13 +29,71 @@ export const processCoinHoldingsData = (data: any[]) =>
     };
   }, {});
 
-export const coinData: CoinData[] = [
+/* eslint-disable @typescript-eslint/no-explicit-any */
+export const processCoinData = ({coins}: any) => {
+  const listNameMapper: {[key: string]: string} = {
+    wallet: 'Wallet',
+    exchange: 'Exchange',
+    staking: 'Staking',
+  };
+
+  return coins.reduce((a: any, b: any) => {
+    const {id, coinId, name, symbol, price} = b;
+    const assets = b.holdings.reduce((a: any, b: any) => {
+      const amount = (a?.amount || 0) + b.amount;
+      const total =
+        ((a.storageTypes && a.storageTypes[b.type]?.total) || 0) + b.amount;
+      const coinPrice = price ?? 0;
+
+      return {
+        ...a,
+        ...{
+          amount,
+          value: amount * coinPrice,
+          storageTypes: {
+            ...(a.storageTypes && a.storageTypes),
+            [b.type]: {
+              name: listNameMapper[b.type],
+              total,
+              value: total * coinPrice,
+              holdings: [
+                b,
+                ...((a.storageTypes && a.storageTypes[b.type]?.holdings) || []),
+              ],
+            },
+          },
+        },
+      };
+    }, {});
+
+    return {
+      portfolioTotal: (a?.portfolioTotal || 0) + assets.value,
+      coins: [
+        ...(a.coins ?? []),
+        {
+          id,
+          coinId,
+          name,
+          symbol,
+          price,
+          amount: assets.amount,
+          value: assets.amount * b.price || 0,
+          assets,
+        },
+      ],
+    };
+  }, {});
+};
+
+/* export const coinData: CoinData[] = [
   {
     id: '0',
     coinId: '1',
     name: 'btc',
     symbol: 'BTC',
     price: 22000,
+    amount: 4.75,
+    value: 4.75 * 22000,
     holdings: [
       {
         id: 'ledger',
@@ -81,6 +139,8 @@ export const coinData: CoinData[] = [
     name: 'eth',
     symbol: 'ETH',
     price: 1600,
+    amount: 25,
+    value: 25 * 1600,
     holdings: [
       {
         id: 'ledger',
@@ -109,6 +169,15 @@ export const coinData: CoinData[] = [
     ],
   },
 ];
+ */
+export const formatAmount = (value: number, location: string) => {
+  if (typeof value === 'undefined' || typeof value === null) {
+    return (0).toFixed(2);
+  }
+  return value < 1
+    ? value.toFixed(4)
+    : new Intl.NumberFormat(location, {minimumFractionDigits: 2}).format(value);
+};
 
 /*{
   portfolioTotal: 100000,

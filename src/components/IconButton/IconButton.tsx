@@ -1,28 +1,40 @@
-import React, { FC, MouseEventHandler, ReactElement, TouchEventHandler } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, {
+  FC,
+  MouseEventHandler,
+  ReactElement,
+  TouchEventHandler,
+} from 'react';
+import {useNavigate} from 'react-router-dom';
 
-import { Icon } from '../../components';
+import {Button, Icon} from '../../components';
+import {StyledProps} from '../../helpers/createStyledProps';
 
-import './IconButton.scss';
-
-interface IconButtonProps {
+interface IconButtonProps extends StyledProps {
   type: string;
   rank?: string;
+  iconHeight?: number;
+  iconWidth?: number;
+  iconSize?: number;
+  iconColor?: string;
   tabIndex?: number;
   disabled?: boolean;
   isLink?: boolean;
   to?: string;
-  onClick: MouseEventHandler,
-  onMouseUp?: MouseEventHandler,
-  onMouseDown?: MouseEventHandler,
-  onMouseLeave?: MouseEventHandler,
-  onTouchStart?: TouchEventHandler,
-  onTouchEnd?: TouchEventHandler,
+  onClick: MouseEventHandler;
+  onMouseUp?: MouseEventHandler;
+  onMouseDown?: MouseEventHandler;
+  onMouseLeave?: MouseEventHandler;
+  onTouchStart?: TouchEventHandler;
+  onTouchEnd?: TouchEventHandler;
 }
 
 const IconButton: FC<IconButtonProps> = ({
   rank = 'primary',
   type,
+  iconHeight,
+  iconWidth,
+  iconColor,
+  iconSize,
   tabIndex,
   disabled,
   isLink = false,
@@ -33,11 +45,16 @@ const IconButton: FC<IconButtonProps> = ({
   onMouseLeave,
   onTouchStart,
   onTouchEnd,
+  ...rest
 }): ReactElement<IconButtonProps> => {
   const navigate = useNavigate();
   return (
-    <button
-      className={`icon-button icon-type-${type} ${disabled ? 'is-disabled' : `icon-button-rank-${rank}`}`}
+    <Button
+      className={`icon-button icon-type-${type} ${
+        disabled ? 'is-disabled' : `icon-button-rank-${rank}`
+      }`}
+      ph={4}
+      pv={4}
       type="button"
       tabIndex={tabIndex}
       disabled={disabled}
@@ -50,9 +67,16 @@ const IconButton: FC<IconButtonProps> = ({
       onMouseLeave={onMouseLeave}
       onTouchStart={onTouchStart}
       onTouchEnd={onTouchEnd}
+      {...rest}
     >
-      <Icon type={type} />
-    </button>
+      <Icon
+        type={type}
+        h={iconHeight}
+        w={iconWidth}
+        color={iconColor}
+        sz={iconSize}
+      />
+    </Button>
   );
 };
 

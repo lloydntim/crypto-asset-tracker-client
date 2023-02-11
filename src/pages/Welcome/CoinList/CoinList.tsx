@@ -1,10 +1,36 @@
 import React, {FC, useState, useRef, useEffect} from 'react';
 import styled from 'styled-components';
-import {Box, Button, Container, List, Select, Text} from '../../../components';
+import {
+  AutoComplete,
+  Box,
+  Button,
+  Container,
+  Form,
+  Headline,
+  IconButton,
+  Image,
+  Input,
+  List,
+  Select,
+  Text,
+} from '../../../components';
 import Table, {TableCell, TableRow} from '../../../components/Table';
-import {processCoinHoldingsData} from './CoinListHelper';
+import {
+  formatAmount,
+  processCoinData,
+  processCoinHoldingsData,
+} from './CoinListHelper';
 import {formatToCurrency} from '../../../utils';
 import CoinListHoldingForm from './CoinListHoldingForm';
+import {
+  BLACK,
+  DARKGREY,
+  GRAPE_EXTRA_DARK,
+  GRAPE_DARK,
+  GREY,
+  LIGHTGREY,
+  WHITE,
+} from '../../../constants/Colors';
 
 type HoldingType = 'wallet' | 'exchange' | 'staking';
 
@@ -15,13 +41,27 @@ interface HoldingsData {
   amount: number;
 }
 
+interface StorageTypeData {
+  staking: HoldingsData[];
+  wallet: HoldingsData[];
+  exchange: HoldingsData[];
+}
+
+interface AssetData {
+  amount: number;
+  value: number;
+  storageTypes: StorageTypeData;
+}
 export interface CoinData {
   id: string;
   coinId: string;
   name: string;
   symbol: string;
   price: number;
-  holdings: HoldingsData[];
+  value: number;
+  amount: number;
+  holdings?: HoldingsData[];
+  assets: AssetData;
 }
 
 interface HoldingsListData {
@@ -35,18 +75,28 @@ const ClickableArea = styled.button`
   background-color: transparent;
 `;
 
-const CustomButton = styled.button`
-  border: none;
-  background-color: white;
-  color: black;
-`;
-
 const CustomInput = styled.input`
   color: black;
+  padding: 6px 8px;
+  border-radius: 8px;
+  border-width: 1px;
+  border-color: ${GRAPE_DARK};
+  display: flex;
+  margin: 8px;
+  flex: 1;
+  ${({w}: {w?: number}) => (w ? `width: ${w}px;` : '')}
 `;
 
+const currencyFormatMapper: {
+  [key: string]: {currency: string; location: string};
+} = {
+  USD: {currency: 'USD', location: 'en-US'},
+  GBP: {currency: 'GBP', location: 'en-GB'},
+  EUR: {currency: 'EUR', location: 'de-DE'},
+};
+
 interface CoinListProps {
-  data: {coins: CoinData[]; convert: string};
+  data: {coins: CoinData[]};
   onChange: () => void;
   onAddCoin: (symbol: string) => void;
   onRemoveCoin: (id: string) => void;
@@ -64,6 +114,10 @@ interface CoinListProps {
     {amount, name, type}: {amount?: number; name?: string; type?: string},
   ) => void;
   onRemoveCoinHolding: (holdingId: string) => void;
+  onToggleEditMode: (args: boolean) => void;
+  onChangeCurrency: (value: string) => void;
+  editMode: boolean;
+  convert: string;
 }
 
 const types = [
@@ -86,21 +140,23 @@ const EntryField = ({
   value,
   onChange,
   onBlur,
+  location,
 }: {
-  value: string | number;
+  value: any;
   onChange?: (args?: any) => void;
   onBlur?: (args?: any) => void;
+  location: string;
 }) => {
   const [entryEditMode, setEntryEditMode] = useState(false);
   const [entryValue, setEntryValue] = useState(value);
   const input = useRef(null);
 
   useEffect(() => {
-    if (entryEditMode) input?.current.focus();
+    if (entryEditMode) input?.current?.focus();
   }, [entryEditMode]);
 
   return (
-    <Box>
+    <Box flex-row align-m spc-btw>
       {entryEditMode ? (
         <CustomInput
           ref={input}
@@ -116,74 +172,30 @@ const EntryField = ({
         />
       ) : (
         <>
-          <Text>
-            {entryValue}
-            <CustomButton
-              onClick={() => {
-                setEntryEditMode(true);
-              }}
-            >
-              update
-            </CustomButton>
+          <Text font-sz={14}>
+            {typeof value === 'number'
+              ? formatAmount(entryValue, location)
+              : entryValue}
           </Text>
+          <IconButton
+            mh={8}
+            type="edit"
+            iconSize={16}
+            onClick={() => {
+              setEntryEditMode(true);
+            }}
+          />
         </>
       )}
     </Box>
   );
 };
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
-const testData = ({coins}: any) => {
-  const listNameMapper: {[key: string]: string} = {
-    wallet: 'Wallet',
-    exchange: 'Exchange',
-    staking: 'Staking',
-  };
-
-  return coins.reduce((a: any, b: any) => {
-    const {id, coinId, name, symbol, price} = b;
-
-    const holdings = b.holdings.reduce((c: any, d: any) => {
-      const amount = (c.amount ?? 0) + d.amount;
-      const value = amount * b.price;
-      return [
-        ...(c.holdings ?? []),
-        {
-          amount,
-          value,
-          name: listNameMapper[d.type],
-          holdings: [d, ...(c[d.type]?.holdings || [])],
-        },
-      ];
-    }, []);
-
-    const coinsAmount = holdings.reduce(
-      (a: any, b: any) => (a.amount ?? 0) + b.amount,
-      0,
-    );
-
-    return {
-      portfolioTotal: coins.reduce(
-        (a: any, b: any) =>
-          b.holdings.reduce((c: any, d: any) => c + d.amount, 0) * b.price + a,
-        0,
-      ),
-      coins: [
-        ...(a.coins ?? []),
-        {
-          id,
-          coinId,
-          name,
-          symbol,
-          price,
-          amount: coinsAmount,
-          value: coinsAmount * b.price,
-          holdings,
-        },
-      ],
-    };
-  }, {});
-};
+const currencies = [
+  {text: 'USD', value: 'USD'},
+  {text: 'GBP', value: 'GBP'},
+  {text: 'EUR', value: 'EUR'},
+];
 
 const CoinList: FC<CoinListProps> = ({
   data,
@@ -193,10 +205,14 @@ const CoinList: FC<CoinListProps> = ({
   onAddCoinHolding,
   onUpdateCoinHolding,
   onRemoveCoinHolding,
+  onToggleEditMode,
+  onChangeCurrency,
+  editMode,
+  convert,
 }) => {
-  const {coins, convert} = data;
-  const [currentCollapsedItem, setCurrentCollapsedItem] = useState(0);
-  const [editMode, setEditMode] = useState(false);
+  const [currentCollapsedItem, setCurrentCollapsedItem] = useState<
+    number | undefined
+  >();
   const [coinName, setCoinName] = useState('');
   const [holding, setHolding] = useState({
     type: types[0].value,
@@ -204,42 +220,87 @@ const CoinList: FC<CoinListProps> = ({
     amount: '',
   });
 
-  console.log('CoinList inside', coins);
-  console.log('CoinList test new', testData(data));
-  const totalHoldings = coins?.reduce(
-    (a, b) => b.holdings.reduce((c, d) => c + d.amount, 0) * b.price + a,
-    0,
-  );
-  return (
-    <Container>
-      <CustomButton
-        onClick={() => {
-          setEditMode(!editMode);
-        }}
-      >
-        {editMode ? 'Save' : 'Edit'}
-      </CustomButton>
+  const {portfolioTotal, coins: testCoins = []} = processCoinData(data);
+  const {currency: formatCurrency, location} = currencyFormatMapper[convert];
 
-      <Container color="grey" p={20} flex-h spc-btw>
-        <Text>My Portfolio</Text>
-        <Text>Total: {formatToCurrency(totalHoldings, convert)}</Text>
+  return (
+    <Container align-c>
+      <Box flex-row mv={12}>
+        <Button
+          mr={12}
+          color={GRAPE_EXTRA_DARK}
+          onClick={() => {
+            onToggleEditMode(!editMode);
+          }}
+        >
+          {editMode ? 'Save' : 'Edit'}
+        </Button>
+
+        <Select options={currencies} onChange={onChangeCurrency} />
+      </Box>
+
+      <Container
+        bgcolor={WHITE}
+        color={BLACK}
+        w={640}
+        br={8}
+        p={20}
+        mv={4}
+        flex-h
+        spc-btw
+      >
+        <Text strong>My Portfolio</Text>
+        <Text>
+          Total: {formatToCurrency(portfolioTotal, formatCurrency, location)}
+        </Text>
       </Container>
+
+      {editMode && (
+        <Container flex-row align-m>
+          <Form ph={8} flex-row w="100%">
+            <Text mh={12}>Coin</Text>
+            <CustomInput
+              value={coinName}
+              onChange={({target: {value}}) => {
+                setCoinName(value);
+              }}
+            />
+
+            <IconButton
+              type="plus"
+              align-c
+              flex-row
+              mv={8}
+              mh={8}
+              onClick={() => onAddCoin(coinName)}
+            />
+          </Form>
+        </Container>
+      )}
+
       <List<CoinData>
-        data={coins || []}
-        renderItem={({item: {id, coinId, name, holdings, price}, index}) => {
-          const totalHoldingsAmount = holdings.reduce(
-            (a, b) => a + b.amount,
-            0,
-          );
-          const totalValue = totalHoldingsAmount * price;
+        data={testCoins}
+        renderItem={({
+          item: {id, coinId, name, assets, price, amount, value},
+          index,
+        }) => {
+          const {storageTypes} = assets;
           const holdingsList: HoldingsListData[] = Object.values(
-            processCoinHoldingsData(holdings),
+            storageTypes ?? {},
           );
 
           return (
             <Container>
               {/* ListSection */}
-              <Box color="grey" pv={20} ph={20} br={20} w={780}>
+              <Box
+                flex-row
+                bgcolor={WHITE}
+                pv={16}
+                ph={12}
+                br={8}
+                mv={4}
+                w={640}
+              >
                 <ClickableArea
                   onClick={() => {
                     console.log(index);
@@ -249,57 +310,99 @@ const CoinList: FC<CoinListProps> = ({
                 >
                   <Table>
                     <TableRow>
-                      <TableCell ph={12}>
-                        <img
-                          width={24}
-                          height={24}
+                      <TableCell valign-m col-w={40}>
+                        <Image
+                          flex-row
+                          sz={24}
                           src={`https://s2.coinmarketcap.com/static/img/coins/64x64/${coinId}.png`}
                         />
                       </TableCell>
-                      <TableCell ph={12}>{name}</TableCell>
-                      <TableCell ph={12}>
-                        {formatToCurrency(price, convert)}
+                      <TableCell valign-m col-w={140} txt-align-l>
+                        {name}
                       </TableCell>
-                      <TableCell ph={12}>{totalHoldingsAmount}</TableCell>
-                      <TableCell ph={12}>
-                        {formatToCurrency(totalValue, convert)}
+                      <TableCell valign-m col-w={120} txt-align-r>
+                        {formatToCurrency(price, formatCurrency, location)}
+                      </TableCell>
+                      <TableCell valign-m col-w={160} txt-align-r>
+                        {formatAmount(amount, location)}
+                      </TableCell>
+                      <TableCell valign-m ph={12} col-w={120} txt-align-r>
+                        {formatToCurrency(value, formatCurrency, location)}
                       </TableCell>
                     </TableRow>
                   </Table>
                 </ClickableArea>
                 {editMode && (
-                  <CustomButton
+                  <IconButton
+                    mh={8}
+                    type="delete"
+                    iconSize={16}
                     onClick={() => {
                       onRemoveCoin(id);
                     }}
-                  >
-                    remove
-                  </CustomButton>
+                  />
                 )}
               </Box>
 
               {/*  ListSubSection*/}
               {currentCollapsedItem === index && (
-                <Box>
+                <Box
+                  bgcolor={LIGHTGREY}
+                  color={DARKGREY}
+                  pv={20}
+                  ph={24}
+                  br={8}
+                  hide={!editMode && holdingsList.length === 0}
+                >
                   {holdingsList.map(
-                    ({holdings: items, total, name: title}, keyIndex) => {
+                    (
+                      {holdings: items, total, name: title},
+                      keyIndex: number,
+                    ) => {
                       return (
-                        <Box key={keyIndex}>
+                        <Box key={keyIndex} mb={12}>
                           <Box>
-                            {title} Total: {total}
+                            <Headline m={0} p={0} pb={12} size="h5">
+                              {title} Total: {formatAmount(total, location)}
+                            </Headline>
                           </Box>
 
                           {items.map(
-                            ({id: holdingId, name, amount, type}, keyIndex) => {
+                            (
+                              {id: holdingId, name, amount},
+                              keyIndex: number,
+                            ) => {
                               const value = price * amount;
 
                               return (
-                                <Table key={keyIndex}>
-                                  <TableRow>
-                                    <TableCell ph={12}>Logo</TableCell>
-                                    <TableCell ph={12}>
+                                <Table key={keyIndex} w="100%">
+                                  <Box
+                                    flex-row
+                                    br={8}
+                                    ph={8}
+                                    align-m
+                                    bgcolor="#d6cfe3"
+                                    mv={2}
+                                  >
+                                    <Box
+                                      pl={8}
+                                      br-tl={8}
+                                      br-bl={8}
+                                      w={44}
+                                      pv={4}
+                                      valign-m
+                                    >
+                                      <Box
+                                        bgcolor={GREY}
+                                        sz={24}
+                                        br={12}
+                                        flex-row
+                                      />
+                                    </Box>
+                                    <Box flex="1" txt-align-l>
                                       {editMode ? (
                                         <EntryField
+                                          location={location}
                                           value={name}
                                           onBlur={({target: {value}}) => {
                                             onUpdateCoinHolding(holdingId, {
@@ -308,13 +411,16 @@ const CoinList: FC<CoinListProps> = ({
                                           }}
                                         />
                                       ) : (
-                                        <Text>{name}</Text>
+                                        <Text valign-m m={0} font-sz={14}>
+                                          {name}
+                                        </Text>
                                       )}
-                                    </TableCell>
-                                    <TableCell ph={12}>
+                                    </Box>
+                                    <Box flex-row w={162} align-r ph={12}>
                                       {editMode ? (
                                         <>
                                           <EntryField
+                                            location={location}
                                             value={amount}
                                             onBlur={({target: {value}}) => {
                                               onUpdateCoinHolding(holdingId, {
@@ -324,22 +430,38 @@ const CoinList: FC<CoinListProps> = ({
                                           />
                                         </>
                                       ) : (
-                                        <Text>{amount ?? 0}</Text>
+                                        <Text valign-m font-sz={14}>
+                                          {formatAmount(amount, location)}
+                                        </Text>
                                       )}
-                                    </TableCell>
-                                    <TableCell ph={12}>
-                                      {formatToCurrency(value, convert)}
-                                    </TableCell>
+                                    </Box>
+                                    <Box
+                                      w={100}
+                                      flex-row
+                                      align-r
+                                      br-tr={8}
+                                      br-br={8}
+                                      pr={8}
+                                    >
+                                      <Text valign-m font-sz={14}>
+                                        {formatToCurrency(
+                                          value,
+                                          formatCurrency,
+                                          location,
+                                        )}
+                                      </Text>
+                                    </Box>
                                     {editMode && (
-                                      <CustomButton
+                                      <IconButton
+                                        mh={8}
+                                        type="delete"
+                                        iconSize={18}
                                         onClick={() => {
                                           onRemoveCoinHolding(holdingId);
                                         }}
-                                      >
-                                        remove
-                                      </CustomButton>
+                                      />
                                     )}
-                                  </TableRow>
+                                  </Box>
                                 </Table>
                               );
                             },
@@ -352,13 +474,7 @@ const CoinList: FC<CoinListProps> = ({
                     <CoinListHoldingForm
                       holding={holding}
                       submitText="add"
-                      onChange={({
-                        field,
-                        value,
-                      }: {
-                        field: string;
-                        value: string;
-                      }) => {
+                      onChange={({field, value}) => {
                         setHolding({...holding, [field]: value});
                       }}
                       onSubmit={() => {
@@ -377,26 +493,6 @@ const CoinList: FC<CoinListProps> = ({
           );
         }}
       />
-      {editMode && (
-        <Container>
-          <form>
-            <Text>Coin</Text>
-            <CustomInput
-              value={coinName}
-              onChange={({target: {value}}) => {
-                setCoinName(value);
-              }}
-            />
-            <CustomButton
-              onClick={() => {
-                onAddCoin(coinName);
-              }}
-            >
-              add
-            </CustomButton>
-          </form>
-        </Container>
-      )}
     </Container>
   );
 };

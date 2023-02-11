@@ -1,28 +1,75 @@
-import React, { FC, ReactElement } from 'react';
-import { withLocalisation } from '../../hoc';
+// import React, {FC, ReactElement} from 'react';
+// import styled from 'styled-components';
+// import createStylesProps from '../../helpers/createStyledProps';
+// import {withLocalisation} from '../../hoc';
 
-import { TextProps } from '../Text/Text';
+// import {StyledTextProps, TextProps} from '../Text/Text';
 
-import './Headline.scss';
+// export type HeadlineSize = 'h1' | 'h2' | 'h3' | 'h4' | 'h5';
 
+// interface HeadlineProps extends TextProps {
+//   size?: HeadlineSize;
+// }
+
+// /* const createHeadlineStyle = (element: HeadlineSize) => styled(
+//   createStylesProps(element),
+// )`
+//   ${(props: StyledTextProps) => props['font-sz'] && `${props['font-sz']}`}
+// `;
+//  */
+
+// const HeadlineSt = styled(createStylesProps('h1'))`
+//   ${(props: StyledTextProps) => props['font-sz'] && `${props['font-sz']}`}
+// `;
+
+// const Headline: FC<HeadlineProps> = ({
+//   size = 'h1',
+//   children,
+//   className = '',
+//   ...rest
+// }): ReactElement => {
+//   // const HeadlineSt = createHeadlineStyle(size);
+
+//   return (
+//     <HeadlineSt
+//       {...rest}
+//       className={`headline headline-size-${size} ${className}`}
+//     >
+//       {children}
+//     </HeadlineSt>
+//   );
+// };
+
+// export default withLocalisation<HeadlineProps>(Headline);
+
+import React, {FC, ReactElement} from 'react';
+import styled from 'styled-components';
+
+import createStylesProps, {StyledProps} from '../../helpers/createStyledProps';
+
+import {withLocalisation} from '../../hoc';
+import {LocalisationProps} from '../../hoc/withLocalisation';
+import {TextProps} from '../Text/Text';
 
 export type HeadlineSize = 'h1' | 'h2' | 'h3' | 'h4' | 'h5';
-
-interface HeadlineProps extends TextProps {
+export interface HeadlineProps extends TextProps {
+  className?: string;
+  strong?: boolean;
   size?: HeadlineSize;
 }
 
 const Headline: FC<HeadlineProps> = ({
-  size = 'h1',
   children,
-  className = ''
+  className = '',
+  size = 'h1',
+  ...rest
 }): ReactElement => {
-  const HeadlineTag = size;
+  const HeadlineSt = createStylesProps(size);
 
   return (
-    <HeadlineTag className={`headline headline-size-${size} ${className}`}>
+    <HeadlineSt m={0} p={0} className={className} {...rest}>
       {children}
-    </HeadlineTag>
+    </HeadlineSt>
   );
 };
 

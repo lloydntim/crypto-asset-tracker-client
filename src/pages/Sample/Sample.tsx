@@ -18,7 +18,7 @@ const Sample: FC = (): ReactElement => {
         <br />
         <Text tKey="testKey" />
         <br />
-        <Text type="dd">Sample Page</Text>
+        <Text>Sample Page</Text>
         <br />
         <ul>
           {list.map((item: string, index: number) => (
