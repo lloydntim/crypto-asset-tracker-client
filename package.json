@@ -1,9 +1,5 @@
 {
-<<<<<<< HEAD
   "name": "crypto-asset-tracker",
-=======
-  "name": "crypto-checker",
->>>>>>> 7207220 (Added localisation and refactoring)
   "version": "1.0.0",
   "description": "",
   "private": true,
@@ -13,11 +9,7 @@
     "test": "jest",
     "lint": "eslint --fix src/**/*.js",
     "build": "webpack --config config/webpack.config.js --mode=production",
-<<<<<<< HEAD
     "dev": "webpack-dev-server --config config/webpack.config.js --port 4001 --host 0.0.0.0 --mode=development"
-=======
-    "dev": "webpack-dev-server --config config/webpack.config.js --port 3001 --host 0.0.0.0 --mode=development"
->>>>>>> 7207220 (Added localisation and refactoring)
   },
   "keywords": [],
   "author": "",

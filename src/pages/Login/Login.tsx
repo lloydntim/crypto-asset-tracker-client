@@ -1,13 +1,19 @@
-import React, { ReactElement, FC, useState, MouseEventHandler, useCallback } from 'react';
-import { useMutation } from '@apollo/client';
-import { useNavigate } from 'react-router-dom';
-import { useTranslation } from "react-i18next";
+import React, {
+  ReactElement,
+  FC,
+  useState,
+  MouseEventHandler,
+  useCallback,
+} from 'react';
+import {useMutation} from '@apollo/client';
+import {useNavigate} from 'react-router-dom';
+import {useTranslation} from 'react-i18next';
 
-import { LOGIN } from '../../graphql';
-import { useForm } from '../../hooks';
-import { useAuthentication } from '../../providers/AuthenticationProvider';
-import { Page } from '../../layouts';
-import { Button, Input, Message, Headline } from '../../components';
+import {LOGIN} from '../../graphql';
+import {useForm} from '../../hooks';
+import {useAuthentication} from '../../providers/AuthenticationProvider';
+import {Page} from '../../layouts';
+import {Button, Input, Message, Headline} from '../../components';
 
 // const authorisedUser = {
 // username: 'admin',
@@ -18,13 +24,20 @@ import { Button, Input, Message, Headline } from '../../components';
 
 const Login: FC = (): ReactElement => {
   const navigate = useNavigate();
-  const { t, i18n: { changeLanguage } } = useTranslation();
+  const {
+    t,
+    i18n: {changeLanguage},
+  } = useTranslation();
   const [message, setMessage] = useState(null);
   // const [color, setColor] = useState('');
-  const { setLoginToken } = useAuthentication();
-  const { form: hookedForm, formFieldChangeHandler, isFormValid } = useForm('username*', 'password*', 'language');
-  const { username, password } = hookedForm;
-  const [login, { loading }] = useMutation(LOGIN, {
+  const {setLoginToken} = useAuthentication();
+  const {form: hookedForm, formFieldChangeHandler, isFormValid} = useForm(
+    'username*',
+    'password*',
+    'language',
+  );
+  const {username, password} = hookedForm;
+  const [login, {loading}] = useMutation(LOGIN, {
     onCompleted: (data) => {
       /* eslint-disable no-undef */
       setLoginToken(data.login.token);
@@ -41,26 +54,28 @@ const Login: FC = (): ReactElement => {
 
   const formFieldFocusHandler = useCallback(() => setMessage(null), []);
 
-  const submitForm: MouseEventHandler<Element> = useCallback((event) => {
-    event.preventDefault();
+  const submitForm: MouseEventHandler<Element> = useCallback(
+    (event) => {
+      event.preventDefault();
 
-    login({
-      variables: {
-        username: username.value.toLowerCase(),
-        password: password.value,
-      },
-    });
+      login({
+        variables: {
+          username: username.value.toLowerCase(),
+          password: password.value,
+        },
+      });
 
-    // if (username.value !== authorisedUser.username) return setMessage({ ...errorMessage, text: 'This user does not exist' });
-    // if (password.value !== authorisedUser.password) return setMessage(errorMessage);
+      // if (username.value !== authorisedUser.username) return setMessage({ ...errorMessage, text: 'This user does not exist' });
+      // if (password.value !== authorisedUser.password) return setMessage(errorMessage);
 
-    // setLoginToken(data.login.token);
-    // navigate('/welcome');
-  }, [username, password]);// eslint-disable-line react-hooks/exhaustive-deps
+      // setLoginToken(data.login.token);
+      // navigate('/welcome');
+    },
+    [username, password, login],
+  ); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const languageChangeHandler = (language: string) => () => changeLanguage(language);
-
-  const languageChangeHandler = (language: string) => () => changeLanguage(language);
+  const languageChangeHandler = (language: string) => () =>
+    changeLanguage(language);
 
   return (
     <Page name="login">
@@ -118,12 +133,11 @@ const Login: FC = (): ReactElement => {
       </form>
       <br />
 
-      <Message type={loading ? 'info' : message?.type}>{
-        loading ? 'Loading' : message?.text
-      }</Message>
+      <Message type={loading ? 'info' : message?.type}>
+        {loading ? 'Loading' : message?.text}
+      </Message>
     </Page>
   );
 };
 
 export default Login;
-
