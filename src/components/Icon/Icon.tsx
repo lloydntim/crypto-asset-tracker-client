@@ -63,7 +63,7 @@ const Icon: FC<IconProps> = ({type, w, h, sz, color}): ReactElement => {
     case 'menu':
       return <IconMenu />;
     case 'close':
-      return <IconClose />;
+      return <IconClose {...dimensions} color={color} />;
     case 'clipboard':
       return <IconClipboard />;
     case 'cut':

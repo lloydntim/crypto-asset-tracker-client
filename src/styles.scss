@@ -87,7 +87,7 @@ body {
   }
 
   label span {
-    display: none;
+    // display: none;
   }
 
   textarea,
@@ -95,15 +95,15 @@ body {
   input[type=text],
   input[type=email],
   input[type=password] {
-    outline: none;
-    background-color: $green;
-    border: 1px solid $white;
-    border-radius: 8px;
-    padding: 12px;
-    margin: 0 0 16px;
-    font-size: 18px;
-    width: 100%;
-    color: $white;
+    // outline: none;
+    // background-color: $green;
+    // border: 1px solid $white;
+    // border-radius: 8px;
+    // padding: 12px;
+    // margin: 0 0 16px;
+    // font-size: 18px;
+    // width: 100%;
+    // color: $white;
 
     &::placeholder {
       color: $white;

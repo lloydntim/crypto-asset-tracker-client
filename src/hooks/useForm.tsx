@@ -43,7 +43,7 @@ const useForm = (...fields: string[]) => {
   const isFormValid = errorStatus === FORM_VALID && !requiredFields.length;
 
   const formFieldChangeHandler = (formFieldDetails: InputChangeEvent) => {
-    const {name: formKeyName, error} = formFieldDetails;
+    const {name: formKeyName = '', error} = formFieldDetails;
     const formField = form[formKeyName];
     const upddatedFormField = {
       [formKeyName]: {...formField, ...formFieldDetails},

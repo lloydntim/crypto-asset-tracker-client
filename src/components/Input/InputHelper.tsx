@@ -1,11 +1,11 @@
 import {FocusEventHandler, LegacyRef} from 'react';
 
-import {DataListItemType} from '../DataList/DataList';
+import {DataListItem} from '../DataList/DataList';
 
 export type InputChangeEvent = {
-  name: string;
-  value?: string;
-  files?: FileList | File[];
+  name?: string;
+  value?: string | undefined;
+  files?: FileList | File[] | null;
   error?: string;
   required?: boolean;
 };
@@ -15,7 +15,7 @@ export interface InputProps {
   label?: string;
   autoComplete?: string;
   autoCapitalize?: string;
-  dataList?: DataListItemType[];
+  dataList?: DataListItem[];
   name?: string;
   type?: string;
   tabIndex?: number;
@@ -32,7 +32,7 @@ export interface InputProps {
   onChange?: InputChangeEventHandler;
   onFocus?: FocusEventHandler<HTMLInputElement>;
   onBlur?: FocusEventHandler<HTMLInputElement>;
-  onDataListClick?: (item: DataListItemType) => void;
+  onDataListClick?: (item: DataListItem) => void;
 }
 
 export type MockFile = {
@@ -41,7 +41,7 @@ export type MockFile = {
 
 export type InputChangeEventTarget = {
   value?: string;
-  files?: FileList | MockFile[];
+  files?: FileList | MockFile[] | null;
 };
 
 export const emailPattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;

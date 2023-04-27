@@ -18,6 +18,7 @@ import {
   ADD_COIN_HOLDING,
   GET_COINS,
   GET_COIN_LISTINGS,
+  GET_SYMBOLS,
   REMOVE_COIN,
   REMOVE_COIN_HOLDING,
   UPDATE_COIN_HOLDING,
@@ -34,6 +35,8 @@ const Welcome: FC = (): ReactElement => {
   const {currentUser} = useAuthentication();
   const [currency, setCurrency] = useState(currencies[0].value);
   const [editMode, setEditMode] = useState(false);
+  const [selectedCoin, setSelectedCoin] = useState<number | undefined>();
+  const [coinError, setCoinError] = useState<number | undefined>();
 
   const {
     data: coins,
@@ -41,6 +44,13 @@ const Welcome: FC = (): ReactElement => {
     error: getCoinsError,
   } = useQuery(GET_COINS, {variables: {creatorId: currentUser()?.id || ''}});
 
+  const {
+    data: getSymbolsData,
+    loading: getSymbolsLoading,
+    error: getSymbolsError,
+  } = useQuery(GET_SYMBOLS);
+
+  const coinSymbols = getSymbolsData?.getSymbols;
   // Gets symbols from coin list and concatinates them
   const symbols = coins?.getCoins
     .map((coin: {symbol: string}) => coin.symbol)
@@ -59,15 +69,16 @@ const Welcome: FC = (): ReactElement => {
   });
 
   const coinListData: {coins: CoinData[]} = useMemo(() => {
-    const processedData = coins?.getCoins.map((coin: CoinData) => {
-      const listing = coinListings?.getCoinListings.find(
-        (listing: CoinData) => listing.symbol === coin.symbol,
-      );
+    const processedData =
+      coins?.getCoins.map((coin: CoinData) => {
+        const listing = coinListings?.getCoinListings.find(
+          (listing: CoinData) => listing.symbol === coin.symbol,
+        );
 
-      const {price, id: coinId, name} = listing ?? {};
+        const {price, id: coinId, name} = listing ?? {};
 
-      return {...coin, price, coinId, name};
-    });
+        return {...coin, price, coinId, name};
+      }) || [];
     return {
       coins: processedData,
     };
@@ -132,8 +143,7 @@ const Welcome: FC = (): ReactElement => {
   const [
     updateCoinHolding,
     {loading: updateCoinHoldingLoading, error: updateCoinHoldingError},
-  ] = useMutation(UPDATE_COIN_HOLDING);
-
+  ] = useMutation(UPDATE_COIN_HOLDING, {onCompleted: () => setEditMode(true)});
   const [
     removeCoinHolding,
     {loading: removeCoinHoldingLoading, error: removeCoinHoldingError},
@@ -164,16 +174,17 @@ const Welcome: FC = (): ReactElement => {
     removeCoinHolding({variables: {holdingId}});
   };
 
-  if (
-    loading ||
-    addCoinLoading ||
-    removeCoinLoading ||
-    getCoinsLoading ||
-    addCoinHoldingLoading ||
-    updateCoinHoldingLoading ||
-    removeCoinHoldingLoading
-  )
-    return <Box>Loading</Box>;
+  // if (
+  // loading ||
+  // addCoinLoading ||
+  // removeCoinLoading ||
+  // getCoinsLoading ||
+  // getSymbolsLoading ||
+  // addCoinHoldingLoading ||
+  // updateCoinHoldingLoading ||
+  // removeCoinHoldingLoading
+  // )
+  //   return <Box>Loading</Box>;
 
   if (addCoinHoldingError) {
     return <Box>{addCoinHoldingError.message.split(':')[1].trim()}</Box>;
@@ -191,12 +202,16 @@ const Welcome: FC = (): ReactElement => {
     return <Box>{getCoinsError.message.split(':')[1].trim()}</Box>;
   }
 
-  if (addCoinError) {
+  if (getSymbolsError) {
+    return <Box>{getSymbolsError.message.split(':')[1].trim()}</Box>;
+  }
+
+  /*   if (addCoinError) {
     const user = currentUser()?.id ?? {};
     console.log('adddCoinError', addCoinError);
     // return <Box>{addCoinError.message.split(':')[1].trim()}</Box>;
     return <Box>Error</Box>;
-  }
+  } */
 
   if (removeCoinError) {
     return <Box>{removeCoinError.message.split(':')[1].trim()}</Box>;
@@ -212,7 +227,18 @@ const Welcome: FC = (): ReactElement => {
       <Header />
       <Body>
         <Headline tKey="welcome:title" />
+        {getCoinsLoading ||
+        getSymbolsLoading ||
+        loading ||
+        removeCoinLoading ||
+        getCoinsLoading ||
+        getSymbolsLoading ? (
+          <Box>Loading</Box>
+        ) : null}
 
+        {addCoinError && (
+          <Message type="error">List Item could not be added</Message>
+        )}
         <CoinList
           data={coinListData}
           onChange={() => console.log('test')}
@@ -228,9 +254,10 @@ const Welcome: FC = (): ReactElement => {
           }}
           editMode={editMode}
           convert={currency}
+          symbols={coinSymbols}
+          selectedCoin={selectedCoin}
+          setSelectedCoin={setSelectedCoin}
         />
-
-        {loading && <Message type="info">Loading</Message>}
       </Body>
       <Footer startYear={2023} companyName="LNCD" />
     </Page>
