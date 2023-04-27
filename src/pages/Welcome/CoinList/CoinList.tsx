@@ -13,6 +13,7 @@ import {
   List,
   Select,
   Text,
+  Radios,
 } from '../../../components';
 import Table, {TableCell, TableRow} from '../../../components/Table';
 import {
@@ -31,6 +32,7 @@ import {
   LIGHTGREY,
   WHITE,
 } from '../../../constants/Colors';
+import {useForm} from '../../../hooks';
 
 type HoldingType = 'wallet' | 'exchange' | 'staking';
 
@@ -116,8 +118,11 @@ interface CoinListProps {
   onRemoveCoinHolding: (holdingId: string) => void;
   onToggleEditMode: (args: boolean) => void;
   onChangeCurrency: (value: string) => void;
+  selectedCoin: number | undefined;
+  setSelectedCoin: (item: number) => void;
   editMode: boolean;
   convert: string;
+  symbols: {name: string; id: string}[];
 }
 
 const types = [
@@ -133,6 +138,11 @@ const types = [
     value: 'exchange',
     text: 'Exchange',
   },
+];
+
+const newCoinSelectOptions = [
+  {value: 'preset', text: 'Preset'},
+  {value: 'other', text: 'Other'},
 ];
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -207,8 +217,11 @@ const CoinList: FC<CoinListProps> = ({
   onRemoveCoinHolding,
   onToggleEditMode,
   onChangeCurrency,
+  selectedCoin,
+  setSelectedCoin,
   editMode,
   convert,
+  symbols,
 }) => {
   const [currentCollapsedItem, setCurrentCollapsedItem] = useState<
     number | undefined
@@ -220,8 +233,20 @@ const CoinList: FC<CoinListProps> = ({
     amount: '',
   });
 
+  const [newCoinSelectOption, setNewCoinSelectOption] = useState(
+    newCoinSelectOptions[0].value,
+  );
+
+  const {
+    form: {newCoin},
+    formFieldChangeHandler,
+    isFormValid,
+  } = useForm('newCoin*');
+
   const {portfolioTotal, coins: testCoins = []} = processCoinData(data);
   const {currency: formatCurrency, location} = currencyFormatMapper[convert];
+
+  console.log(newCoinSelectOption);
 
   return (
     <Container align-c>
@@ -257,22 +282,35 @@ const CoinList: FC<CoinListProps> = ({
 
       {editMode && (
         <Container flex-row align-m>
-          <Form ph={8} flex-row w="100%">
-            <Text mh={12}>Coin</Text>
-            <CustomInput
-              value={coinName}
-              onChange={({target: {value}}) => {
-                setCoinName(value);
-              }}
+          <Form ph={8} flex-row w="100%" align-t>
+            <Select
+              m={8}
+              options={newCoinSelectOptions}
+              onChange={(value) => setNewCoinSelectOption(value)}
+            />
+
+            <Input
+              name={newCoin.name}
+              value={newCoin.value}
+              required={newCoin.required}
+              onChange={formFieldChangeHandler}
+              {...(newCoinSelectOption === 'preset' && {
+                dataList: symbols.map(({id: value, name: text}) => ({
+                  text,
+                  value,
+                })),
+              })}
             />
 
             <IconButton
               type="plus"
               align-c
               flex-row
-              mv={8}
-              mh={8}
-              onClick={() => onAddCoin(coinName)}
+              m={8}
+              onClick={() => {
+                if (typeof newCoin.value !== 'undefined')
+                  onAddCoin(newCoin.value);
+              }}
             />
           </Form>
         </Container>
@@ -303,8 +341,8 @@ const CoinList: FC<CoinListProps> = ({
               >
                 <ClickableArea
                   onClick={() => {
-                    console.log(index);
                     setCurrentCollapsedItem(index);
+                    setSelectedCoin(index);
                     onChange();
                   }}
                 >
@@ -345,7 +383,8 @@ const CoinList: FC<CoinListProps> = ({
               </Box>
 
               {/*  ListSubSection*/}
-              {currentCollapsedItem === index && (
+              {selectedCoin === index && (
+                // {currentCollapsedItem === index && (
                 <Box
                   bgcolor={LIGHTGREY}
                   color={DARKGREY}
@@ -423,6 +462,8 @@ const CoinList: FC<CoinListProps> = ({
                                             location={location}
                                             value={amount}
                                             onBlur={({target: {value}}) => {
+                                              setSelectedCoin(index);
+                                              setCurrentCollapsedItem(index);
                                               onUpdateCoinHolding(holdingId, {
                                                 amount: parseFloat(value),
                                               });

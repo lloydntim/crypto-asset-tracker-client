@@ -67,7 +67,7 @@ export const processCoinData = ({coins}: any) => {
     }, {});
 
     return {
-      portfolioTotal: (a?.portfolioTotal || 0) + assets.value,
+      portfolioTotal: (a?.portfolioTotal || 0) + (assets.value ?? 0),
       coins: [
         ...(a.coins ?? []),
         {

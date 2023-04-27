@@ -71,6 +71,7 @@ export interface StyledProps {
   ['align-m']?: boolean | undefined;
 
   ['font-sz']?: string | number | undefined;
+  ['font-wgt']?: string | number | undefined;
 }
 
 export const isDefined = (prop: unknown) => typeof prop !== 'undefined';
@@ -87,6 +88,8 @@ const createStylesProps = <T extends ComponentType>(
     | 'section'
     | 'p'
     | 'a'
+    | 'ul'
+    | 'li'
     | 'input'
     | 'img'
     | 'h1'
@@ -115,23 +118,26 @@ const createStylesProps = <T extends ComponentType>(
 
     ${({br}: StyledProps) => `border-radius: ${getUnit(br)};`}
     ${(props: StyledProps) =>
-      props['br-tl'] && `border-top-left-radius: ${getUnit(props['br-tl'])};`}
+      isDefined(props['br-tl']) &&
+      `border-top-left-radius: ${getUnit(props['br-tl'])};`}
     ${(props: StyledProps) =>
-      props['br-tr'] && `border-top-right-radius: ${getUnit(props['br-tr'])};`}
+      isDefined(props['br-tr']) &&
+      `border-top-right-radius: ${getUnit(props['br-tr'])};`}
     ${(props: StyledProps) =>
-      props['br-bl'] &&
+      isDefined(props['br-bl']) &&
       `border-bottom-left-radius: ${getUnit(props['br-bl'])};`}
     ${(props: StyledProps) =>
-      props['br-br'] &&
+      isDefined(props['br-br']) &&
       `border-bottom-right-radius: ${getUnit(props['br-br'])};`}
     ${({bcolor}: StyledProps) => bcolor && `border-color: ${bcolor};`}
-    ${({bw}: StyledProps) => bw && `border-width: ${getUnit(bw)};`}
+    ${({bw}: StyledProps) => isDefined(bw) && `border-width: ${getUnit(bw)};`}
 
     ${({p}: StyledProps) => isDefined(p) && `padding: ${getUnit(p)};`}
     ${({ph}: StyledProps) =>
-      ph && `padding-left: ${getUnit(ph)}; padding-right: ${getUnit(ph)};`}
+      isDefined(ph) &&
+      `padding-left: ${getUnit(ph)}; padding-right: ${getUnit(ph)};`}
     ${({pv}: StyledProps) =>
-      pv && `padding-top: ${pv}px; padding-bottom: ${getUnit(pv)};`}
+      isDefined(pv) && `padding-top: ${pv}px; padding-bottom: ${getUnit(pv)};`}
     ${({pt}: StyledProps) => isDefined(pt) && `padding-top: ${getUnit(pt)};`}
     ${({pb}: StyledProps) => isDefined(pb) && `padding-bottom: ${getUnit(pb)};`}
     ${({pl}: StyledProps) => isDefined(pl) && `padding-left: ${getUnit(pl)};`}
@@ -139,9 +145,11 @@ const createStylesProps = <T extends ComponentType>(
 
     ${({m}: StyledProps) => isDefined(m) && `margin: ${getUnit(m)};`}
     ${({mh}: StyledProps) =>
-      mh && `margin-left: ${getUnit(mh)}; margin-right: ${getUnit(mh)};`}
+      isDefined(mh) &&
+      `margin-left: ${getUnit(mh)}; margin-right: ${getUnit(mh)};`}
     ${({mv}: StyledProps) =>
-      mv && `margin-top: ${getUnit(mv)}; margin-bottom: ${getUnit(mv)};`}
+      isDefined(mv) &&
+      `margin-top: ${getUnit(mv)}; margin-bottom: ${getUnit(mv)};`}
 
     ${({mt}: StyledProps) => isDefined(mt) && `margin-top: ${getUnit(mt)};`}
     ${({mb}: StyledProps) => isDefined(mb) && `margin-bottom: ${getUnit(mb)};`}
@@ -161,13 +169,13 @@ const createStylesProps = <T extends ComponentType>(
     ${(props: StyledProps) => props['pos-rel'] && 'position: relative;'}
 
      ${(props: StyledProps) =>
-       props['pos-t'] && `top: ${getUnit(props['pos-t'])};`}
+       isDefined(props['pos-t']) && `top: ${getUnit(props['pos-t'])};`}
     ${(props: StyledProps) =>
-      props['pos-r'] && `right: ${getUnit(props['pos-r'])};`}
+      isDefined(props['pos-r']) && `right: ${getUnit(props['pos-r'])};`}
     ${(props: StyledProps) =>
-      props['pos-b'] && `bottom: ${getUnit(props['pos-b'])};`}
+      isDefined(props['pos-b']) && `bottom: ${getUnit(props['pos-b'])};`}
     ${(props: StyledProps) =>
-      props['pos-l'] && `left: ${getUnit(props['pos-l'])};`}
+      isDefined(props['pos-l']) && `left: ${getUnit(props['pos-l'])};`}
 
     ${({flex}: StyledProps) => flex && `flex: ${flex};`}
     ${(props: StyledProps) =>
@@ -197,6 +205,8 @@ const createStylesProps = <T extends ComponentType>(
 
     ${(props: StyledProps) =>
       props['font-sz'] && `font-size: ${getUnit(props['font-sz'])};`}
+      ${(props: StyledProps) =>
+        props['font-wgt'] && `font-weight: ${props['font-wgt']};`}
 `;
 
 export interface StyledTextProps {

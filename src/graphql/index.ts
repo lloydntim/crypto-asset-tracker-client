@@ -68,6 +68,15 @@ export const GET_COINS = gql`
   }
 `;
 
+export const GET_SYMBOLS = gql`
+  query GetSymbols {
+    getSymbols {
+      name
+      id
+    }
+  }
+`;
+
 export const ADD_COIN = gql`
   mutation AddCoin($symbol: String!, $creatorId: ID!) {
     addCoin(symbol: $symbol, creatorId: $creatorId) {

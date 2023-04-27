@@ -1,49 +1,45 @@
-import React, { FC, ReactElement } from 'react';
+import React, {FC, ReactElement, ReactNode} from 'react';
+import {StyledProps} from '../../helpers/createStyledProps';
+import Button from '../Button/Button';
+import List from '../List/List';
+import Span from '../Span/Span';
 
-import './DataList.scss';
+interface RenderListItemProps {
+  item: DataListItem;
+  index: number;
+}
 
-export type DataListItemType = {
+export type DataListItem = {
   text: string;
-  value: number | string;
-}
+  value: string;
+};
 
-export interface DataListItemProps {
-  item: DataListItemType;
-  onListItemClick?: (item: DataListItemType) => void
-}
-
-export interface DataListProps {
+export interface DataListProps extends StyledProps {
   name?: string;
-  items: DataListItemType[];
-  renderListItem?: FC<DataListItemProps>;
-  onListItemClick?: (item: DataListItemType) => void
+  items: DataListItem[];
+  renderListItem?: ({item, index}: RenderListItemProps) => ReactNode;
 }
 
-const renderDefaultListItem: FC<DataListItemProps> = ({ item, onListItemClick }): ReactElement => (
-  <button
-    type="button"
-    className="datalist-item-button"
-    onClick={() => onListItemClick(item)}
-  >
-    {item.text}
-  </button>
-);
+const renderDefaultListItem = ({item, index}: RenderListItemProps) => {
+  return (
+    <Span key={index} type="button" className="datalist-item-button">
+      {item.text}
+    </Span>
+  );
+};
 
-const DataList: FC<DataListProps> = ({
+const DataList = ({
   name = 'standard',
   items,
   renderListItem = renderDefaultListItem,
-  onListItemClick,
-}) => (
-  <ul className={`datalist ${name}-datalist`}>
-    {
-      items.map((item, index) => (
-        <li key={index} className="datalist-item">
-          {renderListItem({ item, onListItemClick })}
-        </li>
-      ))
-    }
-  </ul>
+  ...rest
+}: DataListProps) => (
+  <List<DataListItem>
+    className={`datalist ${name}-datalist`}
+    data={items}
+    renderItem={renderListItem}
+    {...rest}
+  />
 );
 
 export default DataList;
