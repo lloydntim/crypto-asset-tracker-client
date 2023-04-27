@@ -36,16 +36,11 @@ const Input: FC<InputProps> = (props) => {
   const isTypePassword = type === 'password';
   const [dynamicInputType, setDynamicInputType] = useState(type);
   const [isDataListVisible, setIsDataListVisible] = useState(false);
-<<<<<<< HEAD
   const [inputMessage, setInputMessage] = useState<{
     type: string;
     text: string;
   }>({type: '', text: ''});
   const validationProps = {...props, type: dynamicInputType};
-=======
-  const [inputMessage, setInputMessage] = useState(null);
-  const validationProps = { ...props, type: dynamicInputType };
->>>>>>> 7207220 (Added localisation and refactoring)
 
   return (
     <Label
@@ -69,13 +64,8 @@ const Input: FC<InputProps> = (props) => {
         type={dynamicInputType}
         placeholder={placeholder}
         value={value}
-<<<<<<< HEAD
         onChange={({target: {value, files = null}}) => {
           setInputMessage({text: '', type: 'error'});
-=======
-        onChange={({ target: { value, files } }) => {
-          const error = validateInput({ value, files }, validationProps);
->>>>>>> 7207220 (Added localisation and refactoring)
 
           const error = validateInput({value, files}, validationProps);
 
@@ -87,15 +77,10 @@ const Input: FC<InputProps> = (props) => {
           if (onFocus) onFocus(event);
         }}
         onBlur={(event) => {
-<<<<<<< HEAD
           const {
             target: {value, files},
           } = event;
           const error = validateInput({value, files}, validationProps);
-=======
-          const { target: { value, files } } = event;
-          const error = validateInput({ value, files }, validationProps);
->>>>>>> 7207220 (Added localisation and refactoring)
 
           if (error) setInputMessage({text: error, type: 'error'});
 
@@ -126,17 +111,12 @@ const Input: FC<InputProps> = (props) => {
 
       {type === 'search' && <Icon type="search" />}
 
-<<<<<<< HEAD
       {isDataListVisible && (
         <AutoComplete
           items={dataList}
           value={value}
           onListItemClick={(item) => {
             const error = validateInput({value}, validationProps);
-=======
-      {isDataListVisible && <AutoComplete items={dataList} value={value} onListItemClick={(item) => {
-        const error = validateInput({ value }, validationProps);
->>>>>>> 7207220 (Added localisation and refactoring)
 
             console.log('auto complete error', error);
 
