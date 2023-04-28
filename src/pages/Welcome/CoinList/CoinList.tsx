@@ -246,8 +246,6 @@ const CoinList: FC<CoinListProps> = ({
   const {portfolioTotal, coins: testCoins = []} = processCoinData(data);
   const {currency: formatCurrency, location} = currencyFormatMapper[convert];
 
-  console.log(newCoinSelectOption);
-
   return (
     <Container align-c>
       <Box flex-row mv={12}>
