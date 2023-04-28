@@ -75,7 +75,7 @@ export const processCoinData = ({coins}: any) => {
           coinId,
           name,
           symbol,
-          price,
+          price: price || 0,
           amount: assets.amount,
           value: assets.amount * b.price || 0,
           assets,
