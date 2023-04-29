@@ -73,10 +73,15 @@ export interface StyledProps {
   ['align-b']?: boolean | undefined;
   ['align-m']?: boolean | undefined;
 
+  ['align-self-l']?: boolean | undefined;
+  ['align-self-r']?: boolean | undefined;
+  ['align-self-c']?: boolean | undefined;
+
   ['font-sz']?: string | number | undefined;
   ['font-wgt']?: string | number | undefined;
 
   animation?: string | boolean;
+  ['crsr-pointer']?: boolean | undefined;
 }
 
 export const isDefined = (prop: unknown) => typeof prop !== 'undefined';
@@ -116,9 +121,9 @@ const createStylesProps = <T extends ComponentType>(
     ${({w}: StyledProps) => w && `width: ${getUnit(w)};`}
 
     ${(props: StyledProps) =>
-      props['max-h'] && `height: ${getUnit(props['max-h'])};`}
+      props['max-h'] && `max-height: ${getUnit(props['max-h'])};`}
     ${(props: StyledProps) =>
-      props['max-w'] && `height: ${getUnit(props['max-w'])};`}
+      props['max-w'] && `max-width: ${getUnit(props['max-w'])};`}
     ${(props: StyledProps) =>
       props['min-h'] && `height: ${getUnit(props['min-h'])};`}
     ${(props: StyledProps) =>
@@ -173,7 +178,8 @@ const createStylesProps = <T extends ComponentType>(
     ${({cover}: StyledProps) => cover && 'width: 100%; height: 100%;'}
     ${({hide}: StyledProps) => hide && 'display: none;'}
 
-    ${(props: StyledProps) => props['z-idx'] && `z-index: ${props['z-idx']};`}
+    ${(props: StyledProps) =>
+      isDefined(props['z-idx']) && `z-index: ${props['z-idx']};`}
 
     ${(props: StyledProps) => props['pos-abs'] && 'position: absolute;'}
     ${(props: StyledProps) => props['pos-rel'] && 'position: relative;'}
@@ -215,11 +221,20 @@ const createStylesProps = <T extends ComponentType>(
     ${(props: StyledProps) => props['align-r'] && 'justify-content: flex-end;'}
 
     ${(props: StyledProps) =>
+      props['align-self-l'] && 'align-self: flex-start;'}
+    ${(props: StyledProps) => props['align-self-c'] && 'align-self: center;'}
+    ${(props: StyledProps) => props['align-self-r'] && 'align-self: flex-end;'}
+
+    ${(props: StyledProps) =>
       props['font-sz'] && `font-size: ${getUnit(props['font-sz'])};`}
       ${(props: StyledProps) =>
         props['font-wgt'] && `font-weight: ${props['font-wgt']};`}
 
+<<<<<<< HEAD
     ${({animation}: StyledProps) => animation && `transition: ${animation};`}
+=======
+      ${(props: StyledProps) => props['crsr-pointer'] && 'cursor: pointer;'}
+>>>>>>> bbc0b97 (Added dialogs to remove buttons)
 `;
 
 export interface StyledTextProps {

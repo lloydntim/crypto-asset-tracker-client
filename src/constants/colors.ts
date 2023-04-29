@@ -1,5 +1,6 @@
 export const WHITE = '#fff';
 export const BLACK = '#000';
+export const BLACK_OPACITY_75PC = 'rgb(0,0,0, .75)';
 export const LIGHTGREY = '#efefef';
 export const GREY = '#333';
 export const DARKGREY = '#1b1b1c';
