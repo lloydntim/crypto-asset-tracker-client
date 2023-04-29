@@ -52,6 +52,7 @@ const Button: FC<ButtonProps> = ({
   w = 'auto',
   bcolor = TRANSPARENT,
   'flex-row': flexRow = true,
+  'crsr-pointer': crsrPointer = true,
   ...rest
 }) => {
   const navigate = useNavigate();
@@ -61,6 +62,7 @@ const Button: FC<ButtonProps> = ({
       pv={pv}
       ph={ph}
       flex-row={flexRow}
+      crsr-pointer={crsrPointer}
       color={color}
       bgcolor={bgcolor}
       bcolor={bcolor}
