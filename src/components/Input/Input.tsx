@@ -1,4 +1,4 @@
-import React, {FC, useState} from 'react';
+import React, {FC, forwardRef, useState} from 'react';
 
 import {
   AutoComplete,
@@ -12,12 +12,9 @@ import {TRANSPARENT} from '../../constants/Colors';
 import Label from '../Label/Label';
 import {validateInput, InputProps} from './InputHelper';
 
-// import './Input.scss';
-
 /* eslint-disable react/jsx-props-no-spreading */
-const Input: FC<InputProps> = (props) => {
+const Input: FC<InputProps> = forwardRef((props, ref) => {
   const {
-    inputRef,
     label = '',
     autoComplete,
     autoCapitalize,
@@ -54,7 +51,7 @@ const Input: FC<InputProps> = (props) => {
       {label && <Span className="input-label">{label}</Span>}
       <InputField
         w="100%"
-        ref={inputRef}
+        ref={ref}
         required={required}
         className="input-element"
         autoComplete={dataList.length ? 'off' : autoComplete}
@@ -90,7 +87,7 @@ const Input: FC<InputProps> = (props) => {
         mh={0}
       />
 
-      {(isTypePassword || (dataList?.length && value.length > 0)) && (
+      {isTypePassword && (
         <IconButton
           pos-abs
           pos-r={10}
@@ -109,7 +106,7 @@ const Input: FC<InputProps> = (props) => {
         />
       )}
 
-      {type === 'search' && <Icon type="search" />}
+      {/* {type === 'search' && <Icon type="search" />} */}
 
       {isDataListVisible && (
         <AutoComplete
@@ -132,6 +129,6 @@ const Input: FC<InputProps> = (props) => {
       <Message type={inputMessage.type}>{inputMessage.text}</Message>
     </Label>
   );
-};
+});
 
 export default Input;

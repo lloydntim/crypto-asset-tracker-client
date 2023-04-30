@@ -6,7 +6,7 @@ import Link from './Link/Link';
 import List from './List/List';
 import Container from './Container/Container';
 import DataList from './DataList/DataList';
-import EditableField from './EditableField/EditableField';
+import EntryField from './EntryField/EntryField';
 import Input from './Input/Input';
 import InputField from './InputField/InputField';
 import Form from './Form/Form';
@@ -33,7 +33,7 @@ export {
   Span,
   Link,
   List,
-  EditableField,
+  EntryField,
   Icon,
   IconButton,
   Form,
