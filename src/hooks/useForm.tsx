@@ -1,8 +1,10 @@
-import {useRef, useState, MutableRefObject} from 'react';
+import {useRef, useState, MutableRefObject, LegacyRef} from 'react';
 import {InputChangeEvent} from '../components/Input/InputHelper';
 
 export interface FormFieldDetails extends InputChangeEvent {
-  ref: MutableRefObject<undefined>;
+  // ref: LegacyRef<HTMLInputElement | undefined >;
+
+  ref: MutableRefObject<HTMLInputElement | undefined>;
 }
 export type FormField = {
   [key: string]: FormFieldDetails;
@@ -14,7 +16,7 @@ export const createForm = (fields: string[]) =>
     const fieldName = name.replace('*', '');
     const formField: FormField = {
       [fieldName]: {
-        ref: useRef(),
+        ref: useRef<HTMLInputElement>(),
         value: value || '',
         error: '',
         files: [],

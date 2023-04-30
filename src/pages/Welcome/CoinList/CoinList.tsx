@@ -1,9 +1,10 @@
-import React, {FC, useState, useRef, useEffect} from 'react';
+import React, {FC, useState, useRef, useEffect, FocusEventHandler} from 'react';
 import styled from 'styled-components';
 import {
   Box,
   Button,
   Container,
+  EntryField,
   Form,
   Headline,
   IconButton,
@@ -28,6 +29,7 @@ import {
 } from '../../../constants/Colors';
 import {useForm} from '../../../hooks';
 import {Dialog} from '../../../layouts';
+import {InputChangeEventHandler} from '../../../components/Input/InputHelper';
 
 type HoldingType = 'wallet' | 'exchange' | 'staking';
 
@@ -139,63 +141,6 @@ const newCoinSelectOptions = [
   {value: 'preset', text: 'Preset'},
   {value: 'other', text: 'Other'},
 ];
-
-/* eslint-disable @typescript-eslint/no-explicit-any */
-const EntryField = ({
-  value,
-  onChange,
-  onBlur,
-  location,
-}: {
-  value: any;
-  onChange?: (args?: any) => void;
-  onBlur?: (args?: any) => void;
-  location: string;
-}) => {
-  const [entryEditMode, setEntryEditMode] = useState(false);
-  const [entryValue, setEntryValue] = useState(value);
-
-  const input = useRef(null);
-
-  useEffect(() => {
-    if (entryEditMode) input?.current?.focus();
-  }, [entryEditMode]);
-
-  return (
-    <Box flex-row align-m spc-btw>
-      {entryEditMode ? (
-        <CustomInput
-          ref={input}
-          value={entryValue}
-          onChange={(props) => {
-            setEntryValue(props.target.value);
-            if (onChange) onChange(props);
-          }}
-          onBlur={(props) => {
-            setEntryEditMode(false);
-            if (onBlur) onBlur(props);
-          }}
-        />
-      ) : (
-        <>
-          <Text font-sz={14}>
-            {typeof value === 'number'
-              ? formatAmount(entryValue, location)
-              : entryValue}
-          </Text>
-          <IconButton
-            mh={8}
-            type="edit"
-            iconSize={16}
-            onClick={() => {
-              setEntryEditMode(true);
-            }}
-          />
-        </>
-      )}
-    </Box>
-  );
-};
 
 const currencies = [
   {text: 'USD', value: 'USD'},
@@ -486,6 +431,9 @@ const CoinList: FC<CoinListProps> = (props) => {
                                             <EntryField
                                               location={location}
                                               value={amount}
+                                              onChange={() =>
+                                                console.log(amount)
+                                              }
                                               onBlur={({target: {value}}) => {
                                                 setSelectedCoin(index);
                                                 onUpdateCoinHolding(holdingId, {

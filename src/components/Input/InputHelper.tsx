@@ -1,4 +1,9 @@
-import {FocusEventHandler, LegacyRef} from 'react';
+import {
+  FocusEventHandler,
+  ForwardedRef,
+  LegacyRef,
+  MutableRefObject,
+} from 'react';
 
 import {DataListItem} from '../DataList/DataList';
 
@@ -11,7 +16,9 @@ export type InputChangeEvent = {
 };
 export type InputChangeEventHandler = (arg: InputChangeEvent) => void;
 export interface InputProps {
-  inputRef?: LegacyRef<HTMLInputElement>;
+  // inputRef?: LegacyRef<HTMLInputElement | undefined> | undefined;
+  inputRef?: MutableRefObject<HTMLInputElement>;
+  ref?: ForwardedRef<HTMLInputElement>;
   label?: string;
   autoComplete?: string;
   autoCapitalize?: string;
