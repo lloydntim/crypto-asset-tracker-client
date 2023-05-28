@@ -203,7 +203,7 @@ const Welcome: FC = (): ReactElement => {
   }
 
   if (getSymbolsError) {
-    return <Box>{getSymbolsError.message.split(':')[1].trim()}</Box>;
+    return <Box>{getSymbolsError.message}</Box>;
   }
 
   /*   if (addCoinError) {

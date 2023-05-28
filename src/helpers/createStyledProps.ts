@@ -44,8 +44,11 @@ export interface StyledProps {
   crop?: boolean | undefined;
   hide?: boolean | undefined;
 
+  ['z-idx']?: number | undefined;
+
   ['pos-abs']?: boolean | undefined;
   ['pos-rel']?: boolean | undefined;
+  ['pos-fix']?: boolean | undefined;
 
   ['pos-t']?: number | string | undefined;
   ['pos-r']?: number | string | undefined;
@@ -72,6 +75,8 @@ export interface StyledProps {
 
   ['font-sz']?: string | number | undefined;
   ['font-wgt']?: string | number | undefined;
+
+  animation?: string | boolean;
 }
 
 export const isDefined = (prop: unknown) => typeof prop !== 'undefined';
@@ -79,9 +84,12 @@ export const isDefined = (prop: unknown) => typeof prop !== 'undefined';
 export const getUnit = (value: string | number | undefined) =>
   value ? (typeof value === 'string' ? value : `${value}px`) : 0;
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
 const createStylesProps = <T extends ComponentType>(
   element:
     | T
+    | any
+    | 'aside'
     | 'div'
     | 'button'
     | 'span'
@@ -165,8 +173,11 @@ const createStylesProps = <T extends ComponentType>(
     ${({cover}: StyledProps) => cover && 'width: 100%; height: 100%;'}
     ${({hide}: StyledProps) => hide && 'display: none;'}
 
+    ${(props: StyledProps) => props['z-idx'] && `z-index: ${props['z-idx']};`}
+
     ${(props: StyledProps) => props['pos-abs'] && 'position: absolute;'}
     ${(props: StyledProps) => props['pos-rel'] && 'position: relative;'}
+    ${(props: StyledProps) => props['pos-fix'] && 'position: fixed;'}
 
      ${(props: StyledProps) =>
        isDefined(props['pos-t']) && `top: ${getUnit(props['pos-t'])};`}
@@ -207,6 +218,8 @@ const createStylesProps = <T extends ComponentType>(
       props['font-sz'] && `font-size: ${getUnit(props['font-sz'])};`}
       ${(props: StyledProps) =>
         props['font-wgt'] && `font-weight: ${props['font-wgt']};`}
+
+    ${({animation}: StyledProps) => animation && `transition: ${animation};`}
 `;
 
 export interface StyledTextProps {

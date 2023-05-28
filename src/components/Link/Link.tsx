@@ -1,29 +1,32 @@
-import React, { FC, ReactElement } from 'react';
-import { Link as ReactRouterLink } from 'react-router-dom';
-import { Icon, Text } from '../../components';
+import React, {FC, ReactElement} from 'react';
+import {Link as ReactRouterLink} from 'react-router-dom';
+import {Icon, Text} from '../../components';
 
-import { withLocalisation } from '../../hoc';
-import { LocalisationProps } from '../../hoc/withLocalisation';
+import {withLocalisation} from '../../hoc';
+import {LocalisationProps} from '../../hoc/withLocalisation';
 
-import './Link.scss';
+// import './Link.scss';
+import createStylesProps, {StyledProps} from '../../helpers/createStyledProps';
 
-export interface LinkProps extends LocalisationProps {
+export interface LinkProps extends LocalisationProps, StyledProps {
   className?: string;
   icon?: string;
   to: string;
 }
 
+const LinkSt = createStylesProps(ReactRouterLink);
 const Link: FC<LinkProps> = ({
   icon = '',
   children,
   className = '',
   to = '',
   tKey = '',
+  ...rest
 }): ReactElement => (
-  <ReactRouterLink to={to} className={`link ${className}`}>
+  <LinkSt {...rest} to={to} className={`link ${className}`}>
     <Icon type={icon} />
     <Text tKey={tKey}>{children}</Text>
-  </ReactRouterLink>
+  </LinkSt>
 );
 
 export default withLocalisation<LinkProps>(Link);
