@@ -230,11 +230,8 @@ const createStylesProps = <T extends ComponentType>(
       ${(props: StyledProps) =>
         props['font-wgt'] && `font-weight: ${props['font-wgt']};`}
 
-<<<<<<< HEAD
     ${({animation}: StyledProps) => animation && `transition: ${animation};`}
-=======
       ${(props: StyledProps) => props['crsr-pointer'] && 'cursor: pointer;'}
->>>>>>> bbc0b97 (Added dialogs to remove buttons)
 `;
 
 export interface StyledTextProps {
