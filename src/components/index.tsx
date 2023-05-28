@@ -23,6 +23,7 @@ import Select from './Select/Select';
 import Text from './Text/Text';
 import Image from './Image/Image';
 import Menu from './Menu/Menu';
+import Aside from './Aside/Aside';
 
 export {
   DataList,
@@ -50,4 +51,5 @@ export {
   Select,
   Menu,
   Container,
+  Aside,
 };
