@@ -20,7 +20,7 @@ const Menu: FC<MenuProps> = ({
       animation="left 500ms"
       bgcolor={WHITE}
       pos-fix
-      z-idx={5}
+      z-idx={4}
       h="100vh"
       p={20}
       w={MENU_WIDTH}
