@@ -50,6 +50,7 @@ const Button: FC<ButtonProps> = ({
   bgcolor = GRAPE_LIGHT,
   br = 8,
   w = 'auto',
+  'align-c': alignC = true,
   bcolor = TRANSPARENT,
   'flex-row': flexRow = true,
   'crsr-pointer': crsrPointer = true,
@@ -72,6 +73,7 @@ const Button: FC<ButtonProps> = ({
       tabIndex={tabIndex}
       className={`button button-rank-${rank} ${disabled ? 'is-disabled' : ''}`}
       disabled={disabled}
+      align-c={alignC}
       /* eslint-disable @typescript-eslint/no-explicit-any */
       onClick={(event: any) => {
         if (isLink) return navigate(to);

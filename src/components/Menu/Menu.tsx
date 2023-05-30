@@ -2,18 +2,22 @@ import React, {FC, MouseEventHandler, ReactElement, ReactNode} from 'react';
 import {Box, IconButton, Aside} from '..';
 
 import {WHITE} from '../../constants/Colors';
+import {StyledProps} from '../../helpers/createStyledProps';
 
 const MENU_WIDTH = '80%';
-interface MenuProps {
+interface MenuProps extends StyledProps {
+  className?: string;
   children?: ReactNode;
   visible?: boolean;
   onCloseButtonClick: MouseEventHandler;
 }
 
 const Menu: FC<MenuProps> = ({
+  className = 'menu',
   children,
   visible = false,
   onCloseButtonClick,
+  ...rest
 }): ReactElement => {
   return (
     <Aside
@@ -26,7 +30,8 @@ const Menu: FC<MenuProps> = ({
       w={MENU_WIDTH}
       pos-t={0}
       pos-l={visible ? 0 : `-${MENU_WIDTH}`}
-      className="menu"
+      className={className}
+      {...rest}
     >
       <Box className="menu-button-close" align-r flex-row>
         <IconButton

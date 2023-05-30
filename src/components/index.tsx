@@ -15,7 +15,6 @@ import Icon from './Icon/Icon';
 import Message from './Message/Message';
 import Radios from './Radios/Radios';
 import Switch from './Switch/Switch';
-import Header from './Header/Header';
 import Body from './Body/Body';
 import Footer from './Footer/Footer';
 import Headline from './Headline/Headline';
@@ -23,6 +22,8 @@ import Select from './Select/Select';
 import Text from './Text/Text';
 import Image from './Image/Image';
 import Menu from './Menu/Menu';
+import Header from './Header/Header';
+import Navigation from './Navigation/Navigation';
 import Aside from './Aside/Aside';
 
 export {
@@ -44,6 +45,7 @@ export {
   Switch,
   Header,
   Body,
+  Navigation,
   Footer,
   Headline,
   Text,

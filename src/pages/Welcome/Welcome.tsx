@@ -9,6 +9,7 @@ import {
   Message,
   Box,
   Select,
+  Navigation,
 } from '../../components';
 import {Page} from '../../layouts';
 import CoinList, {CoinData} from './CoinList/CoinList';
@@ -224,7 +225,7 @@ const Welcome: FC = (): ReactElement => {
   console.log('current coins', coins);
   return (
     <Page name="welcome">
-      <Header />
+      <Navigation />
       <Body>
         <Headline tKey="welcome:title" />
         {getCoinsLoading ||

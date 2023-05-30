@@ -3,6 +3,7 @@
     "save": "Save",
     "submit": "Submit",
     "login": "Login",
+    "register": "Register",
     "logout": "Logout"
   },
   "input": {

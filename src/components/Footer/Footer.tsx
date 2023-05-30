@@ -1,22 +1,38 @@
-import React, { FC } from 'react';
+import React, {FC} from 'react';
 
-import './Footer.scss';
+import createStylesProps, {StyledProps} from '../../helpers/createStyledProps';
 
-interface FooterProps {
+interface FooterProps extends StyledProps {
+  className?: string;
   startYear: number;
   companyName: string;
 }
 
-const Footer: FC<FooterProps> = ({ startYear, companyName }) => {
+const FooterSt = createStylesProps('footer');
+
+const Footer: FC<FooterProps> = ({
+  startYear,
+  companyName = 'footer',
+  ...rest
+}) => {
   const currentYear = new Date().getFullYear();
-  const companyYears = startYear === currentYear ? startYear : `${startYear} - ${currentYear}`;
+  const companyYears =
+    startYear === currentYear ? startYear : `${startYear} - ${currentYear}`;
 
   return (
-    <footer className="footer">
-      &copy; {companyYears} {companyName}. All rights reserved
-    </footer>
+    <FooterSt
+      className="footer"
+      pos-l={0}
+      pos-b={0}
+      pv={20}
+      w="100%"
+      flex-row
+      align-c
+      {...rest}
+    >
+      &copy; {companyYears} {companyName}. All rights reserved.
+    </FooterSt>
   );
 };
 
 export default Footer;
-
