@@ -79,20 +79,6 @@ const Login: FC = (): ReactElement => {
 
   return (
     <Page name="login">
-      {/* <Input
-        name="test"
-        label="Color"
-        type="text"
-        value={color}
-        dataList={[
-          { text: 'Blue', value: 'blue' },
-          { text: 'Red', value: 'blue' },
-          { text: 'Burgundi', value: 'blue' },
-          { text: 'Green', value: 'blue' },
-          { text: 'Turquoise', value: 'blue' },
-        ]}
-        onChange={({ value }) => setColor(value)}
-      /> */}
       <Headline tKey="login:title" />
 
       <br />

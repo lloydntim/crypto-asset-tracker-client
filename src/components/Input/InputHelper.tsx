@@ -6,6 +6,7 @@ import {
 } from 'react';
 
 import {DataListItem} from '../DataList/DataList';
+import {DefaultTFuncReturn} from 'i18next';
 
 export type InputChangeEvent = {
   name?: string;
@@ -19,14 +20,14 @@ export interface InputProps {
   // inputRef?: LegacyRef<HTMLInputElement | undefined> | undefined;
   inputRef?: MutableRefObject<HTMLInputElement>;
   ref?: ForwardedRef<HTMLInputElement>;
-  label?: string;
+  label?: string | DefaultTFuncReturn;
   autoComplete?: string;
   autoCapitalize?: string;
   dataList?: DataListItem[];
   name?: string;
   type?: string;
   tabIndex?: number;
-  placeholder?: string;
+  placeholder?: string | DefaultTFuncReturn;
   value?: string;
   pattern?: RegExp;
   required?: boolean;

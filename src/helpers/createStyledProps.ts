@@ -73,6 +73,8 @@ export interface StyledProps {
   ['align-b']?: boolean | undefined;
   ['align-m']?: boolean | undefined;
 
+  ['align-str']?: boolean | undefined;
+
   ['align-self-l']?: boolean | undefined;
   ['align-self-r']?: boolean | undefined;
   ['align-self-c']?: boolean | undefined;
@@ -214,6 +216,8 @@ const createStylesProps = <T extends ComponentType>(
     ${(props: StyledProps) => props['align-t'] && 'align-items: flex-start;'}
     ${(props: StyledProps) => props['align-m'] && 'align-items: center;'}
     ${(props: StyledProps) => props['align-b'] && 'align-items: flex-end;'}
+
+    ${(props: StyledProps) => props['align-str'] && 'align-items: stretch;'}
 
     ${(props: StyledProps) =>
       props['align-l'] && 'justify-content: flex-start;'}

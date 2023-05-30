@@ -1,22 +1,22 @@
-import React, { FC } from 'react';
+import React, {FC} from 'react';
 
-import { Page } from '../../layouts';
-import { Header, Body, Footer, Headline, Button } from '../../components';
+import {Page} from '../../layouts';
+import {Body, Footer, Headline, Button, Box, Header} from '../../components';
 
 const Home: FC = () => {
   return (
     <Page name="home">
-      <Header />
+      <Header>
+        <Headline>Crypto Asset Checker</Headline>
+      </Header>
 
-      <Body>
-        <Headline>Home</Headline>
-
-        <Button tKey="button.login" isLink to="/login" />
-        <br />
-
-        <Button isLink to="/signup">Signup</Button>
-        <br />
-
+      <Body flex-col flex="1">
+        <Box flex-col flex="1" align-c align-m>
+          <Box flex-col align-str>
+            <Button m={8} tKey="button.login" isLink to="/login" />
+            <Button m={8} tKey="button.register" isLink to="/signup" />
+          </Box>
+        </Box>
       </Body>
 
       <Footer startYear={2019} companyName="LNCD" />
