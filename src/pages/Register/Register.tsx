@@ -92,7 +92,7 @@ const Register: FC = (): ReactElement => {
           onChange={({value}) => changeLanguage(value)}
         />
       </Header>
-      <Body>
+      <Body flex-col align-c flex="1">
         <Title tKey="register:title" />
 
         <Form flex-col>
