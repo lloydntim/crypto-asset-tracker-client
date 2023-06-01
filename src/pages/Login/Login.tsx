@@ -92,7 +92,7 @@ const Login: FC = (): ReactElement => {
         />
       </Header>
 
-      <Body align-c align-m flex="1">
+      <Body flex-col align-c flex="1">
         <Title tKey="login:title" />
 
         <Form flex-col>
