@@ -4,7 +4,7 @@ import {RouteObject, useRoutes} from 'react-router-dom';
 import {
   Home,
   Login,
-  Signup,
+  Register,
   Welcome,
   Sample,
   About,
@@ -27,8 +27,8 @@ export default () => {
       element: <Login />,
     },
     {
-      path: 'signup',
-      element: <Signup />,
+      path: 'register',
+      element: <Register />,
     },
     {
       path: 'welcome',

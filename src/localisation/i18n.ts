@@ -4,10 +4,12 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 
 import commonEn from './en/common.json';
 import loginEn from './en/login.json';
+import registerEn from './en/register.json';
 import welcomeEn from './en/welcome.json';
 
 import commonDe from './de/common.json';
 import loginDe from './de/login.json';
+import registerDe from './de/register.json';
 import welcomeDe from './de/welcome.json';
 
 export const defaultNS = 'common';
@@ -17,6 +19,7 @@ export const resources = {
     common: 'common',
     welcome: 'welcome',
     login: 'login',
+    register: 'register',
   },
 } as const;
 
@@ -28,11 +31,13 @@ i18n
       en: {
         common: commonEn,
         login: loginEn,
+        register: registerEn,
         welcome: welcomeEn,
       },
       de: {
         common: commonDe,
         login: loginDe,
+        register: registerDe,
         welcome: welcomeDe,
       },
     },

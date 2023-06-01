@@ -16,17 +16,23 @@ import {
   Button,
   Input,
   Message,
-  Headline,
+  Headline as Title,
   Header,
   Body,
   Footer,
   Link,
+  Radios,
+  Form,
 } from '../../components';
 import {useAuthentication} from '../../providers/AuthenticationProvider';
+import {WHITE} from '../../constants/Colors';
 
 const Register: FC = (): ReactElement => {
   const navigate = useNavigate();
-  const {t} = useTranslation();
+  const {
+    t,
+    i18n: {changeLanguage},
+  } = useTranslation();
   const [message, setMessage] = useState<{text: string; type: string} | null>(
     null,
   );
@@ -57,7 +63,7 @@ const Register: FC = (): ReactElement => {
 
       register({
         variables: {
-          username: username.value.toLowerCase(),
+          username: username.value?.toLowerCase(),
           email: email.value,
           password: password.value,
         },
@@ -67,12 +73,29 @@ const Register: FC = (): ReactElement => {
   ); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <Page name="signup">
-      <Header />
+    <Page name="register">
+      <Header>
+        <Radios
+          isButton
+          flex-row
+          mv={12}
+          items={[
+            {
+              value: 'en',
+              label: 'English',
+            },
+            {
+              value: 'de',
+              label: 'German',
+            },
+          ]}
+          onChange={({value}) => changeLanguage(value)}
+        />
+      </Header>
       <Body>
-        <Headline>Register</Headline>
+        <Title tKey="register:title" />
 
-        <form>
+        <Form flex-col>
           <Input
             name="username"
             label={t('input.label.username')}
@@ -82,7 +105,6 @@ const Register: FC = (): ReactElement => {
             onChange={formFieldChangeHandler}
             onFocus={formFieldFocusHandler}
           />
-          <br />
 
           <Input
             name="email"
@@ -93,7 +115,6 @@ const Register: FC = (): ReactElement => {
             onChange={formFieldChangeHandler}
             onFocus={formFieldFocusHandler}
           />
-          <br />
 
           <Input
             name="password"
@@ -108,7 +129,6 @@ const Register: FC = (): ReactElement => {
             onChange={formFieldChangeHandler}
             onFocus={formFieldFocusHandler}
           />
-          <br />
 
           <Input
             name="passwordConfirm"
@@ -120,26 +140,25 @@ const Register: FC = (): ReactElement => {
             onChange={formFieldChangeHandler}
             onFocus={formFieldFocusHandler}
           />
-          <br />
 
           <Button
             disabled={!(isFormValid && passwordsMatching)}
             tKey="button.register"
             type="submit"
             onClick={submitForm}
+            mv={16}
           />
-        </form>
-        <br />
 
-        <div className="link-group">
-          <Link to="/login">{t('button.register')}</Link>
-        </div>
-        <br />
+          <Message type={loading ? 'info' : message?.type ?? ''}>
+            {loading ? 'Loading' : message?.text}
+          </Message>
+        </Form>
 
-        <Message type={loading ? 'info' : message?.type ?? ''}>
-          {loading ? 'Loading' : message?.text}
-        </Message>
+        <Link color={WHITE} to="/login">
+          {t('button.login')}
+        </Link>
       </Body>
+
       <Footer startYear={2019} companyName="LNCD" />
     </Page>
   );

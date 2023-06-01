@@ -21,13 +21,14 @@ export interface InputProps {
   inputRef?: MutableRefObject<HTMLInputElement>;
   ref?: ForwardedRef<HTMLInputElement>;
   label?: string | DefaultTFuncReturn;
+  labelColor?: string;
   autoComplete?: string;
   autoCapitalize?: string;
   dataList?: DataListItem[];
   name?: string;
   type?: string;
   tabIndex?: number;
-  placeholder?: string | DefaultTFuncReturn;
+  placeholder?: string | DefaultTFuncReturn | undefined;
   value?: string;
   pattern?: RegExp;
   required?: boolean;

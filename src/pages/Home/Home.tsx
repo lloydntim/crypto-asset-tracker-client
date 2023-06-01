@@ -1,13 +1,20 @@
 import React, {FC} from 'react';
 
 import {Page} from '../../layouts';
-import {Body, Footer, Headline, Button, Box, Header} from '../../components';
+import {
+  Body,
+  Footer,
+  Headline as Title,
+  Button,
+  Box,
+  Header,
+} from '../../components';
 
 const Home: FC = () => {
   return (
     <Page name="home">
       <Header>
-        <Headline>Crypto Asset Checker</Headline>
+        <Title>Crypto Asset Checker</Title>
       </Header>
 
       <Body flex-col flex="1">

@@ -20,6 +20,7 @@ export interface StyledProps {
 
   ['bcolor']?: number | string | undefined;
   bw?: number | string | undefined;
+  bs?: number | string | undefined;
 
   p?: number | string | undefined;
   ph?: number | string | undefined;
@@ -43,6 +44,7 @@ export interface StyledProps {
   cover?: boolean | undefined;
   crop?: boolean | undefined;
   hide?: boolean | undefined;
+  hidden?: boolean | undefined;
 
   ['z-idx']?: number | undefined;
 
@@ -146,6 +148,7 @@ const createStylesProps = <T extends ComponentType>(
       `border-bottom-right-radius: ${getUnit(props['br-br'])};`}
     ${({bcolor}: StyledProps) => bcolor && `border-color: ${bcolor};`}
     ${({bw}: StyledProps) => isDefined(bw) && `border-width: ${getUnit(bw)};`}
+    ${({bs}: StyledProps) => isDefined(bs) && `border-style: ${bs || 'solid'};`}
 
     ${({p}: StyledProps) => isDefined(p) && `padding: ${getUnit(p)};`}
     ${({ph}: StyledProps) =>
@@ -179,6 +182,7 @@ const createStylesProps = <T extends ComponentType>(
     ${({crop}: StyledProps) => crop && 'overflow: hidden;'}
     ${({cover}: StyledProps) => cover && 'width: 100%; height: 100%;'}
     ${({hide}: StyledProps) => hide && 'display: none;'}
+    ${({hidden}: StyledProps) => hidden && 'visibility: hidden;'}
 
     ${(props: StyledProps) =>
       isDefined(props['z-idx']) && `z-index: ${props['z-idx']};`}
