@@ -1,24 +1,27 @@
-import React, { FC, ReactNode, ReactElement } from 'react';
+import React, {FC, ReactNode} from 'react';
 
 import './Message.scss';
+import Box from '../Box/Box';
+import {StyledProps} from '../../helpers/createStyledProps';
 
-interface MessageProps {
+interface MessageProps extends StyledProps {
   visible?: boolean;
-  type: string;
-  children?: ReactNode;
+  type?: string;
+  children?: ReactNode | null;
 }
 
 /* eslint-disable react/jsx-props-no-spreading */
 const Message: FC<MessageProps> = ({
-  type,
+  type = 'info',
   children = null,
-}): ReactElement<MessageProps> => {
+  ...rest
+}) => {
   if (!children) return null;
 
   return (
-    <div className={`message message-${type}`}>
+    <Box {...rest} className={`message message-${type}`}>
       {children}
-    </div>
+    </Box>
   );
 };
 

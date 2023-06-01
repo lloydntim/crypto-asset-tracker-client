@@ -1,6 +1,6 @@
 import Home from './Home/Home';
 import Login from './Login/Login';
-import Signup from './Register/Register';
+import Register from './Register/Register';
 import Welcome from './Welcome/Welcome';
 import Sample from './Sample/Sample';
 import Profile from './Profile/Profile';
@@ -12,7 +12,7 @@ import Reset from './Reset/Reset';
 export {
   Home,
   Login,
-  Signup,
+  Register,
   Welcome,
   Sample,
   Profile,

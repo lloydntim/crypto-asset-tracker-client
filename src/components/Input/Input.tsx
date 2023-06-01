@@ -5,10 +5,11 @@ import {
   IconButton,
   Message,
   Icon,
+  Box,
   InputField,
   Span,
 } from '../../components';
-import {TRANSPARENT} from '../../constants/Colors';
+import {GRAPE_DARK, TRANSPARENT, WHITE} from '../../constants/Colors';
 import Label from '../Label/Label';
 import {validateInput, InputProps} from './InputHelper';
 
@@ -16,6 +17,7 @@ import {validateInput, InputProps} from './InputHelper';
 const Input: FC<InputProps> = forwardRef((props, ref) => {
   const {
     label = '',
+    labelColor = WHITE,
     autoComplete,
     autoCapitalize,
     name,
@@ -48,66 +50,69 @@ const Input: FC<InputProps> = forwardRef((props, ref) => {
       pos-rel
       w="100%"
     >
-      {label && <Span className="input-label">{label}</Span>}
-      <InputField
-        w="100%"
-        ref={ref}
-        required={required}
-        className="input-element"
-        autoComplete={dataList.length ? 'off' : autoComplete}
-        autoCapitalize={autoCapitalize}
-        tabIndex={tabIndex}
-        name={name}
-        type={dynamicInputType}
-        placeholder={placeholder}
-        value={value}
-        onChange={({target: {value, files = null}}) => {
-          setInputMessage({text: '', type: 'error'});
-
-          const error = validateInput({value, files}, validationProps);
-
-          if (files) setInputMessage({text: files[0].name, type: 'info'});
-          if (onChange) onChange({name, value, files, error, required});
-        }}
-        onFocus={(event) => {
-          if (dataList?.length) setIsDataListVisible(true);
-          if (onFocus) onFocus(event);
-        }}
-        onBlur={(event) => {
-          const {
-            target: {value, files},
-          } = event;
-          const error = validateInput({value, files}, validationProps);
-
-          if (error) setInputMessage({text: error, type: 'error'});
-
-          if (onBlur) onBlur(event);
-        }}
-        mv={8}
-        mh={0}
-      />
-
-      {isTypePassword && (
-        <IconButton
-          pos-abs
-          pos-r={10}
-          pos-t={12}
-          bgcolor={TRANSPARENT}
-          iconSize={14}
-          type={isTypePassword ? 'view' : 'close'}
-          tabIndex={-1}
-          onClick={() =>
-            isTypePassword
-              ? setDynamicInputType(
-                  dynamicInputType === 'password' ? 'text' : 'password',
-                )
-              : onChange && onChange({name, value: ''})
-          }
-        />
+      {label && (
+        <Span mv={8} flex-row className="input-label" color={labelColor}>
+          {label}
+        </Span>
       )}
+      <Box flex-row w="100%" bgcolor={WHITE} bcolor={GRAPE_DARK} mh={0} br={8}>
+        <InputField
+          flex="1"
+          flex-row
+          m={0}
+          bcolor={TRANSPARENT}
+          ref={ref}
+          required={required}
+          className="input-element"
+          autoComplete={dataList.length ? 'off' : autoComplete}
+          autoCapitalize={autoCapitalize}
+          tabIndex={tabIndex}
+          name={name}
+          type={dynamicInputType}
+          placeholder={placeholder}
+          value={value}
+          onChange={({target: {value, files = null}}) => {
+            setInputMessage({text: '', type: 'error'});
 
-      {/* {type === 'search' && <Icon type="search" />} */}
+            const error = validateInput({value, files}, validationProps);
 
+            if (files) setInputMessage({text: files[0].name, type: 'info'});
+            if (onChange) onChange({name, value, files, error, required});
+          }}
+          onFocus={(event) => {
+            if (dataList?.length) setIsDataListVisible(true);
+            if (onFocus) onFocus(event);
+          }}
+          onBlur={(event) => {
+            const {
+              target: {value, files},
+            } = event;
+            const error = validateInput({value, files}, validationProps);
+
+            if (error) setInputMessage({text: error, type: 'error'});
+
+            if (onBlur) onBlur(event);
+          }}
+        />
+
+        {isTypePassword && (
+          <IconButton
+            bgcolor={TRANSPARENT}
+            iconSize={14}
+            type={isTypePassword ? 'view' : 'close'}
+            tabIndex={-1}
+            onClick={() =>
+              isTypePassword
+                ? setDynamicInputType(
+                    dynamicInputType === 'password' ? 'text' : 'password',
+                  )
+                : onChange && onChange({name, value: ''})
+            }
+          />
+        )}
+
+        {/* {type === 'search' && <Icon type="search" />} */}
+      </Box>
       {isDataListVisible && (
         <AutoComplete
           items={dataList}

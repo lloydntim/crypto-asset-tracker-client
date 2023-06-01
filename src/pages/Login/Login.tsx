@@ -13,14 +13,20 @@ import {LOGIN} from '../../graphql';
 import {useForm} from '../../hooks';
 import {useAuthentication} from '../../providers/AuthenticationProvider';
 import {Page} from '../../layouts';
-import {Button, Input, Message, Headline} from '../../components';
-
-// const authorisedUser = {
-// username: 'admin',
-// password: 'admin',
-// }
-// const data = { login: { token: 'abcd' } };
-// const errorMessage = { type: 'error', text: 'Password is wrong' };
+import {
+  Button,
+  Input,
+  Message,
+  Headline as Title,
+  Header,
+  Form,
+  Body,
+  Footer,
+  Radios,
+  Box,
+  Link,
+} from '../../components';
+import {WHITE} from '../../constants/Colors';
 
 const Login: FC = (): ReactElement => {
   const navigate = useNavigate();
@@ -28,8 +34,9 @@ const Login: FC = (): ReactElement => {
     t,
     i18n: {changeLanguage},
   } = useTranslation();
-  const [message, setMessage] = useState(null);
-  // const [color, setColor] = useState('');
+  const [message, setMessage] = useState<{text: string; type: string} | null>(
+    null,
+  );
   const {setLoginToken} = useAuthentication();
   const {form: hookedForm, formFieldChangeHandler, isFormValid} = useForm(
     'username*',
@@ -42,13 +49,9 @@ const Login: FC = (): ReactElement => {
       /* eslint-disable no-undef */
       setLoginToken(data.login.token);
       navigate('/welcome');
-      // localStorage.setItem('token', data.login.token);
-      // push('/vocablists');
     },
     onError: (error) => {
-      // Sentry.captureException(error);
-      // console.log('Login:  ', error);
-      setMessage(error.message.split(':')[1].trim());
+      setMessage({type: 'error', text: error?.message.split(':')[1].trim()});
     },
   });
 
@@ -60,68 +63,79 @@ const Login: FC = (): ReactElement => {
 
       login({
         variables: {
-          username: username.value.toLowerCase(),
+          username: username.value?.toLowerCase(),
           password: password.value,
         },
       });
-
-      // if (username.value !== authorisedUser.username) return setMessage({ ...errorMessage, text: 'This user does not exist' });
-      // if (password.value !== authorisedUser.password) return setMessage(errorMessage);
-
-      // setLoginToken(data.login.token);
-      // navigate('/welcome');
     },
     [username, password, login],
   ); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const languageChangeHandler = (language: string) => () =>
-    changeLanguage(language);
-
   return (
     <Page name="login">
-      <Headline tKey="login:title" />
-
-      <br />
-      <button onClick={languageChangeHandler('en')}>EN</button>
-      <button onClick={languageChangeHandler('de')}>DE</button>
-      <br />
-
-      <form>
-        <Input
-          name="username"
-          label={t('input.label.username')}
-          placeholder={t('input.placeholder.enterUsername')}
-          required={username.required}
-          value={username.value}
-          onChange={formFieldChangeHandler}
-          onFocus={formFieldFocusHandler}
+      <Header>
+        <Radios
+          isButton
+          flex-row
+          mv={12}
+          items={[
+            {
+              value: 'en',
+              label: 'English',
+            },
+            {
+              value: 'de',
+              label: 'German',
+            },
+          ]}
+          onChange={({value}) => changeLanguage(value)}
         />
-        <br />
-        <Input
-          name="password"
-          label={t('input.label.password')}
-          placeholder={t('input.placeholder.enterPassword')}
-          type="password"
-          required={password.required}
-          value={password.value}
-          onChange={formFieldChangeHandler}
-          onFocus={formFieldFocusHandler}
-        />
+      </Header>
 
-        <br />
+      <Body align-c align-m flex="1">
+        <Title tKey="login:title" />
 
-        <Button
-          disabled={!isFormValid}
-          tKey="button.login"
-          type="submit"
-          onClick={submitForm}
-        />
-      </form>
-      <br />
+        <Form flex-col>
+          <Input
+            name="username"
+            label={t('input.label.username')}
+            placeholder={t('input.placeholder.enterUsername')}
+            required={username.required}
+            value={username.value}
+            onChange={formFieldChangeHandler}
+            onFocus={formFieldFocusHandler}
+          />
 
-      <Message type={loading ? 'info' : message?.type}>
-        {loading ? 'Loading' : message?.text}
-      </Message>
+          <Input
+            name="password"
+            label={t('input.label.password')}
+            placeholder={t('input.placeholder.enterPassword')}
+            type="password"
+            required={password.required}
+            value={password.value}
+            onChange={formFieldChangeHandler}
+            onFocus={formFieldFocusHandler}
+          />
+
+          <Button
+            disabled={!isFormValid}
+            tKey="button.login"
+            type="submit"
+            onClick={submitForm}
+            mv={16}
+          />
+
+          <Message type={loading ? 'info' : message?.type} mv={16}>
+            {loading ? 'Loading' : message?.text}
+          </Message>
+        </Form>
+
+        <Link color={WHITE} to="/register">
+          {t('button.register')}
+        </Link>
+      </Body>
+
+      <Footer startYear={2019} companyName="LNCD" />
     </Page>
   );
 };
