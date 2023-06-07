@@ -11,6 +11,7 @@ import {
   Verify,
   Forgot,
   Reset,
+  Profile,
 } from '../pages';
 import AuthenticationRoute from './AuthenticationRoute';
 
@@ -29,6 +30,10 @@ export default () => {
     {
       path: 'register',
       element: <Register />,
+    },
+    {
+      path: 'profile',
+      element: <Profile />,
     },
     {
       path: 'welcome',

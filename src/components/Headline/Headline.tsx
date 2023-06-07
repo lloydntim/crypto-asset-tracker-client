@@ -58,13 +58,21 @@ export interface HeadlineProps extends TextProps {
   size?: HeadlineSize;
 }
 
+const headlineElementSizeMapper = {
+  h1: createStylesProps('h1'),
+  h2: createStylesProps('h2'),
+  h3: createStylesProps('h3'),
+  h4: createStylesProps('h4'),
+  h5: createStylesProps('h5'),
+};
+
 const Headline: FC<HeadlineProps> = ({
   children,
   className = '',
   size = 'h1',
   ...rest
-}): ReactElement => {
-  const HeadlineSt = createStylesProps(size);
+}) => {
+  const HeadlineSt = headlineElementSizeMapper[size];
 
   return (
     <HeadlineSt m={0} p={0} className={className} {...rest}>

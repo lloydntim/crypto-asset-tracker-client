@@ -146,3 +146,39 @@ export const REMOVE_COIN_HOLDING = gql`
     }
   }
 `;
+
+export const RESEND_VERIFICATION_TOKEN = gql`
+  mutation ResendVerificationToken($email: String, $username: String) {
+    resendVerificationToken(email: $email, username: $username) {
+      message
+    }
+  }
+`;
+
+export const GET_USER = gql`
+  query GetUser($id: ID, $username: String, $email: String) {
+    getUser(id: $id, username: $username, email: $email) {
+      username
+      email
+      isVerified
+    }
+  }
+`;
+
+export const UPDATE_USER = gql`
+  mutation UpdateUser($id: ID, $username: String, $email: String) {
+    updateUser(id: $id, username: $username, email: $email) {
+      username
+      email
+      isVerified
+    }
+  }
+`;
+
+export const REMOVE_USER = gql`
+  mutation RemoveUser($id: ID) {
+    removeUser(id: $id) {
+      id
+    }
+  }
+`;

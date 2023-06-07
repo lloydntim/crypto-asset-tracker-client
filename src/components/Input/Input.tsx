@@ -31,6 +31,10 @@ const Input: FC<InputProps> = forwardRef((props, ref) => {
     onBlur,
     dataList = [],
     onDataListClick,
+    m = 0,
+    mv = 0,
+    mh = 0,
+    bw = 1,
   } = props;
   const isTypePassword = type === 'password';
   const [dynamicInputType, setDynamicInputType] = useState(type);
@@ -59,8 +63,11 @@ const Input: FC<InputProps> = forwardRef((props, ref) => {
         <InputField
           flex="1"
           flex-row
-          m={0}
-          bcolor={TRANSPARENT}
+          m={m}
+          mh={mh}
+          mv={mv}
+          bcolor={GRAPE_DARK}
+          bw={bw}
           ref={ref}
           required={required}
           className="input-element"

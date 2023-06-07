@@ -22,14 +22,12 @@ import {
   BLACK,
   DARKGREY,
   GRAPE_EXTRA_DARK,
-  GRAPE_DARK,
   GREY,
   LIGHTGREY,
   WHITE,
 } from '../../../constants/Colors';
 import {useForm} from '../../../hooks';
 import {Dialog} from '../../../layouts';
-import {InputChangeEventHandler} from '../../../components/Input/InputHelper';
 
 type HoldingType = 'wallet' | 'exchange' | 'staking';
 
@@ -72,18 +70,6 @@ interface HoldingsListData {
 const ClickableArea = styled.button`
   border: none;
   background-color: transparent;
-`;
-
-const CustomInput = styled.input`
-  color: black;
-  padding: 6px 8px;
-  border-radius: 8px;
-  border-width: 1px;
-  border-color: ${GRAPE_DARK};
-  display: flex;
-  margin: 8px;
-  flex: 1;
-  ${({w}: {w?: number}) => (w ? `width: ${w}px;` : '')}
 `;
 
 const currencyFormatMapper: {
@@ -252,7 +238,7 @@ const CoinList: FC<CoinListProps> = (props) => {
 
         {editMode && (
           <Container flex-row align-m>
-            <Form ph={8} flex-row w="100%" align-t>
+            <Form ph={8} flex-row w="100%" align-t align-m>
               <Select
                 m={8}
                 options={newCoinSelectOptions}

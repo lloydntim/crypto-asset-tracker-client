@@ -6,14 +6,22 @@
     "register": "Register",
     "logout": "Logout"
   },
+  "label": {
+    "verified": "Verified",
+    "pending": "Pending"
+  },
   "input": {
     "label": {
       "username": "Username",
-      "password": "Password"
+      "password": "Password",
+      "email": "Email"
     },
     "placeholder": {
       "enterUsername": "Please enter username",
-      "enterPassword": "Please enter password"
+      "enterPassword": "Please enter password",
+      "enterNewPassword": "Please enter new password",
+      "enterEmail": "Please enter email",
+      "enterNewEmail": "Please new enter email"
     }
   }
 }

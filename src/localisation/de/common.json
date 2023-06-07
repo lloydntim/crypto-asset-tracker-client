@@ -6,14 +6,22 @@
     "register": "Anmelden",
     "logout": "Ausloggen"
   },
+  "label": {
+    "verified": "Verifiziert",
+    "pending": "Ausstehend"
+  },
   "input": {
     "label": {
       "username": "Benutzername",
-      "password": "Passwort"
+      "password": "Passwort",
+      "email": "E-Mail"
     },
     "placeholder": {
       "enterUsername": "Bitte Benutzername eingeben",
-      "enterPassword": "Bitte Passwort eingeben"
+      "enterPassword": "Bitte Passwort eingeben",
+      "enterNewPassword": "Bitte neues Passwort eingeben",
+      "enterEmail": "Bitte E-Mail eingeben",
+      "enterNewEmail": "Bitte neue E-Mail eingeben"
     }
   }
 }

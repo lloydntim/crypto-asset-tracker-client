@@ -7,6 +7,7 @@ import {
 
 import {DataListItem} from '../DataList/DataList';
 import {DefaultTFuncReturn} from 'i18next';
+import {StyledProps} from '../../helpers/createStyledProps';
 
 export type InputChangeEvent = {
   name?: string;
@@ -16,7 +17,7 @@ export type InputChangeEvent = {
   required?: boolean;
 };
 export type InputChangeEventHandler = (arg: InputChangeEvent) => void;
-export interface InputProps {
+export interface InputProps extends StyledProps {
   // inputRef?: LegacyRef<HTMLInputElement | undefined> | undefined;
   inputRef?: MutableRefObject<HTMLInputElement>;
   ref?: ForwardedRef<HTMLInputElement>;
