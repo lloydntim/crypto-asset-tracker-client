@@ -23,7 +23,6 @@ import {
   Body,
   Footer,
   Radios,
-  Box,
   Link,
 } from '../../components';
 import {WHITE} from '../../constants/Colors';

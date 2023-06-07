@@ -6,11 +6,13 @@ import commonEn from './en/common.json';
 import loginEn from './en/login.json';
 import registerEn from './en/register.json';
 import welcomeEn from './en/welcome.json';
+import profileEn from './en/profile.json';
 
 import commonDe from './de/common.json';
 import loginDe from './de/login.json';
 import registerDe from './de/register.json';
 import welcomeDe from './de/welcome.json';
+import profileDe from './de/profile.json';
 
 export const defaultNS = 'common';
 
@@ -33,12 +35,14 @@ i18n
         login: loginEn,
         register: registerEn,
         welcome: welcomeEn,
+        profile: profileEn,
       },
       de: {
         common: commonDe,
         login: loginDe,
         register: registerDe,
         welcome: welcomeDe,
+        profile: profileDe,
       },
     },
     detection: {
