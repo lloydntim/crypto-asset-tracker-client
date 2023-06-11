@@ -53,6 +53,10 @@ const Input: FC<InputProps> = forwardRef((props, ref) => {
       htmlFor={name}
       pos-rel
       w="100%"
+      m={m}
+      mh={mh}
+      mv={mv}
+      bcolor={GRAPE_DARK}
     >
       {label && (
         <Span mv={8} flex-row className="input-label" color={labelColor}>
@@ -63,10 +67,8 @@ const Input: FC<InputProps> = forwardRef((props, ref) => {
         <InputField
           flex="1"
           flex-row
-          m={m}
-          mh={mh}
-          mv={mv}
-          bcolor={GRAPE_DARK}
+          m={0}
+          bcolor={TRANSPARENT}
           bw={bw}
           ref={ref}
           required={required}

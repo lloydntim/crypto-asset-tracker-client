@@ -5,7 +5,7 @@ import React, {
   MouseEventHandler,
   useCallback,
 } from 'react';
-import {useNavigate} from 'react-router-dom';
+import {useNavigate, useParams} from 'react-router-dom';
 import {useTranslation} from 'react-i18next';
 import {
   Button,
@@ -15,85 +15,106 @@ import {
   Header,
   Body,
   Footer,
+  Form,
+  Text,
 } from '../../components';
 import {Page} from '../../layouts';
 import {useForm} from '../../hooks';
 import {useAuthentication} from '../../providers/AuthenticationProvider';
-
-const authorisedUser = {
-  username: 'admin',
-  password: 'admin',
-};
-const data = {login: {token: 'abcd'}};
-const errorMessage = {type: 'error', text: 'Password is wrong'};
+import {useMutation, useQuery} from '@apollo/client';
+import {GET_PASSWORD_TOKEN, UPDATE_PASSWORD_TOKEN} from '../../graphql';
 
 const Reset: FC = (): ReactElement => {
   const navigate = useNavigate();
   const {t} = useTranslation();
   const [message, setMessage] = useState(null);
   const {setLoginToken} = useAuthentication();
-  const {form: hookedForm, formFieldChangeHandler, isFormValid} = useForm(
-    'password*',
-    'passwordConfirm*',
-  );
-  const {username, password} = hookedForm;
+  const {
+    form: {password, passwordConfirm},
+    formFieldChangeHandler,
+    isFormValid,
+  } = useForm('password*', 'passwordConfirm*');
 
   const formFieldFocusHandler = useCallback(() => setMessage(null), []);
 
-  const submitForm: MouseEventHandler<Element> = useCallback(
-    (event) => {
-      event.preventDefault();
-
-      if (username.value !== authorisedUser.username)
-        return setMessage({...errorMessage, text: 'This user does not exist'});
-      if (password.value !== authorisedUser.password)
-        return setMessage(errorMessage);
-
-      setLoginToken(data.login.token);
+  const {token: resetPasswordToken} = useParams();
+  const {loading, error, data} = useQuery(GET_PASSWORD_TOKEN, {
+    variables: {resetPasswordToken},
+    /*   onError: ({message}) => {
+      setResponseMessage(message);
+    }, */
+  });
+  const [
+    updatePassword,
+    {loading: mutationLoading, error: mutationError},
+  ] = useMutation(UPDATE_PASSWORD_TOKEN, {
+    onCompleted: (data) => {
+      /* eslint-disable no-undef */
+      setLoginToken(data.updatePassword.token);
       navigate('/welcome');
     },
-    [username, password, navigate, setLoginToken],
-  ); // eslint-disable-line react-hooks/exhaustive-deps
-
+    // onError: (error) =>
+    // setResponseMessage(error.message.split(':')[1].trim()),
+  });
   return (
     <Page name="reset">
       <Header />
       <Body>
-        <Headline>Reset</Headline>
+        <Headline tKey="reset:title" />
 
-        <form>
+        <Form>
           <Input
             name="password"
-            label={t('input.label.password') || ''}
-            placeholder={t('input.placeholder.enterPassword') || ''}
+            label={t('input.label.password')}
+            placeholder={t('input.placeholder.enterPassword')}
             type="password"
             required={password.required}
             value={password.value}
             onChange={formFieldChangeHandler}
             onFocus={formFieldFocusHandler}
+            mv={12}
           />
-          <br />
 
           <Input
             name="passwordConfirm"
-            label="Confirm Password"
-            placeholder="Enter password"
+            label={t('input.label.passwordConfirm')}
+            placeholder={t('input.placeholder.confirmPassword')}
             type="password"
-            required={password.required}
-            value={password.value}
+            required={passwordConfirm.required}
+            value={passwordConfirm.value}
             onChange={formFieldChangeHandler}
             onFocus={formFieldFocusHandler}
+            mv={12}
           />
-          <br />
 
           <Button
             disabled={!isFormValid}
-            tKey="button.login"
+            tKey="common:button.submit"
             type="submit"
-            onClick={submitForm}
+            mv={12}
+            onClick={() =>
+              updatePassword({
+                variables: {resetPasswordToken, password: password.value},
+              })
+            }
           />
-        </form>
-        <Message type={message?.type}>{message?.text}</Message>
+        </Form>
+        {(mutationLoading || loading) && (
+          <Message type="info">
+            <Text tKey="common:message.loading.text" />
+          </Message>
+        )}
+        {error && (
+          <Message type="error">
+            <Text tKey="common:message.error.text" />
+          </Message>
+        )}
+
+        {mutationError && (
+          <Message type="error">
+            <Text tKey="reset:message.error.text" />
+          </Message>
+        )}
       </Body>
       <Footer startYear={2019} companyName="LNCD" />
     </Page>
