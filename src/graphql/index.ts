@@ -41,6 +41,25 @@ export const REGISTER = gql`
   }
 `;
 
+export const GET_PASSWORD_TOKEN = gql`
+  query GetPasswordToken($resetPasswordToken: String) {
+    getPasswordToken(resetPasswordToken: $resetPasswordToken) {
+      token
+    }
+  }
+`;
+
+export const UPDATE_PASSWORD_TOKEN = gql`
+  mutation UpdatePassword($resetPasswordToken: String, $password: String) {
+    updatePassword(
+      resetPasswordToken: $resetPasswordToken
+      password: $password
+    ) {
+      token
+    }
+  }
+`;
+
 export const GET_COIN_LISTINGS = gql`
   query GetCoinListings($symbols: String, $convert: String) {
     getCoinListings(symbols: $symbols, convert: $convert) {
