@@ -8,6 +8,7 @@ import registerEn from './en/register.json';
 import welcomeEn from './en/welcome.json';
 import profileEn from './en/profile.json';
 import resetEn from './en/reset.json';
+import verifyEn from './en/verify.json';
 
 import commonDe from './de/common.json';
 import loginDe from './de/login.json';
@@ -15,6 +16,7 @@ import registerDe from './de/register.json';
 import welcomeDe from './de/welcome.json';
 import profileDe from './de/profile.json';
 import resetDe from './de/reset.json';
+import verifyDe from './de/verify.json';
 
 export const defaultNS = 'common';
 
@@ -25,6 +27,7 @@ export const resources = {
     login: 'login',
     register: 'register',
     reset: 'reset',
+    verify: 'verify',
   },
 } as const;
 
@@ -40,6 +43,7 @@ i18n
         welcome: welcomeEn,
         profile: profileEn,
         reset: resetEn,
+        verify: verifyEn,
       },
       de: {
         common: commonDe,
@@ -48,6 +52,7 @@ i18n
         welcome: welcomeDe,
         profile: profileDe,
         reset: resetDe,
+        verify: verifyDe,
       },
     },
     detection: {
@@ -67,7 +72,15 @@ i18n
       lookupFromSubdomainIndex: 0,
       caches: ['localStorage', 'cookie'],
     },
-    ns: ['common', 'welcome', 'login', 'profile', 'reset', 'register'],
+    ns: [
+      'common',
+      'welcome',
+      'login',
+      'profile',
+      'reset',
+      'register',
+      'verify',
+    ],
     lng: 'en',
     fallbackLng: 'en',
     debug: true,
