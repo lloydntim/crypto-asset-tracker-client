@@ -60,6 +60,14 @@ export const UPDATE_PASSWORD_TOKEN = gql`
   }
 `;
 
+export const VERIFY = gql`
+  mutation Verify($token: String) {
+    verify(token: $token) {
+      token
+    }
+  }
+`;
+
 export const GET_COIN_LISTINGS = gql`
   query GetCoinListings($symbols: String, $convert: String) {
     getCoinListings(symbols: $symbols, convert: $convert) {

@@ -38,7 +38,7 @@ const Reset: FC = (): ReactElement => {
   const formFieldFocusHandler = useCallback(() => setMessage(null), []);
 
   const {token: resetPasswordToken} = useParams();
-  const {loading, error, data} = useQuery(GET_PASSWORD_TOKEN, {
+  const {loading, error} = useQuery(GET_PASSWORD_TOKEN, {
     variables: {resetPasswordToken},
     /*   onError: ({message}) => {
       setResponseMessage(message);
@@ -62,7 +62,7 @@ const Reset: FC = (): ReactElement => {
       <Body>
         <Headline tKey="reset:title" />
 
-        <Form>
+        <Form flex-col align-c flex="1">
           <Input
             name="password"
             label={t('input.label.password')}

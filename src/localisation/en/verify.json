@@ -1,0 +1,8 @@
+{
+  "title": "Verify",
+  "message": {
+    "error": {
+      "text": "An error has occured. The token could not be verified."
+    }
+  }
+}
