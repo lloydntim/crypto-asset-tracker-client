@@ -9,6 +9,7 @@ import welcomeEn from './en/welcome.json';
 import profileEn from './en/profile.json';
 import resetEn from './en/reset.json';
 import verifyEn from './en/verify.json';
+import aboutEn from './en/about.json';
 
 import commonDe from './de/common.json';
 import loginDe from './de/login.json';
@@ -17,6 +18,7 @@ import welcomeDe from './de/welcome.json';
 import profileDe from './de/profile.json';
 import resetDe from './de/reset.json';
 import verifyDe from './de/verify.json';
+import aboutDe from './de/about.json';
 
 export const defaultNS = 'common';
 
@@ -28,6 +30,7 @@ export const resources = {
     register: 'register',
     reset: 'reset',
     verify: 'verify',
+    about: 'about',
   },
 } as const;
 
@@ -44,6 +47,7 @@ i18n
         profile: profileEn,
         reset: resetEn,
         verify: verifyEn,
+        about: aboutEn,
       },
       de: {
         common: commonDe,
@@ -53,6 +57,7 @@ i18n
         profile: profileDe,
         reset: resetDe,
         verify: verifyDe,
+        about: aboutDe,
       },
     },
     detection: {
@@ -80,6 +85,7 @@ i18n
       'reset',
       'register',
       'verify',
+      'about',
     ],
     lng: 'en',
     fallbackLng: 'en',
