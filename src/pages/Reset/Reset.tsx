@@ -1,10 +1,4 @@
-import React, {
-  ReactElement,
-  FC,
-  useState,
-  MouseEventHandler,
-  useCallback,
-} from 'react';
+import React, {ReactElement, FC, useState, useCallback} from 'react';
 import {useNavigate, useParams} from 'react-router-dom';
 import {useTranslation} from 'react-i18next';
 import {
@@ -40,9 +34,6 @@ const Reset: FC = (): ReactElement => {
   const {token: resetPasswordToken} = useParams();
   const {loading, error} = useQuery(GET_PASSWORD_TOKEN, {
     variables: {resetPasswordToken},
-    /*   onError: ({message}) => {
-      setResponseMessage(message);
-    }, */
   });
   const [
     updatePassword,
@@ -53,13 +44,11 @@ const Reset: FC = (): ReactElement => {
       setLoginToken(data.updatePassword.token);
       navigate('/welcome');
     },
-    // onError: (error) =>
-    // setResponseMessage(error.message.split(':')[1].trim()),
   });
   return (
     <Page name="reset">
       <Header />
-      <Body>
+      <Body flex-col align-c flex="1">
         <Headline tKey="reset:title" />
 
         <Form flex-col align-c flex="1">
@@ -99,22 +88,15 @@ const Reset: FC = (): ReactElement => {
             }
           />
         </Form>
-        {(mutationLoading || loading) && (
-          <Message type="info">
-            <Text tKey="common:message.loading.text" />
-          </Message>
-        )}
-        {error && (
-          <Message type="error">
-            <Text tKey="common:message.error.text" />
-          </Message>
-        )}
+        <>
+          {(loading || mutationLoading) && (
+            <Message type="info" tKey="common:message.loading.text" />
+          )}
 
-        {mutationError && (
-          <Message type="error">
-            <Text tKey="reset:message.error.text" />
-          </Message>
-        )}
+          {(error || mutationError) && (
+            <Message type="error" tKey="common:message.error.text" />
+          )}
+        </>
       </Body>
       <Footer startYear={2019} companyName="LNCD" />
     </Page>
