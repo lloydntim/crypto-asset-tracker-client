@@ -1,17 +1,15 @@
-import React, {
-  FC,
-  MouseEventHandler,
-  ReactElement,
-  TouchEventHandler,
-} from 'react';
+import React, {MouseEventHandler, TouchEventHandler} from 'react';
 import {useNavigate} from 'react-router-dom';
 
-import {Button, Icon} from '../../components';
+// import {Button, Icon} from '../../components';
 import {StyledProps} from '../../helpers/createStyledProps';
+import Button from '../Button/Button';
+import Icon from '../Icon/Icon';
 
 interface IconButtonProps extends StyledProps {
   type: string;
   rank?: string;
+  role?: string;
   iconHeight?: number;
   iconWidth?: number;
   iconSize?: number;
@@ -28,9 +26,10 @@ interface IconButtonProps extends StyledProps {
   onTouchEnd?: TouchEventHandler;
 }
 
-const IconButton: FC<IconButtonProps> = ({
+const IconButton = ({
   rank = 'primary',
   type,
+  role,
   iconHeight,
   iconWidth,
   iconColor,
@@ -46,7 +45,7 @@ const IconButton: FC<IconButtonProps> = ({
   onTouchStart,
   onTouchEnd,
   ...rest
-}): ReactElement<IconButtonProps> => {
+}: IconButtonProps) => {
   const navigate = useNavigate();
   return (
     <Button

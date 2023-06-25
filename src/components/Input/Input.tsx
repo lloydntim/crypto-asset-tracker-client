@@ -1,14 +1,12 @@
 import React, {FC, forwardRef, useState} from 'react';
 
-import {
-  AutoComplete,
-  IconButton,
-  Message,
-  Icon,
-  Box,
-  InputField,
-  Span,
-} from '../../components';
+import AutoComplete from '../../components/AutoComplete/AutoComplete';
+import IconButton from '../../components/IconButton/IconButton';
+import Message from '../../components/Message/Message';
+import Box from '../../components/Box/Box';
+import InputField from '../../components/InputField/InputField';
+import Span from '../../components/Span/Span';
+
 import {GRAPE_DARK, TRANSPARENT, WHITE} from '../../constants/Colors';
 import Label from '../Label/Label';
 import {validateInput, InputProps} from './InputHelper';
@@ -24,6 +22,7 @@ const Input: FC<InputProps> = forwardRef((props, ref) => {
     type = 'text',
     tabIndex,
     placeholder = '',
+    placeholderTKey = undefined,
     value = '',
     required,
     onChange,
@@ -65,9 +64,11 @@ const Input: FC<InputProps> = forwardRef((props, ref) => {
       )}
       <Box flex-row w="100%" bgcolor={WHITE} bcolor={GRAPE_DARK} mh={0} br={8}>
         <InputField
+          data-testid="input"
           flex="1"
           flex-row
           m={0}
+          mv={mv}
           bcolor={TRANSPARENT}
           bw={bw}
           ref={ref}
@@ -78,7 +79,7 @@ const Input: FC<InputProps> = forwardRef((props, ref) => {
           tabIndex={tabIndex}
           name={name}
           type={dynamicInputType}
-          placeholder={placeholder}
+          placeholder={placeholderTKey || placeholder}
           value={value}
           onChange={({target: {value, files = null}}) => {
             setInputMessage({text: '', type: 'error'});

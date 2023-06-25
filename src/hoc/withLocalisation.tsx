@@ -1,4 +1,3 @@
-import {TFunction} from 'i18next';
 import React, {ReactNode, ComponentType, ReactElement} from 'react';
 import {useTranslation} from 'react-i18next';
 export interface LocalisationProps {

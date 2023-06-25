@@ -1,29 +1,29 @@
-import React, {FC, ReactNode, MouseEventHandler} from 'react';
+import React, {ReactNode, MouseEventHandler, PropsWithChildren} from 'react';
 
-import {Box, Headline, IconButton} from '../../components';
+import Box from '../../components/Box/Box';
+import Headline from '../../components/Headline/Headline';
+import IconButton from '../../components/IconButton/IconButton';
 
-// import './Overlay.scss';
 import {DARKGREY, WHITE} from '../../constants/Colors';
-import {TFunction} from 'i18next';
 
 interface OverlayProps {
   title?: string;
-  children: ReactNode;
   visible: boolean;
   onCloseButtonClick: MouseEventHandler;
 }
 
 /* eslint-disable react/jsx-props-no-spreading */
-const Overlay: FC<OverlayProps> = ({
+const Overlay = ({
   children,
   title,
   visible,
   onCloseButtonClick,
-}) => {
+}: PropsWithChildren<OverlayProps>) => {
   if (!visible) return null;
 
   return (
     <Box
+      data-testid="overlay"
       className="overlay"
       pos-fix
       pos-t={0}
@@ -36,16 +36,15 @@ const Overlay: FC<OverlayProps> = ({
       pv={12}
       ph={28}
     >
-      {/*  <Box className="overlay-button-close"> */}
       <IconButton
         type="close"
         rank="secondary"
+        aria-label="close-button"
         flex-row
         align-self-r
         onClick={onCloseButtonClick}
         z-idx={1}
       />
-      {/*  </Box> */}
 
       <Box pos-rel pos-b={48} className="overlay-content">
         <Headline mv={16}>{title}</Headline>

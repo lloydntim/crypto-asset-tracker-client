@@ -1,4 +1,4 @@
-import React, {ReactNode, FC} from 'react';
+import React, {ReactNode} from 'react';
 
 import Box from '../Box/Box';
 import {StyledProps} from '../../helpers/createStyledProps';

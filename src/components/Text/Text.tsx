@@ -5,8 +5,6 @@ import createStylesProps, {StyledProps} from '../../helpers/createStyledProps';
 import {withLocalisation} from '../../hoc';
 import {LocalisationProps} from '../../hoc/withLocalisation';
 
-import './Text.scss';
-
 export interface TextProps extends LocalisationProps, StyledProps {
   className?: string;
   strong?: boolean;

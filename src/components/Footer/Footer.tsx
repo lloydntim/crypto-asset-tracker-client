@@ -1,23 +1,24 @@
-import React, {FC} from 'react';
+import React from 'react';
 
 import createStylesProps, {StyledProps} from '../../helpers/createStyledProps';
 
 interface FooterProps extends StyledProps {
   className?: string;
-  startYear: number;
+  startYear?: number;
   companyName: string;
 }
 
+const currentYear = new Date().getFullYear();
+
 const FooterSt = createStylesProps('footer');
 
-const Footer: FC<FooterProps> = ({
-  startYear,
+const Footer = ({
+  startYear = currentYear,
   companyName = 'footer',
   ...rest
-}) => {
-  const currentYear = new Date().getFullYear();
-  const companyYears =
-    startYear === currentYear ? startYear : `${startYear} - ${currentYear}`;
+}: FooterProps) => {
+  const companyYears = `${startYear}${startYear !== currentYear &&
+    `- ${currentYear}`}`;
 
   return (
     <FooterSt

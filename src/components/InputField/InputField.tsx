@@ -31,6 +31,7 @@ const InputField: FC<DetailedHTMLProps<
   ) => {
     return (
       <InputFieldSt
+        aria-label="core-input"
         {...rest}
         {...{
           ref,

@@ -1,6 +1,6 @@
-import React, { FC, ReactNode, ReactElement } from 'react';
+import React, {ReactNode} from 'react';
 
-import './Page.scss';
+import Box from '../../components/Box/Box';
 
 interface PageProps {
   name: string;
@@ -8,11 +8,11 @@ interface PageProps {
 }
 
 /* eslint-disable react/jsx-props-no-spreading */
-const Page: FC<PageProps> = ({ name, children }): ReactElement<PageProps> => {
+const Page = ({name, children}: PageProps) => {
   return (
-    <div className={`page ${name}-page`}>
+    <Box w="100%" max-w={1200} min-h="100vh" className={`page ${name}-page`}>
       {children}
-    </div>
+    </Box>
   );
 };
 

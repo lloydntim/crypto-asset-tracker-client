@@ -4,7 +4,6 @@ import {
   GRAPE_EXTRA_DARK,
   GRAPE_LIGHT,
   TRANSPARENT,
-  WHITE,
 } from '../../constants/Colors';
 import createStylesProps, {StyledProps} from '../../helpers/createStyledProps';
 
@@ -33,7 +32,7 @@ const ButtonSt = createStylesProps('button');
 
 const Button: FC<ButtonProps> = ({
   children,
-  type = 'submit',
+  type = 'button',
   rank = 'primary',
   tabIndex,
   disabled,

@@ -9,7 +9,8 @@
     "test": "jest",
     "lint": "eslint --fix src/**/*.js",
     "build": "webpack --config config/webpack.config.js --mode=production",
-    "dev": "webpack-dev-server --config config/webpack.config.js --port 4001 --host 0.0.0.0 --mode=development"
+    "dev": "webpack-dev-server --config config/webpack.config.js --port 4001 --host 0.0.0.0 --mode=development",
+    "madge": "madge src"
   },
   "keywords": [],
   "author": "",
@@ -53,6 +54,7 @@
   "dependencies": {
     "@apollo/client": "^3.5.10",
     "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/user-event": "^14.4.3",
     "@types/react": "^18.2.12",
     "@types/react-dom": "^18.2.5",
     "axios": "^0.24.0",
@@ -61,6 +63,7 @@
     "i18next": "^22.4.9",
     "i18next-browser-languagedetector": "^7.0.1",
     "jwt-decode": "^3.1.2",
+    "madge": "^6.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-i18next": "^12.1.4",
