@@ -98,6 +98,7 @@ const createStylesProps = <T extends ComponentType>(
   element:
     | T
     | any
+    // | undefined
     | 'aside'
     | 'div'
     | 'button'
@@ -117,7 +118,10 @@ const createStylesProps = <T extends ComponentType>(
     | 'label'
     | 'form'
     | 'input',
-) => styled(element)`
+) => {
+  // if (typeof element === 'undefined') return null;
+
+  return styled(element)`
     ${({sz}: StyledProps) =>
       sz && `width: ${getUnit(sz)}; height: ${getUnit(sz)};`}
 
@@ -241,7 +245,7 @@ const createStylesProps = <T extends ComponentType>(
     ${({animation}: StyledProps) => animation && `transition: ${animation};`}
       ${(props: StyledProps) => props['crsr-pointer'] && 'cursor: pointer;'}
 `;
-
+};
 export interface StyledTextProps {
   color?: number | string | undefined;
 }

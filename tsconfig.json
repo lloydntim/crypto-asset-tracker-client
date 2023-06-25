@@ -10,8 +10,9 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "noEmit": false,
   },
-  "include": ["**/*.ts", "src/**/*.json", "src/components/Aside/Aside.tsx"],
+  "include": ["**/*.ts", "src/**/*.json", "src/components/Aside/Aside.tsx", "src/components/index.tsx"],
   "exclude": ["./src/cypress/**/*"]
 }

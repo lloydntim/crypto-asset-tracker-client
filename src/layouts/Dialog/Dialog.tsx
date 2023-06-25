@@ -1,12 +1,13 @@
-import React, {FC, MouseEventHandler, ReactNode} from 'react';
+import React, {MouseEventHandler, PropsWithChildren} from 'react';
 
-import {Box, Button, Headline, IconButton} from '../../components';
-
+import Box from '../../components/Box/Box';
+import Button from '../../components/Button/Button';
+import Headline from '../../components/Headline/Headline';
+import IconButton from '../../components/IconButton/IconButton';
 import {BLACK_OPACITY_75PC, WHITE} from '../../constants/Colors';
 
 interface DialogProps {
   title: string;
-  children: ReactNode;
   visible: boolean;
   cancelButtonText?: string;
   onCancelButtonClick: MouseEventHandler;
@@ -15,20 +16,21 @@ interface DialogProps {
 }
 
 /* eslint-disable react/jsx-props-no-spreading */
-const Dialog: FC<DialogProps> = ({
+const Dialog = ({
   title,
   children,
-  visible,
   cancelButtonText = 'Cancel',
   continueButtonText = 'Continue',
   onCancelButtonClick,
   onContinueButtonClick,
-}) => {
+  visible,
+}: PropsWithChildren<DialogProps>) => {
   if (!visible) return null;
 
   return (
     <Box
       className="dialog"
+      data-testid="dialog"
       pos-fix
       pos-t={0}
       pos-l={0}

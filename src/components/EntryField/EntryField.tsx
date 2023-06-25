@@ -8,7 +8,7 @@ import React, {
 } from 'react';
 import Box from '../Box/Box';
 import Input from '../Input/Input';
-import {useForm} from '../../hooks';
+import useForm from '../../hooks/useForm';
 import {formatAmount} from '../../pages/Welcome/CoinList/CoinListHelper';
 import Text from '../Text/Text';
 import IconButton from '../IconButton/IconButton';
@@ -19,14 +19,14 @@ interface EntryFieldProps {
   value: any;
   onChange?: InputChangeEventHandler;
   onBlur?: FocusEventHandler<HTMLInputElement>;
-  location: string;
+  location?: string;
 }
 
 const EntryField: FC<EntryFieldProps> = ({
   value: entryValue,
   onChange,
   onBlur,
-  location,
+  location = '',
 }) => {
   const [entryEditMode, setEntryEditMode] = useState(false);
 
@@ -42,7 +42,7 @@ const EntryField: FC<EntryFieldProps> = ({
   }, [entryEditMode, ref]);
 
   return (
-    <Box flex-row align-m spc-btw>
+    <Box data-testid="entry-field" flex-row align-m spc-btw>
       {entryEditMode ? (
         <Input
           name={name}
@@ -60,11 +60,12 @@ const EntryField: FC<EntryFieldProps> = ({
       ) : (
         <>
           <Text font-sz={14}>
-            {typeof entryValue === 'number'
+            {typeof entryValue === 'number' && location
               ? formatAmount(entryValue, location)
               : entryValue}
           </Text>
           <IconButton
+            aria-label="edit-button"
             mh={8}
             type="edit"
             iconSize={16}

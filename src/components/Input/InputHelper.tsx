@@ -5,9 +5,13 @@ import {
   MutableRefObject,
 } from 'react';
 
-import {DataListItem} from '../DataList/DataList';
 import {DefaultTFuncReturn} from 'i18next';
 import {StyledProps} from '../../helpers/createStyledProps';
+
+export type DataListItem = {
+  text: string;
+  value: string;
+};
 
 export type InputChangeEvent = {
   name?: string;
@@ -19,7 +23,7 @@ export type InputChangeEvent = {
 export type InputChangeEventHandler = (arg: InputChangeEvent) => void;
 export interface InputProps extends StyledProps {
   // inputRef?: LegacyRef<HTMLInputElement | undefined> | undefined;
-  inputRef?: MutableRefObject<HTMLInputElement>;
+  // inputRef?: MutableRefObject<HTMLInputElement>;
   ref?: ForwardedRef<HTMLInputElement>;
   label?: string | DefaultTFuncReturn;
   labelColor?: string;
@@ -29,7 +33,8 @@ export interface InputProps extends StyledProps {
   name?: string;
   type?: string;
   tabIndex?: number;
-  placeholder?: string | DefaultTFuncReturn | undefined;
+  placeholder?: string | undefined;
+  placeholderTKey?: DefaultTFuncReturn | undefined;
   value?: string;
   pattern?: RegExp;
   required?: boolean;

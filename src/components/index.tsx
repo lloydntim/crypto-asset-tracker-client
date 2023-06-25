@@ -5,7 +5,6 @@ import Span from './Span/Span';
 import Link from './Link/Link';
 import List from './List/List';
 import Container from './Container/Container';
-import DataList from './DataList/DataList';
 import EntryField from './EntryField/EntryField';
 import Input from './Input/Input';
 import InputField from './InputField/InputField';
@@ -14,7 +13,7 @@ import IconButton from './IconButton/IconButton';
 import Icon from './Icon/Icon';
 import Message from './Message/Message';
 import Radios from './Radios/Radios';
-import Switch from './Switch/Switch';
+// import Checkbox from './Checkbox/Checkbox';
 import Body from './Body/Body';
 import Footer from './Footer/Footer';
 import Headline from './Headline/Headline';
@@ -27,7 +26,6 @@ import Navigation from './Navigation/Navigation';
 import Aside from './Aside/Aside';
 
 export {
-  DataList,
   AutoComplete,
   Button,
   Box,
@@ -42,7 +40,7 @@ export {
   InputField,
   Message,
   Radios,
-  Switch,
+  // Checkbox,
   Header,
   Body,
   Navigation,

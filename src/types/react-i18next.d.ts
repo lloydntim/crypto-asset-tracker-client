@@ -1,4 +1,4 @@
-import {resources, defaultNS} from '../localisation/i18n';
+import {resources, defaultNS} from '../locales/i18n';
 
 // react-i18next versions higher than 11.11.0
 declare module 'react-i18next' {

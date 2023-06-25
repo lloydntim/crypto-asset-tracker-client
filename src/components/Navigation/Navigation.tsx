@@ -1,9 +1,16 @@
-import React, {FC, useState} from 'react';
+import React, {useState} from 'react';
 
 import {useNavigate} from 'react-router-dom';
 import {useAuthentication} from '../../providers/AuthenticationProvider';
-import {Headline, Button, IconButton, Menu, Link, List} from '..';
-import {Dialog} from '../../layouts';
+
+import Headline from '../Headline/Headline';
+import IconButton from '../IconButton/IconButton';
+import Button from '../Button/Button';
+import Menu from '../Menu/Menu';
+import Link from '../Link/Link';
+import List from '../List/List';
+
+import Dialog from '../../layouts/Dialog/Dialog';
 
 import {GRAPE_EXTRA_DARK} from '../../constants/Colors';
 import createStylesProps, {StyledProps} from '../../helpers/createStyledProps';
@@ -14,18 +21,20 @@ interface NavigationProps extends StyledProps {
 
 const NavigationSt = createStylesProps('nav');
 
-const Navigation: FC<NavigationProps> = ({
-  title = '',
-  titleTKey = '',
-  ...rest
-}) => {
+const Navigation = ({title = '', titleTKey = '', ...rest}: NavigationProps) => {
   const navigate = useNavigate();
   const {setLoginToken} = useAuthentication();
   const [isMenuVisible, setIsMenuVisible] = useState(false);
   const [isDialogVisible, setIsDialogVisible] = useState(false);
 
   return (
-    <NavigationSt className="navigation" pv={10} w="100%" {...rest}>
+    <NavigationSt
+      data-testid="main-nav"
+      className="navigation"
+      pv={10}
+      w="100%"
+      {...rest}
+    >
       <Menu
         visible={isMenuVisible}
         onCloseButtonClick={() => setIsMenuVisible(false)}
@@ -40,7 +49,7 @@ const Navigation: FC<NavigationProps> = ({
                 .toUpperCase()}${item.substring(1, item.length)}`}</Link>
             );
           }}
-        ></List>
+        />
         <Button tKey="button.logout" onClick={() => setIsDialogVisible(true)} />
       </Menu>
 

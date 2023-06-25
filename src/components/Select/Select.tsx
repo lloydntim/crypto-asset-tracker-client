@@ -22,6 +22,7 @@ interface SelectOptionProps extends StyledProps {
   text: string;
   selected: boolean;
   className: string;
+  role?: string;
   onClick: (value: string) => void;
 }
 const SelectOption = ({
@@ -55,7 +56,7 @@ const Select: FC<SelectProps> = ({
   const [selectedOption, setSelectedOption] = useState(0);
   const [optionsVisible, setOptionsVisible] = useState(false);
   return (
-    <Box className={`select ${name}-select`} {...rest} pos-rel>
+    <Box role="select" className={`select ${name}-select`} {...rest} pos-rel>
       <Button
         align-m
         ph={16}
