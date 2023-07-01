@@ -8,6 +8,7 @@ import {
   BLUE_LIGHT,
   RED,
   RED_LIGHT,
+  WHITE,
   YELLOW,
   YELLOW_LIGHT,
 } from '../../constants/Colors';
@@ -17,7 +18,7 @@ interface MessageProps extends StyledProps {
   type?: string;
   tKey?: string;
   fontSz?: number;
-  children?: ReactNode | null;
+  children?: ReactNode;
 }
 
 const MessageStatusMapper: {
@@ -40,6 +41,7 @@ const MessageStatusMapper: {
 /* eslint-disable react/jsx-props-no-spreading */
 const Message = ({
   type = 'info',
+  color = WHITE,
   children = null,
   tKey = '',
   fontSz = 18,
@@ -64,8 +66,9 @@ const Message = ({
       bs="solid"
       bcolor={borderColor}
       bgcolor={bgColor}
-      mb={16}
+      mv={16}
       p={12}
+      color={color}
       align-c
       {...rest}
       className={`message message-${type}`}

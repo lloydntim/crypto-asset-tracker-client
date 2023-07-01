@@ -1,11 +1,11 @@
-import React, {FC, useState} from 'react';
+import React, {useState} from 'react';
 
-import Radio from './Radio';
-import Box from '../Box/Box';
 import {StyledProps} from '../../helpers/createStyledProps';
+import Box from '../Box/Box';
+import Radio from './Radio';
 import RadioButton from './RadioButton';
 
-type RadioItem = {
+export type RadioItem = {
   label: string;
   value: string;
 };
@@ -23,18 +23,18 @@ interface RadiosProps extends StyledProps {
   isButton?: boolean;
   onChange: RadioChangeEventHandler;
 }
-/* eslint-disable react/jsx-props-no-spreading */
-const Radios: FC<RadiosProps> = ({
+const Radios = ({
   name = 'default',
   items,
   selectedItem = 0,
   onChange,
   isButton = false,
   ...rest
-}) => {
+}: RadiosProps) => {
   const [selectedRadio, setSelectedRadio] = useState(selectedItem);
 
   const RadioElement = isButton ? RadioButton : Radio;
+
   return (
     <Box {...rest} className={`radios ${name}-radios`}>
       {items.map(({label, value}, index) => (

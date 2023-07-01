@@ -2,6 +2,7 @@ import React from 'react';
 
 const IconMove = () => (
   <svg
+    data-testid="icon-move"
     enableBackground="new 0 0 48 48"
     width="28px"
     height="28px"

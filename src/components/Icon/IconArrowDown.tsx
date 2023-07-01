@@ -19,6 +19,7 @@ const IconArrowDown = ({
       width={sz || w}
       height={sz || h}
       fill={color}
+      data-testid="icon-arrow-down"
     >
       <g>
         <polygon points="19.4 0 0 20.7 160 192 320 20.7 300.7 0 160 150.5 19.4 0" />

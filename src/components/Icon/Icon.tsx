@@ -1,4 +1,4 @@
-import React, {FC, ReactElement} from 'react';
+import React from 'react';
 
 import IconView from './IconView';
 import IconSwap from './IconSwap';
@@ -33,7 +33,7 @@ interface IconProps {
   color?: string;
 }
 
-const Icon: FC<IconProps> = ({type, w, h, sz, color}): ReactElement => {
+const Icon = ({type, w, h, sz, color}: IconProps) => {
   const dimensions = sz ? {sz} : {h, w};
   switch (type) {
     case 'view':

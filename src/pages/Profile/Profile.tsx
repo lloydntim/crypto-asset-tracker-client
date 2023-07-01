@@ -26,7 +26,7 @@ import {
   RESEND_VERIFICATION_TOKEN,
   UPDATE_USER,
 } from '../../graphql';
-import {GRAPE_EXTRA_DARK} from '../../constants/Colors';
+import {GRAPE_DARK, GRAPE_EXTRA_DARK} from '../../constants/Colors';
 import Table, {TableCell, TableRow} from '../../components/Table';
 import {useForm} from '../../hooks';
 
@@ -34,7 +34,7 @@ const Profile: FC = () => {
   const [dialog, setDialog] = useState('');
   const [overlay, setOverlay] = useState(false);
   const navigate = useNavigate();
-  const {currentUser} = useAuthentication();
+  const {currentUser, setLoginToken} = useAuthentication();
   const {
     form: {email},
     resetForm,
@@ -42,7 +42,11 @@ const Profile: FC = () => {
   } = useForm('email*');
 
   const userId = currentUser()?.id || '';
-  const {loading, error, data: user} = useQuery(GET_USER, {
+  const {
+    loading,
+    error,
+    data: user,
+  } = useQuery(GET_USER, {
     variables: {id: userId},
     onCompleted: ({getUser}) => console.log('user', getUser),
     onError: (error) => {
@@ -61,7 +65,7 @@ const Profile: FC = () => {
     },
   ] = useMutation(UPDATE_USER, {
     onCompleted: ({updateUser: {username, email}}) =>
-      console.log('message, email was updated successfulloy'),
+      console.log('message, email was updated successfully'),
     // setResponseMessage(
     //   t('messages_success_emailUpdated', {username, email}),
     // ),
@@ -99,7 +103,10 @@ const Profile: FC = () => {
     {loading: removeUserMutationLoading, error: removeUserMutationError},
   ] = useMutation(REMOVE_USER, {
     onCompleted: ({removeUser: {id}}) => {
+      console.log('remove user');
       removeList({variables: {creatorId: id}});
+      setLoginToken('');
+      navigate('/', {replace: true});
     },
     onError: (error) => {
       // const errorMessage = error.message.split(':')[1].trim();
@@ -118,21 +125,22 @@ const Profile: FC = () => {
   return (
     <Page name="profile">
       <Dialog
-        title={t('profile:dialog_deleteAccount_title')}
+        titleTKey="profile:dialog_deleteAccount_title"
         visible={!!dialog}
         onCancelButtonClick={() => setDialog('')}
         onContinueButtonClick={() => {
           setDialog('');
           removeUser({
-            variables: {creatorId: userId},
+            variables: {id: userId},
           });
         }}
       >
-        {t('profile:dialog_deleteAccount_message')}
+        <Text color={GRAPE_DARK} tKey="profile:dialog_deleteAccount_message" />
       </Dialog>
 
       <Overlay
         title={t('profile:form_title_editEmail')}
+        titleTKey={t('profile:form_title_editEmail')}
         visible={overlay}
         onCloseButtonClick={() => {
           resetForm();

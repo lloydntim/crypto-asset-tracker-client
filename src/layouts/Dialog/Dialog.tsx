@@ -4,10 +4,12 @@ import Box from '../../components/Box/Box';
 import Button from '../../components/Button/Button';
 import Headline from '../../components/Headline/Headline';
 import IconButton from '../../components/IconButton/IconButton';
-import {BLACK_OPACITY_75PC, WHITE} from '../../constants/Colors';
+import {BLACK_OPACITY_75PC, GRAPE_DARK, WHITE} from '../../constants/Colors';
+import {DefaultTFuncReturn} from 'i18next';
 
 interface DialogProps {
-  title: string;
+  title?: string;
+  titleTKey?: DefaultTFuncReturn;
   visible: boolean;
   cancelButtonText?: string;
   onCancelButtonClick: MouseEventHandler;
@@ -18,6 +20,7 @@ interface DialogProps {
 /* eslint-disable react/jsx-props-no-spreading */
 const Dialog = ({
   title,
+  titleTKey,
   children,
   cancelButtonText = 'Cancel',
   continueButtonText = 'Continue',
@@ -47,11 +50,18 @@ const Dialog = ({
         max-w={408}
         flex-col
         p={28}
+        br={8}
         bgcolor={WHITE}
         align-self-c
         className="content"
+        color={GRAPE_DARK}
       >
-        <Headline size="h3">{title}</Headline>
+        {(titleTKey || title) && (
+          <Headline size="h3" tKey={titleTKey}>
+            {title}
+          </Headline>
+        )}
+
         <IconButton
           type="close"
           onClick={onCancelButtonClick}

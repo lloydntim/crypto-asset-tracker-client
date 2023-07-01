@@ -1,4 +1,4 @@
-import React, {ChangeEventHandler, FC, ReactElement} from 'react';
+import React, {ChangeEventHandler} from 'react';
 import Label from '../Label/Label';
 import {GRAPE_DARK, WHITE} from '../../constants/Colors';
 import InputField from '../InputField/InputField';
@@ -6,7 +6,6 @@ import {StyledProps} from '../../helpers/createStyledProps';
 import styled from 'styled-components';
 import Span from '../Span/Span';
 
-/* eslint-disable react/jsx-props-no-spreading */
 interface RadioProps extends StyledProps {
   name: string;
   value: string;
@@ -16,7 +15,7 @@ interface RadioProps extends StyledProps {
   onChange: ChangeEventHandler<HTMLInputElement>;
 }
 
-const RadioConainterSt = styled(Label)``;
+const RadioContainerSt = styled(Label)``;
 const RadioBackgroundSt = styled(Span)`
   &:after {
     content: ' ';
@@ -31,20 +30,21 @@ const RadioBackgroundSt = styled(Span)`
   }
 `;
 
-const Radio: FC<RadioProps> = ({
+const Radio = ({
   name,
   value,
-  label = '',
+  label,
   labelColor = WHITE,
   checked,
   onChange,
-}): ReactElement => (
-  <RadioConainterSt
+}: RadioProps) => (
+  <RadioContainerSt
     color={labelColor}
     className="radio"
     htmlFor={name}
     flex-row
     align-m
+    data-testid="radio"
   >
     <InputField
       hidden
@@ -54,6 +54,7 @@ const Radio: FC<RadioProps> = ({
       type="radio"
       checked={checked}
       onChange={onChange}
+      data-testid="radio-element"
     />
     <RadioBackgroundSt
       flex-row
@@ -69,12 +70,10 @@ const Radio: FC<RadioProps> = ({
       className="radio-background"
       isChecked={checked}
     />
-    {label && (
-      <Span flex-row mv={8} mh={24} className="radio-label">
-        {label}
-      </Span>
-    )}
-  </RadioConainterSt>
+    <Span flex-row mv={8} mh={24} className="radio-label">
+      {label}
+    </Span>
+  </RadioContainerSt>
 );
 
 export default Radio;

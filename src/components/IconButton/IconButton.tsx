@@ -18,7 +18,7 @@ interface IconButtonProps extends StyledProps {
   disabled?: boolean;
   isLink?: boolean;
   to?: string;
-  onClick: MouseEventHandler;
+  onClick?: MouseEventHandler;
   onMouseUp?: MouseEventHandler;
   onMouseDown?: MouseEventHandler;
   onMouseLeave?: MouseEventHandler;
@@ -49,6 +49,8 @@ const IconButton = ({
   const navigate = useNavigate();
   return (
     <Button
+      data-testid={`icon-button-${type}`}
+      aria-label="icon-button"
       className={`icon-button icon-type-${type} ${
         disabled ? 'is-disabled' : `icon-button-rank-${rank}`
       }`}
@@ -58,6 +60,8 @@ const IconButton = ({
       tabIndex={tabIndex}
       disabled={disabled}
       onClick={(event) => {
+        event.preventDefault();
+
         if (isLink) return navigate(to);
         onClick(event);
       }}

@@ -1,4 +1,5 @@
 import React, {FC, forwardRef, useState} from 'react';
+import {useTranslation} from 'react-i18next';
 
 import AutoComplete from '../../components/AutoComplete/AutoComplete';
 import IconButton from '../../components/IconButton/IconButton';
@@ -6,15 +7,17 @@ import Message from '../../components/Message/Message';
 import Box from '../../components/Box/Box';
 import InputField from '../../components/InputField/InputField';
 import Span from '../../components/Span/Span';
+import Text from '../../components/Text/Text';
 
 import {GRAPE_DARK, TRANSPARENT, WHITE} from '../../constants/Colors';
 import Label from '../Label/Label';
 import {validateInput, InputProps} from './InputHelper';
 
-/* eslint-disable react/jsx-props-no-spreading */
+/* eslint-disable react/jsx-props-no-spreading, react/display-name */
 const Input: FC<InputProps> = forwardRef((props, ref) => {
   const {
     label = '',
+    labelTKey,
     labelColor = WHITE,
     autoComplete,
     autoCapitalize,
@@ -22,8 +25,8 @@ const Input: FC<InputProps> = forwardRef((props, ref) => {
     type = 'text',
     tabIndex,
     placeholder = '',
-    placeholderTKey = undefined,
-    value = '',
+    placeholderTKey,
+    value,
     required,
     onChange,
     onFocus,
@@ -43,6 +46,10 @@ const Input: FC<InputProps> = forwardRef((props, ref) => {
     text: string;
   }>({type: '', text: ''});
   const validationProps = {...props, type: dynamicInputType};
+  const [inputValue, setInputValue] = useState(value || '');
+  const {t} = useTranslation();
+
+  const labelText = label || labelTKey;
 
   return (
     <Label
@@ -57,9 +64,9 @@ const Input: FC<InputProps> = forwardRef((props, ref) => {
       mv={mv}
       bcolor={GRAPE_DARK}
     >
-      {label && (
+      {labelText && (
         <Span mv={8} flex-row className="input-label" color={labelColor}>
-          {label}
+          <Text tKey={labelText} m={0} />
         </Span>
       )}
       <Box flex-row w="100%" bgcolor={WHITE} bcolor={GRAPE_DARK} mh={0} br={8}>
@@ -79,11 +86,13 @@ const Input: FC<InputProps> = forwardRef((props, ref) => {
           tabIndex={tabIndex}
           name={name}
           type={dynamicInputType}
-          placeholder={placeholderTKey || placeholder}
-          value={value}
+          placeholderTKey={placeholderTKey}
+          placeholder={placeholderTKey ? t(placeholderTKey) : placeholder}
+          value={inputValue}
           onChange={({target: {value, files = null}}) => {
             setInputMessage({text: '', type: 'error'});
 
+            setInputValue(value);
             const error = validateInput({value, files}, validationProps);
 
             if (files) setInputMessage({text: files[0].name, type: 'info'});
@@ -105,19 +114,23 @@ const Input: FC<InputProps> = forwardRef((props, ref) => {
           }}
         />
 
-        {isTypePassword && (
+        {(isTypePassword || inputValue.length !== 0) && (
           <IconButton
             bgcolor={TRANSPARENT}
             iconSize={14}
+            align-m
+            flex-row
             type={isTypePassword ? 'view' : 'close'}
             tabIndex={-1}
-            onClick={() =>
-              isTypePassword
-                ? setDynamicInputType(
-                    dynamicInputType === 'password' ? 'text' : 'password',
-                  )
-                : onChange && onChange({name, value: ''})
-            }
+            onClick={() => {
+              if (isTypePassword) {
+                return setDynamicInputType(
+                  dynamicInputType === 'password' ? 'text' : 'password',
+                );
+              }
+              setInputValue('');
+              if (onChange) onChange({name, value: ''});
+            }}
           />
         )}
 
@@ -126,9 +139,9 @@ const Input: FC<InputProps> = forwardRef((props, ref) => {
       {isDataListVisible && (
         <AutoComplete
           items={dataList}
-          value={value}
+          value={inputValue}
           onListItemClick={(item) => {
-            const error = validateInput({value}, validationProps);
+            const error = validateInput({value: inputValue}, validationProps);
 
             console.log('auto complete error', error);
 

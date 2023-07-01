@@ -35,7 +35,7 @@ const EntryField: FC<EntryFieldProps> = ({
       fieldName: {name, value, ref},
     },
     formFieldChangeHandler,
-  } = useForm('fieldName');
+  } = useForm(`fieldName${entryValue && `-${entryValue}`}`);
 
   useEffect(() => {
     if (entryEditMode) ref?.current?.focus();
@@ -60,9 +60,9 @@ const EntryField: FC<EntryFieldProps> = ({
       ) : (
         <>
           <Text font-sz={14}>
-            {typeof entryValue === 'number' && location
-              ? formatAmount(entryValue, location)
-              : entryValue}
+            {!Number.isNaN(parseFloat(value)) && location
+              ? formatAmount(parseFloat(value), location)
+              : value}
           </Text>
           <IconButton
             aria-label="edit-button"
@@ -71,7 +71,7 @@ const EntryField: FC<EntryFieldProps> = ({
             iconSize={16}
             onClick={() => {
               setEntryEditMode(true);
-              formFieldChangeHandler({name, value: entryValue});
+              formFieldChangeHandler({name, value});
             }}
           />
         </>

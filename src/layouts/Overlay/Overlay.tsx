@@ -1,13 +1,15 @@
-import React, {ReactNode, MouseEventHandler, PropsWithChildren} from 'react';
+import React, {MouseEventHandler, PropsWithChildren} from 'react';
 
 import Box from '../../components/Box/Box';
 import Headline from '../../components/Headline/Headline';
 import IconButton from '../../components/IconButton/IconButton';
 
-import {DARKGREY, WHITE} from '../../constants/Colors';
+import {DARKGREY, GRAPE_DARK, WHITE} from '../../constants/Colors';
+import {DefaultTFuncReturn} from 'i18next';
 
 interface OverlayProps {
   title?: string;
+  titleTKey?: DefaultTFuncReturn;
   visible: boolean;
   onCloseButtonClick: MouseEventHandler;
 }
@@ -15,7 +17,8 @@ interface OverlayProps {
 /* eslint-disable react/jsx-props-no-spreading */
 const Overlay = ({
   children,
-  title,
+  title = '',
+  titleTKey,
   visible,
   onCloseButtonClick,
 }: PropsWithChildren<OverlayProps>) => {
@@ -47,7 +50,11 @@ const Overlay = ({
       />
 
       <Box pos-rel pos-b={48} className="overlay-content">
-        <Headline mv={16}>{title}</Headline>
+        {(titleTKey || title) && (
+          <Headline tKey={titleTKey} color={GRAPE_DARK} mv={16}>
+            {title}
+          </Headline>
+        )}
         {children}
       </Box>
     </Box>

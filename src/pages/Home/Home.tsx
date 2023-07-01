@@ -21,7 +21,7 @@ const Home: FC = () => {
         <Box flex-col flex="1" align-c align-m>
           <Box flex-col align-str>
             <Button m={8} tKey="button.login" isLink to="/login" />
-            <Button m={8} tKey="button.register" isLink to="/signup" />
+            <Button m={8} tKey="button.register" isLink to="/register" />
           </Box>
         </Box>
       </Body>

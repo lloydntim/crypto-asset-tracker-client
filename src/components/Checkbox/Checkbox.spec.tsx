@@ -10,15 +10,6 @@ import '@testing-library/jest-dom';
 
 import Checkbox from './Checkbox';
 
-const mockNavigate = jest.fn();
-jest.mock('react-i18next', () => ({
-  useTranslation: () => ({t: (key: string) => key}),
-}));
-
-jest.mock('react-router-dom', () => ({
-  useNavigate: () => mockNavigate,
-}));
-
 const mockChangeHandler = jest.fn();
 
 describe('Checkbox', () => {
@@ -53,6 +44,21 @@ describe('Checkbox', () => {
 
     expect(checkboxLabel).toHaveTextContent('Test Mode');
     expect(checkboxElement).toBeInTheDocument();
+  });
+
+  test('renders an input as a switch', () => {
+    render(
+      <Checkbox
+        label="Test Mode"
+        name="test-mode"
+        as-switch
+        onChange={mockChangeHandler}
+      />,
+    );
+
+    const checkboxLabel = screen.getByTestId('checkbox-label');
+
+    expect(checkboxLabel).toHaveClass('checkbox as-switch');
   });
 
   test('calls change handler', async () => {

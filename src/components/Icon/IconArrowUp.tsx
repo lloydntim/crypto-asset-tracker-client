@@ -19,6 +19,7 @@ const IconArrowUp = ({
       height={sz || h}
       fill={color}
       viewBox="0 0 320 192"
+      data-testid="icon-arrow-up"
     >
       <g>
         <polygon points="300.6 192 320 171.3 160 0 0 171.3 19.3 192 160 41.5 300.6 192" />

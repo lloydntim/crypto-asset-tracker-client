@@ -37,11 +37,11 @@ const Login: FC = (): ReactElement => {
     null,
   );
   const {setLoginToken} = useAuthentication();
-  const {form: hookedForm, formFieldChangeHandler, isFormValid} = useForm(
-    'username*',
-    'password*',
-    'language',
-  );
+  const {
+    form: hookedForm,
+    formFieldChangeHandler,
+    isFormValid,
+  } = useForm('username*', 'password*', 'language');
   const {username, password} = hookedForm;
   const [login, {loading}] = useMutation(LOGIN, {
     onCompleted: (data) => {
@@ -97,8 +97,8 @@ const Login: FC = (): ReactElement => {
         <Form flex-col>
           <Input
             name="username"
-            label={t('input.label.username')}
-            placeholder={t('input.placeholder.enterUsername')}
+            labelTKey="input.label.username"
+            placeholderTKey="input.placeholder.enterUsername"
             required={username.required}
             value={username.value}
             onChange={formFieldChangeHandler}
@@ -107,8 +107,8 @@ const Login: FC = (): ReactElement => {
 
           <Input
             name="password"
-            label={t('input.label.password')}
-            placeholder={t('input.placeholder.enterPassword')}
+            labelTKey="input.label.password"
+            placeholderTKey="input.placeholder.enterPassword"
             type="password"
             required={password.required}
             value={password.value}
@@ -129,9 +129,7 @@ const Login: FC = (): ReactElement => {
           </Message>
         </Form>
 
-        <Link color={WHITE} to="/register">
-          {t('button.register')}
-        </Link>
+        <Link color={WHITE} to="/register" tKey="button.register" />
       </Body>
 
       <Footer startYear={2019} companyName="LNCD" />
