@@ -20,6 +20,7 @@ const IconPlus = ({
       fill={color}
       viewBox="-4 3 32 16"
       xmlns="http://www.w3.org/2000/svg"
+      data-testid="icon-plus"
     >
       <path
         clipRule="evenodd"

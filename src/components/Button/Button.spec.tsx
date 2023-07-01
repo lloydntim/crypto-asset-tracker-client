@@ -11,6 +11,7 @@ import '@testing-library/jest-dom';
 import Button from './Button';
 
 const mockNavigate = jest.fn();
+
 jest.mock('react-i18next', () => ({
   useTranslation: () => ({t: (key: string) => key}),
 }));

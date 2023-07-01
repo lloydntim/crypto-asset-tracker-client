@@ -13,7 +13,7 @@ import IconButton from './IconButton/IconButton';
 import Icon from './Icon/Icon';
 import Message from './Message/Message';
 import Radios from './Radios/Radios';
-// import Checkbox from './Checkbox/Checkbox';
+import Checkbox from './Checkbox/Checkbox';
 import Body from './Body/Body';
 import Footer from './Footer/Footer';
 import Headline from './Headline/Headline';
@@ -40,7 +40,7 @@ export {
   InputField,
   Message,
   Radios,
-  // Checkbox,
+  Checkbox,
   Header,
   Body,
   Navigation,

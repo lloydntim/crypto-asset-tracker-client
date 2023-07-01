@@ -8,6 +8,16 @@ import '@testing-library/jest-dom';
 
 import AutoComplete from './AutoComplete';
 
+const mockNavigate = jest.fn();
+
+jest.mock('react-i18next', () => ({
+  useTranslation: () => ({t: (key: string) => key}),
+}));
+
+jest.mock('react-router-dom', () => ({
+  useNavigate: () => mockNavigate,
+}));
+
 describe('AutoComplete', () => {
   test('renders a group of three buttons with text', () => {
     const data = [

@@ -25,7 +25,8 @@ export interface InputProps extends StyledProps {
   // inputRef?: LegacyRef<HTMLInputElement | undefined> | undefined;
   // inputRef?: MutableRefObject<HTMLInputElement>;
   ref?: ForwardedRef<HTMLInputElement>;
-  label?: string | DefaultTFuncReturn;
+  label?: string;
+  labelTKey?: DefaultTFuncReturn;
   labelColor?: string;
   autoComplete?: string;
   autoCapitalize?: string;
@@ -34,8 +35,8 @@ export interface InputProps extends StyledProps {
   type?: string;
   tabIndex?: number;
   placeholder?: string | undefined;
-  placeholderTKey?: DefaultTFuncReturn | undefined;
-  value?: string;
+  placeholderTKey?: DefaultTFuncReturn;
+  value?: string | undefined;
   pattern?: RegExp;
   required?: boolean;
   minLength?: number;
@@ -59,7 +60,8 @@ export type InputChangeEventTarget = {
   files?: FileList | MockFile[] | null;
 };
 
-export const emailPattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+export const emailPattern =
+  /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 export const validateInput = (
   eventTarget: InputChangeEventTarget,

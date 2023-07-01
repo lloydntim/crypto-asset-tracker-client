@@ -11,7 +11,6 @@
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
-    "noEmit": false,
   },
   "include": ["**/*.ts", "src/**/*.json", "src/components/Aside/Aside.tsx", "src/components/index.tsx"],
   "exclude": ["./src/cypress/**/*"]

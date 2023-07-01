@@ -16,7 +16,7 @@ jest.mock('react-i18next', () => ({
 }));
 
 jest.mock('react-router-dom', () => ({
-  useNavigate: mockNavigate,
+  useNavigate: () => mockNavigate,
 }));
 
 describe('InputField', () => {

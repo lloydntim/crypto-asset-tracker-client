@@ -8,6 +8,7 @@ const IconClipboard = () => (
     viewBox="0 0 48 48"
     width="26px"
     xmlns="http://www.w3.org/2000/svg"
+    data-testid="icon-clipboard"
   >
     <g id="BG_xA0_Image_1_" />
     <g id="nature_1_" />

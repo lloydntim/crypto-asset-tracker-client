@@ -58,7 +58,7 @@ const Checkbox = ({
       align-r
       align-m
       opacity={disabled ? 0.33 : 1}
-      className="checkbox"
+      className={`checkbox ${asSwitch && 'as-switch'}`}
       data-testid="checkbox-label"
       htmlFor={name}
     >

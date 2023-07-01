@@ -13,8 +13,8 @@ type LocalisationHOC = <T extends LocalisationProps>(
 const withLocalisation: LocalisationHOC = (Component) => {
   return (props) => {
     const {t} = useTranslation();
-    const {tKey, children} = props;
-    const content = t(tKey || '') || children;
+    const {tKey = '', children = null} = props;
+    const content = tKey ? t(tKey) : children;
 
     if (!content) return null;
 

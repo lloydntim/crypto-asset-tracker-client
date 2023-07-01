@@ -1,4 +1,4 @@
-import React, {ChangeEventHandler, FC, ReactElement} from 'react';
+import React, {ChangeEventHandler} from 'react';
 import styled from 'styled-components';
 
 import {GRAPE_DARK, TRANSPARENT, WHITE} from '../../constants/Colors';
@@ -8,7 +8,6 @@ import Label from '../Label/Label';
 import InputField from '../InputField/InputField';
 import Span from '../Span/Span';
 
-/* eslint-disable react/jsx-props-no-spreading */
 interface RadioButtonProps extends StyledProps {
   name: string;
   value: string;
@@ -20,14 +19,14 @@ interface RadioButtonProps extends StyledProps {
 
 const RadioButtonConainterSt = styled(Label)``;
 
-const RadioButton: FC<RadioButtonProps> = ({
+const RadioButton = ({
   name,
   value,
   label = '',
   labelColor = WHITE,
   checked,
   onChange,
-}): ReactElement => (
+}: RadioButtonProps) => (
   <RadioButtonConainterSt
     color={labelColor}
     className="radio-button"
@@ -50,17 +49,15 @@ const RadioButton: FC<RadioButtonProps> = ({
       checked={checked}
       onChange={onChange}
     />
-    {label && (
-      <Span
-        flex-row
-        mv={8}
-        mh={24}
-        className="radio-label"
-        color={checked ? GRAPE_DARK : WHITE}
-      >
-        {label}
-      </Span>
-    )}
+    <Span
+      flex-row
+      mv={8}
+      mh={24}
+      className="radio-label"
+      color={checked ? GRAPE_DARK : WHITE}
+    >
+      {label}
+    </Span>
   </RadioButtonConainterSt>
 );
 

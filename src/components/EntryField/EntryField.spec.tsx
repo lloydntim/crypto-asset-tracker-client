@@ -51,10 +51,15 @@ describe('EntryField', () => {
 
   test('renders updated test after entering new value', async () => {
     const mockChangeHandler = jest.fn();
+    const mockBlurHandler = jest.fn();
     const user = userEvent.setup();
 
-    const {rerender} = render(
-      <EntryField value="Edit me" onChange={mockChangeHandler} />,
+    render(
+      <EntryField
+        value="Edit me"
+        onChange={mockChangeHandler}
+        onBlur={mockBlurHandler}
+      />,
     );
 
     const editButton = screen.getByLabelText('edit-button');
@@ -68,10 +73,41 @@ describe('EntryField', () => {
     await user.type(entryFieldInput, '{backspace}{backspace}{backspace}ed');
     await user.tab();
 
-    // Forcefully re-rendering which would occure after input has been updated and component's focus is removed
-    rerender(<EntryField value="Edited" onChange={mockChangeHandler} />);
-
     const entryField = screen.getByText('Edited');
+
+    expect(mockBlurHandler).toHaveBeenCalled();
+    expect(entryField).toBeInTheDocument();
+  });
+
+  test('renders formatted static value', async () => {
+    const user = userEvent.setup();
+
+    const mockChangeHandler = jest.fn();
+
+    render(
+      <EntryField
+        value={2000000}
+        location="en-GB"
+        onChange={mockChangeHandler}
+      />,
+    );
+
+    const formattedStaticValue = screen.getByText('2,000,000.00');
+
+    expect(formattedStaticValue).toBeInTheDocument();
+
+    const editButton = screen.getByLabelText('edit-button');
+
+    await user.click(editButton);
+
+    const entryFieldInput = screen.getByDisplayValue(
+      '2000000',
+    ) as HTMLInputElement;
+
+    await user.type(entryFieldInput, '{backspace}{backspace}');
+    await user.tab();
+
+    const entryField = screen.getByText('20,000.00');
 
     expect(entryField).toBeInTheDocument();
   });
