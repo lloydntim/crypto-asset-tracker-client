@@ -1,5 +1,5 @@
 import React from 'react';
-import {BLACK} from '../../constants/Colors';
+import {BLACK} from '../../constants/colors';
 
 const IconArrowUp = ({
   w = 22,

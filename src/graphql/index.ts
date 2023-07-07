@@ -41,6 +41,14 @@ export const REGISTER = gql`
   }
 `;
 
+export const CREATE_PASSWORD_TOKEN = gql`
+  mutation CreatePasswordToken($username: String) {
+    createPasswordToken(username: $username) {
+      message
+    }
+  }
+`;
+
 export const GET_PASSWORD_TOKEN = gql`
   query GetPasswordToken($resetPasswordToken: String) {
     getPasswordToken(resetPasswordToken: $resetPasswordToken) {
@@ -118,10 +126,9 @@ export const ADD_COIN = gql`
 `;
 
 export const REMOVE_COIN = gql`
-  mutation RemoveCoin($id: ID!) {
-    removeCoin(id: $id) {
+  mutation RemoveCoin($creatorId: ID) {
+    removeCoin(creatorId: $creatorId) {
       creatorId
-      id
       name
     }
   }

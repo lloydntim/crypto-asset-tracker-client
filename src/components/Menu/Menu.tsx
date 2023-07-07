@@ -1,6 +1,6 @@
 import React, {MouseEventHandler, ReactNode} from 'react';
 
-import {WHITE} from '../../constants/Colors';
+import {WHITE} from '../../constants/colors';
 import {StyledProps} from '../../helpers/createStyledProps';
 import Box from '../Box/Box';
 import IconButton from '../IconButton/IconButton';

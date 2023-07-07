@@ -24,6 +24,7 @@ export type InputChangeEventHandler = (arg: InputChangeEvent) => void;
 export interface InputProps extends StyledProps {
   // inputRef?: LegacyRef<HTMLInputElement | undefined> | undefined;
   // inputRef?: MutableRefObject<HTMLInputElement>;
+  // inputRef?: MutableRefObject<HTMLInputElement>;
   ref?: ForwardedRef<HTMLInputElement>;
   label?: string;
   labelTKey?: DefaultTFuncReturn;

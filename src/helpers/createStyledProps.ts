@@ -86,6 +86,8 @@ export interface StyledProps {
 
   animation?: string | boolean;
   ['crsr-pointer']?: boolean | undefined;
+
+  ['lst-stl']?: string | undefined;
 }
 
 export const isDefined = (prop: unknown) => typeof prop !== 'undefined';
@@ -125,7 +127,7 @@ const createStylesProps = <T extends ComponentType>(
     ${({sz}: StyledProps) =>
       sz && `width: ${getUnit(sz)}; height: ${getUnit(sz)};`}
 
-      ${({h}) => h && `height: ${getUnit(h)};`}
+    ${({h}: StyledProps) => h && `height: ${getUnit(h)};`}
     ${({w}: StyledProps) => w && `width: ${getUnit(w)};`}
 
     ${(props: StyledProps) =>
@@ -196,7 +198,7 @@ const createStylesProps = <T extends ComponentType>(
     ${(props: StyledProps) => props['pos-fix'] && 'position: fixed;'}
 
      ${(props: StyledProps) =>
-       isDefined(props['pos-t']) && `top: ${getUnit(props['pos-t'])};`}
+      isDefined(props['pos-t']) && `top: ${getUnit(props['pos-t'])};`}
     ${(props: StyledProps) =>
       isDefined(props['pos-r']) && `right: ${getUnit(props['pos-r'])};`}
     ${(props: StyledProps) =>
@@ -240,11 +242,13 @@ const createStylesProps = <T extends ComponentType>(
     ${(props: StyledProps) =>
       props['font-sz'] && `font-size: ${getUnit(props['font-sz'])};`}
       ${(props: StyledProps) =>
-        props['font-wgt'] && `font-weight: ${props['font-wgt']};`}
+      props['font-wgt'] && `font-weight: ${props['font-wgt']};`}
 
     ${({animation}: StyledProps) => animation && `transition: ${animation};`}
-      ${(props: StyledProps) => props['crsr-pointer'] && 'cursor: pointer;'}
-`;
+    ${(props: StyledProps) => props['crsr-pointer'] && 'cursor: pointer;'}
+    ${(props: StyledProps) =>
+      props['lst-stl'] && `list-style: ${props['lst-stl']};`}
+  `;
 };
 export interface StyledTextProps {
   color?: number | string | undefined;
@@ -252,7 +256,7 @@ export interface StyledTextProps {
 
 export const createTextStylesProps = (element: 'p' | 'h5') => {
   return styled(element)`
-    ${({color}) => color && `color: ${color};`}
+    ${({color}: StyledTextProps) => color && `color: ${color};`}
   `;
 };
 

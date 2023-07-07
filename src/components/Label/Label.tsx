@@ -1,5 +1,5 @@
 import React, {DetailedHTMLProps, LabelHTMLAttributes} from 'react';
-import {GRAPE_EXTRA_DARK} from '../../constants/Colors';
+import {GRAPE_EXTRA_DARK} from '../../constants/colors';
 import createStylesProps, {StyledProps} from '../../helpers/createStyledProps';
 
 const LabelSt = createStylesProps('label');

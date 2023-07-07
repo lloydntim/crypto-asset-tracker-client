@@ -11,7 +11,7 @@ import {
   WHITE,
   YELLOW,
   YELLOW_LIGHT,
-} from '../../constants/Colors';
+} from '../../constants/colors';
 
 interface MessageProps extends StyledProps {
   visible?: boolean;
@@ -25,8 +25,8 @@ const MessageStatusMapper: {
   [key: string]: {bgColor: string; borderColor: string};
 } = {
   info: {
-    bgColor: YELLOW,
-    borderColor: YELLOW_LIGHT,
+    bgColor: YELLOW_LIGHT,
+    borderColor: YELLOW,
   },
   error: {
     bgColor: RED_LIGHT,
@@ -68,7 +68,7 @@ const Message = ({
       bgcolor={bgColor}
       mv={16}
       p={12}
-      color={color}
+      color={borderColor}
       align-c
       {...rest}
       className={`message message-${type}`}

@@ -1,6 +1,6 @@
 import React, {ChangeEventHandler} from 'react';
 import Label from '../Label/Label';
-import {GRAPE_DARK, WHITE} from '../../constants/Colors';
+import {GRAPE_DARK, WHITE} from '../../constants/colors';
 import InputField from '../InputField/InputField';
 import {StyledProps} from '../../helpers/createStyledProps';
 import styled from 'styled-components';

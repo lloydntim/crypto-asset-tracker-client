@@ -48,7 +48,7 @@ export default () => {
       element: <About />,
     },
     {
-      path: 'verify',
+      path: 'verify/:token',
       element: <Verify />,
     },
     {
@@ -56,7 +56,7 @@ export default () => {
       element: <Forgot />,
     },
     {
-      path: 'reset',
+      path: 'reset/:token',
       element: <Reset />,
     },
   ];

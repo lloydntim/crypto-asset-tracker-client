@@ -25,7 +25,7 @@ import {
   Form,
 } from '../../components';
 import {useAuthentication} from '../../providers/AuthenticationProvider';
-import {WHITE} from '../../constants/Colors';
+import {WHITE} from '../../constants/colors';
 
 const Register: FC = (): ReactElement => {
   const navigate = useNavigate();
@@ -37,12 +37,11 @@ const Register: FC = (): ReactElement => {
     null,
   );
   const {setLoginToken} = useAuthentication();
-  const {form: hookedForm, formFieldChangeHandler, isFormValid} = useForm(
-    'username*',
-    'email*',
-    'password*',
-    'passwordConfirm*',
-  );
+  const {
+    form: hookedForm,
+    formFieldChangeHandler,
+    isFormValid,
+  } = useForm('username*', 'email*', 'password*', 'passwordConfirm*');
   const {username, email, password, passwordConfirm} = hookedForm;
 
   const passwordsMatching = password.value === passwordConfirm.value;
@@ -98,8 +97,8 @@ const Register: FC = (): ReactElement => {
         <Form flex-col>
           <Input
             name="username"
-            label={t('input.label.username')}
-            placeholder={t('input.placeholder.enterUsername')}
+            labelTKey="common:input.label.username"
+            placeholderTKey="input.placeholder.enterUsername"
             required={username.required}
             value={username.value}
             onChange={formFieldChangeHandler}
@@ -108,8 +107,8 @@ const Register: FC = (): ReactElement => {
 
           <Input
             name="email"
-            label="Email"
-            placeholder="Enter email"
+            labelTKey="common:input.label.email"
+            placeholderTKey="common:input.placeholder.enterEmail"
             required={email.required}
             value={email.value}
             onChange={formFieldChangeHandler}
@@ -118,8 +117,8 @@ const Register: FC = (): ReactElement => {
 
           <Input
             name="password"
-            label={t('input.label.password')}
-            placeholder={t('input.placeholder.enterPassword')}
+            labelTKey="common:input.label.password"
+            placeholderTKey="common:input.placeholder.enterPassword"
             type="password"
             required={password.required}
             value={password.value}
@@ -132,8 +131,8 @@ const Register: FC = (): ReactElement => {
 
           <Input
             name="passwordConfirm"
-            label="Confirm Password"
-            placeholder="Enter password"
+            labelTKey="common:input.label.passwordConfirm"
+            placeholderTKey="common:input.placeholder.confirmNewPassword"
             type="password"
             required={passwordConfirm.required}
             value={passwordConfirm.value}
@@ -143,7 +142,7 @@ const Register: FC = (): ReactElement => {
 
           <Button
             disabled={!(isFormValid && passwordsMatching)}
-            tKey="button.register"
+            tKey="common:button.register"
             type="submit"
             onClick={submitForm}
             mv={16}
@@ -154,9 +153,7 @@ const Register: FC = (): ReactElement => {
           </Message>
         </Form>
 
-        <Link color={WHITE} to="/login">
-          {t('button.login')}
-        </Link>
+        <Link color={WHITE} to="/login" tKey="common:button.login" />
       </Body>
 
       <Footer startYear={2019} companyName="LNCD" />

@@ -1,7 +1,7 @@
 import React, {ChangeEventHandler} from 'react';
 import styled from 'styled-components';
 
-import {GRAPE_DARK, TRANSPARENT, WHITE} from '../../constants/Colors';
+import {GRAPE_DARK, TRANSPARENT, WHITE} from '../../constants/colors';
 import {StyledProps} from '../../helpers/createStyledProps';
 
 import Label from '../Label/Label';

@@ -25,7 +25,7 @@ import {
   GREY,
   LIGHTGREY,
   WHITE,
-} from '../../../constants/Colors';
+} from '../../../constants/colors';
 import {useForm} from '../../../hooks';
 import {Dialog} from '../../../layouts';
 
@@ -187,6 +187,7 @@ const CoinList: FC<CoinListProps> = (props) => {
   const {portfolioTotal, coins: testCoins = []} = processCoinData(data);
   const {currency: formatCurrency, location} = currencyFormatMapper[convert];
 
+  console.log('newCoin.value', newCoin.value);
   return (
     <>
       {coinListDialogMapper[dialog] && (
@@ -264,8 +265,12 @@ const CoinList: FC<CoinListProps> = (props) => {
                 flex-row
                 m={8}
                 onClick={() => {
-                  if (typeof newCoin.value !== 'undefined')
-                    onAddCoin(newCoin.value);
+                  if (typeof newCoin.value !== 'undefined' && symbols) {
+                    const [symbol]: {id: string; name: string}[] =
+                      symbols.filter(({name}) => name === newCoin.value);
+                    onAddCoin(symbol.id);
+                    // formFieldChangeHandler({name: 'newCoin', value: ''});
+                  }
                 }}
               />
             </Form>
@@ -273,13 +278,15 @@ const CoinList: FC<CoinListProps> = (props) => {
         )}
 
         <List<CoinData>
+          lst-stl="none"
+          mv={8}
+          p={0}
           data={testCoins}
           renderItem={({
             item: {id, coinId, name, assets, price, amount, value},
             index,
           }) => {
             const {storageTypes} = assets;
-            console.log('assets', assets);
             const holdingsList: HoldingsListData[] = Object.values(
               storageTypes ?? {},
             );

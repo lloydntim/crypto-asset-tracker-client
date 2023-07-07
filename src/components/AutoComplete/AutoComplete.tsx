@@ -4,7 +4,7 @@ import List, {RenderItem} from '../List/List';
 import Span from '../Span/Span';
 import Button from '../Button/Button';
 
-import {GRAPE_DARK, WHITE} from '../../constants/Colors';
+import {GRAPE_DARK, WHITE} from '../../constants/colors';
 import {DataListItem as AutoCompleteItem} from '../Input/InputHelper';
 
 interface AutoCompleteProps {
