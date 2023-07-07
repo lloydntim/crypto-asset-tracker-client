@@ -1,6 +1,4 @@
-const {
-  resolve
-} = require('path');
+const {resolve} = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const ForkTsCheckerNotifierWebpackPlugin = require('fork-ts-checker-notifier-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
@@ -25,24 +23,29 @@ module.exports = {
     // stats: 'errors-only',
   },
   module: {
-    rules: [{
-      test: /\.tsx?$/,
-      use: 'ts-loader',
-      exclude: /node_modules/,
-    },
-    {
-      test: /\.scss$/,
-      use: [{
-        loader: process.env.NODE_ENV !== 'production' ? 'style-loader' : MiniCssExtractPlugin.loader,
+    rules: [
+      {
+        test: /\.tsx?$/,
+        use: 'ts-loader',
+        exclude: /node_modules/,
       },
       {
-        loader: 'css-loader', // translates CSS into CommonJS
+        test: /\.scss$/,
+        use: [
+          {
+            loader:
+              process.env.NODE_ENV !== 'production'
+                ? 'style-loader'
+                : MiniCssExtractPlugin.loader,
+          },
+          {
+            loader: 'css-loader', // translates CSS into CommonJS
+          },
+          {
+            loader: 'sass-loader', // compiles Sass to CSS
+          },
+        ],
       },
-      {
-        loader: 'sass-loader', // compiles Sass to CSS
-      },
-      ],
-    },
     ],
   },
   resolve: {
@@ -61,7 +64,7 @@ module.exports = {
     }),
     new ForkTsCheckerNotifierWebpackPlugin({
       title: 'TypeScript',
-      excludeWarnings: false
+      excludeWarnings: false,
     }),
     new HtmlWebpackPlugin({
       inject: true,
