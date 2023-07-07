@@ -171,6 +171,7 @@ export const processCoinData = ({coins}: any) => {
 ];
  */
 export const formatAmount = (value: number, location: string) => {
+  console.log('formatAmount', value);
   if (typeof value === 'undefined' || typeof value === null) {
     return (0).toFixed(2);
   }

@@ -1,13 +1,7 @@
-import React, {
-  ReactElement,
-  FC,
-  useState,
-  MouseEventHandler,
-  useCallback,
-} from 'react';
+import React, {useState, MouseEventHandler, useCallback} from 'react';
 import {useMutation} from '@apollo/client';
 import {useNavigate} from 'react-router-dom';
-import {useTranslation} from 'react-i18next';
+import {changeLanguage} from 'i18next';
 
 import {LOGIN} from '../../graphql';
 import {useForm} from '../../hooks';
@@ -25,14 +19,11 @@ import {
   Radios,
   Link,
 } from '../../components';
-import {WHITE} from '../../constants/Colors';
+import {WHITE} from '../../constants/colors';
 
-const Login: FC = (): ReactElement => {
+const Login = () => {
   const navigate = useNavigate();
-  const {
-    t,
-    i18n: {changeLanguage},
-  } = useTranslation();
+
   const [message, setMessage] = useState<{text: string; type: string} | null>(
     null,
   );
@@ -50,7 +41,7 @@ const Login: FC = (): ReactElement => {
       navigate('/welcome');
     },
     onError: (error) => {
-      setMessage({type: 'error', text: error?.message.split(':')[1].trim()});
+      setMessage({type: 'error', text: error?.message});
     },
   });
 
@@ -130,6 +121,8 @@ const Login: FC = (): ReactElement => {
         </Form>
 
         <Link color={WHITE} to="/register" tKey="button.register" />
+
+        <Link color={WHITE} to="/forgot" tKey="login:link.forgotPassword" />
       </Body>
 
       <Footer startYear={2019} companyName="LNCD" />

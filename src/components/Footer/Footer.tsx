@@ -17,8 +17,9 @@ const Footer = ({
   companyName = 'footer',
   ...rest
 }: FooterProps) => {
-  const companyYears = `${startYear}${startYear !== currentYear &&
-    `- ${currentYear}`}`;
+  const companyYears = `${startYear}${
+    startYear !== currentYear ? ` - ${currentYear}` : ''
+  }`;
 
   return (
     <FooterSt

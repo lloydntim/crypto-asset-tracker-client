@@ -26,7 +26,7 @@ import {
   RESEND_VERIFICATION_TOKEN,
   UPDATE_USER,
 } from '../../graphql';
-import {GRAPE_DARK, GRAPE_EXTRA_DARK} from '../../constants/Colors';
+import {GRAPE_DARK, GRAPE_EXTRA_DARK} from '../../constants/colors';
 import Table, {TableCell, TableRow} from '../../components/Table';
 import {useForm} from '../../hooks';
 
@@ -48,11 +48,11 @@ const Profile: FC = () => {
     data: user,
   } = useQuery(GET_USER, {
     variables: {id: userId},
+    skip: !Boolean(userId),
     onCompleted: ({getUser}) => console.log('user', getUser),
     onError: (error) => {
-      //  const errorMessage = error.message.split(':')[1].trim();
       //  setResponseMessage(errorMessage);
-      console.log('error', error);
+      console.log('GET_USER error', error);
     },
   });
 
@@ -69,11 +69,7 @@ const Profile: FC = () => {
     // setResponseMessage(
     //   t('messages_success_emailUpdated', {username, email}),
     // ),
-    onError: (error) => {
-      // const errorMessage = error.message.split(':')[1].trim();
-      console.log('error', error);
-      // setResponseMessage(errorMessage);
-    },
+
     refetchQueries: [{query: GET_USER, variables: {id: userId}}],
   });
 
@@ -86,41 +82,34 @@ const Profile: FC = () => {
     },
   ] = useMutation(RESEND_VERIFICATION_TOKEN, {
     onCompleted: ({resendVerificationToken: {message}}) =>
-      // setResponseMessage(message),
       console.log('message', message),
     refetchQueries: [{query: GET_USER, variables: {id: userId}}],
   });
 
   const [
-    removeList,
-    {loading: removeListMutationLoading, error: removeListMutationError},
+    removeCoin,
+    {loading: removeCoinMutationLoading, error: removeCoinMutationError},
   ] = useMutation(REMOVE_COIN, {
-    onCompleted: () => navigate('/login'),
+    onCompleted: () => {
+      removeUser({
+        variables: {id: userId},
+      });
+    },
   });
 
   const [
     removeUser,
     {loading: removeUserMutationLoading, error: removeUserMutationError},
   ] = useMutation(REMOVE_USER, {
-    onCompleted: ({removeUser: {id}}) => {
-      console.log('remove user');
-      removeList({variables: {creatorId: id}});
+    onCompleted: () => {
       setLoginToken('');
       navigate('/', {replace: true});
-    },
-    onError: (error) => {
-      // const errorMessage = error.message.split(':')[1].trim();
-      console.log('error', error);
-      // setResponseMessage(errorMessage);
     },
   });
 
   const {
-    t,
     i18n: {changeLanguage},
   } = useTranslation();
-
-  console.log('data user', user);
 
   return (
     <Page name="profile">
@@ -130,17 +119,14 @@ const Profile: FC = () => {
         onCancelButtonClick={() => setDialog('')}
         onContinueButtonClick={() => {
           setDialog('');
-          removeUser({
-            variables: {id: userId},
-          });
+          removeCoin({variables: {creatorId: userId}});
         }}
       >
         <Text color={GRAPE_DARK} tKey="profile:dialog_deleteAccount_message" />
       </Dialog>
 
       <Overlay
-        title={t('profile:form_title_editEmail')}
-        titleTKey={t('profile:form_title_editEmail')}
+        titleTKey="profile:form_title_editEmail"
         visible={overlay}
         onCloseButtonClick={() => {
           resetForm();
@@ -149,13 +135,13 @@ const Profile: FC = () => {
       >
         <Form>
           <Input
-            label={t('common:input.label.email')}
+            labelTKey="common:input.label.email"
             ref={email.ref}
             required
             autoComplete="email"
             name={email.name}
             type="email"
-            placeholder={t('common:input.placeholder.enterNewEmail')}
+            placeholderTKey="common:input.placeholder.enterNewEmail"
             value={email.value}
             onChange={formFieldChangeHandler}
             mv={12}
@@ -165,6 +151,7 @@ const Profile: FC = () => {
             // disabled={!isFormValid}
             tKey="profile:form_button_updateEmail"
             onClick={() => {
+              // console.log('email', email.value);
               updateUser({variables: {id: userId, email: email.value}});
               setOverlay(false);
             }}
@@ -193,12 +180,41 @@ const Profile: FC = () => {
       </Header>
       <Body flex-col flex="1">
         <Title tKey="profile:title" />
-        {loading && <Box>Loading</Box>}
+        {(loading ||
+          sendVerificationMutationLoading ||
+          removeUserMutationLoading ||
+          removeCoinMutationLoading) && <Box>Loading</Box>}
         {error && (
-          <Message type="error"> User details could not be loaded</Message>
+          <Message type="error">User details could not be loaded</Message>
         )}
-        {removeUserMutationLoading && (
-          <Message type="error">User could not be loaded</Message>
+        {removeUserMutationError && (
+          <Message type="error">User could not be removed</Message>
+        )}
+
+        {updateUserMutationError && (
+          <Message type="error">{updateUserMutationError.message}</Message>
+        )}
+
+        {removeCoinMutationError && (
+          <Message type="error">{removeCoinMutationError.message}</Message>
+        )}
+
+        {sendVerificationMutationError && (
+          <Message type="error">
+            {sendVerificationMutationError.message}
+          </Message>
+        )}
+
+        {sendVerificationMutationData && (
+          <Message type="info">
+            {sendVerificationMutationData.resendVerificationToken.message}
+          </Message>
+        )}
+
+        {updateUserMutationData && (
+          <Message type="info">
+            {updateUserMutationData.updateUser.message}
+          </Message>
         )}
 
         {user?.getUser && (
@@ -206,10 +222,18 @@ const Profile: FC = () => {
             <Table m={20}>
               <TableRow>
                 <TableCell valign-m col-w={40}>
-                  <Text m={0} strong tKey="common:input.label.email" />
+                  <Text m={0} strong tKey="common:input.label.username" />
                 </TableCell>
                 <TableCell valign-m col-w={40}>
-                  <Text m={0}>{user.getUser.email}</Text>
+                  <Text m={0}>{user.getUser.username}</Text>
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell valign-m col-w={40}>
+                  <Text strong tKey="common:input.label.email" />
+                </TableCell>
+                <TableCell valign-m col-w={40}>
+                  <Text>{user.getUser.email}</Text>
                 </TableCell>
                 <TableCell valign-m col-w={40}>
                   <IconButton
@@ -245,12 +269,12 @@ const Profile: FC = () => {
               {!JSON.parse(user.getUser.isVerified) && (
                 <Button
                   m={8}
-                  tKey={'profile:button_resendVerificationEmail'}
+                  tKey="profile:button_resendVerificationEmail"
                   onClick={() => {
                     resendVerificationToken({
                       variables: {
-                        email: user.email,
-                        username: user.username,
+                        email: user.getUser.email,
+                        username: user.getUser.username,
                       },
                     });
                   }}

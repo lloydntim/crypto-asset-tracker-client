@@ -1,5 +1,5 @@
 import React, {useState, FC} from 'react';
-import {GRAPE_EXTRA_LIGHT, TRANSPARENT, WHITE} from '../../constants/Colors';
+import {GRAPE_EXTRA_LIGHT, TRANSPARENT, WHITE} from '../../constants/colors';
 import {StyledProps} from '../../helpers/createStyledProps';
 import Box from '../Box/Box';
 import Button from '../Button/Button';

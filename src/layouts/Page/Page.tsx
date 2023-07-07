@@ -1,7 +1,7 @@
 import React, {ReactNode} from 'react';
 
 import Box from '../../components/Box/Box';
-import {GRAPE_MEDIUM} from '../../constants/Colors';
+import {GRAPE_MEDIUM} from '../../constants/colors';
 
 interface PageProps {
   name: string;
@@ -10,11 +10,6 @@ interface PageProps {
 
 /* eslint-disable react/jsx-props-no-spreading */
 const Page = ({name, children}: PageProps) => {
-  // display: flex;
-  // flex-direction: column;
-  // padding: 0 12px;
-  // max-width: 664px;
-  // margin: 0 auto;
   return (
     <Box
       w="100%"

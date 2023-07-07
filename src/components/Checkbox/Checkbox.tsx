@@ -4,7 +4,7 @@ import Span from '../Span/Span';
 import InputField from '../InputField/InputField';
 import Label from '../Label/Label';
 
-import {DARKGREY, GRAPE_MEDIUM} from '../../constants/Colors';
+import {DARKGREY, GRAPE_MEDIUM} from '../../constants/colors';
 
 interface CheckboxProps {
   name: string;

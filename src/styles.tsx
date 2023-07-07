@@ -1,5 +1,5 @@
 import {createGlobalStyle} from 'styled-components';
-import {GRAPE_DARK, WHITE} from './constants/Colors';
+import {GRAPE_DARK, WHITE} from './constants/colors';
 
 export default createGlobalStyle`
   body {

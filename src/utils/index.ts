@@ -3,7 +3,7 @@ export const formatToCurrency = (
   currency: string,
   location = 'en-GB',
 ) => {
-  const numberValue = Number.isNaN(value) ? 0 : value;
+  const numberValue = !value || Number.isNaN(value) ? 0 : value;
 
   return new Intl.NumberFormat(location, {style: 'currency', currency}).format(
     numberValue,

@@ -4,7 +4,7 @@ import Box from '../../components/Box/Box';
 import Button from '../../components/Button/Button';
 import Headline from '../../components/Headline/Headline';
 import IconButton from '../../components/IconButton/IconButton';
-import {BLACK_OPACITY_75PC, GRAPE_DARK, WHITE} from '../../constants/Colors';
+import {BLACK_OPACITY_75PC, GRAPE_DARK, WHITE} from '../../constants/colors';
 import {DefaultTFuncReturn} from 'i18next';
 
 interface DialogProps {

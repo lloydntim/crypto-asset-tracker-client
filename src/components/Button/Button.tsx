@@ -1,10 +1,10 @@
-import React, {FC, MouseEventHandler, TouchEventHandler} from 'react';
+import React, {MouseEventHandler, TouchEventHandler} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {
   GRAPE_EXTRA_DARK,
   GRAPE_LIGHT,
   TRANSPARENT,
-} from '../../constants/Colors';
+} from '../../constants/colors';
 import createStylesProps, {StyledProps} from '../../helpers/createStyledProps';
 
 import {withLocalisation} from '../../hoc';
@@ -30,7 +30,7 @@ interface ButtonProps extends LocalisationProps, StyledProps {
 
 const ButtonSt = createStylesProps('button');
 
-const Button: FC<ButtonProps> = ({
+const Button = ({
   children,
   type = 'button',
   rank = 'primary',
@@ -54,7 +54,7 @@ const Button: FC<ButtonProps> = ({
   'flex-row': flexRow = true,
   'crsr-pointer': crsrPointer = true,
   ...rest
-}) => {
+}: ButtonProps) => {
   const navigate = useNavigate();
   return (
     /* eslint-disable react/button-has-type */

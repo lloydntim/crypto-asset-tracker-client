@@ -14,7 +14,7 @@ const Verify: FC = () => {
     onCompleted: (data) => {
       /* eslint-disable no-undef */
       setLoginToken(data.verify.token);
-      navigate(`/user/${currentUser()?.id}`);
+      navigate('/profile');
     },
   });
 
@@ -35,7 +35,7 @@ const Verify: FC = () => {
         )}
         {error && (
           <Message type="error">
-            <Text tKey="common:message.error.text" />
+            <Text>{error.message}</Text>
           </Message>
         )}
       </Body>

@@ -12,8 +12,10 @@ import List from '../List/List';
 
 import Dialog from '../../layouts/Dialog/Dialog';
 
-import {GRAPE_EXTRA_DARK} from '../../constants/Colors';
+import {GRAPE_EXTRA_DARK} from '../../constants/colors';
 import createStylesProps, {StyledProps} from '../../helpers/createStyledProps';
+import Radios from '../Radios/Radios';
+import {changeLanguage} from 'i18next';
 interface NavigationProps extends StyledProps {
   title?: string;
   titleTKey?: string;
@@ -39,6 +41,23 @@ const Navigation = ({title = '', titleTKey = '', ...rest}: NavigationProps) => {
         visible={isMenuVisible}
         onCloseButtonClick={() => setIsMenuVisible(false)}
       >
+        <Radios
+          isButton
+          flex-row
+          mv={12}
+          items={[
+            {
+              value: 'en',
+              label: 'English',
+            },
+            {
+              value: 'de',
+              label: 'German',
+            },
+          ]}
+          onChange={({value}) => changeLanguage(value)}
+        />
+
         <List<string>
           mv={20}
           data={['profile', 'about', 'welcome']}

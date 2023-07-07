@@ -6,6 +6,9 @@
     "register": "Anmelden",
     "logout": "Ausloggen"
   },
+  "link": {
+    "back": "Zurück"
+  },
   "label": {
     "verified": "Verifiziert",
     "pending": "Ausstehend"

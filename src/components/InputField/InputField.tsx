@@ -4,7 +4,7 @@ import React, {
   InputHTMLAttributes,
   forwardRef,
 } from 'react';
-import {GRAPE_DARK, GRAPE_EXTRA_DARK} from '../../constants/Colors';
+import {GRAPE_DARK, GRAPE_EXTRA_DARK} from '../../constants/colors';
 import createStylesProps, {StyledProps} from '../../helpers/createStyledProps';
 import {DefaultTFuncReturn} from 'i18next';
 import {useTranslation} from 'react-i18next';

@@ -110,31 +110,29 @@ const Welcome: FC = (): ReactElement => {
     },
   );
 
-  const [
-    removeCoin,
-    {loading: removeCoinLoading, error: removeCoinError},
-  ] = useMutation(REMOVE_COIN, {
-    update: (cache, {data}) => {
-      const creatorId = currentUser()?.id ?? '';
-      const newCoin = data?.removeCoin ?? false;
-      const existingCoins = creatorId
-        ? cache.readQuery({
+  const [removeCoin, {loading: removeCoinLoading, error: removeCoinError}] =
+    useMutation(REMOVE_COIN, {
+      update: (cache, {data}) => {
+        const creatorId = currentUser()?.id ?? '';
+        const newCoin = data?.removeCoin ?? false;
+        const existingCoins = creatorId
+          ? cache.readQuery({
+              query: GET_COINS,
+              variables: {creatorId},
+            })
+          : false;
+
+        if (newCoin && existingCoins && creatorId) {
+          cache.writeQuery({
             query: GET_COINS,
             variables: {creatorId},
-          })
-        : false;
-
-      if (newCoin && existingCoins && creatorId) {
-        cache.writeQuery({
-          query: GET_COINS,
-          variables: {creatorId},
-          data: {
-            getCoins: [existingCoins],
-          },
-        });
-      }
-    },
-  });
+            data: {
+              getCoins: [existingCoins],
+            },
+          });
+        }
+      },
+    });
 
   const [
     addCoinHolding,
@@ -200,7 +198,7 @@ const Welcome: FC = (): ReactElement => {
   }
 
   if (getCoinsError) {
-    return <Box>{getCoinsError.message.split(':')[1].trim()}</Box>;
+    return <Box>{getCoinsError.message}</Box>;
   }
 
   if (getSymbolsError) {

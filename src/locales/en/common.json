@@ -6,6 +6,9 @@
     "register": "Register",
     "logout": "Logout"
   },
+  "link": {
+    "back": "Back"
+  },
   "label": {
     "verified": "Verified",
     "pending": "Pending"

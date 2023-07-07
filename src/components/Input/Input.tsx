@@ -9,7 +9,7 @@ import InputField from '../../components/InputField/InputField';
 import Span from '../../components/Span/Span';
 import Text from '../../components/Text/Text';
 
-import {GRAPE_DARK, TRANSPARENT, WHITE} from '../../constants/Colors';
+import {GRAPE_DARK, TRANSPARENT, WHITE} from '../../constants/colors';
 import Label from '../Label/Label';
 import {validateInput, InputProps} from './InputHelper';
 
@@ -75,7 +75,6 @@ const Input: FC<InputProps> = forwardRef((props, ref) => {
           flex="1"
           flex-row
           m={0}
-          mv={mv}
           bcolor={TRANSPARENT}
           bw={bw}
           ref={ref}
@@ -144,9 +143,13 @@ const Input: FC<InputProps> = forwardRef((props, ref) => {
             const error = validateInput({value: inputValue}, validationProps);
 
             console.log('auto complete error', error);
+            console.log('item.value', item.value);
 
             if (error) setInputMessage({text: error, type: 'error'});
-            if (onChange) onChange({name, value: item.value, error, required});
+            if (onChange) {
+              setInputValue(item.text);
+              onChange({name, value: item.text, error, required});
+            }
             if (onDataListClick) onDataListClick(item);
 
             setIsDataListVisible(false);

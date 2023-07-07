@@ -1,3 +1,6 @@
 {
-  "title": "Login"
+  "title": "Login",
+  "link": {
+    "forgotPassword": "Forgot Password"
+  }
 }
