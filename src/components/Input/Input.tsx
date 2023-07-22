@@ -87,7 +87,7 @@ const Input: FC<InputProps> = forwardRef((props, ref) => {
           name={name}
           type={dynamicInputType}
           placeholderTKey={placeholderTKey}
-          placeholder={placeholderTKey ? t(placeholderTKey) : placeholder}
+          placeholder={placeholder}
           value={value}
           defaultValue={defaultValue}
           // value={inputValue}
@@ -116,7 +116,7 @@ const Input: FC<InputProps> = forwardRef((props, ref) => {
           }}
         />
 
-        {(isTypePassword || value.length !== 0) && (
+        {(isTypePassword || (value && value.length)) && (
           // {(isTypePassword || inputValue.length !== 0) && (
           <IconButton
             bgcolor={TRANSPARENT}
