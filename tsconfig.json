@@ -12,6 +12,6 @@
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
   },
-  "include": ["**/*.ts", "src/**/*.json", "src/components/Aside/Aside.tsx", "src/components/index.tsx"],
+  "include": ["src/**/*.ts", "src/**/*.json"],
   "exclude": ["cypress/**/*"]
 }
