@@ -39,6 +39,7 @@ const CoinListHoldingForm: FC<CoinListHoldingFormProps> = ({
         Name
       </Text>
       <InputField
+        name="amount"
         value={holding.name}
         w={40}
         onChange={({target: {value}}) => onChange({value, field: 'name'})}
@@ -47,6 +48,7 @@ const CoinListHoldingForm: FC<CoinListHoldingFormProps> = ({
         Amount
       </Text>
       <InputField
+        name="amount"
         value={holding.amount}
         w={40}
         onChange={({target: {value}}) => onChange({value, field: 'amount'})}
@@ -56,6 +58,7 @@ const CoinListHoldingForm: FC<CoinListHoldingFormProps> = ({
       </Text>
 
       <Select
+        name="type"
         options={types}
         onChange={(value) => onChange({value, field: 'type'})}
         m={8}

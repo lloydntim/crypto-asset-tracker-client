@@ -1,5 +1,6 @@
 /// <reference types="cypress" />
 // @ts-check
+
 describe('Login Scenario', () => {
   it('login', () => {
     cy.visit('http://localhost:4001/#/login');

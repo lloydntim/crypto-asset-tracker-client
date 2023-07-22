@@ -26,6 +26,7 @@ const Input: FC<InputProps> = forwardRef((props, ref) => {
     tabIndex,
     placeholder = '',
     placeholderTKey,
+    defaultValue,
     value,
     required,
     onChange,
@@ -46,7 +47,7 @@ const Input: FC<InputProps> = forwardRef((props, ref) => {
     text: string;
   }>({type: '', text: ''});
   const validationProps = {...props, type: dynamicInputType};
-  const [inputValue, setInputValue] = useState(value || '');
+  // const [inputValue, setInputValue] = useState(value || '');
   const {t} = useTranslation();
 
   const labelText = label || labelTKey;
@@ -87,11 +88,13 @@ const Input: FC<InputProps> = forwardRef((props, ref) => {
           type={dynamicInputType}
           placeholderTKey={placeholderTKey}
           placeholder={placeholderTKey ? t(placeholderTKey) : placeholder}
-          value={inputValue}
+          value={value}
+          defaultValue={defaultValue}
+          // value={inputValue}
           onChange={({target: {value, files = null}}) => {
             setInputMessage({text: '', type: 'error'});
-
-            setInputValue(value);
+            console.log('value', value);
+            // setInputValue(value);
             const error = validateInput({value, files}, validationProps);
 
             if (files) setInputMessage({text: files[0].name, type: 'info'});
@@ -113,7 +116,8 @@ const Input: FC<InputProps> = forwardRef((props, ref) => {
           }}
         />
 
-        {(isTypePassword || inputValue.length !== 0) && (
+        {(isTypePassword || value.length !== 0) && (
+          // {(isTypePassword || inputValue.length !== 0) && (
           <IconButton
             bgcolor={TRANSPARENT}
             iconSize={14}
@@ -127,7 +131,7 @@ const Input: FC<InputProps> = forwardRef((props, ref) => {
                   dynamicInputType === 'password' ? 'text' : 'password',
                 );
               }
-              setInputValue('');
+              // setInputValue('');
               if (onChange) onChange({name, value: ''});
             }}
           />
@@ -138,16 +142,18 @@ const Input: FC<InputProps> = forwardRef((props, ref) => {
       {isDataListVisible && (
         <AutoComplete
           items={dataList}
-          value={inputValue}
+          value={value}
+          // value={inputValue}
           onListItemClick={(item) => {
-            const error = validateInput({value: inputValue}, validationProps);
+            const error = validateInput({value}, validationProps);
+            // const error = validateInput({value: inputValue}, validationProps);
 
             console.log('auto complete error', error);
             console.log('item.value', item.value);
 
             if (error) setInputMessage({text: error, type: 'error'});
             if (onChange) {
-              setInputValue(item.text);
+              // setInputValue(item.text);
               onChange({name, value: item.text, error, required});
             }
             if (onDataListClick) onDataListClick(item);
