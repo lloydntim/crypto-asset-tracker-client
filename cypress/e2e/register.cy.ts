@@ -1,6 +1,13 @@
 /// <reference types="cypress" />
 // @ts-check
 describe('Register Scenario', () => {
+  before(() => {
+    // delete 'registeruser' from database if exists
+    cy.deleteOne({username: 'registeruser'}).then((result) => {
+      cy.log(result); // prints the document with the _id if found, otherwise null
+    });
+  });
+
   const names = [
     'Olivia',
     'Noah',
@@ -105,18 +112,19 @@ describe('Register Scenario', () => {
   ];
 
   it('register', () => {
-    const getRandomItemFromArray = (arr) => {
+    const getRandomItemFromArray = (arr: string[]) => {
       const randomItemIndex = Math.floor(Math.random() * arr.length);
 
       return arr[randomItemIndex];
     };
 
-    const getRandomNumber = (min, max) =>
+    const getRandomNumber = (min: number, max: number) =>
       Math.floor(Math.random() * (max - min) + min);
 
-    const userName = `test_${getRandomItemFromArray(
-      names,
-    ).toLowerCase()}${getRandomNumber(0, 10000)}`;
+    // const userName = `test_${getRandomItemFromArray(
+    //   names,
+    // ).toLowerCase()}${getRandomNumber(0, 10000)}`;
+    const userName = 'registeruser';
 
     cy.visit('http://localhost:4001/#/register');
 

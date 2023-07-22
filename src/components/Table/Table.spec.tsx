@@ -28,6 +28,6 @@ describe('Table', () => {
       </Table>,
     );
 
-    expect(screen.getByText('Description')).toBeInTheDocument;
+    expect(screen.getByText('Description')).toBeInTheDocument();
   });
 });

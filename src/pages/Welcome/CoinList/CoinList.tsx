@@ -252,7 +252,7 @@ const CoinList: FC<CoinListProps> = (props) => {
                 required={newCoin.required}
                 onChange={formFieldChangeHandler}
                 {...(newCoinSelectOption === 'preset' && {
-                  dataList: symbols.map(({id: value, name: text}) => ({
+                  dataList: symbols?.map(({id: value, name: text}) => ({
                     text,
                     value,
                   })),
@@ -269,7 +269,7 @@ const CoinList: FC<CoinListProps> = (props) => {
                     const [symbol]: {id: string; name: string}[] =
                       symbols.filter(({name}) => name === newCoin.value);
                     onAddCoin(symbol.id);
-                    // formFieldChangeHandler({name: 'newCoin', value: ''});
+                    formFieldChangeHandler({name: 'newCoin', value: ''});
                   }
                 }}
               />

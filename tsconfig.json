@@ -4,7 +4,7 @@
     "noImplicitAny": true,
     "sourceMap": true,
     "module": "es6",
-    "target": "es5",
+    "target": "es6",
     "jsx": "react",
     "allowJs": true,
     "moduleResolution": "node",
@@ -13,5 +13,5 @@
     "esModuleInterop": true,
   },
   "include": ["**/*.ts", "src/**/*.json", "src/components/Aside/Aside.tsx", "src/components/index.tsx"],
-  "exclude": ["./src/cypress/**/*"]
+  "exclude": ["cypress/**/*"]
 }

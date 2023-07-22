@@ -38,6 +38,7 @@ export interface InputProps extends StyledProps {
   placeholder?: string | undefined;
   placeholderTKey?: DefaultTFuncReturn;
   value?: string | undefined;
+  defaultValue?: string | undefined;
   pattern?: RegExp;
   required?: boolean;
   minLength?: number;

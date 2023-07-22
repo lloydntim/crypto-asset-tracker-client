@@ -1,42 +1,23 @@
-// load type definitions that come with Cypress module
-/// <reference types="cypress" />
+// ***********************************************************
+// This example support/index.js is processed and
+// loaded automatically before your test files.
+//
+// This is a great place to put global configuration and
+// behavior that modifies Cypress.
+//
+// You can change the location of this file or turn off
+// automatically serving support files with the
+// 'supportFile' configuration option.
+//
+// You can read more here:
+// https://on.cypress.io/configuration
+// ***********************************************************
 
-export {};
+// Import commands.js using ES2015 syntax:
+// import {mount} from 'cypress/react18';
+import './commands';
+import './component';
+import './e2e';
 
-/* declare global {
-  namespace Cypress {
-    interface Chainable {
-      login(
-        username: string,
-        password: string,
-      ): Cypress.Chainable<JQuery<HTMLElement>>;
-    }
-  }
-}
- */
-declare global {
-  namespace Cypress {
-    interface Chainable {
-      /**
-       * Custom command to select DOM element by data-cy attribute.
-       * @example cy.dataCy('greeting')
-       */
-      dataCy(value: string): Chainable<JQuery<HTMLElement>>;
-    }
-  }
-}
-
-Cypress.Commands.add('dataCy', (value) => {
-  return cy.get(`[data-cy=${value}]`);
-});
-
-/* Cypress.Commands.add(
-  'login',
-  (username = 'user14', password = 'Password12@') => {
-    cy.get('[name=username]').type(username).should('have.value', username);
-
-    cy.get('[name=password]').type(password).should('have.value', password);
-
-    cy.get('button[type=submit]').click().wait(500);
-  },
-); */
+// Alternatively you can use CommonJS syntax:
+// require('./commands')
