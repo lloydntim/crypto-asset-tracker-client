@@ -8,7 +8,7 @@ import {GRAPE_DARK, WHITE} from '../../constants/colors';
 import {DataListItem as AutoCompleteItem} from '../Input/InputHelper';
 
 interface AutoCompleteProps {
-  value: string;
+  value: string | undefined;
   items: AutoCompleteItem[];
   onListItemClick: (item: AutoCompleteItem) => void;
 }
@@ -21,7 +21,11 @@ export const highlightTextSection = (
   normalText: text.substring(inputValueLength),
 });
 
-const AutoComplete = ({items, value, onListItemClick}: AutoCompleteProps) => {
+const AutoComplete = ({
+  items,
+  value = '',
+  onListItemClick,
+}: AutoCompleteProps) => {
   const filteredItems = items.filter(
     (item) =>
       value.length && item.text.toLowerCase().startsWith(value.toLowerCase()),

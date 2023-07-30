@@ -9,3 +9,13 @@ export const formatToCurrency = (
     numberValue,
   );
 };
+
+export const getRandomItemFromArray = (arr: string[]): string => {
+  const randomItemIndex = Math.floor(Math.random() * arr.length);
+
+  return arr[randomItemIndex];
+};
+
+export const slugify = (str: string) => {
+  return str.replace(' ', '-').toLowerCase();
+};

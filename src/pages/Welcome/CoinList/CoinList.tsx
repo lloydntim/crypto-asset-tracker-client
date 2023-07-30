@@ -16,7 +16,7 @@ import {
 } from '../../../components';
 import Table, {TableCell, TableRow} from '../../../components/Table';
 import {formatAmount, processCoinData} from './CoinListHelper';
-import {formatToCurrency} from '../../../utils';
+import {formatToCurrency, slugify} from '../../../utils';
 import CoinListHoldingForm from './CoinListHoldingForm';
 import {
   BLACK,
@@ -83,7 +83,7 @@ const currencyFormatMapper: {
 interface CoinListProps {
   data: {coins: CoinData[]};
   onChange: () => void;
-  onAddCoin: (symbol: string) => void;
+  onAddCoin: (args: {symbol?: string; slug?: string}) => void;
   onRemoveCoin: (id: string) => void;
   onAddCoinHolding: (
     id: string,
@@ -187,7 +187,6 @@ const CoinList: FC<CoinListProps> = (props) => {
   const {portfolioTotal, coins: testCoins = []} = processCoinData(data);
   const {currency: formatCurrency, location} = currencyFormatMapper[convert];
 
-  console.log('newCoin.value', newCoin.value);
   return (
     <>
       {coinListDialogMapper[dialog] && (
@@ -199,7 +198,9 @@ const CoinList: FC<CoinListProps> = (props) => {
             setDialog('');
             formFieldChangeHandler({name: 'newCoin', value: ''});
             setHolding({...holding, amount: '', name: ''});
-            if (dialog === 'removeCoin') return onRemoveCoin(removedItemId);
+            console.log('removedItemId', removedItemId);
+            if (dialog === 'removeCoin')
+              if (dialog === 'removeCoin') return onRemoveCoin(removedItemId);
             onRemoveCoinHolding(removedItemId);
           }}
         >
@@ -268,7 +269,13 @@ const CoinList: FC<CoinListProps> = (props) => {
                   if (typeof newCoin.value !== 'undefined' && symbols) {
                     const [symbol]: {id: string; name: string}[] =
                       symbols.filter(({name}) => name === newCoin.value);
-                    onAddCoin(symbol.id);
+
+                    const addCoinArgs =
+                      newCoinSelectOption === 'Other'
+                        ? {symbol: symbol.id}
+                        : {slug: slugify(newCoin.value)};
+
+                    onAddCoin(addCoinArgs);
                     formFieldChangeHandler({name: 'newCoin', value: ''});
                   }
                 }}
@@ -295,6 +302,7 @@ const CoinList: FC<CoinListProps> = (props) => {
               <Container>
                 {/* ListSection */}
                 <Box
+                  className="coin-list-item"
                   flex-row
                   bgcolor={WHITE}
                   pv={16}
@@ -361,8 +369,9 @@ const CoinList: FC<CoinListProps> = (props) => {
                         {holdings: items, total, name: title},
                         keyIndex: number,
                       ) => {
+                        console.log('holdingsList', holdingsList);
                         return (
-                          <Box key={keyIndex} mb={12}>
+                          <Box key={keyIndex} mb={12} className="holding">
                             <Box>
                               <Headline m={0} p={0} pb={12} size="h5">
                                 {title} Total: {formatAmount(total, location)}{' '}

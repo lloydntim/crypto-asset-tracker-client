@@ -11,10 +11,13 @@ const Verify: FC = () => {
   const {token} = useParams();
   const {setLoginToken, currentUser} = useAuthentication();
   const [verify, {loading, error}] = useMutation(VERIFY, {
+    errorPolicy: 'all',
     onCompleted: (data) => {
       /* eslint-disable no-undef */
-      setLoginToken(data.verify.token);
-      navigate('/profile');
+      if (data.verify) {
+        setLoginToken(data.verify.token);
+        navigate('/profile');
+      }
     },
   });
 
@@ -33,11 +36,7 @@ const Verify: FC = () => {
             <Text tKey="common:message.loading.text" />
           </Message>
         )}
-        {error && (
-          <Message type="error">
-            <Text>{error.message}</Text>
-          </Message>
-        )}
+        {error && <Message type="error">{error.message}</Message>}
       </Body>
       <Footer startYear={2019} companyName="LNCD" />
     </Page>

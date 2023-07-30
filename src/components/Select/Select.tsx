@@ -58,6 +58,7 @@ const Select: FC<SelectProps> = ({
   return (
     <Box role="select" className={`select ${name}-select`} {...rest} pos-rel>
       <Button
+        className="select-value"
         align-m
         ph={16}
         onClick={() => setOptionsVisible(!optionsVisible)}
@@ -68,7 +69,7 @@ const Select: FC<SelectProps> = ({
         </Span>
       </Button>
       {optionsVisible && (
-        <Box pos-abs pos-l={0} pos-t={40}>
+        <Box pos-abs pos-l={0} pos-t={40} className="select-options-group">
           {options.map(({text, value}, index) => (
             <SelectOption
               key={index}

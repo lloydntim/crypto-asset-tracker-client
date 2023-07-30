@@ -11,8 +11,8 @@
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
+    "types": ["jest", "node"]
   },
   "include": ["src/**/*.ts", "src/**/*.json"],
-  // "include": ["src/**/*.ts", "src/**/*.json", "src/**/*.json"],
   "exclude": ["cypress/**/*"]
 }

@@ -1,3 +1,9 @@
 {
-  "title": "Anmelden"
+  "title": "Anmelden",
+  "messages": {
+    "errors": {
+      "passwordsNotMatching": "Passwörter stimmen nicht überein",
+      "unableToRegisterUser": "Leider konnte der Benutzer nicht erstellt werden"
+    }
+  }
 }

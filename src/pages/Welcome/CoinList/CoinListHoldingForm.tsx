@@ -39,7 +39,7 @@ const CoinListHoldingForm: FC<CoinListHoldingFormProps> = ({
         Name
       </Text>
       <InputField
-        name="amount"
+        name="name"
         value={holding.name}
         w={40}
         onChange={({target: {value}}) => onChange({value, field: 'name'})}

@@ -90,7 +90,9 @@ const Profile: FC = () => {
     removeCoin,
     {loading: removeCoinMutationLoading, error: removeCoinMutationError},
   ] = useMutation(REMOVE_COIN, {
+    errorPolicy: 'all',
     onCompleted: () => {
+      console.log('removeUser', userId);
       removeUser({
         variables: {id: userId},
       });
@@ -183,7 +185,7 @@ const Profile: FC = () => {
         {(loading ||
           sendVerificationMutationLoading ||
           removeUserMutationLoading ||
-          removeCoinMutationLoading) && <Box>Loading</Box>}
+          removeCoinMutationLoading) && <Message type="info">Loading</Message>}
         {error && (
           <Message type="error">User details could not be loaded</Message>
         )}

@@ -113,8 +113,8 @@ export const GET_SYMBOLS = gql`
 `;
 
 export const ADD_COIN = gql`
-  mutation AddCoin($symbol: String!, $creatorId: ID!) {
-    addCoin(symbol: $symbol, creatorId: $creatorId) {
+  mutation AddCoin($symbol: String, $slug: String, $creatorId: ID!) {
+    addCoin(symbol: $symbol, slug: $slug, creatorId: $creatorId) {
       symbol
       holdings {
         name
@@ -126,9 +126,10 @@ export const ADD_COIN = gql`
 `;
 
 export const REMOVE_COIN = gql`
-  mutation RemoveCoin($creatorId: ID) {
-    removeCoin(creatorId: $creatorId) {
+  mutation RemoveCoin($id: ID, $creatorId: ID) {
+    removeCoin(id: $id, creatorId: $creatorId) {
       creatorId
+      id
       name
     }
   }
