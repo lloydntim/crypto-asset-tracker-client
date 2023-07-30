@@ -20,9 +20,12 @@ import {
   Link,
 } from '../../components';
 import {WHITE} from '../../constants/colors';
+import {useTranslation} from 'react-i18next';
 
 const Login = () => {
   const navigate = useNavigate();
+
+  const {t} = useTranslation();
 
   const [message, setMessage] = useState<{text: string; type: string} | null>(
     null,
@@ -41,7 +44,12 @@ const Login = () => {
       navigate('/welcome');
     },
     onError: (error) => {
-      setMessage({type: 'error', text: error?.message});
+      setMessage({
+        type: 'error',
+        text: error?.message.includes('fetch')
+          ? t('login:messages.errors.unableToLoginUser')
+          : error?.message,
+      });
     },
   });
 
@@ -53,7 +61,7 @@ const Login = () => {
 
       login({
         variables: {
-          username: username.value?.toLowerCase(),
+          username: username.value,
           password: password.value,
         },
       });

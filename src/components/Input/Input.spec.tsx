@@ -19,6 +19,14 @@ jest.mock('react-router-dom', () => ({
   useNavigate: () => mockNavigate,
 }));
 
+const dataListData = [
+  {text: 'Sample', value: '0'},
+  {text: 'Title 1', value: '1'},
+  {text: 'Title 2', value: '2'},
+  {text: 'Title 3', value: '3'},
+  {text: 'Unrelated', value: '4'},
+];
+
 describe('Input', () => {
   test('renders custom error message when required', async () => {
     const user = userEvent.setup();
@@ -43,11 +51,11 @@ describe('Input', () => {
     expect(errorMessage).toBeInTheDocument();
   });
 
-  test('renders a entry with text', async () => {
+  test('renders an entry with text', async () => {
     const user = userEvent.setup();
-    render(<Input value="1" />);
+    render(<Input defaultValue="1" />);
 
-    const input = screen.getByLabelText('core-input');
+    const input = screen.getByTestId('input');
 
     await user.type(input, '23');
 
@@ -56,27 +64,17 @@ describe('Input', () => {
 
   test('renders a entry with text and clears it', async () => {
     const user = userEvent.setup();
-    render(<Input value="Some text to be cleared" />);
+    const {rerender, getByTestId, getByLabelText} = render(
+      <Input value="Some text to be cleared" />,
+    );
 
-    const clearButton = screen.getByTestId('icon-button-close');
-
-    await user.click(clearButton);
-
-    const input = screen.getByLabelText('core-input');
-
-    expect(input).toHaveValue('');
-  });
-
-  test('renders a entry with text and clears it', async () => {
-    const user = userEvent.setup();
-
-    render(<Input value="Some text to be cleared" />);
-
-    const clearButton = screen.getByTestId('icon-button-close');
+    const clearButton = getByTestId('icon-button-close');
 
     await user.click(clearButton);
 
-    const input = screen.getByLabelText('core-input');
+    rerender(<Input value="" />);
+
+    const input = getByLabelText('core-input');
 
     expect(input).toHaveValue('');
   });
@@ -85,16 +83,10 @@ describe('Input', () => {
     const user = userEvent.setup();
     const mockDataListClickHandler = jest.fn();
 
-    render(
+    const {rerender} = render(
       <Input
         value=""
-        dataList={[
-          {text: 'Sample', value: '0'},
-          {text: 'Title 1', value: '1'},
-          {text: 'Title 2', value: '2'},
-          {text: 'Title 3', value: '3'},
-          {text: 'Unrelated', value: '4'},
-        ]}
+        dataList={dataListData}
         onDataListClick={mockDataListClickHandler}
       />,
     );
@@ -102,6 +94,14 @@ describe('Input', () => {
     const input = screen.getByLabelText('core-input');
 
     await user.type(input, 'Title');
+
+    rerender(
+      <Input
+        value="Title"
+        dataList={dataListData}
+        onDataListClick={mockDataListClickHandler}
+      />,
+    );
 
     expect(screen.getAllByRole('button', {name: /Title/i})).toHaveLength(3);
     expect(
@@ -116,16 +116,10 @@ describe('Input', () => {
     const user = userEvent.setup();
     const mockDataListClickHandler = jest.fn();
 
-    render(
+    const {rerender} = render(
       <Input
-        value=""
-        dataList={[
-          {text: 'Sample', value: '0'},
-          {text: 'Title 1', value: '1'},
-          {text: 'Title 2', value: '2'},
-          {text: 'Title 3', value: '3'},
-          {text: 'Unrelated', value: '4'},
-        ]}
+        value="Sample"
+        dataList={dataListData}
         onDataListClick={mockDataListClickHandler}
       />,
     );
@@ -133,6 +127,14 @@ describe('Input', () => {
     const input = screen.getByLabelText('core-input');
 
     await user.type(input, 'Sample');
+
+    rerender(
+      <Input
+        value="Sample"
+        dataList={dataListData}
+        onDataListClick={mockDataListClickHandler}
+      />,
+    );
 
     const selectedListItem = screen.getByRole('button', {name: /Sample/i});
 

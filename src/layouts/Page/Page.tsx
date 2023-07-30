@@ -18,7 +18,7 @@ const Page = ({name, children}: PageProps) => {
       pv={0}
       max-w={640}
       mh="auto"
-      min-h="100vh"
+      min-h="100%"
       className={`page ${name}-page`}
     >
       {children}

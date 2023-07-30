@@ -52,13 +52,29 @@ const Register: FC = (): ReactElement => {
       setLoginToken(data.register.token);
       navigate('/welcome');
     },
-    onError: (error) => setMessage({text: error.message, type: 'error'}),
+    onError: (error) =>
+      setMessage({
+        text: error?.message.includes('fetch')
+          ? t('register:messages.errors.unableToRegisterUser')
+          : error?.message,
+        type: 'error',
+      }),
   });
 
   const formFieldFocusHandler = useCallback(() => setMessage(null), []);
   const submitForm: MouseEventHandler<Element> = useCallback(
     (event) => {
       event.preventDefault();
+
+      if (!passwordsMatching) {
+        console.log('test');
+        setMessage({
+          text: t('register:messages.errors.passwordsNotMatching'),
+          type: 'error',
+        });
+
+        return;
+      }
 
       register({
         variables: {
@@ -68,7 +84,7 @@ const Register: FC = (): ReactElement => {
         },
       });
     },
-    [username, email, password, register],
+    [username, email, password, register, passwordsMatching, t],
   ); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
@@ -141,7 +157,7 @@ const Register: FC = (): ReactElement => {
           />
 
           <Button
-            disabled={!(isFormValid && passwordsMatching)}
+            disabled={!isFormValid}
             tKey="common:button.register"
             type="submit"
             onClick={submitForm}

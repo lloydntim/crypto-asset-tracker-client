@@ -33,33 +33,32 @@ const getRequiredFields = (form: FormField) =>
     .filter((formField) => formField.required)
     .map((requiredField) => requiredField.name);
 
-const FORM_VALID = 'valid';
-const FORM_INVALID = 'invalid';
+const getFieldErrors = (form: FormField) =>
+  Object.values(form).map((field) => field.error || '');
 
 const useForm = (...fields: string[]) => {
   const defaultFormValues = createForm(fields);
   const [form, setForm] = useState(defaultFormValues);
   const [requiredFields, setRequiredFields] = useState(getRequiredFields(form));
-  const [errorStatus, setErrorStatus] = useState('');
+  const [errors, setErrors] = useState<string[]>([]);
 
-  const isFormValid = errorStatus === FORM_VALID && !requiredFields.length;
-
+  const isFormValid =
+    getFieldErrors(form).every((err: string) => !err.length) &&
+    !requiredFields.length;
   const formFieldChangeHandler = (formFieldDetails: InputChangeEvent) => {
-    const {name: formKeyName = '', error} = formFieldDetails;
+    const {name: formKeyName = '', error = ''} = formFieldDetails;
     const formField = form[formKeyName];
     const upddatedFormField = {
       [formKeyName]: {...formField, ...formFieldDetails},
     };
-
+    setErrors([...errors, error]);
     setRequiredFields(requiredFields.filter((field) => field !== formKeyName));
-    setErrorStatus(error ? FORM_INVALID : FORM_VALID);
     setForm({...form, ...upddatedFormField});
   };
 
   const resetForm = () => {
     setForm(defaultFormValues);
     setRequiredFields(getRequiredFields(form));
-    setErrorStatus('');
   };
 
   return {

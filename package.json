@@ -59,6 +59,7 @@
   "dependencies": {
     "@apollo/client": "^3.5.10",
     "axios": "^0.24.0",
+    "cypress-mailhog": "^2.2.0",
     "graphql": "^16.3.0",
     "history": "^5.3.0",
     "i18next": "^22.4.9",

@@ -31,6 +31,8 @@ const Reset = () => {
   // const formFieldFocusHandler = useCallback(() => setMessage(null), []);
 
   const {token: resetPasswordToken} = useParams();
+
+  console.log('params resetPasswordToken', resetPasswordToken);
   const {
     loading: getPasswordTokenQueryLoading,
     error: getPasswordTokenQueryError,

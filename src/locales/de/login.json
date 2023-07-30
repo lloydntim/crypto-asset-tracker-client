@@ -2,5 +2,10 @@
   "title": "Log-In",
   "link": {
     "forgotPassword": "Passwort vergessen"
+  },
+  "messages": {
+    "errors": {
+      "unableToLoginUser": "Leider konnte der Benutzer nicht eingeloggt werden"
+    }
   }
 }

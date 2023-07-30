@@ -88,6 +88,7 @@ const Welcome: FC = (): ReactElement => {
   const [addCoin, {loading: addCoinLoading, error: addCoinError}] = useMutation(
     ADD_COIN,
     {
+      errorPolicy: 'all',
       update: (cache, {data}) => {
         const creatorId = currentUser()?.id ?? '';
         const newCoin = data?.addCoin ?? false;
@@ -107,6 +108,9 @@ const Welcome: FC = (): ReactElement => {
           });
         }
       },
+      // onError: (error) => {
+      //   console.log('Error', error);
+      // },
     },
   );
 
@@ -121,6 +125,8 @@ const Welcome: FC = (): ReactElement => {
               variables: {creatorId},
             })
           : false;
+
+        console.log('update', existingCoins);
 
         if (newCoin && existingCoins && creatorId) {
           cache.writeQuery({
@@ -148,8 +154,8 @@ const Welcome: FC = (): ReactElement => {
     {loading: removeCoinHoldingLoading, error: removeCoinHoldingError},
   ] = useMutation(REMOVE_COIN_HOLDING);
 
-  const addCoinHandler = (symbol: string) => {
-    addCoin({variables: {symbol, creatorId: currentUser()?.id}});
+  const addCoinHandler = (args: {symbol?: string; slug?: string}) => {
+    addCoin({variables: {...args, creatorId: currentUser()?.id}});
   };
 
   const removeCoinHandler = (id: string) => {
@@ -205,13 +211,6 @@ const Welcome: FC = (): ReactElement => {
     return <Box>{getSymbolsError.message}</Box>;
   }
 
-  /*   if (addCoinError) {
-    const user = currentUser()?.id ?? {};
-    console.log('adddCoinError', addCoinError);
-    // return <Box>{addCoinError.message.split(':')[1].trim()}</Box>;
-    return <Box>Error</Box>;
-  } */
-
   if (removeCoinError) {
     return <Box>{removeCoinError.message.split(':')[1].trim()}</Box>;
   }
@@ -232,12 +231,11 @@ const Welcome: FC = (): ReactElement => {
         removeCoinLoading ||
         getCoinsLoading ||
         getSymbolsLoading ? (
-          <Box>Loading</Box>
+          <Message type="info">Loading</Message>
         ) : null}
 
-        {addCoinError && (
-          <Message type="error">List Item could not be added</Message>
-        )}
+        {addCoinError && <Message type="error">{addCoinError.message}</Message>}
+
         <CoinList
           data={coinListData}
           onChange={() => console.log('test')}
