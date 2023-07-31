@@ -109,7 +109,7 @@ const Welcome: FC = (): ReactElement => {
         }
       },
       // onError: (error) => {
-      //   console.log('Error', error);
+      //   console.log('Error ', error);
       // },
     },
   );
