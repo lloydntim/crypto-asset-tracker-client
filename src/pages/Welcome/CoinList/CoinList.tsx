@@ -1,4 +1,4 @@
-import React, {FC, useState, useRef, useEffect, FocusEventHandler} from 'react';
+import React, {useState} from 'react';
 import styled from 'styled-components';
 import {
   Box,
@@ -15,7 +15,18 @@ import {
   Text,
 } from '../../../components';
 import Table, {TableCell, TableRow} from '../../../components/Table';
-import {formatAmount, processCoinData} from './CoinListHelper';
+import {
+  CoinData,
+  CoinListProps,
+  HoldingsListData,
+  coinListDialogMapper,
+  currenciesOptions,
+  currencyFormatMapper,
+  formatAmount,
+  newCoinSelectOptions,
+  processCoinData,
+  types,
+} from './CoinListHelper';
 import {formatToCurrency, slugify} from '../../../utils';
 import CoinListHoldingForm from './CoinListHoldingForm';
 import {
@@ -29,127 +40,12 @@ import {
 import {useForm} from '../../../hooks';
 import {Dialog} from '../../../layouts';
 
-type HoldingType = 'wallet' | 'exchange' | 'staking';
-
-interface HoldingsData {
-  id: string;
-  name: string;
-  type: HoldingType;
-  amount: number;
-}
-
-interface StorageTypeData {
-  staking: HoldingsData[];
-  wallet: HoldingsData[];
-  exchange: HoldingsData[];
-}
-
-interface AssetData {
-  amount: number;
-  value: number;
-  storageTypes: StorageTypeData;
-}
-export interface CoinData {
-  id: string;
-  coinId: string;
-  name: string;
-  symbol: string;
-  price: number;
-  value: number;
-  amount: number;
-  holdings?: HoldingsData[];
-  assets: AssetData;
-}
-
-interface HoldingsListData {
-  name: HoldingType;
-  total: number;
-  holdings: HoldingsData[];
-}
-
 const ClickableArea = styled.button`
   border: none;
   background-color: transparent;
 `;
 
-const currencyFormatMapper: {
-  [key: string]: {currency: string; location: string};
-} = {
-  USD: {currency: 'USD', location: 'en-US'},
-  GBP: {currency: 'GBP', location: 'en-GB'},
-  EUR: {currency: 'EUR', location: 'de-DE'},
-};
-
-interface CoinListProps {
-  data: {coins: CoinData[]};
-  onChange: () => void;
-  onAddCoin: (args: {symbol?: string; slug?: string}) => void;
-  onRemoveCoin: (id: string) => void;
-  onAddCoinHolding: (
-    id: string,
-    holding: {
-      name: string;
-      amount: number;
-      type: string;
-      currency: string;
-    },
-  ) => void;
-  onUpdateCoinHolding: (
-    holdingId: string,
-    {amount, name, type}: {amount?: number; name?: string; type?: string},
-  ) => void;
-  onRemoveCoinHolding: (holdingId: string) => void;
-  onToggleEditMode: (args: boolean) => void;
-  onChangeCurrency: (value: string) => void;
-  selectedCoin: number | undefined;
-  setSelectedCoin: (item: number) => void;
-  editMode: boolean;
-  convert: string;
-  symbols: {name: string; id: string}[];
-}
-
-const types = [
-  {
-    value: 'wallet',
-    text: 'Wallet',
-  },
-  {
-    value: 'staking',
-    text: 'Staking',
-  },
-  {
-    value: 'exchange',
-    text: 'Exchange',
-  },
-];
-
-const newCoinSelectOptions = [
-  {value: 'preset', text: 'Preset'},
-  {value: 'other', text: 'Other'},
-];
-
-const currencies = [
-  {text: 'USD', value: 'USD'},
-  {text: 'GBP', value: 'GBP'},
-  {text: 'EUR', value: 'EUR'},
-];
-
-const coinListDialogMapper: {
-  [key: string]: {title: string; message: string; callback: string};
-} = {
-  removeCoin: {
-    title: 'Remove Coin',
-    message: 'Do you really want to remove this coin?',
-    callback: 'onRemoveCoin',
-  },
-  removeCoinHolding: {
-    title: 'Remove Coin Holding',
-    message: 'Do you really want to remove this coin holding?',
-    callback: 'onRemoveCoinHolding',
-  },
-};
-
-const CoinList: FC<CoinListProps> = (props) => {
+const CoinList = (props: CoinListProps) => {
   const {
     data,
     onChange,
@@ -185,7 +81,7 @@ const CoinList: FC<CoinListProps> = (props) => {
   } = useForm('newCoin*');
 
   const {portfolioTotal, coins: testCoins = []} = processCoinData(data);
-  const {currency: formatCurrency, location} = currencyFormatMapper[convert];
+  const {location} = currencyFormatMapper[convert];
 
   return (
     <>
@@ -198,9 +94,7 @@ const CoinList: FC<CoinListProps> = (props) => {
             setDialog('');
             formFieldChangeHandler({name: 'newCoin', value: ''});
             setHolding({...holding, amount: '', name: ''});
-            console.log('removedItemId', removedItemId);
-            if (dialog === 'removeCoin')
-              if (dialog === 'removeCoin') return onRemoveCoin(removedItemId);
+            if (dialog === 'removeCoin') return onRemoveCoin(removedItemId);
             onRemoveCoinHolding(removedItemId);
           }}
         >
@@ -215,11 +109,9 @@ const CoinList: FC<CoinListProps> = (props) => {
             onClick={() => {
               onToggleEditMode(!editMode);
             }}
-          >
-            {editMode ? 'Save' : 'Edit'}
-          </Button>
-
-          <Select options={currencies} onChange={onChangeCurrency} />
+            tKey={`common:button.${editMode ? 'edit' : 'save'}`}
+          />
+          <Select options={currenciesOptions} onChange={onChangeCurrency} />
         </Box>
 
         <Container
@@ -232,10 +124,13 @@ const CoinList: FC<CoinListProps> = (props) => {
           flex-h
           spc-btw
         >
-          <Text strong>My Portfolio</Text>
-          <Text>
-            Total: {formatToCurrency(portfolioTotal, formatCurrency, location)}
-          </Text>
+          <Text strong tKey="welcome:coinlist.text.myPortfolio" />
+          <Text
+            tKey="welcome:coinlist.text.portfolioTotal"
+            tOptions={{
+              total: formatToCurrency(portfolioTotal, convert, location),
+            }}
+          />
         </Container>
 
         {editMode && (
@@ -330,13 +225,13 @@ const CoinList: FC<CoinListProps> = (props) => {
                           {name}
                         </TableCell>
                         <TableCell valign-m col-w={120} txt-align-r>
-                          {formatToCurrency(price, formatCurrency, location)}
+                          {formatToCurrency(price, convert, location)}
                         </TableCell>
                         <TableCell valign-m col-w={160} txt-align-r>
                           {formatAmount(amount, location)}
                         </TableCell>
                         <TableCell valign-m ph={12} col-w={120} txt-align-r>
-                          {formatToCurrency(value, formatCurrency, location)}
+                          {formatToCurrency(value, convert, location)}
                         </TableCell>
                       </TableRow>
                     </Table>
@@ -369,14 +264,11 @@ const CoinList: FC<CoinListProps> = (props) => {
                         {holdings: items, total, name: title},
                         keyIndex: number,
                       ) => {
-                        console.log('holdingsList', holdingsList);
                         return (
                           <Box key={keyIndex} mb={12} className="holding">
-                            <Box>
-                              <Headline m={0} p={0} pb={12} size="h5">
-                                {title} Total: {formatAmount(total, location)}{' '}
-                              </Headline>
-                            </Box>
+                            <Headline m={0} p={0} pb={12} size="h5">
+                              {title} Total: {formatAmount(total, location)}
+                            </Headline>
 
                             {items.map(
                               (
@@ -433,9 +325,6 @@ const CoinList: FC<CoinListProps> = (props) => {
                                             <EntryField
                                               location={location}
                                               value={amount}
-                                              onChange={() =>
-                                                console.log(amount)
-                                              }
                                               onBlur={({target: {value}}) => {
                                                 setSelectedCoin(index);
                                                 onUpdateCoinHolding(holdingId, {
@@ -461,7 +350,7 @@ const CoinList: FC<CoinListProps> = (props) => {
                                         <Text valign-m font-sz={14}>
                                           {formatToCurrency(
                                             value,
-                                            formatCurrency,
+                                            convert,
                                             location,
                                           )}
                                         </Text>

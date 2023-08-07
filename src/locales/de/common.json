@@ -4,7 +4,8 @@
     "submit": "Submit",
     "login": "Einloggen",
     "register": "Anmelden",
-    "logout": "Ausloggen"
+    "logout": "Ausloggen",
+    "edit": "Ändern"
   },
   "link": {
     "back": "Zurück"
