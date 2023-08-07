@@ -10,7 +10,8 @@
     "lint": "eslint --fix src/**/*.js",
     "build": "webpack --config config/webpack.config.js --mode=production",
     "dev": "webpack-dev-server --config config/webpack.config.js --port 4001 --host 0.0.0.0 --mode=development",
-    "madge": "madge src"
+    "madge": "madge src",
+    "prepare": "husky install"
   },
   "keywords": [],
   "author": "",
@@ -42,9 +43,9 @@
     "fork-ts-checker-notifier-webpack-plugin": "^7.0.0",
     "fork-ts-checker-webpack-plugin": "^8.0.0",
     "html-webpack-plugin": "^5.5.3",
+    "husky": "^8.0.3",
     "jest": "^27.0.0",
     "mini-css-extract-plugin": "^2.7.6",
-    "pre-commit": "^1.2.2",
     "prettier": "^2.8.8",
     "sass": "^1.43.3",
     "sass-loader": "^12.2.0",
