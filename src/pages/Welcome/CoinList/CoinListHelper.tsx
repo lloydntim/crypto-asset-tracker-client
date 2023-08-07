@@ -1,4 +1,5 @@
-import {CoinData} from './CoinList';
+import {t} from 'i18next';
+import {createSelectOptions} from '../../../helpers/createSelectOptions';
 
 enum HoldingTypes {
   WALLET = 'wallet',
@@ -6,37 +7,133 @@ enum HoldingTypes {
   STAKING = 'staking',
 }
 
-// type HoldingType = Record<HoldingTypes, string>;
+enum Currencies {
+  EUR = 'EUR',
+  USD = 'USD',
+  GBP = 'GBP',
+}
 
-const listNameMapper: {[key: string]: string} = {
-  wallet: 'Wallet',
-  exchange: 'Exchange',
-  staking: 'Staking',
+enum AddNewCoinOptions {
+  PRESET = 'preset',
+  OTHER = 'other',
+}
+
+type HoldingType = HoldingTypes;
+
+type Currency = Currencies;
+
+interface HoldingsData {
+  id: string;
+  name: string;
+  type: HoldingType;
+  amount: number;
+}
+
+interface StorageTypeData {
+  staking: HoldingsData[];
+  wallet: HoldingsData[];
+  exchange: HoldingsData[];
+}
+
+const HOLDING_TYPES_T_KEY_PATH = 'welcome:coinlist.input.options.holdingTypes';
+const ADD_COIN_OPTIONS_T_KEY_PATH = 'welcome:coinlist.input.options.newCoin';
+const REMOVE_COIN_DIALOG_T_KEY_PATH = 'welcome:coinlist.dialog.removeCoin';
+const REMOVE_HOLDING_DIALOG_T_KEY_PATH = 'welcome:coinlist.dialog.removeCoin';
+export interface AssetData {
+  amount: number;
+  value: number;
+  storageTypes: StorageTypeData;
+}
+export interface CoinData {
+  id: string;
+  coinId: string;
+  name: string;
+  symbol: string;
+  price: number;
+  value: number;
+  amount: number;
+  holdings?: HoldingsData[];
+  assets: AssetData;
+}
+
+export interface HoldingsListData {
+  name: HoldingType;
+  total: number;
+  holdings: HoldingsData[];
+}
+
+export interface CoinListProps {
+  data: {coins: CoinData[]};
+  onChange: () => void;
+  onAddCoin: (args: {symbol?: string; slug?: string}) => void;
+  onRemoveCoin: (id: string) => void;
+  onAddCoinHolding: (
+    id: string,
+    holding: {
+      name: string;
+      amount: number;
+      type: string;
+      currency: string;
+    },
+  ) => void;
+  onUpdateCoinHolding: (
+    holdingId: string,
+    {amount, name, type}: {amount?: number; name?: string; type?: string},
+  ) => void;
+  onRemoveCoinHolding: (holdingId: string) => void;
+  onToggleEditMode: (args: boolean) => void;
+  onChangeCurrency: (value: string) => void;
+  selectedCoin: number | undefined;
+  setSelectedCoin: (item: number) => void;
+  editMode: boolean;
+  convert: string;
+  symbols: {name: string; id: string}[];
+}
+
+export const currencies = Object.values(Currencies);
+export const holdingTypes = Object.values(HoldingTypes);
+export const addNewCoinOptions = Object.values(AddNewCoinOptions);
+
+export const newCoinSelectOptions = createSelectOptions(
+  addNewCoinOptions,
+  ADD_COIN_OPTIONS_T_KEY_PATH,
+);
+
+export const coinListDialogMapper: {
+  [key: string]: {title: string; message: string; callback: string};
+} = {
+  removeCoin: {
+    title: t(`${REMOVE_COIN_DIALOG_T_KEY_PATH}.title`),
+    message: t(`${REMOVE_COIN_DIALOG_T_KEY_PATH}.message`),
+    callback: 'onRemoveCoin',
+  },
+  removeCoinHolding: {
+    title: t(`${REMOVE_HOLDING_DIALOG_T_KEY_PATH}.title`),
+    message: t(`${REMOVE_HOLDING_DIALOG_T_KEY_PATH}.message`),
+    callback: 'onRemoveCoinHolding',
+  },
+};
+
+export const currenciesOptions = currencies.map((currency) => ({
+  text: currency,
+  value: currency,
+}));
+
+export const types = createSelectOptions(
+  holdingTypes,
+  HOLDING_TYPES_T_KEY_PATH,
+);
+
+export const currencyFormatMapper: {
+  [key: string]: {currency: Currencies; location: string};
+} = {
+  USD: {currency: Currencies.USD, location: 'en-US'},
+  GBP: {currency: Currencies.GBP, location: 'en-GB'},
+  EUR: {currency: Currencies.USD, location: 'de-DE'},
 };
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-export const processCoinHoldingsData = (data: any[]) =>
-  data.reduce((a, b) => {
-    return {
-      ...a,
-      ...{
-        [b.type]: {
-          name: listNameMapper[b.type],
-          total: (a[b.type]?.total || 0) + b.amount,
-          holdings: a[b.type]?.holdings ? [b, ...a[b.type].holdings] : [b],
-        },
-      },
-    };
-  }, {});
-
-/* eslint-disable @typescript-eslint/no-explicit-any */
 export const processCoinData = ({coins}: any) => {
-  const listNameMapper: {[key: string]: string} = {
-    wallet: 'Wallet',
-    exchange: 'Exchange',
-    staking: 'Staking',
-  };
-
   return coins.reduce((a: any, b: any) => {
     const {id, coinId, name, symbol, price} = b;
     const assets = b.holdings.reduce((a: any, b: any) => {
@@ -53,7 +150,7 @@ export const processCoinData = ({coins}: any) => {
           storageTypes: {
             ...(a.storageTypes && a.storageTypes),
             [b.type]: {
-              name: listNameMapper[b.type],
+              name: t(`${HOLDING_TYPES_T_KEY_PATH}.${b.type}`),
               total,
               value: total * coinPrice,
               holdings: [
@@ -85,93 +182,7 @@ export const processCoinData = ({coins}: any) => {
   }, {});
 };
 
-/* export const coinData: CoinData[] = [
-  {
-    id: '0',
-    coinId: '1',
-    name: 'btc',
-    symbol: 'BTC',
-    price: 22000,
-    amount: 4.75,
-    value: 4.75 * 22000,
-    holdings: [
-      {
-        id: 'ledger',
-        name: 'Legder',
-        type: 'wallet',
-        amount: 0.25,
-      },
-      {
-        id: 'trezor',
-        name: 'Trezor',
-        type: 'wallet',
-        amount: 0.5,
-      },
-      {
-        id: 'coinbase',
-        name: 'Coinbase',
-        type: 'exchange',
-        amount: 1,
-      },
-      {
-        id: 'binance',
-        name: 'Binance',
-        type: 'exchange',
-        amount: 2,
-      },
-      {
-        id: 'coinbase',
-        name: 'Coinbase',
-        type: 'staking',
-        amount: 1,
-      },
-      {
-        id: 'binance',
-        name: 'Binance',
-        type: 'staking',
-        amount: 2,
-      },
-    ],
-  },
-  {
-    id: '5',
-    coinId: '1027',
-    name: 'eth',
-    symbol: 'ETH',
-    price: 1600,
-    amount: 25,
-    value: 25 * 1600,
-    holdings: [
-      {
-        id: 'ledger',
-        name: 'Legder',
-        type: 'wallet',
-        amount: 2,
-      },
-      {
-        id: 'trezor',
-        name: 'Trezor',
-        type: 'wallet',
-        amount: 3,
-      },
-      {
-        id: 'kraken',
-        name: 'Kraken',
-        type: 'exchange',
-        amount: 15,
-      },
-      {
-        id: 'FTX',
-        name: 'FTX',
-        type: 'exchange',
-        amount: 5,
-      },
-    ],
-  },
-];
- */
 export const formatAmount = (value: number, location: string) => {
-  console.log('formatAmount', value);
   if (typeof value === 'undefined' || typeof value === null) {
     return (0).toFixed(2);
   }
@@ -179,92 +190,3 @@ export const formatAmount = (value: number, location: string) => {
     ? value.toFixed(4)
     : new Intl.NumberFormat(location, {minimumFractionDigits: 2}).format(value);
 };
-
-/*{
-  portfolioTotal: 100000,
-  coins: [
-    {
-      id: ,
-      coinId: 1,
-      name: 'Bitcoin',
-      symbol: 'BTC',
-      price: '22000'
-      amount: 2.5,
-      value: 66000,
-      holdings: [
-        {
-          name: 'Wallets',
-          amount: 2.5,
-          value: 55.000,
-          holdings: [
-            {
-              name: 'Trezor',
-              amount: 2,
-              value: 44000
-            },
-            {
-              name: 'Ledger',
-              amount: .5,
-              value: 11000
-            }
-          ]
-        },
-        {
-          name: 'Exchanges',
-          amount: 1,
-          value: 22000,
-          holdings: [
-            {
-              name: 'Binance',
-              amount: .5,
-              value: 11000
-            },
-            {
-              name: 'Coibase',
-              amount: .5,
-              value: 11000
-            }
-          ]
-        },
-      ]
-    },
-    {
-      coin: 'eth',
-      price: '1500'
-      holdings: [
-        {
-          name: 'Wallets',
-          total: 55.000,
-          holdings: [
-            {
-              name: 'Trezor',
-              amount: 2,
-              value: 44000
-            },
-            {
-              name: 'Ledger',
-              amount: .5,
-              value: 11000
-            }
-          ]
-        },
-        {
-          name: 'Exchanges',
-          total: 22000,
-          holdings: [
-            {
-              name: 'Binance',
-              amount: .5,
-              value: 11000
-            },
-            {
-              name: 'Coibase',
-              amount: .5,
-              value: 11000
-            }
-          ]
-        },
-      ]
-    },
-  ]
-}*/

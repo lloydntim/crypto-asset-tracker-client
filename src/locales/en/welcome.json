@@ -1,4 +1,31 @@
 {
   "title": "Welcome",
-  "greeting": "Hi there, welcome back!"
+  "greeting": "Hi there, welcome back!",
+  "coinlist": {
+    "text": {
+      "myPortfolio": "My Portfolio",
+      "portfolioTotal": "Total: {{total}}"
+    },
+    "dialog": {
+      "removeCoin": {
+        "title": "Remove Coin",
+        "message": "Do you really want to remove this coin?"
+      },
+      "removeCoinHolding": {
+        "title": "Remove Coin Holding",
+        "message": "Do you really want to remove this coin holding?"
+      }
+    },
+    "options": {
+      "holdingTypes": {
+        "wallet": "Wallet",
+        "staking": "Staking",
+        "exchange": "Exchange"
+      },
+      "newCoin": {
+        "preset": "Preset",
+        "other": "Other"
+      }
+    }
+  }
 }

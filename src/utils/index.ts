@@ -16,6 +16,10 @@ export const getRandomItemFromArray = (arr: string[]): string => {
   return arr[randomItemIndex];
 };
 
-export const slugify = (str: string) => {
+export const slugify = (str: string): string => {
   return str.replace(' ', '-').toLowerCase();
+};
+
+export const capitalizeString = (str: string): string => {
+  return `${str.charAt(0).toUpperCase()}${str.substring(1)}`;
 };

@@ -1,18 +1,7 @@
-import React, {FC, ReactElement, useMemo, useState} from 'react';
-import {useForm} from '../../hooks';
-import {
-  Header,
-  Body,
-  Input,
-  Headline,
-  Footer,
-  Message,
-  Box,
-  Select,
-  Navigation,
-} from '../../components';
+import React, {useMemo, useState} from 'react';
+import {Body, Headline, Footer, Message, Navigation} from '../../components';
 import {Page} from '../../layouts';
-import CoinList, {CoinData} from './CoinList/CoinList';
+import CoinList from './CoinList/CoinList';
 import {useMutation, useQuery} from '@apollo/client';
 import {
   ADD_COIN,
@@ -25,19 +14,13 @@ import {
   UPDATE_COIN_HOLDING,
 } from '../../graphql';
 import {useAuthentication} from '../../providers/AuthenticationProvider';
+import {CoinData, currencies} from './CoinList/CoinListHelper';
 
-const currencies = [
-  {text: 'USD', value: 'USD'},
-  {text: 'GBP', value: 'GBP'},
-  {text: 'EUR', value: 'EUR'},
-];
-
-const Welcome: FC = (): ReactElement => {
+const Welcome = () => {
   const {currentUser} = useAuthentication();
-  const [currency, setCurrency] = useState(currencies[0].value);
+  const [currency, setCurrency] = useState<string>(currencies[0] as string);
   const [editMode, setEditMode] = useState(false);
   const [selectedCoin, setSelectedCoin] = useState<number | undefined>();
-  const [coinError, setCoinError] = useState<number | undefined>();
 
   const {
     data: coins,
@@ -108,9 +91,6 @@ const Welcome: FC = (): ReactElement => {
           });
         }
       },
-      // onError: (error) => {
-      //   console.log('Error ', error);
-      // },
     },
   );
 
@@ -125,8 +105,6 @@ const Welcome: FC = (): ReactElement => {
               variables: {creatorId},
             })
           : false;
-
-        console.log('update', existingCoins);
 
         if (newCoin && existingCoins && creatorId) {
           cache.writeQuery({
@@ -179,63 +157,45 @@ const Welcome: FC = (): ReactElement => {
     removeCoinHolding({variables: {holdingId}});
   };
 
-  // if (
-  // loading ||
-  // addCoinLoading ||
-  // removeCoinLoading ||
-  // getCoinsLoading ||
-  // getSymbolsLoading ||
-  // addCoinHoldingLoading ||
-  // updateCoinHoldingLoading ||
-  // removeCoinHoldingLoading
-  // )
-  //   return <Box>Loading</Box>;
-
-  if (addCoinHoldingError) {
-    return <Box>{addCoinHoldingError.message.split(':')[1].trim()}</Box>;
-  }
-
-  if (updateCoinHoldingError) {
-    return <Box>{updateCoinHoldingError.message.split(':')[1].trim()}</Box>;
-  }
-
-  if (removeCoinHoldingError) {
-    return <Box>{removeCoinHoldingError.message.split(':')[1].trim()}</Box>;
-  }
-
-  if (getCoinsError) {
-    return <Box>{getCoinsError.message}</Box>;
-  }
-
-  if (getSymbolsError) {
-    return <Box>{getSymbolsError.message}</Box>;
-  }
-
-  if (removeCoinError) {
-    return <Box>{removeCoinError.message.split(':')[1].trim()}</Box>;
-  }
-
-  if (coinListingsError) {
-    return <Box>{coinListingsError.message.split(':')[1]?.trim()}</Box>;
-  }
-
-  console.log('current coins', coins);
   return (
     <Page name="welcome">
       <Navigation />
       <Body>
         <Headline tKey="welcome:title" />
-        {getCoinsLoading ||
-        getSymbolsLoading ||
-        loading ||
-        removeCoinLoading ||
-        getCoinsLoading ||
-        getSymbolsLoading ? (
-          <Message type="info">Loading</Message>
-        ) : null}
 
+        {(getCoinsLoading ||
+          getSymbolsLoading ||
+          loading ||
+          removeCoinLoading ||
+          getCoinsLoading ||
+          getSymbolsLoading ||
+          addCoinLoading ||
+          addCoinHoldingLoading ||
+          updateCoinHoldingLoading ||
+          removeCoinHoldingLoading) && <Message type="info">Loading</Message>}
+
+        {getCoinsError && (
+          <Message type="error">{getCoinsError.message}</Message>
+        )}
         {addCoinError && <Message type="error">{addCoinError.message}</Message>}
-
+        {addCoinHoldingError && (
+          <Message type="error">{addCoinHoldingError.message}</Message>
+        )}
+        {updateCoinHoldingError && (
+          <Message type="error">{updateCoinHoldingError.message}</Message>
+        )}
+        {removeCoinHoldingError && (
+          <Message type="error">{removeCoinHoldingError.message}</Message>
+        )}
+        {getSymbolsError && (
+          <Message type="error">{getSymbolsError.message}</Message>
+        )}
+        {removeCoinError && (
+          <Message type="error">{removeCoinError.message}</Message>
+        )}
+        {coinListingsError && (
+          <Message type="error">{coinListingsError.message}</Message>
+        )}
         <CoinList
           data={coinListData}
           onChange={() => console.log('test')}
