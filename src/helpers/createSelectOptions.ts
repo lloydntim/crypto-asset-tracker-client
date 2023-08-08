@@ -1,4 +1,4 @@
-import {t} from 'i18next';
+import i18n from '../locales/i18n';
 
 export const createSelectOptions = (
   arr: string[],
@@ -6,6 +6,6 @@ export const createSelectOptions = (
 ): {text: string; value: string}[] => {
   return arr.map((type: string) => ({
     value: type,
-    text: t(`${tKeyPath}.${type}`),
+    text: i18n.t(`${tKeyPath}.${type}`),
   }));
 };

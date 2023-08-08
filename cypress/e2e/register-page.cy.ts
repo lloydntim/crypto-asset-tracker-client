@@ -11,7 +11,7 @@ describe('Register Scenario', () => {
     cy.mhDeleteAll();
   });
 
-  it.only('registers a user ', () => {
+  it('registers a user ', () => {
     cy.register(username, 'info@lncd.world', 'Password12!', 'Password12!');
 
     cy.contains('Welcome');

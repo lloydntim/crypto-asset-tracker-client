@@ -1,4 +1,4 @@
-import React, {FC, useState} from 'react';
+import React, {useState} from 'react';
 import {Dialog, Overlay, Page} from '../../layouts';
 import {useTranslation} from 'react-i18next';
 import {useNavigate} from 'react-router-dom';
@@ -30,7 +30,7 @@ import {GRAPE_DARK, GRAPE_EXTRA_DARK} from '../../constants/colors';
 import Table, {TableCell, TableRow} from '../../components/Table';
 import {useForm} from '../../hooks';
 
-const Profile: FC = () => {
+const Profile = () => {
   const [dialog, setDialog] = useState('');
   const [overlay, setOverlay] = useState(false);
   const navigate = useNavigate();
@@ -49,11 +49,6 @@ const Profile: FC = () => {
   } = useQuery(GET_USER, {
     variables: {id: userId},
     skip: !Boolean(userId),
-    onCompleted: ({getUser}) => console.log('user', getUser),
-    onError: (error) => {
-      //  setResponseMessage(errorMessage);
-      console.log('GET_USER error', error);
-    },
   });
 
   const [
@@ -64,12 +59,6 @@ const Profile: FC = () => {
       error: updateUserMutationError,
     },
   ] = useMutation(UPDATE_USER, {
-    onCompleted: ({updateUser: {username, email}}) =>
-      console.log('message, email was updated successfully'),
-    // setResponseMessage(
-    //   t('messages_success_emailUpdated', {username, email}),
-    // ),
-
     refetchQueries: [{query: GET_USER, variables: {id: userId}}],
   });
 
@@ -81,8 +70,6 @@ const Profile: FC = () => {
       error: sendVerificationMutationError,
     },
   ] = useMutation(RESEND_VERIFICATION_TOKEN, {
-    onCompleted: ({resendVerificationToken: {message}}) =>
-      console.log('message', message),
     refetchQueries: [{query: GET_USER, variables: {id: userId}}],
   });
 
@@ -92,7 +79,6 @@ const Profile: FC = () => {
   ] = useMutation(REMOVE_COIN, {
     errorPolicy: 'all',
     onCompleted: () => {
-      console.log('removeUser', userId);
       removeUser({
         variables: {id: userId},
       });
@@ -153,7 +139,6 @@ const Profile: FC = () => {
             // disabled={!isFormValid}
             tKey="profile:form_button_updateEmail"
             onClick={() => {
-              // console.log('email', email.value);
               updateUser({variables: {id: userId, email: email.value}});
               setOverlay(false);
             }}
@@ -184,6 +169,7 @@ const Profile: FC = () => {
         <Title tKey="profile:title" />
         {(loading ||
           sendVerificationMutationLoading ||
+          updateUserMutationLoading ||
           removeUserMutationLoading ||
           removeCoinMutationLoading) && <Message type="info">Loading</Message>}
         {error && (

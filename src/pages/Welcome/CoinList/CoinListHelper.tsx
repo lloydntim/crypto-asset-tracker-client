@@ -1,4 +1,4 @@
-import {t} from 'i18next';
+import i18n from '../../../locales/i18n';
 import {createSelectOptions} from '../../../helpers/createSelectOptions';
 
 enum HoldingTypes {
@@ -8,9 +8,9 @@ enum HoldingTypes {
 }
 
 enum Currencies {
-  EUR = 'EUR',
   USD = 'USD',
   GBP = 'GBP',
+  EUR = 'EUR',
 }
 
 enum AddNewCoinOptions {
@@ -19,8 +19,6 @@ enum AddNewCoinOptions {
 }
 
 type HoldingType = HoldingTypes;
-
-type Currency = Currencies;
 
 interface HoldingsData {
   id: string;
@@ -100,16 +98,16 @@ export const newCoinSelectOptions = createSelectOptions(
 );
 
 export const coinListDialogMapper: {
-  [key: string]: {title: string; message: string; callback: string};
+  [key: string]: {titleTKey: string; messageTKey: string; callback: string};
 } = {
   removeCoin: {
-    title: t(`${REMOVE_COIN_DIALOG_T_KEY_PATH}.title`),
-    message: t(`${REMOVE_COIN_DIALOG_T_KEY_PATH}.message`),
+    titleTKey: `${REMOVE_COIN_DIALOG_T_KEY_PATH}.title`,
+    messageTKey: `${REMOVE_COIN_DIALOG_T_KEY_PATH}.message`,
     callback: 'onRemoveCoin',
   },
   removeCoinHolding: {
-    title: t(`${REMOVE_HOLDING_DIALOG_T_KEY_PATH}.title`),
-    message: t(`${REMOVE_HOLDING_DIALOG_T_KEY_PATH}.message`),
+    titleTKey: `${REMOVE_HOLDING_DIALOG_T_KEY_PATH}.title`,
+    messageTKey: `${REMOVE_HOLDING_DIALOG_T_KEY_PATH}.message`,
     callback: 'onRemoveCoinHolding',
   },
 };
@@ -150,7 +148,7 @@ export const processCoinData = ({coins}: any) => {
           storageTypes: {
             ...(a.storageTypes && a.storageTypes),
             [b.type]: {
-              name: t(`${HOLDING_TYPES_T_KEY_PATH}.${b.type}`),
+              name: i18n.t(`${HOLDING_TYPES_T_KEY_PATH}.${b.type}`),
               total,
               value: total * coinPrice,
               holdings: [

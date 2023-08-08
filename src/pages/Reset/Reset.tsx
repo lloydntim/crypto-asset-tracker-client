@@ -20,7 +20,6 @@ import {changeLanguage} from 'i18next';
 
 const Reset = () => {
   const navigate = useNavigate();
-  const [message, setMessage] = useState(null);
   const {setLoginToken} = useAuthentication();
   const {
     form: {password, passwordConfirm},
@@ -32,7 +31,6 @@ const Reset = () => {
 
   const {token: resetPasswordToken} = useParams();
 
-  console.log('params resetPasswordToken', resetPasswordToken);
   const {
     loading: getPasswordTokenQueryLoading,
     error: getPasswordTokenQueryError,

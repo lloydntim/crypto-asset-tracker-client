@@ -87,7 +87,7 @@ const CoinList = (props: CoinListProps) => {
     <>
       {coinListDialogMapper[dialog] && (
         <Dialog
-          title={coinListDialogMapper[dialog]?.title}
+          titleTKey={coinListDialogMapper[dialog]?.titleTKey}
           visible={!!dialog}
           onCancelButtonClick={() => setDialog('')}
           onContinueButtonClick={() => {
@@ -98,7 +98,7 @@ const CoinList = (props: CoinListProps) => {
             onRemoveCoinHolding(removedItemId);
           }}
         >
-          {coinListDialogMapper[dialog]?.message}
+          <Text tKey={coinListDialogMapper[dialog]?.messageTKey} />
         </Dialog>
       )}
       <Container align-c>
@@ -109,7 +109,7 @@ const CoinList = (props: CoinListProps) => {
             onClick={() => {
               onToggleEditMode(!editMode);
             }}
-            tKey={`common:button.${editMode ? 'edit' : 'save'}`}
+            tKey={`common:button.${editMode ? 'save' : 'edit'}`}
           />
           <Select options={currenciesOptions} onChange={onChangeCurrency} />
         </Box>
