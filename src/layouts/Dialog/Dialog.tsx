@@ -9,7 +9,7 @@ import {DefaultTFuncReturn} from 'i18next';
 
 interface DialogProps {
   title?: string;
-  titleTKey?: DefaultTFuncReturn;
+  titleTKey?: string;
   visible: boolean;
   cancelButtonText?: string;
   onCancelButtonClick: MouseEventHandler;
@@ -20,7 +20,7 @@ interface DialogProps {
 /* eslint-disable react/jsx-props-no-spreading */
 const Dialog = ({
   title,
-  titleTKey,
+  titleTKey = '',
   children,
   cancelButtonText = 'Cancel',
   continueButtonText = 'Continue',

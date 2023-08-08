@@ -1,4 +1,8 @@
 {
   "eslint.format.enable": true,
-  "editor.tabSize": 2
+  "editor.tabSize": 2,
+  "launch": {
+    "configurations": [],
+    "compounds": []
+  }
 }

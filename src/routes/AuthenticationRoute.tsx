@@ -12,12 +12,8 @@ const AuthenticationRoute: FC<AunthenticationRouteProps> = ({
 }): ReactElement => {
   const location = useLocation();
   const {currentUser} = useAuthentication();
-
-  console.log('currentUser', currentUser());
-
   const state = location.state as {from: string};
   const path = state?.from || '/';
-  console.log('path', state);
 
   return currentUser() ? component : <Navigate to={path} replace />;
 };

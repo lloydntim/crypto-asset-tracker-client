@@ -67,7 +67,6 @@ const Register: FC = (): ReactElement => {
       event.preventDefault();
 
       if (!passwordsMatching) {
-        console.log('test');
         setMessage({
           text: t('register:messages.errors.passwordsNotMatching'),
           type: 'error',

@@ -16,15 +16,17 @@
         "message": "Do you really want to remove this coin holding?"
       }
     },
-    "options": {
-      "holdingTypes": {
-        "wallet": "Wallet",
-        "staking": "Staking",
-        "exchange": "Exchange"
-      },
-      "newCoin": {
-        "preset": "Preset",
-        "other": "Other"
+    "input": {
+      "options": {
+        "holdingTypes": {
+          "wallet": "Wallet",
+          "staking": "Staking",
+          "exchange": "Exchange"
+        },
+        "newCoin": {
+          "preset": "Preset",
+          "other": "Other"
+        }
       }
     }
   }

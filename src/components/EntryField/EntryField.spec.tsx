@@ -12,7 +12,18 @@ import EntryField from './EntryField';
 const mockNavigate = jest.fn();
 
 jest.mock('react-i18next', () => ({
-  useTranslation: () => ({t: (key: string) => key}),
+  useTranslation: () => {
+    return {
+      t: (key: string) => key,
+      i18n: {
+        changeLanguage: () => new Promise(() => null),
+      },
+    };
+  },
+  initReactI18next: {
+    type: '3rdParty',
+    init: () => null,
+  },
 }));
 
 jest.mock('react-router-dom', () => ({
