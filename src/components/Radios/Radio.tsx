@@ -16,7 +16,7 @@ interface RadioProps extends StyledProps {
 }
 
 const RadioContainerSt = styled(Label)``;
-const RadioBackgroundSt = styled(Span)`
+const RadioBackgroundSt = styled(Span)<{isChecked: boolean}>`
   &:after {
     content: ' ';
     background-color: ${GRAPE_DARK};
@@ -24,8 +24,7 @@ const RadioBackgroundSt = styled(Span)`
     width: 12px;
     height: 12px;
     border-radius: 8px;
-    background-color: ${({isChecked}: {isChecked: boolean}) =>
-      isChecked ? GRAPE_DARK : WHITE};
+    background-color: ${({isChecked}) => (isChecked ? GRAPE_DARK : WHITE)};
     display: flex;
   }
 `;

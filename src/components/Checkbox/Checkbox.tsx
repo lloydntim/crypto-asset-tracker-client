@@ -15,11 +15,11 @@ interface CheckboxProps {
   onChange: ChangeEventHandler<HTMLInputElement>;
 }
 
-const BackgroundSt = styled(Span)`
+const BackgroundSt = styled(Span)<{checked: boolean; asSwitch: boolean}>`
   &:after {
     content: ' ';
     position: absolute;
-    ${({checked, asSwitch}: {checked: boolean; asSwitch: boolean}) =>
+    ${({checked, asSwitch}) =>
       asSwitch
         ? `
             width: 16px;

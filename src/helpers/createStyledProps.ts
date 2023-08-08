@@ -123,7 +123,7 @@ const createStylesProps = <T extends ComponentType>(
 ) => {
   // if (typeof element === 'undefined') return null;
 
-  return styled(element)`
+  return styled(element)<StyledProps>`
     ${({sz}: StyledProps) =>
       sz && `width: ${getUnit(sz)}; height: ${getUnit(sz)};`}
 

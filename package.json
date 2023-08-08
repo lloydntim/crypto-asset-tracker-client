@@ -7,7 +7,7 @@
     "cy:open": "cypress open",
     "cy:test": "cypress run",
     "test": "jest",
-    "lint": "eslint --fix src/**/*.js",
+    "lint": "eslint --fix src/**/*.ts",
     "build": "webpack --config config/webpack.config.js --mode=production",
     "dev": "webpack-dev-server --config config/webpack.config.js --port 4001 --host 0.0.0.0 --mode=development",
     "madge": "madge src",

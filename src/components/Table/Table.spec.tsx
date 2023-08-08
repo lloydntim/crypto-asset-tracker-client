@@ -18,10 +18,10 @@ describe('Table', () => {
     render(
       <Table>
         <TableRow>
-          <TableCell valign-m col-w={140} txt-align-l>
+          <TableCell $valign-m $col-w={140} $txt-align-l>
             <Text>Description</Text>
           </TableCell>
-          <TableCell valign-m col-w={120} txt-align-r>
+          <TableCell $valign-m $col-w={120} $txt-align-r>
             <Text>This a random text</Text>
           </TableCell>
         </TableRow>
