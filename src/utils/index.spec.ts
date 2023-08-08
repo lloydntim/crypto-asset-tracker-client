@@ -1,11 +1,11 @@
-import {capitalizeString} from './';
+import { capitalizeString } from './'
 
 describe('utils', () => {
   describe('capitalizeString', () => {
     it('should capitalize a string', () => {
-      const str = 'capitalized';
+      const str = 'capitalized'
 
-      expect(capitalizeString(str)).toEqual('Capitalized');
-    });
-  });
-});
+      expect(capitalizeString(str)).toEqual('Capitalized')
+    })
+  })
+})

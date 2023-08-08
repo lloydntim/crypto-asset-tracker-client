@@ -1,4 +1,11 @@
-import React, {FC, forwardRef, useState} from 'react';
+import React, {
+  ChangeEvent,
+  FC,
+  FocusEvent,
+  FocusEventHandler,
+  forwardRef,
+  useState,
+} from 'react';
 import {useTranslation} from 'react-i18next';
 
 import AutoComplete from '../../components/AutoComplete/AutoComplete';
@@ -47,7 +54,6 @@ const Input: FC<InputProps> = forwardRef((props, ref) => {
     text: string;
   }>({type: '', text: ''});
   const validationProps = {...props, type: dynamicInputType};
-  // const [inputValue, setInputValue] = useState(value || '');
   const {t} = useTranslation();
 
   const labelText = label || labelTKey;
@@ -90,21 +96,20 @@ const Input: FC<InputProps> = forwardRef((props, ref) => {
           placeholder={placeholder}
           value={value}
           defaultValue={defaultValue}
-          // value={inputValue}
-          onChange={({target: {value, files = null}}) => {
+          onChange={({
+            target: {value, files = null},
+          }: ChangeEvent<HTMLInputElement>) => {
             setInputMessage({text: '', type: 'error'});
-            console.log('value', value);
-            // setInputValue(value);
             const error = validateInput({value, files}, validationProps);
 
             if (files) setInputMessage({text: files[0].name, type: 'info'});
             if (onChange) onChange({name, value, files, error, required});
           }}
-          onFocus={(event) => {
+          onFocus={(event: FocusEvent<HTMLInputElement, Element>) => {
             if (dataList?.length) setIsDataListVisible(true);
             if (onFocus) onFocus(event);
           }}
-          onBlur={(event) => {
+          onBlur={(event: FocusEvent<HTMLInputElement, Element>) => {
             const {
               target: {value, files},
             } = event;
@@ -117,7 +122,6 @@ const Input: FC<InputProps> = forwardRef((props, ref) => {
         />
 
         {(isTypePassword || (value && value.length)) && (
-          // {(isTypePassword || inputValue.length !== 0) && (
           <IconButton
             bgcolor={TRANSPARENT}
             iconSize={14}
@@ -131,7 +135,6 @@ const Input: FC<InputProps> = forwardRef((props, ref) => {
                   dynamicInputType === 'password' ? 'text' : 'password',
                 );
               }
-              // setInputValue('');
               if (onChange) onChange({name, value: ''});
             }}
           />
@@ -143,17 +146,10 @@ const Input: FC<InputProps> = forwardRef((props, ref) => {
         <AutoComplete
           items={dataList}
           value={value}
-          // value={inputValue}
           onListItemClick={(item) => {
             const error = validateInput({value}, validationProps);
-            // const error = validateInput({value: inputValue}, validationProps);
-
-            console.log('auto complete error', error);
-            console.log('item.value', item.value);
-
             if (error) setInputMessage({text: error, type: 'error'});
             if (onChange) {
-              // setInputValue(item.text);
               onChange({name, value: item.text, error, required});
             }
             if (onDataListClick) onDataListClick(item);

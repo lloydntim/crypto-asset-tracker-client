@@ -1,29 +1,29 @@
-import {ApolloClient, InMemoryCache, createHttpLink} from '@apollo/client';
-import gql from 'graphql-tag';
-import {setContext} from '@apollo/client/link/context';
+import { ApolloClient, InMemoryCache, createHttpLink } from '@apollo/client'
+import gql from 'graphql-tag'
+import { setContext } from '@apollo/client/link/context'
 
-const APOLLO_CLIENT_URI = 'http://localhost:3001/graphql';
+const APOLLO_CLIENT_URI = 'http://localhost:3001/graphql'
 
 export const createClient = () => {
-  const httpLink = createHttpLink({uri: APOLLO_CLIENT_URI});
+  const httpLink = createHttpLink({ uri: APOLLO_CLIENT_URI })
 
-  const authLink = setContext((_, {headers}) => {
-    const token = localStorage.getItem('token');
+  const authLink = setContext((_, { headers }) => {
+    const token = localStorage.getItem('token')
 
     return {
       headers: {
         ...headers,
-        authorization: token ? `Bearer ${token}` : '',
-      },
-    };
-  });
+        authorization: token ? `Bearer ${token}` : ''
+      }
+    }
+  })
 
   return new ApolloClient({
     link: authLink.concat(httpLink),
     cache: new InMemoryCache(),
-    connectToDevTools: true,
-  });
-};
+    connectToDevTools: true
+  })
+}
 
 export const LOGIN = gql`
   mutation Login($username: String, $password: String) {
@@ -31,7 +31,7 @@ export const LOGIN = gql`
       token
     }
   }
-`;
+`
 
 export const REGISTER = gql`
   mutation Register($username: String, $email: String, $password: String) {
@@ -39,7 +39,7 @@ export const REGISTER = gql`
       token
     }
   }
-`;
+`
 
 export const CREATE_PASSWORD_TOKEN = gql`
   mutation CreatePasswordToken($username: String) {
@@ -47,7 +47,7 @@ export const CREATE_PASSWORD_TOKEN = gql`
       message
     }
   }
-`;
+`
 
 export const GET_PASSWORD_TOKEN = gql`
   query GetPasswordToken($resetPasswordToken: String) {
@@ -55,7 +55,7 @@ export const GET_PASSWORD_TOKEN = gql`
       token
     }
   }
-`;
+`
 
 export const UPDATE_PASSWORD_TOKEN = gql`
   mutation UpdatePassword($resetPasswordToken: String, $password: String) {
@@ -66,7 +66,7 @@ export const UPDATE_PASSWORD_TOKEN = gql`
       token
     }
   }
-`;
+`
 
 export const VERIFY = gql`
   mutation Verify($token: String) {
@@ -74,7 +74,7 @@ export const VERIFY = gql`
       token
     }
   }
-`;
+`
 
 export const GET_COIN_LISTINGS = gql`
   query GetCoinListings($symbols: String, $convert: String) {
@@ -85,7 +85,7 @@ export const GET_COIN_LISTINGS = gql`
       symbol
     }
   }
-`;
+`
 export const GET_COINS = gql`
   query GetCoins($creatorId: ID) {
     getCoins(creatorId: $creatorId) {
@@ -101,7 +101,7 @@ export const GET_COINS = gql`
       }
     }
   }
-`;
+`
 
 export const GET_SYMBOLS = gql`
   query GetSymbols {
@@ -110,7 +110,7 @@ export const GET_SYMBOLS = gql`
       id
     }
   }
-`;
+`
 
 export const ADD_COIN = gql`
   mutation AddCoin($symbol: String, $slug: String, $creatorId: ID!) {
@@ -123,7 +123,7 @@ export const ADD_COIN = gql`
       id
     }
   }
-`;
+`
 
 export const REMOVE_COIN = gql`
   mutation RemoveCoin($id: ID, $creatorId: ID) {
@@ -133,7 +133,7 @@ export const REMOVE_COIN = gql`
       name
     }
   }
-`;
+`
 
 export const ADD_COIN_HOLDING = gql`
   mutation addCoinHolding($id: ID!, $holding: HoldingInput) {
@@ -149,7 +149,7 @@ export const ADD_COIN_HOLDING = gql`
       }
     }
   }
-`;
+`
 
 export const UPDATE_COIN_HOLDING = gql`
   mutation updateCoinHolding($holdingId: ID!, $holding: HoldingInput) {
@@ -165,7 +165,7 @@ export const UPDATE_COIN_HOLDING = gql`
       }
     }
   }
-`;
+`
 
 export const REMOVE_COIN_HOLDING = gql`
   mutation removeCoinHolding($holdingId: ID!) {
@@ -180,7 +180,7 @@ export const REMOVE_COIN_HOLDING = gql`
       }
     }
   }
-`;
+`
 
 export const RESEND_VERIFICATION_TOKEN = gql`
   mutation ResendVerificationToken($email: String, $username: String) {
@@ -188,7 +188,7 @@ export const RESEND_VERIFICATION_TOKEN = gql`
       message
     }
   }
-`;
+`
 
 export const GET_USER = gql`
   query GetUser($id: ID, $username: String, $email: String) {
@@ -198,7 +198,7 @@ export const GET_USER = gql`
       isVerified
     }
   }
-`;
+`
 
 export const UPDATE_USER = gql`
   mutation UpdateUser($id: ID, $username: String, $email: String) {
@@ -208,7 +208,7 @@ export const UPDATE_USER = gql`
       isVerified
     }
   }
-`;
+`
 
 export const REMOVE_USER = gql`
   mutation RemoveUser($id: ID) {
@@ -216,4 +216,4 @@ export const REMOVE_USER = gql`
       id
     }
   }
-`;
+`

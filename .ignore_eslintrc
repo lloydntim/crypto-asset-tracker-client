@@ -3,11 +3,13 @@
     "plugin:@typescript-eslint/recommended",
     "plugin:react/recommended",
     "prettier/@typescript-eslint",
-    "prettier/react"
+    "prettier/react",
+     "plugin:react-hooks/recommended"
   ],
+
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
-    "ecmaVersion": 2018,
+    "ecmaVersion": 2021,
     "sourceType": "module"
   },
   "plugins": [

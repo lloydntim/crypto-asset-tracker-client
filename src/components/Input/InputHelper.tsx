@@ -22,10 +22,8 @@ export type InputChangeEvent = {
 };
 export type InputChangeEventHandler = (arg: InputChangeEvent) => void;
 export interface InputProps extends StyledProps {
-  // inputRef?: LegacyRef<HTMLInputElement | undefined> | undefined;
-  // inputRef?: MutableRefObject<HTMLInputElement>;
-  // inputRef?: MutableRefObject<HTMLInputElement>;
-  ref?: ForwardedRef<HTMLInputElement>;
+  ref?: MutableRefObject<HTMLInputElement | undefined> | any;
+  // Added any type to supress TS errors do to ref
   label?: string;
   labelTKey?: DefaultTFuncReturn;
   labelColor?: string;

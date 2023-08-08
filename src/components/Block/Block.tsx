@@ -12,9 +12,8 @@ import List from '../List/List';
 
 import Dialog from '../../layouts/Dialog/Dialog';
 
-import {GRAPE_EXTRA_DARK} from '../../constants/Colors';
+import {GRAPE_EXTRA_DARK} from '../../constants/colors';
 import createStylesProps, {StyledProps} from '../../helpers/createStyledProps';
-import Text from '../Text/Text';
 interface BlockProps extends StyledProps {
   title?: string;
   titleTKey?: string;

@@ -9,7 +9,7 @@ import {DefaultTFuncReturn} from 'i18next';
 
 interface OverlayProps {
   title?: string;
-  titleTKey?: DefaultTFuncReturn;
+  titleTKey?: string;
   visible: boolean;
   onCloseButtonClick: MouseEventHandler;
 }
@@ -18,7 +18,7 @@ interface OverlayProps {
 const Overlay = ({
   children,
   title = '',
-  titleTKey,
+  titleTKey = '',
   visible,
   onCloseButtonClick,
 }: PropsWithChildren<OverlayProps>) => {

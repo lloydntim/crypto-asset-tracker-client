@@ -2,7 +2,7 @@ import React, {Children, PropsWithChildren, ReactNode, useState} from 'react';
 
 import Box from '../../components/Box/Box';
 import Button from '../../components/Button/Button';
-import {GRAPE_DARK, GREY, TRANSPARENT} from '../../constants/Colors';
+import {GRAPE_DARK, GREY, TRANSPARENT} from '../../constants/colors';
 
 interface TabsProps {
   titles: string[];

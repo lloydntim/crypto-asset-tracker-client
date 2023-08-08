@@ -1,7 +1,6 @@
 import React, {MouseEventHandler, TouchEventHandler} from 'react';
 import {useNavigate} from 'react-router-dom';
 
-// import {Button, Icon} from '../../components';
 import {StyledProps} from '../../helpers/createStyledProps';
 import Button from '../Button/Button';
 import Icon from '../Icon/Icon';
@@ -63,7 +62,7 @@ const IconButton = ({
         event.preventDefault();
 
         if (isLink) return navigate(to);
-        onClick(event);
+        if (onClick) onClick(event);
       }}
       onMouseUp={onMouseUp}
       onMouseDown={onMouseDown}

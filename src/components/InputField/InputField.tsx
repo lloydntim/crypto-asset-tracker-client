@@ -13,8 +13,13 @@ const InputFieldSt = createStylesProps('input');
 
 /* eslint-disable react/display-name  */
 const InputField: FC<
-  DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> &
-    StyledProps & {placeholderTKey?: DefaultTFuncReturn}
+  | (DetailedHTMLProps<
+      InputHTMLAttributes<HTMLInputElement>,
+      HTMLInputElement
+    > &
+      StyledProps & {placeholderTKey?: DefaultTFuncReturn})
+  | any
+  // Added any type to supress TS errors do to ref
 > = forwardRef(
   (
     {
@@ -26,8 +31,8 @@ const InputField: FC<
       pv = 8,
       bw = 1,
       flex = '1',
-      placeholder,
-      placeholderTKey,
+      placeholder = '',
+      placeholderTKey = '',
       ...rest
     },
     ref,
@@ -36,7 +41,7 @@ const InputField: FC<
     return (
       <InputFieldSt
         {...{
-          ['aria-label']: 'core-input',
+          'aria-label': 'core-input',
           ref,
           bcolor,
           bw,
@@ -46,7 +51,9 @@ const InputField: FC<
           ph,
           pv,
           flex,
-          placeholder: t(placeholderTKey || placeholder),
+          ...((placeholderTKey || placeholder) && {
+            placeholder: t(placeholderTKey || placeholder),
+          }),
           ...rest,
         }}
       />
