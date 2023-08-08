@@ -1,9 +1,9 @@
-import {resources, defaultNS} from '../locales/i18n';
+import { type resources, type defaultNS } from '../locales/i18n'
 
 // react-i18next versions higher than 11.11.0
 declare module 'react-i18next' {
   interface CustomTypeOptions {
-    defaultNS: typeof defaultNS;
-    resources: typeof resources['en'];
+    defaultNS: typeof defaultNS
+    resources: typeof resources['en']
   }
 }

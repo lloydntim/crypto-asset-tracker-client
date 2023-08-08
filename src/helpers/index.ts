@@ -1,3 +1,3 @@
-import addStylesProps, {StyledProps} from './createStyledProps';
+import addStylesProps, { type StyledProps } from './createStyledProps'
 
-export {addStylesProps, StyledProps};
+export { addStylesProps, type StyledProps }

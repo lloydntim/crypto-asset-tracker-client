@@ -15,9 +15,10 @@ interface AuthenticationProviderProps {
   children: ReactNode;
 }
 
-const AuthenticationContext = createContext<AuthenticationContextProps>(
-  undefined,
-);
+const AuthenticationContext = createContext<AuthenticationContextProps>({
+  currentUser: () => null,
+  setLoginToken: () => null,
+});
 
 const AuthenticationProvider: FC<AuthenticationProviderProps> = ({
   children,
