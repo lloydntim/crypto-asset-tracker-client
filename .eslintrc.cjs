@@ -5,10 +5,14 @@ module.exports = {
     jest: true,
   },
   extends: [
-    'standard-with-typescript',
+    // 'standard-with-typescript',
+    'eslint:recommended',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:@typescript-eslint/recommended-type-checked',
     'plugin:react/recommended',
     'plugin:react-hooks/recommended',
   ],
+  root: true,
   overrides: [
     {
       env: {
@@ -25,8 +29,9 @@ module.exports = {
     project: true,
     ecmaVersion: 'latest',
     sourceType: 'module',
+    tsconfigRootDir: __dirname,
   },
-  plugins: ['react'],
+  plugins: ['react', '@typescript-eslint'],
   rules: {
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/strict-boolean-expressions': 'off',

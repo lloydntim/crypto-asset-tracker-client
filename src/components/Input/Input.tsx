@@ -1,11 +1,4 @@
-import React, {
-  ChangeEvent,
-  FC,
-  FocusEvent,
-  FocusEventHandler,
-  forwardRef,
-  useState,
-} from 'react';
+import React, {ChangeEvent, FocusEvent, forwardRef, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 
 import AutoComplete from '../../components/AutoComplete/AutoComplete';
@@ -21,7 +14,7 @@ import Label from '../Label/Label';
 import {validateInput, InputProps} from './InputHelper';
 
 /* eslint-disable react/jsx-props-no-spreading, react/display-name */
-const Input: FC<InputProps> = forwardRef((props, ref) => {
+const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
   const {
     label = '',
     labelTKey,
@@ -96,9 +89,7 @@ const Input: FC<InputProps> = forwardRef((props, ref) => {
           placeholder={placeholder}
           value={value}
           defaultValue={defaultValue}
-          onChange={({
-            target: {value, files = null},
-          }: ChangeEvent<HTMLInputElement>) => {
+          onChange={({target: {value, files = null}}) => {
             setInputMessage({text: '', type: 'error'});
             const error = validateInput({value, files}, validationProps);
 

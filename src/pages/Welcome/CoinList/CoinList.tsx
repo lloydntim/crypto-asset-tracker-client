@@ -214,23 +214,23 @@ const CoinList = (props: CoinListProps) => {
                   >
                     <Table>
                       <TableRow>
-                        <TableCell valign-m col-w={40}>
+                        <TableCell $valign-m $col-w={40}>
                           <Image
                             flex-row
                             sz={24}
                             src={`https://s2.coinmarketcap.com/static/img/coins/64x64/${coinId}.png`}
                           />
                         </TableCell>
-                        <TableCell valign-m col-w={140} txt-align-l>
+                        <TableCell $valign-m $col-w={140} $txt-alignn-l>
                           {name}
                         </TableCell>
-                        <TableCell valign-m col-w={120} txt-align-r>
+                        <TableCell $valign-m $col-w={120} $txt-alignn-r>
                           {formatToCurrency(price, convert, location)}
                         </TableCell>
-                        <TableCell valign-m col-w={160} txt-align-r>
+                        <TableCell $valign-m $col-w={160} $txt-alignn-r>
                           {formatAmount(amount, location)}
                         </TableCell>
-                        <TableCell valign-m ph={12} col-w={120} txt-align-r>
+                        <TableCell $valign-m ph={12} $col-w={120} $txt-alignn-r>
                           {formatToCurrency(value, convert, location)}
                         </TableCell>
                       </TableRow>
@@ -293,7 +293,7 @@ const CoinList = (props: CoinListProps) => {
                                         br-bl={8}
                                         w={44}
                                         pv={4}
-                                        valign-m
+                                        $valign-m
                                       >
                                         <Box
                                           bgcolor={GREY}
@@ -302,7 +302,7 @@ const CoinList = (props: CoinListProps) => {
                                           flex-row
                                         />
                                       </Box>
-                                      <Box flex="1" txt-align-l>
+                                      <Box flex="1" $txt-alignn-l>
                                         {editMode ? (
                                           <EntryField
                                             location={location}
@@ -314,7 +314,7 @@ const CoinList = (props: CoinListProps) => {
                                             }}
                                           />
                                         ) : (
-                                          <Text valign-m m={0} font-sz={14}>
+                                          <Text $valign-m m={0} font-sz={14}>
                                             {name}
                                           </Text>
                                         )}
@@ -334,7 +334,7 @@ const CoinList = (props: CoinListProps) => {
                                             />
                                           </>
                                         ) : (
-                                          <Text valign-m font-sz={14}>
+                                          <Text $valign-m font-sz={14}>
                                             {formatAmount(amount, location)}
                                           </Text>
                                         )}
@@ -347,7 +347,7 @@ const CoinList = (props: CoinListProps) => {
                                         br-br={8}
                                         pr={8}
                                       >
-                                        <Text valign-m font-sz={14}>
+                                        <Text $valign-m font-sz={14}>
                                           {formatToCurrency(
                                             value,
                                             convert,
