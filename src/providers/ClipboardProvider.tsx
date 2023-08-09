@@ -1,4 +1,4 @@
-import React, { createContext, FC, ReactNode, useContext } from 'react';
+import React, {createContext, ReactNode, useContext} from 'react';
 
 export interface ClipboardData<T> {
   list: T[];
@@ -7,21 +7,34 @@ export interface ClipboardData<T> {
 
 interface ClipboardContextProps {
   get: <T>() => ClipboardData<T>;
-  add: <T>(data: ClipboardData<T>) => void;
+  add: <T>(data?: ClipboardData<T>) => void;
 }
 
 interface ClipboardProviderProps {
   children: ReactNode;
 }
 
-const ClipboardContext = createContext<ClipboardContextProps>(undefined);
+const LOCAL_STORAGE_CLIPBOARD_KEY = 'clipboard';
+const ClipboardContext = createContext<ClipboardContextProps>({
+  get: () => ({list: [], id: ''}),
+  add: () => null,
+});
 
-const ClipboardProvider: FC<ClipboardProviderProps> = ({ children }: ClipboardProviderProps) => {
+const ClipboardProvider = ({children}: ClipboardProviderProps) => {
   return (
-    <ClipboardContext.Provider value={{
-      get: () => JSON.parse(sessionStorage.getItem('clipboard')) || null,
-      add: (data) => sessionStorage.setItem('clipboard', JSON.stringify(data)),
-    }}>
+    <ClipboardContext.Provider
+      value={{
+        get: () =>
+          JSON.parse(
+            sessionStorage.getItem(LOCAL_STORAGE_CLIPBOARD_KEY) as string,
+          ) || null,
+        add: (data) =>
+          sessionStorage.setItem(
+            LOCAL_STORAGE_CLIPBOARD_KEY,
+            JSON.stringify(data),
+          ),
+      }}
+    >
       {children}
     </ClipboardContext.Provider>
   );

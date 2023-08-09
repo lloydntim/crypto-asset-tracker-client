@@ -1,26 +1,17 @@
-import React, {
-  DetailedHTMLProps,
-  FC,
-  InputHTMLAttributes,
-  forwardRef,
-} from 'react';
+import React, {ChangeEventHandler, forwardRef} from 'react';
 import {GRAPE_DARK, GRAPE_EXTRA_DARK} from '../../constants/colors';
-import createStylesProps, {StyledProps} from '../../helpers/createStyledProps';
-import {DefaultTFuncReturn} from 'i18next';
+import createStylesProps from '../../helpers/createStyledProps';
 import {useTranslation} from 'react-i18next';
+import {InputProps} from '../Input/InputHelper';
 
 const InputFieldSt = createStylesProps('input');
 
+type InputFieldProps = Omit<InputProps, 'onChange'> & {
+  onChange?: ChangeEventHandler<HTMLInputElement>;
+};
+
 /* eslint-disable react/display-name  */
-const InputField: FC<
-  | (DetailedHTMLProps<
-      InputHTMLAttributes<HTMLInputElement>,
-      HTMLInputElement
-    > &
-      StyledProps & {placeholderTKey?: DefaultTFuncReturn})
-  | any
-  // Added any type to supress TS errors do to ref
-> = forwardRef(
+const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
   (
     {
       m = 8,

@@ -1,9 +1,9 @@
-import React, {FC, ReactElement, useState} from 'react';
+import React, {useState} from 'react';
 import {Header, Body, Text, Headline, Footer} from '../../components';
 import {Page, Overlay} from '../../layouts';
 import {useClipboard, ClipboardData} from '../../providers/ClipboardProvider';
 
-const Sample: FC = (): ReactElement => {
+const Sample = () => {
   const [list, setList] = useState(['apples', 'oranges', 'carots']);
   const [isOverlayVisible, setIsOverlayVisible] = useState(false);
   const clipboard = useClipboard();

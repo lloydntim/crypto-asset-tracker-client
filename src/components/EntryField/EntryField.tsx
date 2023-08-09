@@ -1,11 +1,4 @@
-import React, {
-  FC,
-  ReactElement,
-  useState,
-  useEffect,
-  useRef,
-  FocusEventHandler,
-} from 'react';
+import React, {useState, useEffect, FocusEventHandler} from 'react';
 import Box from '../Box/Box';
 import Input from '../Input/Input';
 import useForm from '../../hooks/useForm';
@@ -22,12 +15,12 @@ interface EntryFieldProps {
   location?: string;
 }
 
-const EntryField: FC<EntryFieldProps> = ({
+const EntryField = ({
   value: entryValue,
   onChange,
   onBlur,
   location = '',
-}) => {
+}: EntryFieldProps) => {
   const [entryEditMode, setEntryEditMode] = useState(false);
 
   const {

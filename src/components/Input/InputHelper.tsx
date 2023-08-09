@@ -1,9 +1,4 @@
-import {
-  FocusEventHandler,
-  ForwardedRef,
-  LegacyRef,
-  MutableRefObject,
-} from 'react';
+import {FocusEventHandler} from 'react';
 
 import {DefaultTFuncReturn} from 'i18next';
 import {StyledProps} from '../../helpers/createStyledProps';
@@ -22,8 +17,8 @@ export type InputChangeEvent = {
 };
 export type InputChangeEventHandler = (arg: InputChangeEvent) => void;
 export interface InputProps extends StyledProps {
-  ref?: MutableRefObject<HTMLInputElement | undefined> | any;
-  // Added any type to supress TS errors do to ref
+  className?: string;
+  id?: string;
   label?: string;
   labelTKey?: DefaultTFuncReturn;
   labelColor?: string;
@@ -41,6 +36,8 @@ export interface InputProps extends StyledProps {
   required?: boolean;
   minLength?: number;
   maxLength?: number;
+  checked?: boolean;
+  disabled?: boolean;
   patternErrorMessage?: string;
   requiredErrorMessage?: string;
   minLengthErrorMessage?: string;
