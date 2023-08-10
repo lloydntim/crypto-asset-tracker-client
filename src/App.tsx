@@ -1,10 +1,10 @@
-import React, {FC, ReactElement} from 'react';
+import React from 'react';
 import {HashRouter as Router} from 'react-router-dom';
 import {AuthenticationProvider, ClipboardProvider} from './providers';
 
 import Routes from './routes';
 
-export const App: FC = (): ReactElement => {
+export const App = () => {
   return (
     <AuthenticationProvider>
       <ClipboardProvider>

@@ -67,7 +67,9 @@ const Reset = () => {
               label: 'German',
             },
           ]}
-          onChange={({value}) => changeLanguage(value)}
+          onChange={({value}) => {
+            changeLanguage(value);
+          }}
         />
       </Header>
       <Body flex-col align-c flex="1">
@@ -103,11 +105,11 @@ const Reset = () => {
             tKey="common:button.submit"
             type="submit"
             mv={12}
-            onClick={() =>
+            onClick={() => {
               updatePassword({
                 variables: {resetPasswordToken, password: password.value},
-              })
-            }
+              });
+            }}
           />
         </Form>
         <>
