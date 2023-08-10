@@ -47,7 +47,9 @@ const Forgot = () => {
               label: 'German',
             },
           ]}
-          onChange={({value}) => changeLanguage(value)}
+          onChange={({value}) => {
+            changeLanguage(value);
+          }}
         />
       </Header>
       <Body>
@@ -68,9 +70,9 @@ const Forgot = () => {
             mv={16}
             tKey="common:button.submit"
             type="submit"
-            onClick={() =>
-              createPasswordToken({variables: {username: username.value}})
-            }
+            onClick={() => {
+              createPasswordToken({variables: {username: username.value}});
+            }}
           />
         </Form>
 

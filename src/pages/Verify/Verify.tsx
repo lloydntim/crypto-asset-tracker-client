@@ -1,4 +1,4 @@
-import React, {FC, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import {Page} from '../../layouts';
 import {Text, Header, Body, Footer, Headline, Message} from '../../components';
 import {useMutation} from '@apollo/client';
@@ -6,7 +6,7 @@ import {VERIFY} from '../../graphql';
 import {useAuthentication} from '../../providers/AuthenticationProvider';
 import {useNavigate, useParams} from 'react-router-dom';
 
-const Verify: FC = () => {
+const Verify = () => {
   const navigate = useNavigate();
   const {token} = useParams();
   const {setLoginToken, currentUser} = useAuthentication();
@@ -15,7 +15,7 @@ const Verify: FC = () => {
     onCompleted: (data) => {
       /* eslint-disable no-undef */
       if (data.verify) {
-        setLoginToken(data.verify.token);
+        setLoginToken(data.verify.token as string);
         navigate('/profile');
       }
     },

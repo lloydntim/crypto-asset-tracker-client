@@ -1,9 +1,11 @@
 import {defineConfig} from 'cypress';
 import {configurePlugin} from 'cypress-mongodb';
 
+const {MONGODB_NAME, MONGODB_URI, MAILHOG_URL, CLIENT_BASE_URL} = process.env;
+
 export default defineConfig({
   e2e: {
-    baseUrl: 'http://localhost:4001',
+    baseUrl: CLIENT_BASE_URL,
     // We've imported your old cypress plugins here.
     // You may want to clean this up later by importing these.
     setupNodeEvents(on) {
@@ -11,11 +13,11 @@ export default defineConfig({
     },
     env: {
       mongodb: {
-        uri: 'mongodb://localhost:27017',
-        database: 'lncd-crypto-tracker-development',
+        uri: MONGODB_URI,
+        database: MONGODB_NAME,
         collection: 'user',
       },
-      mailHogUrl: 'http://localhost:8025',
+      mailHogUrl: MAILHOG_URL,
     },
     supportFile: 'cypress/support/index.{js,jsx,ts,tsx}', // Path to file to load before spec files load. This file is compiled and bundled. (Pass false to disable)
     testIsolation: true, // Ensure a clean browser context between tests. Tests should always be able to be run independently from one another and still pass.

@@ -101,7 +101,7 @@ describe('EntryField', () => {
   test('renders formatted static value', async () => {
     const user = userEvent.setup();
 
-    const {rerender} = render(<EntryField value={2000000} location="en-GB" />);
+    const {rerender} = render(<EntryField value="2000000" location="en-GB" />);
 
     const formattedStaticValue = screen.getByText('2,000,000.00');
 
@@ -118,7 +118,7 @@ describe('EntryField', () => {
     await user.type(entryFieldInput, '{backspace}{backspace}');
     await user.tab();
 
-    rerender(<EntryField value={20000} location="en-GB" />);
+    rerender(<EntryField value="20000" location="en-GB" />);
 
     const entryField = screen.getByText('20,000.00');
 
