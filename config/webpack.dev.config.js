@@ -1,10 +1,10 @@
 import path from 'path';
 import url from 'url';
-import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import ForkTsCheckerNotifierWebpackPlugin from 'fork-ts-checker-notifier-webpack-plugin';
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import FaviconsWebpackPlugin from 'favicons-webpack-plugin';
+import {CleanWebpackPlugin} from 'clean-webpack-plugin';
 import ESLintPlugin from 'eslint-webpack-plugin';
 import Dotenv from 'dotenv-webpack';
 
@@ -15,8 +15,8 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 export default {
+  mode: 'development',
   entry: resolve(__dirname, '../src/index.tsx'),
-  // mode: 'development',
   context: process.cwd(), // to automatically find tsconfig.json
   output: {
     path: resolve(__dirname, '../dist'),
@@ -25,10 +25,10 @@ export default {
   },
   devtool: 'inline-source-map',
   devServer: {
-    // clientLogLevel: 'warning',
-    // open: true,
+    open: true,
+    host: '0.0.0.0',
+    port: 4001,
     historyApiFallback: true,
-    // stats: 'errors-only',
   },
   module: {
     rules: [
@@ -36,23 +36,6 @@ export default {
         test: /\.tsx?$/,
         use: 'ts-loader',
         exclude: /node_modules/,
-      },
-      {
-        test: /\.scss$/,
-        use: [
-          {
-            loader:
-              process.env.NODE_ENV !== 'production'
-                ? 'style-loader'
-                : MiniCssExtractPlugin.loader,
-          },
-          {
-            loader: 'css-loader', // translates CSS into CommonJS
-          },
-          {
-            loader: 'sass-loader', // compiles Sass to CSS
-          },
-        ],
       },
     ],
   },
@@ -80,6 +63,7 @@ export default {
       template: resolve(__dirname, '../src/index.html'),
     }),
     new FaviconsWebpackPlugin(resolve(__dirname, '../src/logo.svg')),
+    new CleanWebpackPlugin(),
   ],
   externals: {
     'react/addons': true,

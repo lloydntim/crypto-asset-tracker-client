@@ -1,7 +1,10 @@
 import {defineConfig} from 'cypress';
 import {configurePlugin} from 'cypress-mongodb';
 
-const {MONGODB_NAME, MONGODB_URI, MAILHOG_URL, CLIENT_BASE_URL} = process.env;
+const MONGODB_URI = 'mongodb://localhost:27017';
+const MONGODB_NAME = 'lncd-crypto-tracker-development';
+const MAILHOG_URL = 'http://localhost:3001/graphql';
+const CLIENT_BASE_URL = 'http://localhost:4001';
 
 export default defineConfig({
   e2e: {
