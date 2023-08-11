@@ -41,7 +41,7 @@ Cypress.Commands.add(
     password: string,
     passwordConfirm: string,
   ) => {
-    cy.visit('http://localhost:4001/#/register');
+    cy.visit('/register');
 
     cy.get('[name=username]').type(username).should('have.value', username);
 
