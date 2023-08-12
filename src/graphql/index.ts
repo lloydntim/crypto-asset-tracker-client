@@ -2,6 +2,8 @@ import {ApolloClient, InMemoryCache, createHttpLink} from '@apollo/client';
 import gql from 'graphql-tag';
 import {setContext} from '@apollo/client/link/context';
 
+console.log('env vars', process.env);
+
 export const createClient = () => {
   const httpLink = createHttpLink({
     uri: process.env.APOLLO_SERVER_URL,
