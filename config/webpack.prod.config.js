@@ -18,13 +18,11 @@ const __dirname = dirname(__filename);
 export default {
   entry: resolve(__dirname, '../src/index.tsx'),
   mode: 'production',
-  name: 'client',
   context: process.cwd(), // to automatically find tsconfig.json
   output: {
     path: resolve(__dirname, '../dist'),
-    publicPath: '/',
-    filename: '[name].[contenthash].bundle.js',
-    // chunkFilename: '[name].bundle.js',
+    // publicPath: '/',
+    filename: 'js/[name].js',
   },
   module: {
     rules: [
@@ -38,23 +36,32 @@ export default {
   resolve: {
     extensions: ['.tsx', '.ts', '.jsx', '.js'],
   },
-  optimization: {
+  /* optimization: {
     splitChunks: {
+      chunks: 'async',
+      minSize: 20000,
+      minRemainingSize: 0,
+      minChunks: 1,
+      maxAsyncRequests: 30,
+      maxInitialRequests: 30,
+      enforceSizeThreshold: 50000,
       cacheGroups: {
         vendor: {
           name: 'node_vendors', // part of the bundle name and
           // can be used in chunks array of HtmlWebpackPlugin
           test: /[\\/]node_modules[\\/]/,
           chunks: 'all',
+          reuseExistingChunk: true,
         },
         common: {
           test: /[\\/]src[\\/]components[\\/]/,
           chunks: 'all',
           minSize: 0,
+          reuseExistingChunk: true,
         },
       },
     },
-  },
+  }, */
   plugins: [
     new Dotenv(),
     new ESLintPlugin({
