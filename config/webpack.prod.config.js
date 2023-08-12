@@ -1,4 +1,3 @@
-import webpack from 'webpack';
 import path from 'path';
 import url from 'url';
 import ForkTsCheckerNotifierWebpackPlugin from 'fork-ts-checker-notifier-webpack-plugin';
@@ -21,6 +20,7 @@ export default {
   context: process.cwd(), // to automatically find tsconfig.json
   output: {
     path: resolve(__dirname, '../dist'),
+    // publicPath: '/',
     filename: 'js/[name].js',
   },
   module: {

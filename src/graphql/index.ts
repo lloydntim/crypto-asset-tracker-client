@@ -2,6 +2,8 @@ import {ApolloClient, InMemoryCache, createHttpLink} from '@apollo/client';
 import gql from 'graphql-tag';
 import {setContext} from '@apollo/client/link/context';
 
+console.log(process.env);
+
 console.log(
   'RAILWAY_SERVICE_GRAPHQL_APOLLO_API_URL',
   process.env.RAILWAY_SERVICE_GRAPHQL_APOLLO_API_URL,
