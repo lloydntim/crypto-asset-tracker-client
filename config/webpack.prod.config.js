@@ -21,7 +21,6 @@ export default {
   context: process.cwd(), // to automatically find tsconfig.json
   output: {
     path: resolve(__dirname, '../dist'),
-    // publicPath: '/',
     filename: 'js/[name].js',
   },
   module: {
@@ -36,7 +35,7 @@ export default {
   resolve: {
     extensions: ['.tsx', '.ts', '.jsx', '.js'],
   },
-  /* optimization: {
+  optimization: {
     splitChunks: {
       chunks: 'async',
       minSize: 20000,
@@ -61,7 +60,7 @@ export default {
         },
       },
     },
-  }, */
+  },
   plugins: [
     new Dotenv(),
     new ESLintPlugin({

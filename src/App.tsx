@@ -9,13 +9,13 @@ export const App = () => {
   return (
     <AuthenticationProvider>
       <ClipboardProvider>
-        {/*     <Suspense
+        <Suspense
           fallback={<Message type="info" tKey="common:message.loading.text" />}
-        > */}
-        <Router>
-          <Routes />
-        </Router>
-        {/*  </Suspense> */}
+        >
+          <Router>
+            <Routes />
+          </Router>
+        </Suspense>
       </ClipboardProvider>
     </AuthenticationProvider>
   );
