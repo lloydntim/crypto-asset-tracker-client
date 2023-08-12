@@ -2,7 +2,12 @@ import {ApolloClient, InMemoryCache, createHttpLink} from '@apollo/client';
 import gql from 'graphql-tag';
 import {setContext} from '@apollo/client/link/context';
 
-console.log('APOLLO_URL', process.env.RAILWAY_SERVICE_GRAPHQL_APOLLO_API_URL);
+console.log(
+  'RAILWAY_SERVICE_GRAPHQL_APOLLO_API_URL',
+  process.env.RAILWAY_SERVICE_GRAPHQL_APOLLO_API_URL,
+);
+console.log('APOLLO_SERVER_URL', process.env.APOLLO_SERVER_URL);
+
 export const createClient = () => {
   const httpLink = createHttpLink({
     uri: process.env.RAILWAY_SERVICE_GRAPHQL_APOLLO_API_URL,
