@@ -3,7 +3,9 @@ import gql from 'graphql-tag';
 import {setContext} from '@apollo/client/link/context';
 
 export const createClient = () => {
-  const httpLink = createHttpLink({uri: process.env.APOLLO_SERVER_URL});
+  const httpLink = createHttpLink({
+    uri: process.env.RAILWAY_SERVICE_GRAPHQL_APOLLO_API_URL,
+  });
 
   const authLink = setContext(
     (_, {headers}: {headers: {authorization: string}}) => {
