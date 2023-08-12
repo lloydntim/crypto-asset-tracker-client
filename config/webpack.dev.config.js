@@ -43,7 +43,7 @@ export default {
     extensions: ['.tsx', '.ts', '.jsx', '.js'],
   },
   plugins: [
-    new Dotenv(),
+    new Dotenv({systemvars: true}),
     new ESLintPlugin({
       context: resolve(__dirname, '../src'),
       extensions: ['js', 'jsx', 'ts', 'tsx'],

@@ -62,7 +62,7 @@ export default {
     },
   },
   plugins: [
-    new Dotenv(),
+    new Dotenv({systemvars: true, expand: true}),
     new ESLintPlugin({
       context: resolve(__dirname, '../src'),
       extensions: ['js', 'jsx', 'ts', 'tsx'],

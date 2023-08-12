@@ -23,6 +23,7 @@
     "@testing-library/user-event": "^14.4.3",
     "@types/dotenv-webpack": "^7.0.4",
     "@types/jest": "^27.0.0",
+    "@types/node": "^20.4.10",
     "@types/react": "^18.2.12",
     "@types/react-dom": "^18.2.5",
     "@types/testing-library__jest-dom": "^5.14.6",
