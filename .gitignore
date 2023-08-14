@@ -1,8 +1,7 @@
-dist
 node_modules
 .DS_Store
+.env
 cypress/videos
 cypress/screenshots
 cypress/fixtures/users.json
 cypress/fixtures/profile.json
-.env

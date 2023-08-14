@@ -3,7 +3,7 @@
     "outDir": "./dist/",
     "noImplicitAny": true,
     "sourceMap": true,
-    "module": "es2020",
+    "module": "es6",
     "target": "es6",
     "jsx": "react",
     "allowJs": true,
@@ -11,9 +11,9 @@
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
-    "types": ["jest", "node", "webpack"],
+    "types": ["jest", "node"],
     "strictNullChecks": true
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.json"],
+  "include": ["src/**/*.ts", "src/**/*.json"],
   "exclude": ["cypress/**/*"]
 }

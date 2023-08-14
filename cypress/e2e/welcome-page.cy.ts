@@ -62,7 +62,7 @@ describe('Welcome Page', () => {
       cy.log(result); // prints '# documents deleted'
     });
 
-    cy.visit('/login');
+    cy.visit('http://localhost:4001/#/login');
 
     cy.login('user02', 'Password12!');
   });

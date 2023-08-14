@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {FC} from 'react';
 import {Page} from '../../layouts';
 import {
   Text,
@@ -11,7 +11,7 @@ import {
 } from '../../components';
 import {changeLanguage} from 'i18next';
 
-const About = () => {
+const About: FC = () => {
   return (
     <Page name="about">
       <Header>
@@ -29,9 +29,7 @@ const About = () => {
               label: 'German',
             },
           ]}
-          onChange={({value}) => {
-            changeLanguage(value);
-          }}
+          onChange={({value}) => changeLanguage(value)}
         />
       </Header>
       <Body flex-col align-c flex="1">

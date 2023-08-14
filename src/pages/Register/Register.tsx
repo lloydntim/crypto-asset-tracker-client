@@ -103,9 +103,7 @@ const Register: FC = (): ReactElement => {
               label: 'German',
             },
           ]}
-          onChange={({value}) => {
-            changeLanguage(value);
-          }}
+          onChange={({value}) => changeLanguage(value)}
         />
       </Header>
       <Body flex-col align-c flex="1">

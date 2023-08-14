@@ -180,9 +180,9 @@ export const processCoinData = ({coins}: any) => {
   }, {});
 };
 
-export const formatAmount = (value: number = 0, location: string) => {
-  if (!value) {
-    return value.toFixed(2);
+export const formatAmount = (value: number, location: string) => {
+  if (typeof value === 'undefined' || typeof value === null) {
+    return (0).toFixed(2);
   }
   return value < 1
     ? value.toFixed(4)

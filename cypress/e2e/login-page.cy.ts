@@ -3,7 +3,7 @@
 
 describe('Login Scenario', () => {
   beforeEach(() => {
-    cy.visit('/login');
+    cy.visit('http://localhost:4001/#/login');
   });
   it('login', () => {
     cy.login('user14', 'Password12@');

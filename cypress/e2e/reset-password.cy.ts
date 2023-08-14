@@ -14,10 +14,10 @@ describe('Reset Password Scenario', () => {
   });
 
   it('goes to reset page', () => {
-    cy.visit('/register');
+    cy.visit('http://localhost:4001/#/register');
     cy.register(username, 'info@lncd.world', 'Password12!', 'Password12!');
 
-    cy.visit('/forgot');
+    cy.visit('http://localhost:4001/#/forgot');
     cy.contains('Forgot');
 
     cy.get('[name=username]').type(username).should('have.value', username);

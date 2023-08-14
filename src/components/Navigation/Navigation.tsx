@@ -55,9 +55,7 @@ const Navigation = ({title = '', titleTKey = '', ...rest}: NavigationProps) => {
               label: 'German',
             },
           ]}
-          onChange={({value}) => {
-            changeLanguage(value);
-          }}
+          onChange={({value}) => changeLanguage(value)}
         />
 
         <List<string>
