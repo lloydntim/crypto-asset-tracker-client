@@ -1,3 +1,4 @@
+/* PLOP_INJECT_IMPORT */
 import AutoComplete from './AutoComplete/AutoComplete';
 import Button from './Button/Button';
 import Box from './Box/Box';
@@ -26,6 +27,7 @@ import Navigation from './Navigation/Navigation';
 import Aside from './Aside/Aside';
 
 export {
+  /* PLOP_INJECT_EXPORT */
   AutoComplete,
   Button,
   Box,
