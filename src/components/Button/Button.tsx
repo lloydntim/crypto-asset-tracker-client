@@ -1,4 +1,4 @@
-import React, {MouseEventHandler, TouchEventHandler} from 'react';
+import React, {MouseEventHandler, TouchEventHandler, MouseEvent} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {
   GRAPE_EXTRA_DARK,
@@ -73,8 +73,7 @@ const Button = ({
       className={`button button-rank-${rank} ${disabled ? 'is-disabled' : ''}`}
       disabled={disabled}
       align-c={alignC}
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-      onClick={(event: any) => {
+      onClick={(event: MouseEvent<HTMLButtonElement>) => {
         if (isLink) return navigate(to);
         if (type === 'submit') event.preventDefault();
 

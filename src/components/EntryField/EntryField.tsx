@@ -9,7 +9,7 @@ import {InputChangeEventHandler} from '../Input/InputHelper';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 interface EntryFieldProps {
-  value: any;
+  value: string;
   onChange?: InputChangeEventHandler;
   onBlur?: FocusEventHandler<HTMLInputElement>;
   location?: string;
