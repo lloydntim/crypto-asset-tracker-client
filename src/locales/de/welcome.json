@@ -1,0 +1,33 @@
+{
+  "title": "Willkommen",
+  "greeting": "Hallo, willkommen züruck!",
+  "coinlist": {
+    "text": {
+      "myPortfolio": "Mein Portfolio",
+      "portfolioTotal": "Gesamtbetrag: {{total}}"
+    },
+    "dialog": {
+      "removeCoin": {
+        "title": "Coin Löschen",
+        "message": "Wollen Sie wirklich diese Coin löschen?"
+      },
+      "removeCoinHolding": {
+        "title": "Coin Holding Löschen",
+        "message": "Wollen Sie wirklich dieses Coin Holding löschen?"
+      }
+    },
+    "input": {
+      "options": {
+        "holdingTypes": {
+          "wallet": "Wallet",
+          "staking": "Staking",
+          "exchange": "Börse"
+        },
+        "newCoin": {
+          "preset": "Preset",
+          "other": "Andere"
+        }
+      }
+    }
+  }
+}

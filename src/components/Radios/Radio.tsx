@@ -1,33 +1,78 @@
-import React, { ChangeEventHandler, FC, ReactElement } from 'react';
+import React, {ChangeEventHandler} from 'react';
+import Label from '../Label/Label';
+import {GRAPE_DARK, WHITE} from '../../constants/colors';
+import InputField from '../InputField/InputField';
+import {StyledProps} from '../../helpers/createStyledProps';
+import styled from 'styled-components';
+import Span from '../Span/Span';
 
-/* eslint-disable react/jsx-props-no-spreading */
-interface RadioProps {
+interface RadioProps extends StyledProps {
   name: string;
   value: string;
   label: string;
+  labelColor?: string;
   checked: boolean;
   onChange: ChangeEventHandler<HTMLInputElement>;
 }
 
-const Radio: FC<RadioProps> = ({
+const RadioContainerSt = styled(Label)``;
+const RadioBackgroundSt = styled(Span)<{isChecked: boolean}>`
+  &:after {
+    content: ' ';
+    background-color: ${GRAPE_DARK};
+    visibility: visible;
+    width: 12px;
+    height: 12px;
+    border-radius: 8px;
+    background-color: ${({isChecked}) => (isChecked ? GRAPE_DARK : WHITE)};
+    display: flex;
+  }
+`;
+
+const Radio = ({
   name,
   value,
-  label = '',
+  label,
+  labelColor = WHITE,
   checked,
   onChange,
-}): ReactElement => (
-  <label className="radio" htmlFor={name}>
-    <input
+}: RadioProps) => (
+  <RadioContainerSt
+    color={labelColor}
+    className="radio"
+    htmlFor={name}
+    flex-row
+    align-m
+    data-testid="radio"
+  >
+    <InputField
+      hidden
       id={name}
       value={value}
       className="radio-input"
       type="radio"
       checked={checked}
       onChange={onChange}
+      data-testid="radio-element"
     />
-    <span className="radio-background" />
-    {label && <span className="radio-label">{label}</span>}
-  </label>
+    <RadioBackgroundSt
+      flex-row
+      br={10}
+      size={20}
+      bgcolor={WHITE}
+      bcolor={WHITE}
+      bw={2}
+      bs="solid"
+      pos-rel
+      align-m
+      align-c
+      className="radio-background"
+      isChecked={checked}
+    />
+    <Span flex-row mv={8} mh={24} className="radio-label">
+      {label}
+    </Span>
+  </RadioContainerSt>
 );
 
 export default Radio;

@@ -1,0 +1,11 @@
+{
+  "title": "Login",
+  "link": {
+    "forgotPassword": "Forgot Password"
+  },
+  "messages": {
+    "errors": {
+      "unableToLoginUser": "Something went wrong, user could not be logged in"
+    }
+  }
+}

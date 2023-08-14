@@ -1,53 +1,56 @@
-import React, { FC, useState } from 'react';
+import React, {useState} from 'react';
 
+import {StyledProps} from '../../helpers/createStyledProps';
+import Box from '../Box/Box';
 import Radio from './Radio';
+import RadioButton from './RadioButton';
 
-import './Radios.scss';
-
-type RadioItem = {
+export type RadioItem = {
   label: string;
   value: string;
-}
+};
 
-type RadioChangeEventHandler = (
-  event: {
-    label: string,
-    value: string | number,
-    index: number
-  }
-) => void;
+type RadioChangeEventHandler = (event: {
+  label: string;
+  value: string;
+  index: number;
+}) => void;
 
-
-interface RadiosProps {
+interface RadiosProps extends StyledProps {
   name?: string;
   items: RadioItem[];
-  selectedItem: number;
+  selectedItem?: number;
+  isButton?: boolean;
   onChange: RadioChangeEventHandler;
 }
-/* eslint-disable react/jsx-props-no-spreading */
-const Radios: FC<RadiosProps> = ({
-  name = '',
+const Radios = ({
+  name = 'default',
   items,
   selectedItem = 0,
   onChange,
-}) => {
+  isButton = false,
+  ...rest
+}: RadiosProps) => {
   const [selectedRadio, setSelectedRadio] = useState(selectedItem);
+
+  const RadioElement = isButton ? RadioButton : Radio;
+
   return (
-    <div className={`radios ${name}-radios`}>
-      {items.map(({ label, value }, index) => (
-        <Radio
+    <Box {...rest} className={`radios ${name}-radios`}>
+      {items.map(({label, value}, index) => (
+        <RadioElement
           key={index}
           value={value}
           name={`radio-${index}`}
           checked={selectedRadio === index}
           label={label}
-          onChange={({ target: { value } }) => {
+          onChange={({target: {value}}) => {
             setSelectedRadio(index);
-            onChange({ label, value, index });
+            onChange({label, value, index});
           }}
         />
       ))}
-    </div>
+    </Box>
   );
 };
 

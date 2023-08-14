@@ -1,6 +1,7 @@
-import React, { FC, ReactNode, ReactElement } from 'react';
+import React, {ReactNode} from 'react';
 
-import './Page.scss';
+import Box from '../../components/Box/Box';
+import {GRAPE_MEDIUM} from '../../constants/colors';
 
 interface PageProps {
   name: string;
@@ -8,11 +9,20 @@ interface PageProps {
 }
 
 /* eslint-disable react/jsx-props-no-spreading */
-const Page: FC<PageProps> = ({ name, children }): ReactElement<PageProps> => {
+const Page = ({name, children}: PageProps) => {
   return (
-    <div className={`page ${name}-page`}>
+    <Box
+      w="100%"
+      flex-col
+      ph={12}
+      pv={0}
+      max-w={640}
+      mh="auto"
+      min-h="100%"
+      className={`page ${name}-page`}
+    >
       {children}
-    </div>
+    </Box>
   );
 };
 

@@ -1,0 +1,10 @@
+{
+  "title": "Benutzerkontodetails",
+  "dialog_deleteAccount_title": "Möchten Sie Ihr Konto wirklich löschen?",
+  "dialog_deleteAccount_message": "Sobald dieses Konto gelöscht wurde, kann es nicht mehr rückgängig gemacht werden. Sie verlieren alle Ihre Daten.",
+  "button_deleteAccount_text": "Konto löschen",
+  "label_userStatus": "Status",
+  "button_resendVerificationEmail": "Bestätigungs-E-Mail erneut senden",
+  "form_title_editEmail": "Benutzer-E-Mail bearbeiten",
+  "form_button_updateEmail": "E-Mail aktualisieren"
+}

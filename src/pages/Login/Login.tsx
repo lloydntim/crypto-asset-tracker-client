@@ -1,88 +1,141 @@
-import React, { ReactElement, FC, useState, MouseEventHandler } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Button, Input, Message } from '../../components';
-import { Page } from '../../layouts';
-import { useForm } from '../../hooks';
-import { useAuthentication } from '../../providers/AuthenticationProvider';
+import React, {useState, MouseEventHandler, useCallback} from 'react';
+import {useMutation} from '@apollo/client';
+import {useNavigate} from 'react-router-dom';
+import {changeLanguage} from 'i18next';
 
-const authorisedUser = {
-  username: 'admin',
-  password: 'admin',
-}
-const data = { login: { token: 'abcd' } };
-const errorMessage = { type: 'error', text: 'Password is wrong' };
+import {LOGIN} from '../../graphql';
+import {useForm} from '../../hooks';
+import {useAuthentication} from '../../providers/AuthenticationProvider';
+import {Page} from '../../layouts';
+import {
+  Button,
+  Input,
+  Message,
+  Headline as Title,
+  Header,
+  Form,
+  Body,
+  Footer,
+  Radios,
+  Link,
+} from '../../components';
+import {WHITE} from '../../constants/colors';
+import {useTranslation} from 'react-i18next';
 
-const Login: FC = (): ReactElement => {
+const Login = () => {
   const navigate = useNavigate();
-  const [message, setMessage] = useState(null);
-  // const [color, setColor] = useState('');
-  const { setLoginToken } = useAuthentication();
-  const { form: hookedForm, formFieldChangeHandler, isFormValid } = useForm('username*', 'password*', 'language');
-  const { username, password } = hookedForm;
 
-  const formFieldFocusHandler = () => setMessage(null);
-  const submitForm: MouseEventHandler<Element> = (event) => {
-    event.preventDefault();
+  const {t} = useTranslation();
 
-    if (username.value !== authorisedUser.username) return setMessage({ ...errorMessage, text: 'This user does not exist' });
-    if (password.value !== authorisedUser.password) return setMessage(errorMessage);
+  const [message, setMessage] = useState<{text: string; type: string} | null>(
+    null,
+  );
+  const {setLoginToken} = useAuthentication();
+  const {
+    form: hookedForm,
+    formFieldChangeHandler,
+    isFormValid,
+  } = useForm('username*', 'password*', 'language');
+  const {username, password} = hookedForm;
+  const [login, {loading}] = useMutation(LOGIN, {
+    onCompleted: (data) => {
+      /* eslint-disable no-undef */
+      setLoginToken(data.login.token);
+      navigate('/welcome');
+    },
+    onError: (error) => {
+      setMessage({
+        type: 'error',
+        text: error?.message.includes('fetch')
+          ? t('login:messages.errors.unableToLoginUser')
+          : error?.message,
+      });
+    },
+  });
 
-    setLoginToken(data.login.token);
-    navigate('/welcome');
-  };
+  const formFieldFocusHandler = useCallback(() => setMessage(null), []);
+
+  const submitForm: MouseEventHandler<Element> = useCallback(
+    (event) => {
+      event.preventDefault();
+
+      login({
+        variables: {
+          username: username.value,
+          password: password.value,
+        },
+      });
+    },
+    [username, password, login],
+  ); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <Page name="login">
-      {/* <Input
-        name="test"
-        label="Color"
-        type="text"
-        value={color}
-        dataList={[
-          { text: 'Blue', value: 'blue' },
-          { text: 'Red', value: 'blue' },
-          { text: 'Burgundi', value: 'blue' },
-          { text: 'Green', value: 'blue' },
-          { text: 'Turquoise', value: 'blue' },
-        ]}
-        onChange={({ value }) => setColor(value)}
-      /> */}
-      <form>
-        <Input
-          name="username"
-          label="username"
-          required={username.required}
-          value={username.value}
-          onChange={formFieldChangeHandler}
-          onFocus={formFieldFocusHandler}
+      <Header>
+        <Radios
+          isButton
+          flex-row
+          mv={12}
+          items={[
+            {
+              value: 'en',
+              label: 'English',
+            },
+            {
+              value: 'de',
+              label: 'German',
+            },
+          ]}
+          onChange={({value}) => changeLanguage(value)}
         />
-        <br />
-        <Input
-          name="password"
-          label="password"
-          type="password"
-          required={password.required}
-          value={password.value}
-          onChange={formFieldChangeHandler}
-          onFocus={formFieldFocusHandler}
-        />
+      </Header>
 
-        <br />
+      <Body flex-col align-c flex="1">
+        <Title tKey="login:title" />
 
-        <Button
-          disabled={!isFormValid}
-          text="Submit"
-          type="submit"
-          onClick={submitForm}
-        />
-      </form>
+        <Form flex-col>
+          <Input
+            name="username"
+            labelTKey="input.label.username"
+            placeholderTKey="input.placeholder.enterUsername"
+            required={username.required}
+            value={username.value}
+            onChange={formFieldChangeHandler}
+            onFocus={formFieldFocusHandler}
+          />
 
-      <br />
+          <Input
+            name="password"
+            labelTKey="input.label.password"
+            placeholderTKey="input.placeholder.enterPassword"
+            type="password"
+            required={password.required}
+            value={password.value}
+            onChange={formFieldChangeHandler}
+            onFocus={formFieldFocusHandler}
+          />
 
-      <Message type={message?.type}>{message?.text}</Message>
+          <Button
+            disabled={!isFormValid}
+            tKey="button.login"
+            type="submit"
+            onClick={submitForm}
+            mv={16}
+          />
+
+          <Message type={loading ? 'info' : message?.type} mv={16}>
+            {loading ? 'Loading' : message?.text}
+          </Message>
+        </Form>
+
+        <Link color={WHITE} to="/register" tKey="button.register" />
+
+        <Link color={WHITE} to="/forgot" tKey="login:link.forgotPassword" />
+      </Body>
+
+      <Footer startYear={2019} companyName="LNCD" />
     </Page>
   );
 };
 
 export default Login;
-

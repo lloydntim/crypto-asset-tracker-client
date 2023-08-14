@@ -1,48 +1,71 @@
-import React, { FC, ReactElement } from 'react';
+import React from 'react';
 
-import DataList, { DataListProps } from '../DataList/DataList';
+import List, {RenderItem} from '../List/List';
+import Span from '../Span/Span';
+import Button from '../Button/Button';
 
-import './AutoComplete.scss';
+import {GRAPE_DARK, WHITE} from '../../constants/colors';
+import {DataListItem as AutoCompleteItem} from '../Input/InputHelper';
 
-interface AutoCompleteProps extends DataListProps {
-  value: string;
+interface AutoCompleteProps {
+  value: string | undefined;
+  items: AutoCompleteItem[];
+  onListItemClick: (item: AutoCompleteItem) => void;
 }
 
-export const highlightTextSection = (text: string, inputValueLength: number) => ({
+export const highlightTextSection = (
+  text: string,
+  inputValueLength: number,
+) => ({
   boldText: text.substring(0, inputValueLength),
   normalText: text.substring(inputValueLength),
 });
 
-const AutoComplete: FC<AutoCompleteProps> = ({
+const AutoComplete = ({
   items,
-  value,
+  value = '',
   onListItemClick,
-}) => {
-  const filteredItems = items
-    .filter(
-      (item) => value.length && item.text.toLowerCase().startsWith(value.toLowerCase())
+}: AutoCompleteProps) => {
+  const filteredItems = items.filter(
+    (item) =>
+      value.length && item.text.toLowerCase().startsWith(value.toLowerCase()),
+  );
+
+  const renderItem: RenderItem<AutoCompleteItem> = ({item, index}) => {
+    const {normalText, boldText} = highlightTextSection(
+      item.text,
+      value.length,
     );
+    return (
+      <Button
+        key={index}
+        bgcolor={WHITE}
+        br={0}
+        w="100%"
+        h="100%"
+        p={12}
+        color={GRAPE_DARK}
+        align-l
+        type="button"
+        data-testid="autocomplete-item"
+        className="autocomplete-item-button"
+        onClick={() => onListItemClick(item)}
+      >
+        <Span font-wgt={700}>{boldText}</Span>
+        {normalText && <Span>{normalText}</Span>}
+      </Button>
+    );
+  };
 
   return (
-    <DataList
-      name="autocomplete"
-      items={filteredItems}
-      renderListItem={
-        ({ item }): ReactElement => {
-          const { normalText, boldText } = highlightTextSection(item.text, value.length);
-
-          return (
-            <button
-              type="button"
-              className="auto-complete-item-button"
-              onClick={() => onListItemClick(item)}
-            >
-              <span>{boldText}</span>
-              {normalText && <span>{normalText}</span>}
-            </button>
-          )
-        }
-      }
+    <List<AutoCompleteItem>
+      pos-abs
+      pos-t={44}
+      w="100%"
+      data-testid="autocomplete"
+      className="autocomplete"
+      data={filteredItems}
+      renderItem={renderItem}
     />
   );
 };

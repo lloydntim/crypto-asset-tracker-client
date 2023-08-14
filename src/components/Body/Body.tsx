@@ -1,13 +1,17 @@
-import React, { FC, ReactElement } from 'react';
+import React, {FC, ReactElement, ReactNode} from 'react';
+import Box from '../Box/Box';
 
-import './Body.scss';
+import {StyledProps} from '../../helpers/createStyledProps';
 
-const Body: FC = ({ children }): ReactElement => {
+interface BodyProps extends StyledProps {
+  children: ReactNode;
+}
 
+const Body: FC<BodyProps> = ({children, ...rest}): ReactElement => {
   return (
-    <div className="body">
+    <Box className="body" role="section" h="100%" {...rest}>
       {children}
-    </div>
+    </Box>
   );
 };
 

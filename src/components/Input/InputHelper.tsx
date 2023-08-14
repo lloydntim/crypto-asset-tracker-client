@@ -1,25 +1,43 @@
-import { FocusEventHandler, LegacyRef } from 'react';
+import {FocusEventHandler} from 'react';
 
-import { DataListItemType } from '../DataList/DataList';
+import {DefaultTFuncReturn} from 'i18next';
+import {StyledProps} from '../../helpers/createStyledProps';
 
-export type InputChangeEvent = { name?: string, value?: string, files?: FileList | File[], error?: string, required?: boolean };
+export type DataListItem = {
+  text: string;
+  value: string;
+};
+
+export type InputChangeEvent = {
+  name?: string;
+  value?: string | undefined;
+  files?: FileList | File[] | null;
+  error?: string;
+  required?: boolean;
+};
 export type InputChangeEventHandler = (arg: InputChangeEvent) => void;
-
-export interface InputProps {
-  inputRef?: LegacyRef<HTMLInputElement>;
+export interface InputProps extends StyledProps {
+  className?: string;
+  id?: string;
   label?: string;
+  labelTKey?: DefaultTFuncReturn;
+  labelColor?: string;
   autoComplete?: string;
   autoCapitalize?: string;
-  dataList?: DataListItemType[];
+  dataList?: DataListItem[];
   name?: string;
   type?: string;
   tabIndex?: number;
-  placeholder?: string;
-  value?: string;
+  placeholder?: string | undefined;
+  placeholderTKey?: DefaultTFuncReturn;
+  value?: string | undefined;
+  defaultValue?: string | undefined;
   pattern?: RegExp;
   required?: boolean;
   minLength?: number;
   maxLength?: number;
+  checked?: boolean;
+  disabled?: boolean;
   patternErrorMessage?: string;
   requiredErrorMessage?: string;
   minLengthErrorMessage?: string;
@@ -27,22 +45,26 @@ export interface InputProps {
   onChange?: InputChangeEventHandler;
   onFocus?: FocusEventHandler<HTMLInputElement>;
   onBlur?: FocusEventHandler<HTMLInputElement>;
-  onDataListClick?: (item: DataListItemType) => void;
+  onDataListClick?: (item: DataListItem) => void;
 }
 
 export type MockFile = {
-  name: string,
-}
+  name: string;
+};
 
 export type InputChangeEventTarget = {
-  value?: string,
-  files?: FileList | MockFile[],
-}
+  value?: string;
+  files?: FileList | MockFile[] | null;
+};
 
-export const emailPattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+export const emailPattern =
+  /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-export const validateInput = (eventTarget: InputChangeEventTarget, props: InputProps) => {
-  const { value, files } = eventTarget;
+export const validateInput = (
+  eventTarget: InputChangeEventTarget,
+  props: InputProps,
+) => {
+  const {value, files} = eventTarget;
   const {
     type,
     pattern,
@@ -63,9 +85,9 @@ export const validateInput = (eventTarget: InputChangeEventTarget, props: InputP
     return requiredErrorMessage || `${type} input is required`;
   else if (inputPattern && !input?.match(inputPattern))
     return patternErrorMessage || `${type} input pattern not valid`;
-  else if (minLength && value.length < minLength)
+  else if (minLength && value && value.length < minLength)
     return minLengthErrorMessage || `${type} input min length is ${minLength}`;
-  else if (maxLength && value.length > maxLength)
+  else if (maxLength && value && value.length > maxLength)
     return maxLengthErrorMessage || `${type} input max length is ${maxLength}`;
   else return '';
 };

@@ -1,23 +1,32 @@
-import React, { FC, ReactElement } from 'react';
+import React, {FC, ReactElement} from 'react';
 
-import { withLocalisation } from '../../hoc';
-import { LocalisationProps } from '../../hoc/withLocalisation';
+import createStylesProps, {StyledProps} from '../../helpers/createStyledProps';
 
-import './Text.scss';
+import {withLocalisation} from '../../hoc';
+import {LocalisationProps} from '../../hoc/withLocalisation';
 
-export interface TextProps extends LocalisationProps {
+export interface TextProps extends LocalisationProps, StyledProps {
   className?: string;
-  type?: string;
+  strong?: boolean;
 }
 
+const TextSt = createStylesProps('p');
+
 const Text: FC<TextProps> = ({
-  type = 'standard',
   children,
   className = '',
-}): ReactElement => (
-  <span className={`text text-type-${type} ${className}`}>
-    {children}
-  </span>
-);
+  strong,
+  ...rest
+}): ReactElement => {
+  const createParagraph = () => (
+    <TextSt {...rest} className={className}>
+      {children}
+    </TextSt>
+  );
+
+  if (strong) return <strong>{createParagraph()}</strong>;
+
+  return createParagraph();
+};
 
 export default withLocalisation<TextProps>(Text);

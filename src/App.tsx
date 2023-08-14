@@ -5,13 +5,13 @@ import {AuthenticationProvider, ClipboardProvider} from './providers';
 import Routes from './routes';
 
 export const App: FC = (): ReactElement => {
-    return (
-        <AuthenticationProvider>
-            <ClipboardProvider>
-                <Router>
-                    <Routes />
-                </Router>
-            </ClipboardProvider>
-        </AuthenticationProvider>
-    );
+  return (
+    <AuthenticationProvider>
+      <ClipboardProvider>
+        <Router>
+          <Routes />
+        </Router>
+      </ClipboardProvider>
+    </AuthenticationProvider>
+  );
 };

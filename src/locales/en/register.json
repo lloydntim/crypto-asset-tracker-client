@@ -1,0 +1,9 @@
+{
+  "title": "Register",
+  "messages": {
+    "errors": {
+      "passwordsNotMatching": "Passwords not matching",
+      "unableToRegisterUser": "Something went wrong, user could not be registered"
+    }
+  }
+}

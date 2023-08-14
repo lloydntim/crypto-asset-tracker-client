@@ -1,0 +1,8 @@
+{
+  "title": "Passwort Zurücksetzen",
+  "message": {
+    "error": {
+      "text": "Ein Fehler ist eingetreten. Das Token könnte nicht verifiziert werden."
+    }
+  }
+}

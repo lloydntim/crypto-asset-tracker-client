@@ -1,0 +1,10 @@
+{
+  "title": "User account details",
+  "dialog_deleteAccount_title": "Do you really want to delete your account?",
+  "dialog_deleteAccount_message": "Once this account is deleted it is irreversable. You will lose all your data.",
+  "button_deleteAccount_text": "Delete Account",
+  "label_userStatus": "Status",
+  "button_resendVerificationEmail": "Resend Verification Email",
+  "form_title_editEmail": "Edit User Email",
+  "form_button_updateEmail": "Update Email"
+}

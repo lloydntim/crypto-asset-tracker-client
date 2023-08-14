@@ -1,28 +1,23 @@
-import React, { FC, ReactElement } from 'react';
-import { withLocalisation } from '../../hoc';
+import React from 'react';
 
-import { TextProps } from '../Text/Text';
+import createStylesProps from '../../helpers/createStyledProps';
 
-import './Headline.scss';
-
+import {withLocalisation} from '../../hoc';
+import {TextProps} from '../Text/Text';
 
 export type HeadlineSize = 'h1' | 'h2' | 'h3' | 'h4' | 'h5';
-
-interface HeadlineProps extends TextProps {
+export interface HeadlineProps extends TextProps {
+  strong?: boolean;
   size?: HeadlineSize;
 }
 
-const Headline: FC<HeadlineProps> = ({
-  size = 'h1',
-  children,
-  className = ''
-}): ReactElement => {
-  const HeadlineTag = size;
+const Headline = ({children, size = 'h1', ...rest}: HeadlineProps) => {
+  const HeadlineSt = createStylesProps(size);
 
   return (
-    <HeadlineTag className={`headline headline-size-${size} ${className}`}>
+    <HeadlineSt m={0} p={0} {...rest}>
       {children}
-    </HeadlineTag>
+    </HeadlineSt>
   );
 };
 

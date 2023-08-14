@@ -1,24 +1,80 @@
-import React, { FC, ReactNode, ReactElement } from 'react';
+import React, {ReactNode} from 'react';
 
-import './Message.scss';
+import Box from '../Box/Box';
+import {StyledProps} from '../../helpers/createStyledProps';
+import Text from '../Text/Text';
+import {
+  BLUE,
+  BLUE_LIGHT,
+  RED,
+  RED_LIGHT,
+  WHITE,
+  YELLOW,
+  YELLOW_LIGHT,
+} from '../../constants/colors';
 
-interface MessageProps {
+interface MessageProps extends StyledProps {
   visible?: boolean;
-  type: string;
+  type?: string;
+  tKey?: string;
+  fontSz?: number;
   children?: ReactNode;
 }
 
+const MessageStatusMapper: {
+  [key: string]: {bgColor: string; borderColor: string};
+} = {
+  info: {
+    bgColor: YELLOW_LIGHT,
+    borderColor: YELLOW,
+  },
+  error: {
+    bgColor: RED_LIGHT,
+    borderColor: RED,
+  },
+  success: {
+    bgColor: BLUE_LIGHT,
+    borderColor: BLUE,
+  },
+};
+
 /* eslint-disable react/jsx-props-no-spreading */
-const Message: FC<MessageProps> = ({
-  type,
+const Message = ({
+  type = 'info',
+  color = WHITE,
   children = null,
-}): ReactElement<MessageProps> => {
-  if (!children) return null;
+  tKey = '',
+  fontSz = 18,
+  ...rest
+}: MessageProps) => {
+  if (!children && !tKey) return null;
+
+  const {bgColor, borderColor} = MessageStatusMapper[type];
+  const content = tKey ? (
+    <Text font-sz={fontSz} color={borderColor} tKey={tKey} />
+  ) : (
+    children
+  );
 
   return (
-    <div className={`message message-${type}`}>
-      {children}
-    </div>
+    <Box
+      role="alert"
+      w="100%"
+      flex-row
+      br={8}
+      bw={1}
+      bs="solid"
+      bcolor={borderColor}
+      bgcolor={bgColor}
+      mv={16}
+      p={12}
+      color={borderColor}
+      align-c
+      {...rest}
+      className={`message message-${type}`}
+    >
+      {content}
+    </Box>
   );
 };
 
