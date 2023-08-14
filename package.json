@@ -10,7 +10,9 @@
     "lint": "eslint --fix src/**/*.ts",
     "cy:open": "cypress open",
     "cy:test": "cypress run",
-    "madge": "madge src"
+    "madge": "madge src",
+    "tsc": "tsc",
+    "plop": "plop"
   },
   "type": "module",
   "keywords": [],
@@ -53,6 +55,7 @@
     "jest-environment-jsdom": "^29.6.2",
     "mini-css-extract-plugin": "^2.7.6",
     "npm": "^9.8.1",
+    "plop": "^3.1.2",
     "prettier": "^2.8.8",
     "ts-jest": "^29.1.1",
     "ts-loader": "^9.4.3",
