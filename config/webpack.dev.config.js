@@ -1,14 +1,22 @@
-const {resolve} = require('path');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const ForkTsCheckerNotifierWebpackPlugin = require('fork-ts-checker-notifier-webpack-plugin');
-const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
-const ESLintPlugin = require('eslint-webpack-plugin');
+import path from 'path';
+import url from 'url';
+import ForkTsCheckerNotifierWebpackPlugin from 'fork-ts-checker-notifier-webpack-plugin';
+import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+import FaviconsWebpackPlugin from 'favicons-webpack-plugin';
+import {CleanWebpackPlugin} from 'clean-webpack-plugin';
+import ESLintPlugin from 'eslint-webpack-plugin';
+import Dotenv from 'dotenv-webpack';
 
-module.exports = {
+const {resolve, dirname} = path;
+const {fileURLToPath} = url;
+// workaround https://stackabuse.com/bytes/fix-dirname-is-not-defined-in-es-module-scope-in-javascript-node/
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+export default {
+  mode: 'development',
   entry: resolve(__dirname, '../src/index.tsx'),
-  // mode: 'development',
   context: process.cwd(), // to automatically find tsconfig.json
   output: {
     path: resolve(__dirname, '../dist'),
@@ -17,10 +25,10 @@ module.exports = {
   },
   devtool: 'inline-source-map',
   devServer: {
-    // clientLogLevel: 'warning',
-    // open: true,
+    open: true,
+    host: '0.0.0.0',
+    port: 4001,
     historyApiFallback: true,
-    // stats: 'errors-only',
   },
   module: {
     rules: [
@@ -29,29 +37,13 @@ module.exports = {
         use: 'ts-loader',
         exclude: /node_modules/,
       },
-      {
-        test: /\.scss$/,
-        use: [
-          {
-            loader:
-              process.env.NODE_ENV !== 'production'
-                ? 'style-loader'
-                : MiniCssExtractPlugin.loader,
-          },
-          {
-            loader: 'css-loader', // translates CSS into CommonJS
-          },
-          {
-            loader: 'sass-loader', // compiles Sass to CSS
-          },
-        ],
-      },
     ],
   },
   resolve: {
     extensions: ['.tsx', '.ts', '.jsx', '.js'],
   },
   plugins: [
+    new Dotenv({systemvars: true}),
     new ESLintPlugin({
       context: resolve(__dirname, '../src'),
       extensions: ['js', 'jsx', 'ts', 'tsx'],
@@ -71,6 +63,7 @@ module.exports = {
       template: resolve(__dirname, '../src/index.html'),
     }),
     new FaviconsWebpackPlugin(resolve(__dirname, '../src/logo.svg')),
+    new CleanWebpackPlugin(),
   ],
   externals: {
     'react/addons': true,

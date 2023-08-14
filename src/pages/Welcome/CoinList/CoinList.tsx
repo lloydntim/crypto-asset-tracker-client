@@ -324,7 +324,7 @@ const CoinList = (props: CoinListProps) => {
                                           <>
                                             <EntryField
                                               location={location}
-                                              value={amount}
+                                              value={amount.toString()}
                                               onBlur={({target: {value}}) => {
                                                 setSelectedCoin(index);
                                                 onUpdateCoinHolding(holdingId, {

@@ -16,7 +16,7 @@ describe('Change Email Scenario', () => {
   const email = `${Date.now()}@mail.com`;
 
   it('change email', () => {
-    cy.visit('http://localhost:4001/#/register');
+    cy.visit('/register');
 
     cy.register(username, 'info@lncd.world', 'Password12!', 'Password12!');
 
@@ -54,7 +54,7 @@ describe('Change Email Scenario', () => {
   });
 
   it('deletes user', () => {
-    cy.visit('http://localhost:4001/#/login');
+    cy.visit('/login');
     cy.login(username, 'Password12!');
 
     cy.dataTestId('icon-button-menu').click();
@@ -70,7 +70,7 @@ describe('Change Email Scenario', () => {
   it('resends verification email', () => {
     cy.mhDeleteAll();
 
-    cy.visit('http://localhost:4001/#/register');
+    cy.visit('/register');
 
     cy.register(username, 'info@lncd.world', 'Password12!', 'Password12!');
 

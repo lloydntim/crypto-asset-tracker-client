@@ -86,7 +86,9 @@ const Login = () => {
               label: 'German',
             },
           ]}
-          onChange={({value}) => changeLanguage(value)}
+          onChange={({value}) => {
+            changeLanguage(value);
+          }}
         />
       </Header>
 

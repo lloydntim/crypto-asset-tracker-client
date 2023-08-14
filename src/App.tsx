@@ -1,16 +1,21 @@
-import React, {FC, ReactElement} from 'react';
-import {HashRouter as Router} from 'react-router-dom';
+import React, {Suspense} from 'react';
+import {BrowserRouter as Router} from 'react-router-dom';
 import {AuthenticationProvider, ClipboardProvider} from './providers';
 
 import Routes from './routes';
+import {Message} from './components';
 
-export const App: FC = (): ReactElement => {
+export const App = () => {
   return (
     <AuthenticationProvider>
       <ClipboardProvider>
-        <Router>
-          <Routes />
-        </Router>
+        <Suspense
+          fallback={<Message type="info" tKey="common:message.loading.text" />}
+        >
+          <Router>
+            <Routes />
+          </Router>
+        </Suspense>
       </ClipboardProvider>
     </AuthenticationProvider>
   );

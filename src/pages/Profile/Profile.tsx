@@ -48,7 +48,7 @@ const Profile = () => {
     data: user,
   } = useQuery(GET_USER, {
     variables: {id: userId},
-    skip: !Boolean(userId),
+    skip: !userId,
   });
 
   const [
@@ -161,7 +161,9 @@ const Profile = () => {
               label: 'German',
             },
           ]}
-          onChange={({value}) => changeLanguage(value)}
+          onChange={({value}) => {
+            changeLanguage(value);
+          }}
         />
         <Navigation />
       </Header>
@@ -244,7 +246,7 @@ const Profile = () => {
                 <TableCell valign-m col-w={40}>
                   <Text
                     tKey={`common:label.${
-                      JSON.parse(user.getUser.isVerified)
+                      JSON.parse(user.getUser.isVerified as string)
                         ? 'verified'
                         : 'pending'
                     }`}
