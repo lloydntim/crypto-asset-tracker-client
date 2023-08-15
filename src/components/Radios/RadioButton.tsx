@@ -1,7 +1,7 @@
 import React, {ChangeEventHandler} from 'react';
 import styled from 'styled-components';
 
-import {GRAPE_DARK, TRANSPARENT, WHITE} from '../../constants/colors';
+import {GRAPE_DARK, WHITE} from '../../constants/colors';
 import {StyledProps} from '../../helpers/createStyledProps';
 
 import Label from '../Label/Label';
@@ -11,7 +11,8 @@ import Span from '../Span/Span';
 interface RadioButtonProps extends StyledProps {
   name: string;
   value: string;
-  label: string;
+  label?: string;
+  labelTKey?: string;
   labelColor?: string;
   checked: boolean;
   onChange: ChangeEventHandler<HTMLInputElement>;
@@ -23,6 +24,7 @@ const RadioButton = ({
   name,
   value,
   label = '',
+  labelTKey = '',
   labelColor = WHITE,
   checked,
   onChange,
@@ -33,8 +35,8 @@ const RadioButton = ({
     htmlFor={name}
     flex-row
     align-m
-    bcolor={WHITE}
-    bgcolor={checked ? WHITE : TRANSPARENT}
+    bcolor={checked ? WHITE : GRAPE_DARK}
+    bgcolor={checked ? GRAPE_DARK : WHITE}
     bs="solid"
     bw={1}
     br={8}
@@ -54,7 +56,8 @@ const RadioButton = ({
       mv={8}
       mh={24}
       className="radio-label"
-      color={checked ? GRAPE_DARK : WHITE}
+      tKey={labelTKey}
+      color={checked ? WHITE : GRAPE_DARK}
     >
       {label}
     </Span>

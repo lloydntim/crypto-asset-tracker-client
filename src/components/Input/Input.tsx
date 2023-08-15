@@ -17,7 +17,7 @@ import {validateInput, InputProps} from './InputHelper';
 const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
   const {
     label = '',
-    labelTKey,
+    labelTKey = '',
     labelColor = WHITE,
     autoComplete,
     autoCapitalize,

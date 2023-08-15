@@ -12,7 +12,11 @@
   },
   "label": {
     "verified": "Verified",
-    "pending": "Pending"
+    "pending": "Pending",
+    "language": {
+      "en": "English",
+      "de": "German"
+    }
   },
   "message": {
     "loading": {

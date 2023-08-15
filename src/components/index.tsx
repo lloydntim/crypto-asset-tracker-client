@@ -1,4 +1,5 @@
 /* PLOP_INJECT_IMPORT */
+import LanguageSwitch from './LanguageSwitch/LanguageSwitch';
 import AutoComplete from './AutoComplete/AutoComplete';
 import Button from './Button/Button';
 import Box from './Box/Box';
@@ -28,6 +29,7 @@ import Aside from './Aside/Aside';
 
 export {
   /* PLOP_INJECT_EXPORT */
+LanguageSwitch,
   AutoComplete,
   Button,
   Box,

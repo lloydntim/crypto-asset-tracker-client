@@ -1,4 +1,4 @@
-import React, {ReactElement, FC, useState, useCallback} from 'react';
+import React from 'react';
 import {useNavigate, useParams} from 'react-router-dom';
 import {
   Button,
@@ -10,13 +10,13 @@ import {
   Footer,
   Form,
   Radios,
+  Navigation,
 } from '../../components';
 import {Page} from '../../layouts';
 import {useForm} from '../../hooks';
 import {useAuthentication} from '../../providers/AuthenticationProvider';
 import {useMutation, useQuery} from '@apollo/client';
 import {GET_PASSWORD_TOKEN, UPDATE_PASSWORD_TOKEN} from '../../graphql';
-import {changeLanguage} from 'i18next';
 
 const Reset = () => {
   const navigate = useNavigate();
@@ -53,24 +53,7 @@ const Reset = () => {
   return (
     <Page name="reset">
       <Header>
-        <Radios
-          isButton
-          flex-row
-          mv={12}
-          items={[
-            {
-              value: 'en',
-              label: 'English',
-            },
-            {
-              value: 'de',
-              label: 'German',
-            },
-          ]}
-          onChange={({value}) => {
-            changeLanguage(value);
-          }}
-        />
+        <Navigation />
       </Header>
       <Body flex-col align-c flex="1">
         <Headline tKey="reset:title" />

@@ -15,7 +15,7 @@ type LocalisationHOC = <T extends LocalisationProps>(
 const withLocalisation: LocalisationHOC = (Component) => {
   return (props) => {
     const {t} = useTranslation();
-    const {tKey = '', tOptions = {}, children = null} = props;
+    const {tKey = '', tOptions = {}, children} = props;
     const content = tKey ? t(tKey, tOptions) : children;
 
     if (!content) return null;

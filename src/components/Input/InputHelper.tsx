@@ -1,5 +1,4 @@
 import {FocusEventHandler} from 'react';
-
 import {DefaultTFuncReturn} from 'i18next';
 import {StyledProps} from '../../helpers/createStyledProps';
 
@@ -20,7 +19,7 @@ export interface InputProps extends StyledProps {
   className?: string;
   id?: string;
   label?: string;
-  labelTKey?: DefaultTFuncReturn;
+  labelTKey?: string;
   labelColor?: string;
   autoComplete?: string;
   autoCapitalize?: string;

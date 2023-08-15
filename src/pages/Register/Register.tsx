@@ -23,16 +23,14 @@ import {
   Link,
   Radios,
   Form,
+  Navigation,
 } from '../../components';
 import {useAuthentication} from '../../providers/AuthenticationProvider';
 import {WHITE} from '../../constants/colors';
 
 const Register: FC = (): ReactElement => {
   const navigate = useNavigate();
-  const {
-    t,
-    i18n: {changeLanguage},
-  } = useTranslation();
+  const {t} = useTranslation();
   const [message, setMessage] = useState<{text: string; type: string} | null>(
     null,
   );
@@ -89,24 +87,7 @@ const Register: FC = (): ReactElement => {
   return (
     <Page name="register">
       <Header>
-        <Radios
-          isButton
-          flex-row
-          mv={12}
-          items={[
-            {
-              value: 'en',
-              label: 'English',
-            },
-            {
-              value: 'de',
-              label: 'German',
-            },
-          ]}
-          onChange={({value}) => {
-            changeLanguage(value);
-          }}
-        />
+        <Navigation />
       </Header>
       <Body flex-col align-c flex="1">
         <Title tKey="register:title" />
