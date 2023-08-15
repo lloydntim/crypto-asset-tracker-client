@@ -7,32 +7,14 @@ import {
   Footer,
   Headline,
   Box,
-  Radios,
+  Navigation,
 } from '../../components';
-import {changeLanguage} from 'i18next';
 
 const About = () => {
   return (
     <Page name="about">
       <Header>
-        <Radios
-          isButton
-          flex-row
-          mv={12}
-          items={[
-            {
-              value: 'en',
-              label: 'English',
-            },
-            {
-              value: 'de',
-              label: 'German',
-            },
-          ]}
-          onChange={({value}) => {
-            changeLanguage(value);
-          }}
-        />
+        <Navigation />
       </Header>
       <Body flex-col align-c flex="1">
         <Headline tKey="about:title" />

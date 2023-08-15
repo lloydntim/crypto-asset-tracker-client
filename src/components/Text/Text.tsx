@@ -1,4 +1,4 @@
-import React, {FC, ReactElement} from 'react';
+import React from 'react';
 
 import createStylesProps, {StyledProps} from '../../helpers/createStyledProps';
 
@@ -12,12 +12,7 @@ export interface TextProps extends LocalisationProps, StyledProps {
 
 const TextSt = createStylesProps('p');
 
-const Text: FC<TextProps> = ({
-  children,
-  className = '',
-  strong,
-  ...rest
-}): ReactElement => {
+const Text = ({children, className = '', strong, ...rest}: TextProps) => {
   const createParagraph = () => (
     <TextSt {...rest} className={className}>
       {children}

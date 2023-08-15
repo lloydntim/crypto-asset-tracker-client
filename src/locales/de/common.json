@@ -12,7 +12,11 @@
   },
   "label": {
     "verified": "Verifiziert",
-    "pending": "Ausstehend"
+    "pending": "Ausstehend",
+    "language": {
+      "en": "Englisch",
+      "de": "Deutsch"
+    }
   },
   "input": {
     "label": {

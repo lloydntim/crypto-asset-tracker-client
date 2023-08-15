@@ -1,7 +1,6 @@
 import React, {useState, MouseEventHandler, useCallback} from 'react';
 import {useMutation} from '@apollo/client';
 import {useNavigate} from 'react-router-dom';
-import {changeLanguage} from 'i18next';
 
 import {LOGIN} from '../../graphql';
 import {useForm} from '../../hooks';
@@ -16,8 +15,8 @@ import {
   Form,
   Body,
   Footer,
-  Radios,
   Link,
+  Navigation,
 } from '../../components';
 import {WHITE} from '../../constants/colors';
 import {useTranslation} from 'react-i18next';
@@ -72,24 +71,7 @@ const Login = () => {
   return (
     <Page name="login">
       <Header>
-        <Radios
-          isButton
-          flex-row
-          mv={12}
-          items={[
-            {
-              value: 'en',
-              label: 'English',
-            },
-            {
-              value: 'de',
-              label: 'German',
-            },
-          ]}
-          onChange={({value}) => {
-            changeLanguage(value);
-          }}
-        />
+        <Navigation />
       </Header>
 
       <Body flex-col align-c flex="1">

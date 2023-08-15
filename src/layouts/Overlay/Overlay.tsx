@@ -5,7 +5,6 @@ import Headline from '../../components/Headline/Headline';
 import IconButton from '../../components/IconButton/IconButton';
 
 import {DARKGREY, GRAPE_DARK, WHITE} from '../../constants/colors';
-import {DefaultTFuncReturn} from 'i18next';
 
 interface OverlayProps {
   title?: string;

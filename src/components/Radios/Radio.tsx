@@ -1,5 +1,5 @@
 import React, {ChangeEventHandler} from 'react';
-import Label from '../Label/Label';
+import RadioContainer from '../Label/Label';
 import {GRAPE_DARK, WHITE} from '../../constants/colors';
 import InputField from '../InputField/InputField';
 import {StyledProps} from '../../helpers/createStyledProps';
@@ -9,13 +9,13 @@ import Span from '../Span/Span';
 interface RadioProps extends StyledProps {
   name: string;
   value: string;
-  label: string;
+  label?: string;
+  labelTKey?: string;
   labelColor?: string;
   checked: boolean;
   onChange: ChangeEventHandler<HTMLInputElement>;
 }
 
-const RadioContainerSt = styled(Label)``;
 const RadioBackgroundSt = styled(Span)<{isChecked: boolean}>`
   &:after {
     content: ' ';
@@ -33,11 +33,12 @@ const Radio = ({
   name,
   value,
   label,
+  labelTKey = '',
   labelColor = WHITE,
   checked,
   onChange,
 }: RadioProps) => (
-  <RadioContainerSt
+  <RadioContainer
     color={labelColor}
     className="radio"
     htmlFor={name}
@@ -58,7 +59,7 @@ const Radio = ({
     <RadioBackgroundSt
       flex-row
       br={10}
-      size={20}
+      sz={20}
       bgcolor={WHITE}
       bcolor={WHITE}
       bw={2}
@@ -69,10 +70,10 @@ const Radio = ({
       className="radio-background"
       isChecked={checked}
     />
-    <Span flex-row mv={8} mh={24} className="radio-label">
+    <Span tKey={labelTKey} flex-row mv={8} mh={24} className="radio-label">
       {label}
     </Span>
-  </RadioContainerSt>
+  </RadioContainer>
 );
 
 export default Radio;

@@ -9,19 +9,15 @@ import {
   Footer,
   Form,
   Link,
-  Radios,
+  Navigation,
 } from '../../components';
 import {Page} from '../../layouts';
 import {useForm} from '../../hooks';
 import {useMutation} from '@apollo/client';
 import {CREATE_PASSWORD_TOKEN} from '../../graphql';
 import {WHITE} from '../../constants/colors';
-import {useTranslation} from 'react-i18next';
 
 const Forgot = () => {
-  const {
-    i18n: {changeLanguage},
-  } = useTranslation();
   const {
     form: {username},
     formFieldChangeHandler,
@@ -33,24 +29,7 @@ const Forgot = () => {
   return (
     <Page name="forgot">
       <Header>
-        <Radios
-          isButton
-          flex-row
-          mv={12}
-          items={[
-            {
-              value: 'en',
-              label: 'English',
-            },
-            {
-              value: 'de',
-              label: 'German',
-            },
-          ]}
-          onChange={({value}) => {
-            changeLanguage(value);
-          }}
-        />
+        <Navigation />
       </Header>
       <Body>
         <Headline>Forgot</Headline>

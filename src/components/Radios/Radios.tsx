@@ -6,15 +6,16 @@ import Radio from './Radio';
 import RadioButton from './RadioButton';
 
 export type RadioItem = {
-  label: string;
+  labelTKey?: string;
+  label?: string;
   value: string;
 };
 
-type RadioChangeEventHandler = (event: {
-  label: string;
-  value: string;
+export type RadioChangeEvent = RadioItem & {
   index: number;
-}) => void;
+};
+
+export type RadioChangeEventHandler = (event: RadioChangeEvent) => void;
 
 interface RadiosProps extends StyledProps {
   name?: string;
@@ -37,16 +38,17 @@ const Radios = ({
 
   return (
     <Box {...rest} className={`radios ${name}-radios`}>
-      {items.map(({label, value}, index) => (
+      {items.map(({label, labelTKey, value}, index) => (
         <RadioElement
           key={index}
           value={value}
+          labelTKey={labelTKey}
           name={`radio-${index}`}
           checked={selectedRadio === index}
           label={label}
           onChange={({target: {value}}) => {
             setSelectedRadio(index);
-            onChange({label, value, index});
+            onChange({label, labelTKey, value, index});
           }}
         />
       ))}

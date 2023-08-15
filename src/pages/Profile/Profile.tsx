@@ -1,13 +1,11 @@
 import React, {useState} from 'react';
 import {Dialog, Overlay, Page} from '../../layouts';
-import {useTranslation} from 'react-i18next';
 import {useNavigate} from 'react-router-dom';
 import {
   Header,
   Body,
   Footer,
   Headline as Title,
-  Radios,
   Message,
   Box,
   Navigation,
@@ -95,10 +93,6 @@ const Profile = () => {
     },
   });
 
-  const {
-    i18n: {changeLanguage},
-  } = useTranslation();
-
   return (
     <Page name="profile">
       <Dialog
@@ -147,24 +141,6 @@ const Profile = () => {
       </Overlay>
 
       <Header>
-        <Radios
-          isButton
-          flex-row
-          mv={12}
-          items={[
-            {
-              value: 'en',
-              label: 'English',
-            },
-            {
-              value: 'de',
-              label: 'German',
-            },
-          ]}
-          onChange={({value}) => {
-            changeLanguage(value);
-          }}
-        />
         <Navigation />
       </Header>
       <Body flex-col flex="1">
