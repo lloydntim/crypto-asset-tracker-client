@@ -112,7 +112,7 @@ describe('Input', () => {
     ).not.toBeInTheDocument();
   });
 
-  test('renders a input with datalist and updates the input value with list item text when when clicked', async () => {
+  test('renders an input with datalist and updates the input value with list item text when when clicked', async () => {
     const user = userEvent.setup();
     const mockDataListClickHandler = jest.fn();
 

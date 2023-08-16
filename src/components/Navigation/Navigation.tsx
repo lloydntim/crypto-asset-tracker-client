@@ -20,6 +20,13 @@ interface NavigationProps extends StyledProps {
   titleTKey?: string;
 }
 
+enum Pages {
+  PROFILE = 'Profile',
+  ABOUT = 'About',
+  WELCOME = 'Welcome',
+}
+
+const pages = Object.values(Object.values(Pages));
 const NavigationSt = createStylesProps('nav');
 
 const Navigation = ({title = '', titleTKey = '', ...rest}: NavigationProps) => {
@@ -32,7 +39,7 @@ const Navigation = ({title = '', titleTKey = '', ...rest}: NavigationProps) => {
     <NavigationSt
       data-testid="main-nav"
       className="navigation"
-      pv={10}
+      pv={32}
       w="100%"
       {...rest}
     >
@@ -43,13 +50,19 @@ const Navigation = ({title = '', titleTKey = '', ...rest}: NavigationProps) => {
         <LanguageSwitch />
 
         <List<string>
+          p={0}
           mv={20}
-          data={['profile', 'about', 'welcome']}
+          data={pages}
           renderItem={({item}: {item: string}) => {
             return (
-              <Link color={GRAPE_EXTRA_DARK} to={`/${item}`}>{`${item
-                .substring(0, 1)
-                .toUpperCase()}${item.substring(1, item.length)}`}</Link>
+              <Link
+                color={GRAPE_EXTRA_DARK}
+                txt-deco="none"
+                to={`/${item}`}
+              >{`${item.substring(0, 1).toUpperCase()}${item.substring(
+                1,
+                item.length,
+              )}`}</Link>
             );
           }}
         />

@@ -5,20 +5,20 @@ export interface StyledProps {
   w?: number | string | undefined;
   h?: number | string | undefined;
 
-  ['max-h']?: number | string | undefined;
-  ['max-w']?: number | string | undefined;
-  ['min-h']?: number | string | undefined;
-  ['min-w']?: number | string | undefined;
+  'max-h'?: number | string | undefined;
+  'max-w'?: number | string | undefined;
+  'min-h'?: number | string | undefined;
+  'min-w'?: number | string | undefined;
 
   sz?: number | string | undefined;
   br?: number | undefined;
 
-  ['br-tl']?: number | undefined;
-  ['br-tr']?: number | undefined;
-  ['br-bl']?: number | undefined;
-  ['br-br']?: number | undefined;
+  'br-tl'?: number | undefined;
+  'br-tr'?: number | undefined;
+  'br-bl'?: number | undefined;
+  'br-br'?: number | undefined;
 
-  ['bcolor']?: number | string | undefined;
+  bcolor?: number | string | undefined;
   bw?: number | string | undefined;
   bs?: number | string | undefined;
 
@@ -46,48 +46,49 @@ export interface StyledProps {
   hide?: boolean | undefined;
   hidden?: boolean | undefined;
 
-  ['z-idx']?: number | undefined;
+  'z-idx'?: number | undefined;
 
-  ['pos-abs']?: boolean | undefined;
-  ['pos-rel']?: boolean | undefined;
-  ['pos-fix']?: boolean | undefined;
+  'pos-abs'?: boolean | undefined;
+  'pos-rel'?: boolean | undefined;
+  'pos-fix'?: boolean | undefined;
 
-  ['pos-t']?: number | string | undefined;
-  ['pos-r']?: number | string | undefined;
-  ['pos-b']?: number | string | undefined;
-  ['pos-l']?: number | string | undefined;
+  'pos-t'?: number | string | undefined;
+  'pos-r'?: number | string | undefined;
+  'pos-b'?: number | string | undefined;
+  'pos-l'?: number | string | undefined;
 
   flex?: string | undefined;
 
-  ['flex-col']?: boolean | undefined;
-  ['flex-row']?: boolean | undefined;
-  ['flex-col-r']?: boolean | undefined;
-  ['flex-row-r']?: boolean | undefined;
+  'flex-col'?: boolean | undefined;
+  'flex-row'?: boolean | undefined;
+  'flex-col-r'?: boolean | undefined;
+  'flex-row-r'?: boolean | undefined;
 
-  ['spc-btw']?: boolean | undefined;
-  ['spc-arnd']?: boolean | undefined;
+  'spc-btw'?: boolean | undefined;
+  'spc-arnd'?: boolean | undefined;
 
-  ['align-l']?: boolean | undefined;
-  ['align-r']?: boolean | undefined;
-  ['align-c']?: boolean | undefined;
+  'align-l'?: boolean | undefined;
+  'align-r'?: boolean | undefined;
+  'align-c'?: boolean | undefined;
 
-  ['align-t']?: boolean | undefined;
-  ['align-b']?: boolean | undefined;
-  ['align-m']?: boolean | undefined;
+  'align-t'?: boolean | undefined;
+  'align-b'?: boolean | undefined;
+  'align-m'?: boolean | undefined;
 
-  ['align-str']?: boolean | undefined;
+  'align-str'?: boolean | undefined;
 
-  ['align-self-l']?: boolean | undefined;
-  ['align-self-r']?: boolean | undefined;
-  ['align-self-c']?: boolean | undefined;
+  'align-self-l'?: boolean | undefined;
+  'align-self-r'?: boolean | undefined;
+  'align-self-c'?: boolean | undefined;
 
-  ['font-sz']?: string | number | undefined;
-  ['font-wgt']?: string | number | undefined;
+  'font-sz'?: string | number | undefined;
+  'font-wgt'?: string | number | undefined;
 
   animation?: string;
-  ['crsr-pointer']?: boolean | undefined;
+  'crsr-pointer'?: boolean | undefined;
 
-  ['lst-stl']?: string | undefined;
+  'txt-deco'?: string | undefined;
+  'lst-stl'?: string | undefined;
 }
 
 export const isDefined = (prop: unknown) => typeof prop !== 'undefined';
@@ -250,6 +251,8 @@ const createStylesProps = <T extends ComponentType>(
     ${(props: StyledProps) => props['crsr-pointer'] && 'cursor: pointer;'}
     ${(props: StyledProps) =>
       props['lst-stl'] && `list-style: ${props['lst-stl']};`}
+    ${(props: StyledProps) =>
+      props['txt-deco'] && `text-decoration: ${props['txt-deco']};`}
   `;
 };
 export interface StyledTextProps {

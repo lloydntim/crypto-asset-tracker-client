@@ -101,7 +101,7 @@ const CoinList = (props: CoinListProps) => {
           <Text tKey={coinListDialogMapper[dialog]?.messageTKey} />
         </Dialog>
       )}
-      <Container align-c>
+      <Container mv={32} align-c>
         <Box flex-row mv={12}>
           <Button
             mr={12}
@@ -117,7 +117,6 @@ const CoinList = (props: CoinListProps) => {
         <Container
           bgcolor={WHITE}
           color={BLACK}
-          w={640}
           br={8}
           p={20}
           mv={4}
@@ -135,14 +134,15 @@ const CoinList = (props: CoinListProps) => {
 
         {editMode && (
           <Container flex-row align-m>
-            <Form ph={8} flex-row w="100%" align-t align-m>
+            <Form ph={8} pt={12} flex-row w="100%" align-t>
               <Select
-                m={8}
+                mh={8}
                 options={newCoinSelectOptions}
                 onChange={(value) => setNewCoinSelectOption(value)}
               />
 
               <Input
+                mh={8}
                 name={newCoin.name}
                 value={newCoin.value}
                 required={newCoin.required}
@@ -159,7 +159,7 @@ const CoinList = (props: CoinListProps) => {
                 type="plus"
                 align-c
                 flex-row
-                m={8}
+                mh={8}
                 onClick={() => {
                   if (typeof newCoin.value !== 'undefined' && symbols) {
                     const [symbol]: {id: string; name: string}[] =
@@ -204,7 +204,6 @@ const CoinList = (props: CoinListProps) => {
                   ph={12}
                   br={8}
                   mv={4}
-                  w={640}
                 >
                   <ClickableArea
                     onClick={() => {
@@ -221,16 +220,16 @@ const CoinList = (props: CoinListProps) => {
                             src={`https://s2.coinmarketcap.com/static/img/coins/64x64/${coinId}.png`}
                           />
                         </TableCell>
-                        <TableCell $valign-m $col-w={140} $txt-alignn-l>
+                        <TableCell $valign-m $col-w={140} $txt-align-l>
                           {name}
                         </TableCell>
-                        <TableCell $valign-m $col-w={120} $txt-alignn-r>
+                        <TableCell $valign-m $col-w={120} $txt-align-r>
                           {formatToCurrency(price, convert, location)}
                         </TableCell>
-                        <TableCell $valign-m $col-w={160} $txt-alignn-r>
+                        <TableCell $valign-m $col-w={160} $txt-align-r>
                           {formatAmount(amount, location)}
                         </TableCell>
-                        <TableCell $valign-m ph={12} $col-w={120} $txt-alignn-r>
+                        <TableCell $valign-m ph={12} $col-w={120} $txt-align-r>
                           {formatToCurrency(value, convert, location)}
                         </TableCell>
                       </TableRow>

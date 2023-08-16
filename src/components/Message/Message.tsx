@@ -45,6 +45,7 @@ const Message = ({
   children = null,
   tKey = '',
   fontSz = 18,
+  mv = 16,
   ...rest
 }: MessageProps) => {
   if (!children && !tKey) return null;
@@ -66,7 +67,7 @@ const Message = ({
       bs="solid"
       bcolor={borderColor}
       bgcolor={bgColor}
-      mv={16}
+      mv={mv}
       p={12}
       color={borderColor}
       align-c

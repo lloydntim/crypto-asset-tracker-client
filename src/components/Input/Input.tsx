@@ -1,4 +1,4 @@
-import React, {ChangeEvent, FocusEvent, forwardRef, useState} from 'react';
+import React, {FocusEvent, forwardRef, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 
 import AutoComplete from '../../components/AutoComplete/AutoComplete';
@@ -34,9 +34,9 @@ const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
     onBlur,
     dataList = [],
     onDataListClick,
-    m = 0,
-    mv = 0,
-    mh = 0,
+    m,
+    mv,
+    mh,
     bw = 1,
   } = props;
   const isTypePassword = type === 'password';
@@ -47,7 +47,6 @@ const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
     text: string;
   }>({type: '', text: ''});
   const validationProps = {...props, type: dynamicInputType};
-  const {t} = useTranslation();
 
   const labelText = label || labelTKey;
 
@@ -69,12 +68,22 @@ const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
           <Text tKey={labelText} m={0} />
         </Span>
       )}
-      <Box flex-row w="100%" bgcolor={WHITE} bcolor={GRAPE_DARK} mh={0} br={8}>
+      <Box
+        flex-row
+        w="100%"
+        pos-rel
+        bgcolor={WHITE}
+        bcolor={GRAPE_DARK}
+        mh={0}
+        br={8}
+      >
         <InputField
           data-testid="input"
           flex="1"
           flex-row
           m={0}
+          pr={32}
+          pl={12}
           bcolor={TRANSPARENT}
           bw={bw}
           ref={ref}
@@ -106,6 +115,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
             } = event;
             const error = validateInput({value, files}, validationProps);
 
+            if (!dataList?.length) setIsDataListVisible(false);
             if (error) setInputMessage({text: error, type: 'error'});
 
             if (onBlur) onBlur(event);
@@ -117,6 +127,9 @@ const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
             bgcolor={TRANSPARENT}
             iconSize={14}
             align-m
+            pos-abs
+            pos-r={4}
+            pos-t={6}
             flex-row
             type={isTypePassword ? 'view' : 'close'}
             tabIndex={-1}
@@ -150,7 +163,9 @@ const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
         />
       )}
 
-      <Message type={inputMessage.type}>{inputMessage.text}</Message>
+      <Message mv={8} type={inputMessage.type}>
+        {inputMessage.text}
+      </Message>
     </Label>
   );
 });
