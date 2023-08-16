@@ -68,7 +68,6 @@ const AutoComplete = ({
       pos-t={24}
       lst-stl="none"
       flex-col
-      // align-c
       p={0}
       bgcolor={GRAPE_EXTRA_LIGHT}
       w="100%"
