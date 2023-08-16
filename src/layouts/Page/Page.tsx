@@ -1,7 +1,6 @@
 import React, {ReactNode} from 'react';
 
 import Box from '../../components/Box/Box';
-import {GRAPE_MEDIUM} from '../../constants/colors';
 
 interface PageProps {
   name: string;

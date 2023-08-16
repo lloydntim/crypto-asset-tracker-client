@@ -2,7 +2,6 @@ import React, {ReactNode} from 'react';
 import createStylesProps, {StyledProps} from '../../helpers/createStyledProps';
 
 const ListSt = createStylesProps('ul');
-
 const ListItemSt = createStylesProps('li');
 
 export interface RenderItemProps<T> {
@@ -20,7 +19,7 @@ interface ListProps<ItemType> extends StyledProps {
 const List = <T,>({data, renderItem, ...rest}: ListProps<T>) => (
   <ListSt role="list" {...rest}>
     {data.map((item, index) => (
-      <ListItemSt role="listitem" key={index}>
+      <ListItemSt flex-col role="listitem" key={index}>
         {renderItem({item, index})}
       </ListItemSt>
     ))}

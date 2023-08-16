@@ -1,5 +1,12 @@
 import React, {useMemo, useState} from 'react';
-import {Body, Headline, Footer, Message, Navigation} from '../../components';
+import {
+  Body,
+  Headline,
+  Footer,
+  Message,
+  Navigation,
+  Header,
+} from '../../components';
 import {Page} from '../../layouts';
 import CoinList from './CoinList/CoinList';
 import {useMutation, useQuery} from '@apollo/client';
@@ -159,7 +166,10 @@ const Welcome = () => {
 
   return (
     <Page name="welcome">
-      <Navigation />
+      <Header>
+        <Navigation />
+      </Header>
+
       <Body>
         <Headline tKey="welcome:title" />
 

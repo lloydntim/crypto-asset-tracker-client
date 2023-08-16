@@ -8,6 +8,7 @@ import Aside from '../Aside/Aside';
 import Link from '../Link/Link';
 
 const MENU_WIDTH = '80%';
+const MENU_MAX_WIDTH = 480;
 interface MenuProps extends StyledProps {
   className?: string;
   children?: ReactNode;
@@ -30,19 +31,17 @@ const Menu = ({
       pos-fix
       z-idx={4}
       h="100vh"
-      p={20}
+      pv={20}
+      pl={40}
+      pr={20}
       w={MENU_WIDTH}
+      max-w={MENU_MAX_WIDTH}
       pos-t={0}
       pos-l={visible ? 0 : `-${MENU_WIDTH}`}
       className={className}
       {...rest}
     >
-      <Box
-        // data-testid="close-button"
-        className="menu-button-close"
-        align-r
-        flex-row
-      >
+      <Box className="menu-button-close" align-r flex-row>
         <IconButton
           role="button"
           type="close"

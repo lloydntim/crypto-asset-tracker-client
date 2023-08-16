@@ -4,7 +4,11 @@ import List, {RenderItem} from '../List/List';
 import Span from '../Span/Span';
 import Button from '../Button/Button';
 
-import {GRAPE_DARK, WHITE} from '../../constants/colors';
+import {
+  GRAPE_DARK,
+  GRAPE_EXTRA_LIGHT,
+  TRANSPARENT,
+} from '../../constants/colors';
 import {DataListItem as AutoCompleteItem} from '../Input/InputHelper';
 
 interface AutoCompleteProps {
@@ -39,13 +43,14 @@ const AutoComplete = ({
     return (
       <Button
         key={index}
-        bgcolor={WHITE}
         br={0}
-        w="100%"
         h="100%"
-        p={12}
+        pv={12}
+        ph="10%"
         color={GRAPE_DARK}
         align-l
+        align-c={false}
+        bgcolor={TRANSPARENT}
         type="button"
         data-testid="autocomplete-item"
         className="autocomplete-item-button"
@@ -60,7 +65,11 @@ const AutoComplete = ({
   return (
     <List<AutoCompleteItem>
       pos-abs
-      pos-t={44}
+      pos-t={24}
+      lst-stl="none"
+      flex-col
+      p={0}
+      bgcolor={GRAPE_EXTRA_LIGHT}
       w="100%"
       data-testid="autocomplete"
       className="autocomplete"

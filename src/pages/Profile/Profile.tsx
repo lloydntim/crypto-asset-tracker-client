@@ -185,7 +185,7 @@ const Profile = () => {
 
         {user?.getUser && (
           <>
-            <Table m={20}>
+            <Table mv={32}>
               <TableRow>
                 <TableCell valign-m col-w={40}>
                   <Text m={0} strong tKey="common:input.label.username" />
