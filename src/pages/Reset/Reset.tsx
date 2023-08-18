@@ -17,6 +17,7 @@ import {useForm} from '../../hooks';
 import {useAuthentication} from '../../providers/AuthenticationProvider';
 import {useMutation, useQuery} from '@apollo/client';
 import {GET_PASSWORD_TOKEN, UPDATE_PASSWORD_TOKEN} from '../../graphql';
+import {displayResponseErrorMessage} from '../../helpers/displayResponseErrorMessage';
 
 const Reset = () => {
   const navigate = useNavigate();
@@ -27,14 +28,13 @@ const Reset = () => {
     isFormValid,
   } = useForm('password*', 'passwordConfirm*');
 
-  // const formFieldFocusHandler = useCallback(() => setMessage(null), []);
-
   const {token: resetPasswordToken} = useParams();
 
   const {
     loading: getPasswordTokenQueryLoading,
     error: getPasswordTokenQueryError,
   } = useQuery(GET_PASSWORD_TOKEN, {
+    errorPolicy: 'all',
     variables: {resetPasswordToken},
   });
   const [
@@ -67,7 +67,6 @@ const Reset = () => {
             required={password.required}
             value={password.value}
             onChange={formFieldChangeHandler}
-            // onFocus={formFieldFocusHandler}
             mv={12}
           />
 
@@ -79,7 +78,6 @@ const Reset = () => {
             required={passwordConfirm.required}
             value={passwordConfirm.value}
             onChange={formFieldChangeHandler}
-            // onFocus={formFieldFocusHandler}
             mv={12}
           />
 
@@ -91,7 +89,7 @@ const Reset = () => {
             onClick={() => {
               updatePassword({
                 variables: {resetPasswordToken, password: password.value},
-              });
+              }).catch((error) => console.log(error));
             }}
           />
         </Form>
@@ -99,19 +97,11 @@ const Reset = () => {
           {(getPasswordTokenQueryLoading || updatePasswordMutationLoading) && (
             <Message type="info" tKey="common:message.loading.text" />
           )}
-
-          {getPasswordTokenQueryError && (
-            <Message type="error">{getPasswordTokenQueryError.message}</Message>
-          )}
-
-          {updatePasswordMutationError && (
-            <Message type="error">
-              {updatePasswordMutationError.message}
-            </Message>
-          )}
+          {displayResponseErrorMessage(getPasswordTokenQueryError)}
+          {displayResponseErrorMessage(updatePasswordMutationError)}
         </>
       </Body>
-      <Footer startYear={2019} companyName="LNCD" />
+      <Footer startYear={2023} companyName="LNCD" />
     </Page>
   );
 };

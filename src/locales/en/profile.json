@@ -6,5 +6,8 @@
   "label_userStatus": "Status",
   "button_resendVerificationEmail": "Resend Verification Email",
   "form_title_editEmail": "Edit User Email",
-  "form_button_updateEmail": "Update Email"
+  "form_button_updateEmail": "Update Email",
+  "error": {
+    "message": ""
+  }
 }

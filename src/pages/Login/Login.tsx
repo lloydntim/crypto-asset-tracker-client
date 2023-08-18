@@ -1,4 +1,4 @@
-import React, {useState, MouseEventHandler, useCallback} from 'react';
+import React, {MouseEventHandler} from 'react';
 import {useMutation} from '@apollo/client';
 import {useNavigate} from 'react-router-dom';
 
@@ -19,16 +19,10 @@ import {
   Navigation,
 } from '../../components';
 import {WHITE} from '../../constants/colors';
-import {useTranslation} from 'react-i18next';
+import {displayResponseErrorMessage} from '../../helpers/displayResponseErrorMessage';
 
 const Login = () => {
   const navigate = useNavigate();
-
-  const {t} = useTranslation();
-
-  const [message, setMessage] = useState<{text: string; type: string} | null>(
-    null,
-  );
   const {setLoginToken} = useAuthentication();
   const {
     form: hookedForm,
@@ -36,37 +30,26 @@ const Login = () => {
     isFormValid,
   } = useForm('username*', 'password*', 'language');
   const {username, password} = hookedForm;
-  const [login, {loading}] = useMutation(LOGIN, {
+  const [login, {loading, error}] = useMutation(LOGIN, {
     onCompleted: (data) => {
       /* eslint-disable no-undef */
       setLoginToken(data.login.token);
       navigate('/welcome');
     },
-    onError: (error) => {
-      setMessage({
-        type: 'error',
-        text: error?.message.includes('fetch')
-          ? t('login:messages.errors.unableToLoginUser')
-          : error?.message,
-      });
-    },
   });
 
-  const formFieldFocusHandler = useCallback(() => setMessage(null), []);
+  const submitForm: MouseEventHandler = (event) => {
+    event.preventDefault();
 
-  const submitForm: MouseEventHandler<Element> = useCallback(
-    (event) => {
-      event.preventDefault();
-
-      login({
-        variables: {
-          username: username.value,
-          password: password.value,
-        },
-      });
-    },
-    [username, password, login],
-  ); // eslint-disable-line react-hooks/exhaustive-deps
+    login({
+      variables: {
+        username: username.value,
+        password: password.value,
+      },
+    }).catch((error) => {
+      console.log(error);
+    });
+  };
 
   return (
     <Page name="login">
@@ -85,9 +68,7 @@ const Login = () => {
             required={username.required}
             value={username.value}
             onChange={formFieldChangeHandler}
-            onFocus={formFieldFocusHandler}
           />
-
           <Input
             name="password"
             labelTKey="input.label.password"
@@ -96,9 +77,7 @@ const Login = () => {
             required={password.required}
             value={password.value}
             onChange={formFieldChangeHandler}
-            onFocus={formFieldFocusHandler}
           />
-
           <Button
             disabled={!isFormValid}
             tKey="button.login"
@@ -106,10 +85,11 @@ const Login = () => {
             onClick={submitForm}
             mv={16}
           />
-
-          <Message type={loading ? 'info' : message?.type} mv={16}>
-            {loading ? 'Loading' : message?.text}
-          </Message>
+          {loading && <Message tKey="common:message:loading:text" />}
+          {displayResponseErrorMessage(
+            error,
+            'login:messages.errors.unableToLoginUser',
+          )}
         </Form>
 
         <Link color={WHITE} to="/register" tKey="button.register" />
@@ -117,7 +97,7 @@ const Login = () => {
         <Link color={WHITE} to="/forgot" tKey="login:link.forgotPassword" />
       </Body>
 
-      <Footer startYear={2019} companyName="LNCD" />
+      <Footer startYear={2023} companyName="LNCD" />
     </Page>
   );
 };

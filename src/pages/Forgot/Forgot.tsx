@@ -16,6 +16,7 @@ import {useForm} from '../../hooks';
 import {useMutation} from '@apollo/client';
 import {CREATE_PASSWORD_TOKEN} from '../../graphql';
 import {WHITE} from '../../constants/colors';
+import {displayResponseErrorMessage} from '../../helpers/displayResponseErrorMessage';
 
 const Forgot = () => {
   const {
@@ -31,18 +32,19 @@ const Forgot = () => {
       <Header>
         <Navigation />
       </Header>
-      <Body>
-        <Headline>Forgot</Headline>
 
-        <Form>
+      <Body>
+        <Headline tKey="forgot:title" />
+
+        <Form mv={32}>
           <Input
             name="username"
+            type="email"
             labelTKey="input.label.username"
             placeholderTKey="input.placeholder.enterUsername"
             required={username.required}
             value={username.value}
             onChange={formFieldChangeHandler}
-            // onFocus={formFieldChangeHandler}
           />
 
           <Button
@@ -50,7 +52,9 @@ const Forgot = () => {
             tKey="common:button.submit"
             type="submit"
             onClick={() => {
-              createPasswordToken({variables: {username: username.value}});
+              createPasswordToken({
+                variables: {username: username.value},
+              }).catch((error) => console.log(error));
             }}
           />
         </Form>
@@ -58,12 +62,15 @@ const Forgot = () => {
         <Link color={WHITE} to="/login" tKey="common:button:login" />
 
         {loading && <Message type="info" tKey="common:message:loading:text" />}
-        {error && <Message type="error">{error.message}</Message>}
+
+        {displayResponseErrorMessage(error, 'forgot:message.error.text')}
+
         {data && (
           <Message type="success">{data.createPasswordToken.message}</Message>
         )}
       </Body>
-      <Footer startYear={2019} companyName="LNCD" />
+
+      <Footer startYear={2023} companyName="LNCD" />
     </Page>
   );
 };

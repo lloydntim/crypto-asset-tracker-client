@@ -105,6 +105,7 @@ const Register: FC = (): ReactElement => {
 
           <Input
             name="email"
+            type="email"
             labelTKey="common:input.label.email"
             placeholderTKey="common:input.placeholder.enterEmail"
             required={email.required}
@@ -147,14 +148,14 @@ const Register: FC = (): ReactElement => {
           />
 
           <Message type={loading ? 'info' : message?.type ?? ''}>
-            {loading ? 'Loading' : message?.text}
+            {loading ? t('common:message:loading:text') : message?.text}
           </Message>
         </Form>
 
         <Link color={WHITE} to="/login" tKey="common:button.login" />
       </Body>
 
-      <Footer startYear={2019} companyName="LNCD" />
+      <Footer startYear={2023} companyName="LNCD" />
     </Page>
   );
 };

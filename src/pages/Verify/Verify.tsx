@@ -9,11 +9,11 @@ import {useNavigate, useParams} from 'react-router-dom';
 const Verify = () => {
   const navigate = useNavigate();
   const {token} = useParams();
-  const {setLoginToken, currentUser} = useAuthentication();
+  const {setLoginToken} = useAuthentication();
   const [verify, {loading, error}] = useMutation(VERIFY, {
-    errorPolicy: 'all',
     onCompleted: (data) => {
       /* eslint-disable no-undef */
+      console.log('what');
       if (data.verify) {
         setLoginToken(data.verify.token as string);
         navigate('/profile');
@@ -22,8 +22,12 @@ const Verify = () => {
   });
 
   useEffect(() => {
-    verify({variables: {token}});
-  }, [token, verify]);
+    console.log('test');
+    verify({variables: {token}}).catch((error) => {
+      navigate('/');
+      console.log(error);
+    });
+  }, [token, verify, navigate]);
 
   return (
     <Page name="verify">
@@ -31,14 +35,10 @@ const Verify = () => {
       <Body flex-col align-c flex="1">
         <Headline tKey="verify:title" />
 
-        {loading && (
-          <Message type="info">
-            <Text tKey="common:message.loading.text" />
-          </Message>
-        )}
-        {error && <Message type="error">{error.message}</Message>}
+        {loading && <Message type="info" tKey="common:message.loading.text" />}
+        {error && <Message type="error" tKey="common:message.error.text" />}
       </Body>
-      <Footer startYear={2019} companyName="LNCD" />
+      <Footer startYear={2023} companyName="LNCD" />
     </Page>
   );
 };
