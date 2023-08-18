@@ -1,0 +1,8 @@
+{
+  "title": "Forgot Password",
+  "message": {
+    "error": {
+      "text": "An error has occured. Your email could not be submitted."
+    }
+  }
+}

@@ -23,7 +23,7 @@ const About = () => {
           <Text m={0} tKey="about:description" />
         </Box>
       </Body>
-      <Footer startYear={2019} companyName="LNCD" />
+      <Footer startYear={2023} companyName="LNCD" />
     </Page>
   );
 };

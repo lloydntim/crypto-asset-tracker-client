@@ -22,6 +22,7 @@ import {
 } from '../../graphql';
 import {useAuthentication} from '../../providers/AuthenticationProvider';
 import {CoinData, currencies} from './CoinList/CoinListHelper';
+import {displayResponseErrorMessage} from '../../helpers/displayResponseErrorMessage';
 
 const Welcome = () => {
   const {currentUser} = useAuthentication();
@@ -50,7 +51,7 @@ const Welcome = () => {
   const {
     data: coinListings,
     refetch,
-    loading,
+    loading: coinListingLoading,
     error: coinListingsError,
   } = useQuery(GET_COIN_LISTINGS, {
     variables: {
@@ -175,37 +176,24 @@ const Welcome = () => {
 
         {(getCoinsLoading ||
           getSymbolsLoading ||
-          loading ||
+          coinListingLoading ||
           removeCoinLoading ||
-          getCoinsLoading ||
-          getSymbolsLoading ||
           addCoinLoading ||
           addCoinHoldingLoading ||
           updateCoinHoldingLoading ||
-          removeCoinHoldingLoading) && <Message type="info">Loading</Message>}
+          removeCoinHoldingLoading) && (
+          <Message type="info" tKey="common:message.loading.text" />
+        )}
 
-        {getCoinsError && (
-          <Message type="error">{getCoinsError.message}</Message>
-        )}
-        {addCoinError && <Message type="error">{addCoinError.message}</Message>}
-        {addCoinHoldingError && (
-          <Message type="error">{addCoinHoldingError.message}</Message>
-        )}
-        {updateCoinHoldingError && (
-          <Message type="error">{updateCoinHoldingError.message}</Message>
-        )}
-        {removeCoinHoldingError && (
-          <Message type="error">{removeCoinHoldingError.message}</Message>
-        )}
-        {getSymbolsError && (
-          <Message type="error">{getSymbolsError.message}</Message>
-        )}
-        {removeCoinError && (
-          <Message type="error">{removeCoinError.message}</Message>
-        )}
-        {coinListingsError && (
-          <Message type="error">{coinListingsError.message}</Message>
-        )}
+        {displayResponseErrorMessage(getCoinsError)}
+        {displayResponseErrorMessage(getSymbolsError)}
+        {displayResponseErrorMessage(addCoinError)}
+        {displayResponseErrorMessage(removeCoinError)}
+        {displayResponseErrorMessage(coinListingsError)}
+        {displayResponseErrorMessage(addCoinHoldingError)}
+        {displayResponseErrorMessage(updateCoinHoldingError)}
+        {displayResponseErrorMessage(removeCoinHoldingError)}
+
         <CoinList
           data={coinListData}
           onChange={() => console.log('test')}

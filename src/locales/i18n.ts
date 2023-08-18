@@ -1,27 +1,29 @@
 /* eslint-disable @typescript-eslint/no-floating-promises */
-import i18n from 'i18next'
-import { initReactI18next } from 'react-i18next'
-import LanguageDetector from 'i18next-browser-languagedetector'
+import i18n from 'i18next';
+import {initReactI18next} from 'react-i18next';
+import LanguageDetector from 'i18next-browser-languagedetector';
 
-import commonEn from './en/common.json'
-import loginEn from './en/login.json'
-import registerEn from './en/register.json'
-import welcomeEn from './en/welcome.json'
-import profileEn from './en/profile.json'
-import resetEn from './en/reset.json'
-import verifyEn from './en/verify.json'
-import aboutEn from './en/about.json'
+import commonEn from './en/common.json';
+import loginEn from './en/login.json';
+import registerEn from './en/register.json';
+import welcomeEn from './en/welcome.json';
+import profileEn from './en/profile.json';
+import resetEn from './en/reset.json';
+import verifyEn from './en/verify.json';
+import aboutEn from './en/about.json';
+import forgotEn from './en/forgot.json';
 
-import commonDe from './de/common.json'
-import loginDe from './de/login.json'
-import registerDe from './de/register.json'
-import welcomeDe from './de/welcome.json'
-import profileDe from './de/profile.json'
-import resetDe from './de/reset.json'
-import verifyDe from './de/verify.json'
-import aboutDe from './de/about.json'
+import commonDe from './de/common.json';
+import loginDe from './de/login.json';
+import registerDe from './de/register.json';
+import welcomeDe from './de/welcome.json';
+import profileDe from './de/profile.json';
+import resetDe from './de/reset.json';
+import verifyDe from './de/verify.json';
+import aboutDe from './de/about.json';
+import forgotDe from './de/forgot.json';
 
-export const defaultNS = 'common'
+export const defaultNS = 'common';
 
 export const resources = {
   en: {
@@ -31,9 +33,10 @@ export const resources = {
     register: 'register',
     reset: 'reset',
     verify: 'verify',
-    about: 'about'
-  }
-} as const
+    about: 'about',
+    forgot: 'forgot',
+  },
+} as const;
 
 i18n
   .use(initReactI18next)
@@ -48,7 +51,8 @@ i18n
         profile: profileEn,
         reset: resetEn,
         verify: verifyEn,
-        about: aboutEn
+        about: aboutEn,
+        forgot: forgotEn,
       },
       de: {
         common: commonDe,
@@ -58,8 +62,9 @@ i18n
         profile: profileDe,
         reset: resetDe,
         verify: verifyDe,
-        about: aboutDe
-      }
+        about: aboutDe,
+        forgot: forgotDe,
+      },
     },
     detection: {
       order: [
@@ -69,14 +74,14 @@ i18n
         'querystring',
         'htmlTag',
         'path',
-        'subdomain'
+        'subdomain',
       ],
       lookupQuerystring: 'lng',
       lookupCookie: 'i18next',
       lookupLocalStorage: 'i18nextLng',
       lookupFromPathIndex: 0,
       lookupFromSubdomainIndex: 0,
-      caches: ['localStorage', 'cookie']
+      caches: ['localStorage', 'cookie'],
     },
     ns: [
       'common',
@@ -86,11 +91,11 @@ i18n
       'reset',
       'register',
       'verify',
-      'about'
+      'about',
+      'forgot',
     ],
-    lng: 'en',
     fallbackLng: 'en',
-    debug: true
-  })
+    debug: true,
+  });
 
-export default i18n
+export default i18n;

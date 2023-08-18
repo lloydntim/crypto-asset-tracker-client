@@ -50,7 +50,7 @@ const Sample = () => {
       >
         This is just a random Overlay.
       </Overlay>
-      <Footer startYear={2019} companyName="LNCD" />
+      <Footer startYear={2023} companyName="LNCD" />
     </Page>
   );
 };

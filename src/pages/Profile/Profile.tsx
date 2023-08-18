@@ -27,6 +27,7 @@ import {
 import {GRAPE_DARK, GRAPE_EXTRA_DARK} from '../../constants/colors';
 import Table, {TableCell, TableRow} from '../../components/Table';
 import {useForm} from '../../hooks';
+import {displayResponseErrorMessage} from '../../helpers/displayResponseErrorMessage';
 
 const Profile = () => {
   const [dialog, setDialog] = useState('');
@@ -127,13 +128,15 @@ const Profile = () => {
             value={email.value}
             onChange={formFieldChangeHandler}
             mv={12}
-            // onBlur={updateFormData}
           />
           <Button
-            // disabled={!isFormValid}
             tKey="profile:form_button_updateEmail"
             onClick={() => {
-              updateUser({variables: {id: userId, email: email.value}});
+              updateUser({variables: {id: userId, email: email.value}}).catch(
+                (error) => {
+                  console.log(error);
+                },
+              );
               setOverlay(false);
             }}
           />
@@ -149,26 +152,16 @@ const Profile = () => {
           sendVerificationMutationLoading ||
           updateUserMutationLoading ||
           removeUserMutationLoading ||
-          removeCoinMutationLoading) && <Message type="info">Loading</Message>}
-        {error && (
-          <Message type="error">User details could not be loaded</Message>
+          removeCoinMutationLoading) && (
+          <Message type="info" tKey="common:message:loading:text" />
         )}
-        {removeUserMutationError && (
-          <Message type="error">User could not be removed</Message>
-        )}
-
-        {updateUserMutationError && (
-          <Message type="error">{updateUserMutationError.message}</Message>
-        )}
-
-        {removeCoinMutationError && (
-          <Message type="error">{removeCoinMutationError.message}</Message>
-        )}
-
-        {sendVerificationMutationError && (
-          <Message type="error">
-            {sendVerificationMutationError.message}
-          </Message>
+        {displayResponseErrorMessage(
+          error ||
+            removeUserMutationError ||
+            updateUserMutationError ||
+            removeCoinMutationError ||
+            sendVerificationMutationError,
+          'common:message.error.text',
         )}
 
         {sendVerificationMutationData && (
@@ -176,13 +169,11 @@ const Profile = () => {
             {sendVerificationMutationData.resendVerificationToken.message}
           </Message>
         )}
-
         {updateUserMutationData && (
           <Message type="info">
             {updateUserMutationData.updateUser.message}
           </Message>
         )}
-
         {user?.getUser && (
           <>
             <Table mv={32}>
@@ -242,6 +233,8 @@ const Profile = () => {
                         email: user.getUser.email,
                         username: user.getUser.username,
                       },
+                    }).catch((error) => {
+                      console.log(error);
                     });
                   }}
                 />
@@ -259,7 +252,7 @@ const Profile = () => {
           </>
         )}
       </Body>
-      <Footer startYear={2019} companyName="LNCD" />
+      <Footer startYear={2023} companyName="LNCD" />
     </Page>
   );
 };
