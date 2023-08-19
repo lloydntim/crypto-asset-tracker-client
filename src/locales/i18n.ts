@@ -4,6 +4,7 @@ import {initReactI18next} from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 
 import commonEn from './en/common.json';
+import homeEn from './en/home.json';
 import loginEn from './en/login.json';
 import registerEn from './en/register.json';
 import welcomeEn from './en/welcome.json';
@@ -14,6 +15,7 @@ import aboutEn from './en/about.json';
 import forgotEn from './en/forgot.json';
 
 import commonDe from './de/common.json';
+import homeDe from './de/home.json';
 import loginDe from './de/login.json';
 import registerDe from './de/register.json';
 import welcomeDe from './de/welcome.json';
@@ -28,6 +30,7 @@ export const defaultNS = 'common';
 export const resources = {
   en: {
     common: 'common',
+    home: 'home',
     welcome: 'welcome',
     login: 'login',
     register: 'register',
@@ -45,6 +48,7 @@ i18n
     resources: {
       en: {
         common: commonEn,
+        home: homeDe,
         login: loginEn,
         register: registerEn,
         welcome: welcomeEn,
@@ -56,6 +60,7 @@ i18n
       },
       de: {
         common: commonDe,
+        home: homeDe,
         login: loginDe,
         register: registerDe,
         welcome: welcomeDe,
@@ -85,6 +90,7 @@ i18n
     },
     ns: [
       'common',
+      'home',
       'welcome',
       'login',
       'profile',

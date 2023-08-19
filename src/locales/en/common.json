@@ -7,6 +7,12 @@
     "logout": "Logout",
     "edit": "Edit"
   },
+  "nav": {
+    "dialog": {
+      "title": "Logout",
+      "text": " Do you really want to to log out?"
+    }
+  },
   "link": {
     "back": "Back"
   },

@@ -1,5 +1,6 @@
 {
   "title": "Welcome",
+  "navTitle": "Crypto Asset List",
   "greeting": "Hi there, welcome back!",
   "coinlist": {
     "text": {
@@ -27,6 +28,13 @@
           "preset": "Preset",
           "other": "Other"
         }
+      }
+    },
+    "form": {
+      "addHolding": {
+        "name": "Name",
+        "amount": "Amount",
+        "type": "Type"
       }
     }
   }

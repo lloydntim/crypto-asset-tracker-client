@@ -41,7 +41,7 @@ export const createClient = () => {
   );
 
   return new ApolloClient({
-    link: from([errorLink, httpLink, authLink]),
+    link: from([errorLink, authLink, httpLink]),
     cache: new InMemoryCache(),
     connectToDevTools: true,
   });

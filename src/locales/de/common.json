@@ -7,6 +7,12 @@
     "logout": "Ausloggen",
     "edit": "Ändern"
   },
+  "nav": {
+    "dialog": {
+      "title": "Ausloggen",
+      "text": "Wollen Sie sich wirklich ausloggen?"
+    }
+  },
   "link": {
     "back": "Zurück"
   },
