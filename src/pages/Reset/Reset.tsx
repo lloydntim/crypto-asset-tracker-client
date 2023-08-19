@@ -9,7 +9,6 @@ import {
   Body,
   Footer,
   Form,
-  Radios,
   Navigation,
 } from '../../components';
 import {Page} from '../../layouts';

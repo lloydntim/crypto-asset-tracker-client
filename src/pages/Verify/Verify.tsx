@@ -13,7 +13,6 @@ const Verify = () => {
   const [verify, {loading, error}] = useMutation(VERIFY, {
     onCompleted: (data) => {
       /* eslint-disable no-undef */
-      console.log('what');
       if (data.verify) {
         setLoginToken(data.verify.token as string);
         navigate('/profile');

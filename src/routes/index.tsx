@@ -1,39 +1,16 @@
 import React, {lazy} from 'react';
 import {RouteObject, useRoutes} from 'react-router-dom';
 
-// import {
-//   Login,
-//   Welcome,
-//   Home,
-//   Register,
-//   Profile,
-//   Forgot,
-//   Verify,
-//   About,
-//   Reset,
-//   Sample,
-// } from '../pages';
-// import AuthenticationRoute from './AuthenticationRoute';
-
-const Home = lazy(() => import(/* : "home" */ '../pages/Home/Home'));
-const Login = lazy(() => import(/* : "login" */ '../pages/Login/Login'));
-const Register = lazy(
-  () => import(/* : "register" */ '../pages/Register/Register'),
-);
-const Welcome = lazy(
-  () => import(/* : "welcome" */ '../pages/Welcome/Welcome'),
-);
-const Sample = lazy(() => import(/* : "sample" */ '../pages/Sample/Sample'));
-const About = lazy(() => import(/* : "about" */ '../pages/About/About'));
-const Verify = lazy(() => import(/* : "verify" */ '../pages/Verify/Verify'));
-const Forgot = lazy(() => import(/* : "forgot" */ '../pages/Forgot/Forgot'));
-const Reset = lazy(() => import(/* : "reset" */ '../pages/Reset/Reset'));
-const Profile = lazy(
-  () => import(/* : "profile" */ '../pages/Profile/Profile'),
-);
-const AuthenticationRoute = lazy(
-  () => import(/* : "authroute" */ './AuthenticationRoute'),
-);
+const Home = lazy(() => import('../pages/Home/Home'));
+const Login = lazy(() => import('../pages/Login/Login'));
+const Register = lazy(() => import('../pages/Register/Register'));
+const Welcome = lazy(() => import('../pages/Welcome/Welcome'));
+const About = lazy(() => import('../pages/About/About'));
+const Verify = lazy(() => import('../pages/Verify/Verify'));
+const Forgot = lazy(() => import('../pages/Forgot/Forgot'));
+const Reset = lazy(() => import('../pages/Reset/Reset'));
+const Profile = lazy(() => import('../pages/Profile/Profile'));
+const AuthenticationRoute = lazy(() => import('./AuthenticationRoute'));
 
 export default () => {
   const routes: RouteObject[] = [
@@ -57,10 +34,7 @@ export default () => {
       path: 'welcome',
       element: <AuthenticationRoute component={<Welcome />} />,
     },
-    {
-      path: 'sample',
-      element: <AuthenticationRoute component={<Sample />} />,
-    },
+
     {
       path: 'about',
       element: <About />,

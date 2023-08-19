@@ -166,7 +166,7 @@ const CoinList = (props: CoinListProps) => {
                       symbols.filter(({name}) => name === newCoin.value);
 
                     const addCoinArgs =
-                      newCoinSelectOption === 'Other'
+                      newCoinSelectOption === 'other'
                         ? {symbol: symbol.id}
                         : {slug: slugify(newCoin.value)};
 

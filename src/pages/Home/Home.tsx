@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React from 'react';
 
 import {Page} from '../../layouts';
 import {
@@ -8,16 +8,19 @@ import {
   Button,
   Box,
   Header,
+  Navigation,
 } from '../../components';
 
-const Home: FC = () => {
+const Home = () => {
   return (
     <Page name="home">
       <Header>
-        <Title>Crypto Asset Checker</Title>
+        <Navigation />
       </Header>
 
       <Body flex-col flex="1">
+        <Title tKey="home:title" />
+
         <Box flex-col flex="1" align-c align-m>
           <Box flex-col align-str>
             <Button m={8} tKey="button.login" isLink to="/login" />

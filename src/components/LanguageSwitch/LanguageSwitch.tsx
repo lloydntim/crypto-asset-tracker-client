@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useTranslation} from 'react-i18next';
 
 import Box from '../Box/Box';
@@ -15,26 +15,33 @@ interface LanguageSwitchProps extends StyledProps {
   className?: string;
 }
 
-const languageCodes = Object.values(Languages);
+const languageCodes = Object.values(Languages) as string[];
 /* eslint-disable react/jsx-props-no-spreading */
 const LanguageSwitch = (props: LanguageSwitchProps) => {
   const {
-    i18n: {changeLanguage},
+    i18n: {changeLanguage, language},
   } = useTranslation();
 
   const onChangeHandler = ({value}: {value: string}) => {
     changeLanguage(value);
   };
 
+  useEffect(() => {
+    changeLanguage(language);
+  }, [changeLanguage, language]);
+
   const createLanguageOptions = languageCodes.map((code) => ({
     value: code,
     labelTKey: `common:label.language.${code}`,
   }));
 
+  const isCurrentLanguage = languageCodes.indexOf(language);
+
   return (
     <Box w="100%" {...props}>
       <Radios
         isButton
+        selectedItem={isCurrentLanguage}
         flex-row
         mv={12}
         items={createLanguageOptions}

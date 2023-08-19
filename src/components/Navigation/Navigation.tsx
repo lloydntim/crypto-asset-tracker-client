@@ -9,6 +9,7 @@ import Button from '../Button/Button';
 import Menu from '../Menu/Menu';
 import Link from '../Link/Link';
 import List from '../List/List';
+import Text from '../Text/Text';
 
 import Dialog from '../../layouts/Dialog/Dialog';
 
@@ -59,10 +60,8 @@ const Navigation = ({title = '', titleTKey = '', ...rest}: NavigationProps) => {
                 color={GRAPE_EXTRA_DARK}
                 txt-deco="none"
                 to={`/${item}`}
-              >{`${item.substring(0, 1).toUpperCase()}${item.substring(
-                1,
-                item.length,
-              )}`}</Link>
+                tKey={`${item.toLowerCase()}:navTitle`}
+              />
             );
           }}
         />
@@ -73,7 +72,7 @@ const Navigation = ({title = '', titleTKey = '', ...rest}: NavigationProps) => {
       <IconButton type="menu" onClick={() => setIsMenuVisible(true)} />
 
       <Dialog
-        title="Logout"
+        titleTKey="common:nav.dialog.title"
         visible={isDialogVisible}
         onCancelButtonClick={() => setIsDialogVisible(false)}
         onContinueButtonClick={() => {
@@ -82,7 +81,7 @@ const Navigation = ({title = '', titleTKey = '', ...rest}: NavigationProps) => {
           navigate('/', {replace: true});
         }}
       >
-        Do you really want to to log out?
+        <Text tKey="common:nav.dialog.title" />
       </Dialog>
     </NavigationSt>
   );

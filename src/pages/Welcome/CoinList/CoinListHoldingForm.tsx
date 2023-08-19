@@ -1,21 +1,7 @@
-import React, {FC} from 'react';
+import React from 'react';
 import {Form, IconButton, InputField, Select, Text} from '../../../components';
-import {SelectItemType} from '../../../components/Select/Select';
 
-const types: SelectItemType[] = [
-  {
-    value: 'wallet',
-    text: 'Wallet',
-  },
-  {
-    value: 'staking',
-    text: 'Staking',
-  },
-  {
-    value: 'exchange',
-    text: 'Exchange',
-  },
-];
+import {types} from './CoinListHelper';
 
 interface CoinListHoldingFormProps {
   holding: {
@@ -28,34 +14,44 @@ interface CoinListHoldingFormProps {
   submitText: string;
 }
 
-const CoinListHoldingForm: FC<CoinListHoldingFormProps> = ({
+const CoinListHoldingForm = ({
   holding,
   onChange,
   onSubmit,
-}) => {
+}: CoinListHoldingFormProps) => {
   return (
     <Form flex-row align-m>
-      <Text flex-row mv={8} font-sz={14}>
-        Name
-      </Text>
+      <Text
+        flex-row
+        mv={8}
+        font-sz={14}
+        tKey="welcome:coinlist.form.addHolding.name"
+      />
+
       <InputField
         name="name"
         value={holding.name}
         w={40}
         onChange={({target: {value}}) => onChange({value, field: 'name'})}
       />
-      <Text mv={8} flex-row font-sz={14}>
-        Amount
-      </Text>
+      <Text
+        mv={8}
+        flex-row
+        font-sz={14}
+        tKey="welcome:coinlist.form.addHolding.amount"
+      />
       <InputField
         name="amount"
         value={holding.amount}
         w={40}
         onChange={({target: {value}}) => onChange({value, field: 'amount'})}
       />
-      <Text mv={8} flex-row font-sz={14}>
-        Type
-      </Text>
+      <Text
+        mv={8}
+        flex-row
+        font-sz={14}
+        tKey="welcome:coinlist.form.addHolding.type"
+      />
 
       <Select
         name="type"

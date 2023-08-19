@@ -1,5 +1,6 @@
 {
   "title": "User account details",
+  "navTitle": "Profile",
   "dialog_deleteAccount_title": "Do you really want to delete your account?",
   "dialog_deleteAccount_message": "Once this account is deleted it is irreversable. You will lose all your data.",
   "button_deleteAccount_text": "Delete Account",

@@ -1,10 +1,4 @@
-import React, {
-  ReactElement,
-  FC,
-  useState,
-  MouseEventHandler,
-  useCallback,
-} from 'react';
+import React, {useState, MouseEventHandler, useCallback} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {useTranslation} from 'react-i18next';
 import {useMutation} from '@apollo/client';
@@ -21,14 +15,13 @@ import {
   Body,
   Footer,
   Link,
-  Radios,
   Form,
   Navigation,
 } from '../../components';
 import {useAuthentication} from '../../providers/AuthenticationProvider';
 import {WHITE} from '../../constants/colors';
 
-const Register: FC = (): ReactElement => {
+const Register = () => {
   const navigate = useNavigate();
   const {t} = useTranslation();
   const [message, setMessage] = useState<{text: string; type: string} | null>(
