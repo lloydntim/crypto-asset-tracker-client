@@ -1,22 +1,12 @@
 import React from 'react';
-import {
-  Button,
-  Input,
-  Message,
-  Headline,
-  Header,
-  Body,
-  Footer,
-  Form,
-  Link,
-  Navigation,
-} from '../../components';
-import {Page} from '../../layouts';
+import {Button, Input, Message, Form, Link} from '../../components';
+import {Page, PageContent} from '../../layouts';
 import {useForm} from '../../hooks';
 import {useMutation} from '@apollo/client';
 import {CREATE_PASSWORD_TOKEN} from '../../graphql';
 import {WHITE} from '../../constants/colors';
 import {displayResponseErrorMessage} from '../../helpers/displayResponseErrorMessage';
+import {FORM_WIDTH} from '../../constants';
 
 const Forgot = () => {
   const {
@@ -29,14 +19,8 @@ const Forgot = () => {
 
   return (
     <Page name="forgot">
-      <Header>
-        <Navigation />
-      </Header>
-
-      <Body>
-        <Headline tKey="forgot:title" />
-
-        <Form mv={32}>
+      <PageContent titleTKey="forgot:title" bodyWidth={FORM_WIDTH}>
+        <Form>
           <Input
             name="username"
             type="email"
@@ -68,9 +52,7 @@ const Forgot = () => {
         {data && (
           <Message type="success">{data.createPasswordToken.message}</Message>
         )}
-      </Body>
-
-      <Footer startYear={2023} companyName="LNCD" />
+      </PageContent>
     </Page>
   );
 };

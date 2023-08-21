@@ -1,13 +1,6 @@
 import React, {useMemo, useState} from 'react';
-import {
-  Body,
-  Headline,
-  Footer,
-  Message,
-  Navigation,
-  Header,
-} from '../../components';
-import {Page} from '../../layouts';
+import {Message} from '../../components';
+import {Page, PageContent} from '../../layouts';
 import CoinList from './CoinList/CoinList';
 import {useMutation, useQuery} from '@apollo/client';
 import {
@@ -167,13 +160,7 @@ const Welcome = () => {
 
   return (
     <Page name="welcome">
-      <Header>
-        <Navigation />
-      </Header>
-
-      <Body>
-        <Headline tKey="welcome:title" />
-
+      <PageContent isAuthorised titleTKey="welcome:title">
         {(getCoinsLoading ||
           getSymbolsLoading ||
           coinListingLoading ||
@@ -213,8 +200,7 @@ const Welcome = () => {
           selectedCoin={selectedCoin}
           setSelectedCoin={setSelectedCoin}
         />
-      </Body>
-      <Footer startYear={2023} companyName="LNCD" />
+      </PageContent>
     </Page>
   );
 };

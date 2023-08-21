@@ -82,7 +82,9 @@ describe('Tabs', () => {
     await user.click(tab2);
 
     const firstTabContentSection = screen.queryByText('Content for tab 1');
-    const secondTabContentSection = screen.getByText('Content for tab 2');
+    const secondTabContentSection = await screen.findByText(
+      'Content for tab 2',
+    );
 
     expect(firstTabContentSection).not.toBeInTheDocument();
     expect(secondTabContentSection).toBeInTheDocument();

@@ -108,6 +108,7 @@ export const GET_COIN_LISTINGS = gql`
     }
   }
 `;
+
 export const GET_COINS = gql`
   query GetCoins($creatorId: ID) {
     getCoins(creatorId: $creatorId) {

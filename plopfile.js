@@ -7,27 +7,35 @@ export default (plop) => {
         name: 'name',
         message: 'What is your component name?',
       },
+      {
+        name: 'component_type',
+        type: 'list',
+        message: 'Choose your component:',
+        choices: ['Layout', 'Component'],
+      },
     ],
     actions: [
       {
         type: 'add',
-        path: 'src/components/{{pascalCase name}}/{{pascalCase name}}.tsx',
-        templateFile: 'plop-templates/Component/Component.tsx.hbs',
+        path: 'src/{{lowerCase component_type}}s/{{pascalCase name}}/{{pascalCase name}}.tsx',
+        templateFile:
+          'plop-templates/{{component_type}}/{{component_type}}.tsx.hbs',
       },
       {
         type: 'add',
-        path: 'src/components/{{pascalCase name}}/{{pascalCase name}}.spec.tsx',
-        templateFile: 'plop-templates/Component/Component.spec.tsx.hbs',
+        path: 'src/{{lowerCase component_type}}s/{{pascalCase name}}/{{pascalCase name}}.spec.tsx',
+        templateFile:
+          'plop-templates/{{component_type}}/{{component_type}}.spec.tsx.hbs',
       },
       {
         type: 'append',
-        path: 'src/components/index.tsx',
+        path: 'src/{{lowerCase component_type}}s/index.tsx',
         pattern: `/* PLOP_INJECT_IMPORT */`,
         template: `import {{pascalCase name}} from './{{pascalCase name}}/{{pascalCase name}}';`,
       },
       {
         type: 'append',
-        path: 'src/components/index.tsx',
+        path: 'src/{{lowerCase component_type}}s/index.tsx',
         pattern: `/* PLOP_INJECT_EXPORT */`,
         template: `{{pascalCase name}},`,
       },

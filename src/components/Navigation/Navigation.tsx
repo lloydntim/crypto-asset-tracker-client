@@ -28,13 +28,18 @@ enum Pages {
 }
 
 const pages = Object.values(Object.values(Pages));
+const authenticatedPages = [Pages.ABOUT];
 const NavigationSt = createStylesProps('nav');
 
 const Navigation = ({title = '', titleTKey = '', ...rest}: NavigationProps) => {
   const navigate = useNavigate();
-  const {setLoginToken} = useAuthentication();
+  const {setLoginToken, currentUser} = useAuthentication();
   const [isMenuVisible, setIsMenuVisible] = useState(false);
   const [isDialogVisible, setIsDialogVisible] = useState(false);
+
+  const authenticatedLinks = currentUser()?.id
+    ? pages
+    : pages.filter((page) => authenticatedPages.includes(page));
 
   return (
     <NavigationSt
@@ -53,7 +58,7 @@ const Navigation = ({title = '', titleTKey = '', ...rest}: NavigationProps) => {
         <List<string>
           p={0}
           mv={20}
-          data={pages}
+          data={authenticatedLinks}
           renderItem={({item}: {item: string}) => {
             return (
               <Link
@@ -81,7 +86,7 @@ const Navigation = ({title = '', titleTKey = '', ...rest}: NavigationProps) => {
           navigate('/', {replace: true});
         }}
       >
-        <Text tKey="common:nav.dialog.title" />
+        <Text tKey="common:nav.dialog.text" />
       </Dialog>
     </NavigationSt>
   );
