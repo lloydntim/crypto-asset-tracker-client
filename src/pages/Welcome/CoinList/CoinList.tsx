@@ -12,19 +12,19 @@ import {
   Input,
   List,
   Select,
+  Span,
   Text,
 } from '../../../components';
 import Table, {TableCell, TableRow} from '../../../components/Table';
 import {
-  CoinData,
+  CoinListItem,
   CoinListProps,
-  HoldingsListData,
+  HOLDING_TYPES_T_KEY_PATH,
   coinListDialogMapper,
   currenciesOptions,
   currencyFormatMapper,
   formatAmount,
   newCoinSelectOptions,
-  processCoinData,
   types,
 } from './CoinListHelper';
 import {formatToCurrency, slugify} from '../../../utils';
@@ -80,7 +80,7 @@ const CoinList = (props: CoinListProps) => {
     formFieldChangeHandler,
   } = useForm('newCoin*');
 
-  const {portfolioTotal, coins: testCoins = []} = processCoinData(data);
+  const {balance, coins: coinList} = data;
   const {location} = currencyFormatMapper[convert];
 
   return (
@@ -127,7 +127,7 @@ const CoinList = (props: CoinListProps) => {
           <Text
             tKey="welcome:coinlist.text.portfolioTotal"
             tOptions={{
-              total: formatToCurrency(portfolioTotal, convert, location),
+              total: formatToCurrency(balance, convert, location),
             }}
           />
         </Container>
@@ -179,20 +179,25 @@ const CoinList = (props: CoinListProps) => {
           </Container>
         )}
 
-        <List<CoinData>
+        <List<CoinListItem>
           lst-stl="none"
           mv={8}
           p={0}
-          data={testCoins}
+          data={coinList}
           renderItem={({
-            item: {id, coinId, name, assets, price, amount, value},
+            item: {
+              id,
+              coinId,
+              name,
+              symbol,
+              price,
+              amount,
+              value,
+              total,
+              storageOptions,
+            },
             index,
           }) => {
-            const {storageTypes} = assets;
-            const holdingsList: HoldingsListData[] = Object.values(
-              storageTypes ?? {},
-            );
-
             return (
               <Container>
                 {/* ListSection */}
@@ -208,7 +213,7 @@ const CoinList = (props: CoinListProps) => {
                   <ClickableArea
                     onClick={() => {
                       setSelectedCoin(index);
-                      onChange();
+                      if (onChange) onChange();
                     }}
                   >
                     <Table>
@@ -256,26 +261,29 @@ const CoinList = (props: CoinListProps) => {
                     pv={20}
                     ph={24}
                     br={8}
-                    hide={!editMode && holdingsList.length === 0}
+                    hide={!editMode && storageOptions.length === 0}
                   >
-                    {holdingsList.map(
-                      (
-                        {holdings: items, total, name: title},
-                        keyIndex: number,
-                      ) => {
+                    {storageOptions.map(
+                      ({holdings: items, total, type}, keyIndex: number) => {
                         return (
                           <Box key={keyIndex} mb={12} className="holding">
                             <Headline m={0} p={0} pb={12} size="h5">
-                              {title} Total: {formatAmount(total, location)}
+                              <Span
+                                tKey={`${HOLDING_TYPES_T_KEY_PATH}.${type}`}
+                              />
+                              <Span
+                                tKey="welcome:coinlist.text.totalValue"
+                                tOptions={{
+                                  total: formatAmount(total, location),
+                                }}
+                              />
                             </Headline>
 
                             {items.map(
                               (
-                                {id: holdingId, name, amount},
+                                {id: holdingId, value, name, amount},
                                 keyIndex: number,
                               ) => {
-                                const value = price * amount;
-
                                 return (
                                   <Table key={keyIndex} w="100%">
                                     <Box

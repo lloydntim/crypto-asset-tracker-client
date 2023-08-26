@@ -5,7 +5,8 @@
   "coinlist": {
     "text": {
       "myPortfolio": "My Portfolio",
-      "portfolioTotal": "Total: {{total}}"
+      "portfolioTotal": "Total: {{total}}",
+      "totalValue": "Total Value: {{total}}"
     },
     "dialog": {
       "removeCoin": {

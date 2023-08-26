@@ -15,7 +15,7 @@ const AuthenticationRoute: FC<AunthenticationRouteProps> = ({
   const state = location.state as {from: string};
   const path = state?.from || '/';
 
-  return currentUser() ? component : <Navigate to={path} replace />;
+  return currentUser().id ? component : <Navigate to={path} replace />;
 };
 
 export default AuthenticationRoute;

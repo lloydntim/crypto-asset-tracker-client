@@ -98,30 +98,27 @@ export const VERIFY = gql`
   }
 `;
 
-export const GET_COIN_LISTINGS = gql`
-  query GetCoinListings($symbols: String, $convert: String) {
-    getCoinListings(symbols: $symbols, convert: $convert) {
-      price
-      id
-      name
-      symbol
-    }
-  }
-`;
-
-export const GET_COINS = gql`
-  query GetCoins($creatorId: ID) {
-    getCoins(creatorId: $creatorId) {
-      symbol
-      id
-      creatorId
-      holdings {
-        amount
+export const GET_COIN_LIST = gql`
+  query GetCoinList($creatorId: ID, $convert: String) {
+    getCoinList(creatorId: $creatorId, convert: $convert) {
+      coins {
         id
-        type
-        holdingId
+        coinId
         name
+        symbol
+        total
+        value
+        storageOptions {
+          type
+          total
+          holdings {
+            amount
+            name
+            value
+          }
+        }
       }
+      balance
     }
   }
 `;

@@ -8,7 +8,7 @@ export const displayResponseErrorMessage = (
 ) => {
   if (!error) return null;
 
-  if (error?.message.includes('fetch'))
+  if (error?.message.includes('fetch') || error?.message.includes('Response'))
     return <Message type="error" mv={16} tKey={customMessageTKey} />;
 
   return (
