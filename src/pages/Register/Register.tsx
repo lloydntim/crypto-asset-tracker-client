@@ -3,7 +3,7 @@ import {useNavigate} from 'react-router-dom';
 import {useTranslation} from 'react-i18next';
 import {useMutation} from '@apollo/client';
 
-import {REGISTER} from '../../graphql';
+import {REGISTER} from '../../graphql/operations';
 import {useForm} from '../../hooks';
 import {Page, PageContent} from '../../layouts';
 import {Button, Input, Message, Link, Form} from '../../components';

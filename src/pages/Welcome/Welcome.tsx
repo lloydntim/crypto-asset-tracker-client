@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {Message} from '../../components';
 import {Page, PageContent} from '../../layouts';
 import CoinList from './CoinList/CoinList';
-import {ApolloCache, useMutation, useQuery} from '@apollo/client';
+import {InMemoryCache, useMutation, useQuery} from '@apollo/client';
 import {
   ADD_COIN,
   ADD_COIN_HOLDING,
@@ -11,7 +11,7 @@ import {
   REMOVE_COIN,
   REMOVE_COIN_HOLDING,
   UPDATE_COIN_HOLDING,
-} from '../../graphql';
+} from '../../graphql/operations';
 import {useAuthentication} from '../../providers/AuthenticationProvider';
 import {currencies} from './CoinList/CoinListHelper';
 import {displayResponseErrorMessage} from '../../helpers/displayResponseErrorMessage';
@@ -28,6 +28,19 @@ const Welcome = () => {
     query: GET_COIN_LIST,
     variables: getCoinListQueryVariables,
   };
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const updateGetCoinListQueryCache = (cache: InMemoryCache, {data}: any) => {
+    if (!data) return;
+
+    const existingCoins = cache.readQuery(cacheQueryParams);
+
+    cache.writeQuery({
+      ...cacheQueryParams,
+      data: {
+        getCoinList: [existingCoins],
+      },
+    });
+  };
 
   const {
     data,
@@ -35,6 +48,7 @@ const Welcome = () => {
     loading: getCoinListQueryLoading,
     error: getCoinListQueryError,
   } = useQuery(GET_COIN_LIST, {
+    errorPolicy: 'all',
     variables: getCoinListQueryVariables,
   });
 
@@ -43,7 +57,7 @@ const Welcome = () => {
     loading: getSymbolsLoading,
     error: getSymbolsError,
   } = useQuery(GET_SYMBOLS, {
-    fetchPolicy: 'cache-first',
+    // fetchPolicy: 'cache-first',
     skip: getCoinListQueryLoading || !data?.getCoinList,
   });
 
@@ -51,35 +65,13 @@ const Welcome = () => {
     ADD_COIN,
     {
       errorPolicy: 'all',
-      update: (cache, {data}) => {
-        if (!data || !creatorId) return;
-
-        const existingCoins = cache.readQuery(cacheQueryParams);
-
-        cache.writeQuery({
-          ...cacheQueryParams,
-          data: {
-            getCoinList: [existingCoins],
-          },
-        });
-      },
+      update: updateGetCoinListQueryCache,
     },
   );
 
   const [removeCoin, {loading: removeCoinLoading, error: removeCoinError}] =
     useMutation(REMOVE_COIN, {
-      update: (cache, {data}) => {
-        if (!data || !creatorId) return;
-
-        const existingCoins = cache.readQuery(cacheQueryParams);
-
-        cache.writeQuery({
-          ...cacheQueryParams,
-          data: {
-            getCoinList: [existingCoins],
-          },
-        });
-      },
+      update: updateGetCoinListQueryCache,
     });
 
   const [
@@ -90,7 +82,10 @@ const Welcome = () => {
   const [
     updateCoinHolding,
     {loading: updateCoinHoldingLoading, error: updateCoinHoldingError},
-  ] = useMutation(UPDATE_COIN_HOLDING, {onCompleted: () => setEditMode(true)});
+  ] = useMutation(UPDATE_COIN_HOLDING, {
+    update: updateGetCoinListQueryCache,
+    onCompleted: () => setEditMode(true),
+  });
   const [
     removeCoinHolding,
     {loading: removeCoinHoldingLoading, error: removeCoinHoldingError},

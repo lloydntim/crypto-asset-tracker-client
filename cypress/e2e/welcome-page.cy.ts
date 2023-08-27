@@ -22,7 +22,6 @@ const addHoldings = (
   parent: string,
   holdings: {type: string; amount: number; name: string}[],
 ) => {
-  //
   cy.get('[role=listitem]').contains(parent).click();
 
   holdings.forEach(({name, amount, type}) => {

@@ -191,9 +191,8 @@ const CoinList = (props: CoinListProps) => {
               name,
               symbol,
               price,
-              amount,
               value,
-              total,
+              total: coinTotal,
               storageOptions,
             },
             index,
@@ -232,7 +231,7 @@ const CoinList = (props: CoinListProps) => {
                           {formatToCurrency(price, convert, location)}
                         </TableCell>
                         <TableCell $valign-m $col-w={160} $txt-align-r>
-                          {formatAmount(amount, location)}
+                          {formatAmount(coinTotal, location)}
                         </TableCell>
                         <TableCell $valign-m ph={12} $col-w={120} $txt-align-r>
                           {formatToCurrency(value, convert, location)}
@@ -315,6 +314,14 @@ const CoinList = (props: CoinListProps) => {
                                             location={location}
                                             value={name}
                                             onBlur={({target: {value}}) => {
+                                              console.log(
+                                                'holdingId',
+                                                holdingId,
+                                              );
+                                              console.log(
+                                                'holdingId',
+                                                holdingId,
+                                              );
                                               onUpdateCoinHolding(holdingId, {
                                                 name: value,
                                               });

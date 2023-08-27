@@ -37,12 +37,13 @@ const PageContent = ({
         flex-col
         align-m
         flex="1"
+        mb={60}
         {...(bodyWidth && {w: bodyWidth, 'align-self-c': true})}
       >
         {!isAuthorised && <Logo flex-row align-c w="100%" mv={60} />}
 
         {(title || titleTKey) && (
-          <Title mv={24} align-c align-self-l>
+          <Title mv={24} align-c align-self-l tKey={titleTKey}>
             {title}
           </Title>
         )}

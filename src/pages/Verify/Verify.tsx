@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import {Page, PageContent} from '../../layouts';
 import {Message} from '../../components';
 import {useMutation} from '@apollo/client';
-import {VERIFY} from '../../graphql';
+import {VERIFY} from '../../graphql/operations';
 import {useAuthentication} from '../../providers/AuthenticationProvider';
 import {useNavigate, useParams} from 'react-router-dom';
 import {displayResponseErrorMessage} from '../../helpers/displayResponseErrorMessage';
