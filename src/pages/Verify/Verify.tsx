@@ -24,7 +24,6 @@ const Verify = () => {
 
   useEffect(() => {
     verify({variables: {token}}).catch((error) => {
-      navigate('/');
       console.log(error);
     });
   }, [token, verify, navigate]);

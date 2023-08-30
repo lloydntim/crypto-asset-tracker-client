@@ -37,7 +37,7 @@ const PageContent = ({
         flex-col
         align-m
         flex="1"
-        mb={60}
+        h="auto"
         {...(bodyWidth && {w: bodyWidth, 'align-self-c': true})}
       >
         {!isAuthorised && <Logo flex-row align-c w="100%" mv={60} />}

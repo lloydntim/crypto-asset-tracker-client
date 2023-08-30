@@ -20,9 +20,7 @@ const AuthenticationContext = createContext<AuthenticationContextProps>({
   setLoginToken: () => null,
 });
 
-const AuthenticationProvider: FC<AuthenticationProviderProps> = ({
-  children,
-}: AuthenticationProviderProps) => (
+const AuthenticationProvider = ({children}: AuthenticationProviderProps) => (
   <AuthenticationContext.Provider
     value={{
       currentUser: () => {
@@ -30,7 +28,7 @@ const AuthenticationProvider: FC<AuthenticationProviderProps> = ({
 
         return token ? jwtDecode(token) : {};
       },
-      setLoginToken: (token) => localStorage.setItem('token', token),
+      setLoginToken: (token: string) => localStorage.setItem('token', token),
     }}
   >
     {children}

@@ -6,12 +6,19 @@ enum Currencies {
   EUR = 'EUR',
 }
 
-enum AddNewCoinOptions {
+export type Currency = `${Currencies}`;
+
+export type CurrencyOption = {
+  text: Currencies;
+  value: Currencies;
+};
+
+export enum AddNewCoinOptions {
   PRESET = 'preset',
   OTHER = 'other',
 }
 
-type StorageOptionType = `${StorageOptionTypes}`;
+export type StorageOptionType = `${StorageOptionTypes}`;
 
 export interface Holding {
   id: string;
@@ -40,7 +47,7 @@ enum StorageOptionTypes {
   STAKING = 'staking',
 }
 
-interface StorageOption {
+export interface StorageOption {
   type: StorageOptionType;
   total: number;
   holdings: Holding[];
@@ -72,8 +79,7 @@ export interface CoinListProps {
     holding: {
       name: string;
       amount: number;
-      type: string;
-      currency: string;
+      type: StorageOptionType;
     },
   ) => void;
   onUpdateCoinHolding: (
@@ -86,7 +92,7 @@ export interface CoinListProps {
   selectedCoin: number | undefined;
   setSelectedCoin: (item: number) => void;
   editMode: boolean;
-  convert: string;
+  convert: Currency;
   symbols: {name: string; id: string}[];
 }
 

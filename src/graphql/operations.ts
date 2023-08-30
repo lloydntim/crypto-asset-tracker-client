@@ -135,7 +135,6 @@ export const UPDATE_COIN_HOLDING = gql`
       holdings {
         name
         id
-        currency
         amount
       }
     }

@@ -38,7 +38,7 @@ describe('Change Email Scenario', () => {
         cy.visit(link).wait(500);
       });
 
-    cy.reload();
+    // cy.reload();
     cy.contains('Verified');
 
     cy.dataTestId('icon-button-edit').click();

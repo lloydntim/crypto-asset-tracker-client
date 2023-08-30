@@ -1,49 +1,31 @@
 import React, {useState} from 'react';
-import styled from 'styled-components';
 import {
-  Box,
-  Button,
   Container,
-  EntryField,
   Form,
-  Headline,
   IconButton,
-  Image,
   Input,
   List,
   Select,
-  Span,
   Text,
 } from '../../../components';
-import Table, {TableCell, TableRow} from '../../../components/Table';
 import {
+  AddNewCoinOptions,
   CoinListItem,
   CoinListProps,
-  HOLDING_TYPES_T_KEY_PATH,
+  StorageOptionType,
   coinListDialogMapper,
   currenciesOptions,
   currencyFormatMapper,
-  formatAmount,
   newCoinSelectOptions,
   types,
 } from './CoinListHelper';
-import {formatToCurrency, slugify} from '../../../utils';
-import CoinListHoldingForm from './CoinListHoldingForm';
-import {
-  BLACK,
-  DARKGREY,
-  GRAPE_EXTRA_DARK,
-  GREY,
-  LIGHTGREY,
-  WHITE,
-} from '../../../constants/colors';
+import {slugify} from '../../../utils';
 import {useForm} from '../../../hooks';
 import {Dialog} from '../../../layouts';
-
-const ClickableArea = styled.button`
-  border: none;
-  background-color: transparent;
-`;
+import CoinListItemSection from './CoinListItemSection';
+import CoinListStorageOptions from './CoinListStorageOptions';
+import CoinListHolding from './CoinListHolding';
+import CoinListTitleSection from './CoinListTitleSection';
 
 const CoinList = (props: CoinListProps) => {
   const {
@@ -63,7 +45,7 @@ const CoinList = (props: CoinListProps) => {
     symbols,
   } = props;
   const [holding, setHolding] = useState({
-    type: types[0].value,
+    type: types[0].value as StorageOptionType,
     name: '',
     amount: '',
   });
@@ -102,35 +84,17 @@ const CoinList = (props: CoinListProps) => {
         </Dialog>
       )}
       <Container mv={32} align-c>
-        <Box flex-row mv={12}>
-          <Button
-            mr={12}
-            color={GRAPE_EXTRA_DARK}
-            onClick={() => {
-              onToggleEditMode(!editMode);
-            }}
-            tKey={`common:button.${editMode ? 'save' : 'edit'}`}
-          />
-          <Select options={currenciesOptions} onChange={onChangeCurrency} />
-        </Box>
-
-        <Container
-          bgcolor={WHITE}
-          color={BLACK}
-          br={8}
-          p={20}
-          mv={4}
-          flex-h
-          spc-btw
-        >
-          <Text strong tKey="welcome:coinlist.text.myPortfolio" />
-          <Text
-            tKey="welcome:coinlist.text.portfolioTotal"
-            tOptions={{
-              total: formatToCurrency(balance, convert, location),
-            }}
-          />
-        </Container>
+        <CoinListTitleSection
+          {...{
+            balance,
+            editMode,
+            convert,
+            location,
+            onToggleEditMode,
+            onChangeCurrency,
+            currenciesOptions,
+          }}
+        />
 
         {editMode && (
           <Container flex-row align-m>
@@ -147,7 +111,8 @@ const CoinList = (props: CoinListProps) => {
                 value={newCoin.value}
                 required={newCoin.required}
                 onChange={formFieldChangeHandler}
-                {...(newCoinSelectOption === 'preset' && {
+                {...(newCoinSelectOption ===
+                  (AddNewCoinOptions.PRESET as string) && {
                   dataList: symbols?.map(({id: value, name: text}) => ({
                     text,
                     value,
@@ -164,10 +129,10 @@ const CoinList = (props: CoinListProps) => {
                   if (typeof newCoin.value !== 'undefined' && symbols) {
                     const [symbol]: {id: string; name: string}[] =
                       symbols.filter(({name}) => name === newCoin.value);
-
                     const addCoinArgs =
-                      newCoinSelectOption === 'other'
-                        ? {symbol: symbol.id}
+                      newCoinSelectOption ===
+                      (AddNewCoinOptions.PRESET as string)
+                        ? {symbol: symbol?.id}
                         : {slug: slugify(newCoin.value)};
 
                     onAddCoin(addCoinArgs);
@@ -185,231 +150,95 @@ const CoinList = (props: CoinListProps) => {
           p={0}
           data={coinList}
           renderItem={({
-            item: {
-              id,
-              coinId,
-              name,
-              symbol,
-              price,
-              value,
-              total: coinTotal,
-              storageOptions,
-            },
+            item: {id, coinId, name, price, value, total, storageOptions},
             index,
           }) => {
             return (
-              <Container>
-                {/* ListSection */}
-                <Box
-                  className="coin-list-item"
-                  flex-row
-                  bgcolor={WHITE}
-                  pv={16}
-                  ph={12}
-                  br={8}
-                  mv={4}
-                >
-                  <ClickableArea
-                    onClick={() => {
-                      setSelectedCoin(index);
-                      if (onChange) onChange();
-                    }}
-                  >
-                    <Table>
-                      <TableRow>
-                        <TableCell $valign-m $col-w={40}>
-                          <Image
-                            flex-row
-                            sz={24}
-                            src={`https://s2.coinmarketcap.com/static/img/coins/64x64/${coinId}.png`}
-                          />
-                        </TableCell>
-                        <TableCell $valign-m $col-w={140} $txt-align-l>
-                          {name}
-                        </TableCell>
-                        <TableCell $valign-m $col-w={120} $txt-align-r>
-                          {formatToCurrency(price, convert, location)}
-                        </TableCell>
-                        <TableCell $valign-m $col-w={160} $txt-align-r>
-                          {formatAmount(coinTotal, location)}
-                        </TableCell>
-                        <TableCell $valign-m ph={12} $col-w={120} $txt-align-r>
-                          {formatToCurrency(value, convert, location)}
-                        </TableCell>
-                      </TableRow>
-                    </Table>
-                  </ClickableArea>
-                  {editMode && (
-                    <IconButton
-                      mh={8}
-                      type="delete"
-                      iconSize={16}
-                      onClick={() => {
-                        setDialog('removeCoin');
-                        setRemovedItemId(id);
-                      }}
-                    />
-                  )}
-                </Box>
+              <>
+                <CoinListItemSection
+                  {...{
+                    name,
+                    coinId,
+                    editMode,
+                    value,
+                    total,
+                    location,
+                    convert,
+                    price,
+                  }}
+                  onClick={() => {
+                    setSelectedCoin(index);
+                    if (onChange) onChange();
+                  }}
+                  deleteButtonClickHandler={() => {
+                    setDialog('removeCoin');
+                    setRemovedItemId(id);
+                  }}
+                />
 
-                {/*  ListSubSection*/}
                 {selectedCoin === index && (
-                  <Box
-                    bgcolor={LIGHTGREY}
-                    color={DARKGREY}
-                    pv={20}
-                    ph={24}
-                    br={8}
-                    hide={!editMode && storageOptions.length === 0}
-                  >
-                    {storageOptions.map(
-                      ({holdings: items, total, type}, keyIndex: number) => {
-                        return (
-                          <Box key={keyIndex} mb={12} className="holding">
-                            <Headline m={0} p={0} pb={12} size="h5">
-                              <Span
-                                tKey={`${HOLDING_TYPES_T_KEY_PATH}.${type}`}
-                              />
-                              <Span
-                                tKey="welcome:coinlist.text.totalValue"
-                                tOptions={{
-                                  total: formatAmount(total, location),
-                                }}
-                              />
-                            </Headline>
-
-                            {items.map(
-                              (
-                                {id: holdingId, value, name, amount},
-                                keyIndex: number,
-                              ) => {
-                                return (
-                                  <Table key={keyIndex} w="100%">
-                                    <Box
-                                      flex-row
-                                      br={8}
-                                      ph={8}
-                                      align-m
-                                      bgcolor="#d6cfe3"
-                                      mv={2}
-                                    >
-                                      <Box
-                                        pl={8}
-                                        br-tl={8}
-                                        br-bl={8}
-                                        w={44}
-                                        pv={4}
-                                        $valign-m
-                                      >
-                                        <Box
-                                          bgcolor={GREY}
-                                          sz={24}
-                                          br={12}
-                                          flex-row
-                                        />
-                                      </Box>
-                                      <Box flex="1" $txt-alignn-l>
-                                        {editMode ? (
-                                          <EntryField
-                                            location={location}
-                                            value={name}
-                                            onBlur={({target: {value}}) => {
-                                              console.log(
-                                                'holdingId',
-                                                holdingId,
-                                              );
-                                              console.log(
-                                                'holdingId',
-                                                holdingId,
-                                              );
-                                              onUpdateCoinHolding(holdingId, {
-                                                name: value,
-                                              });
-                                            }}
-                                          />
-                                        ) : (
-                                          <Text $valign-m m={0} font-sz={14}>
-                                            {name}
-                                          </Text>
-                                        )}
-                                      </Box>
-                                      <Box flex-row w={162} align-r ph={12}>
-                                        {editMode ? (
-                                          <>
-                                            <EntryField
-                                              location={location}
-                                              value={amount.toString()}
-                                              onBlur={({target: {value}}) => {
-                                                setSelectedCoin(index);
-                                                onUpdateCoinHolding(holdingId, {
-                                                  amount: parseFloat(value),
-                                                });
-                                              }}
-                                            />
-                                          </>
-                                        ) : (
-                                          <Text $valign-m font-sz={14}>
-                                            {formatAmount(amount, location)}
-                                          </Text>
-                                        )}
-                                      </Box>
-                                      <Box
-                                        w={100}
-                                        flex-row
-                                        align-r
-                                        br-tr={8}
-                                        br-br={8}
-                                        pr={8}
-                                      >
-                                        <Text $valign-m font-sz={14}>
-                                          {formatToCurrency(
-                                            value,
-                                            convert,
-                                            location,
-                                          )}
-                                        </Text>
-                                      </Box>
-                                      {editMode && (
-                                        <IconButton
-                                          mh={8}
-                                          type="delete"
-                                          iconSize={18}
-                                          onClick={() => {
-                                            setRemovedItemId(holdingId);
-                                            setDialog('removeCoinHolding');
-                                          }}
-                                        />
-                                      )}
-                                    </Box>
-                                  </Table>
-                                );
-                              },
-                            )}
-                          </Box>
-                        );
-                      },
-                    )}
-                    {editMode && (
-                      <CoinListHoldingForm
-                        holding={holding}
-                        submitText="add"
-                        onChange={({field, value}) => {
-                          setHolding({...holding, [field]: value});
-                        }}
-                        onSubmit={() => {
-                          onAddCoinHolding(id, {
-                            amount: parseFloat(holding.amount),
-                            type: holding.type,
-                            name: holding.name,
-                            currency: name,
-                          });
-                          setHolding({...holding, amount: '', name: ''});
-                        }}
-                      />
-                    )}
-                  </Box>
+                  <CoinListStorageOptions
+                    editMode={editMode}
+                    location={location}
+                    options={storageOptions}
+                    holdingValue={holding}
+                    onChangeHoldingValue={({field, value}) => {
+                      setHolding({...holding, [field]: value});
+                    }}
+                    onSubmitOptionHolding={() => {
+                      onAddCoinHolding(id, {
+                        amount: parseFloat(holding.amount),
+                        type: holding.type,
+                        name: holding.name,
+                      });
+                      setHolding({...holding, amount: '', name: ''});
+                    }}
+                    renderOption={({holdings}, index) => {
+                      return (
+                        <>
+                          {holdings.map(
+                            (
+                              {id: holdingId, value, name, amount},
+                              keyIndex: number,
+                            ) => {
+                              return (
+                                <CoinListHolding
+                                  key={keyIndex}
+                                  updateCoinHoldingHandler={({
+                                    key,
+                                    value: holdingValue,
+                                  }) => {
+                                    onUpdateCoinHolding(holdingId, {
+                                      [key]:
+                                        key === 'amount'
+                                          ? parseFloat(holdingValue)
+                                          : holdingValue,
+                                    });
+                                  }}
+                                  removeCoinHoldingHandler={() => {
+                                    setRemovedItemId(holdingId);
+                                    setDialog('removeCoinHolding');
+                                  }}
+                                  {...{
+                                    id,
+                                    value,
+                                    name,
+                                    amount,
+                                    location,
+                                    editMode,
+                                    convert,
+                                    index,
+                                  }}
+                                />
+                              );
+                            },
+                          )}
+                        </>
+                      );
+                    }}
+                  />
                 )}
-              </Container>
+              </>
             );
           }}
         />
