@@ -7,7 +7,7 @@ import commonEn from './en/common.json';
 import homeEn from './en/home.json';
 import loginEn from './en/login.json';
 import registerEn from './en/register.json';
-import welcomeEn from './en/welcome.json';
+import portfolioEn from './en/portfolio.json';
 import profileEn from './en/profile.json';
 import resetEn from './en/reset.json';
 import verifyEn from './en/verify.json';
@@ -18,7 +18,7 @@ import commonDe from './de/common.json';
 import homeDe from './de/home.json';
 import loginDe from './de/login.json';
 import registerDe from './de/register.json';
-import welcomeDe from './de/welcome.json';
+import portfolioDe from './de/portfolio.json';
 import profileDe from './de/profile.json';
 import resetDe from './de/reset.json';
 import verifyDe from './de/verify.json';
@@ -31,7 +31,7 @@ export const resources = {
   en: {
     common: 'common',
     home: 'home',
-    welcome: 'welcome',
+    portfolio: 'portfolio',
     login: 'login',
     register: 'register',
     reset: 'reset',
@@ -51,7 +51,7 @@ i18n
         home: homeDe,
         login: loginEn,
         register: registerEn,
-        welcome: welcomeEn,
+        portfolio: portfolioEn,
         profile: profileEn,
         reset: resetEn,
         verify: verifyEn,
@@ -63,7 +63,7 @@ i18n
         home: homeDe,
         login: loginDe,
         register: registerDe,
-        welcome: welcomeDe,
+        portfolio: portfolioDe,
         profile: profileDe,
         reset: resetDe,
         verify: verifyDe,
@@ -91,7 +91,7 @@ i18n
     ns: [
       'common',
       'home',
-      'welcome',
+      'portfolio',
       'login',
       'profile',
       'reset',

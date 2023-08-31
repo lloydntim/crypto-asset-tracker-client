@@ -52,7 +52,7 @@ const coin = {
   },
 };
 
-describe('Welcome Page', () => {
+describe('Portfolio Page', () => {
   beforeEach(() => {
     // delete all coins related to user 02 from database if exists
     cy.deleteMany(

@@ -16,7 +16,7 @@ import {useAuthentication} from '../../providers/AuthenticationProvider';
 import {Currency, currencies} from './CoinList/CoinListHelper';
 import {displayResponseErrorMessage} from '../../helpers/displayResponseErrorMessage';
 
-const Welcome = () => {
+const Portfolio = () => {
   const {currentUser} = useAuthentication();
   const [currency, setCurrency] = useState<Currency>(currencies[0]);
   const [editMode, setEditMode] = useState(false);
@@ -171,8 +171,8 @@ const Welcome = () => {
     removeCoinHoldingError;
 
   return (
-    <Page name="welcome">
-      <PageContent isAuthorised titleTKey="welcome:title">
+    <Page name="portfolio">
+      <PageContent isAuthorised titleTKey="portfolio:title">
         {(getCoinListQueryLoading ||
           getSymbolsLoading ||
           removeCoinLoading ||
@@ -204,4 +204,4 @@ const Welcome = () => {
   );
 };
 
-export default Welcome;
+export default Portfolio;

@@ -39,7 +39,7 @@ const Reset = () => {
   ] = useMutation(UPDATE_PASSWORD_TOKEN, {
     onCompleted: (data) => {
       setLoginToken(data.updatePassword.token);
-      navigate('/welcome');
+      navigate('/portfolio');
     },
   });
   return (

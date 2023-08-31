@@ -31,7 +31,7 @@ const Register = () => {
   const [register, {loading}] = useMutation(REGISTER, {
     onCompleted: (data) => {
       setLoginToken(data.register.token);
-      navigate('/welcome');
+      navigate('/portfolio');
     },
     onError: (error) =>
       setMessage({

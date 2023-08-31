@@ -45,9 +45,9 @@ const CoinListTitleSection = ({
         $flex-h
         $spc-btw
       >
-        <Text strong tKey="welcome:coinlist.text.myPortfolio" />{' '}
+        <Text strong tKey="portfolio:coinlist.text.myPortfolio" />{' '}
         <Text
-          tKey="welcome:coinlist.text.portfolioTotal"
+          tKey="portfolio:coinlist.text.portfolioTotal"
           tOptions={{
             total: formatToCurrency(balance, convert, location),
           }}

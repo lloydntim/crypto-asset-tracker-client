@@ -24,11 +24,12 @@ interface NavigationProps extends StyledProps {
 enum Pages {
   PROFILE = 'Profile',
   ABOUT = 'About',
-  WELCOME = 'Welcome',
+  PORTFOLIO = 'Portfolio',
+  HOME = 'Home',
 }
 
 const pages = Object.values(Object.values(Pages));
-const authenticatedPages = [Pages.ABOUT];
+const authenticatedPageLinks = [Pages.PORTFOLIO, Pages.PROFILE];
 const NavigationSt = createStylesProps('nav');
 
 const Navigation = ({title = '', titleTKey = '', ...rest}: NavigationProps) => {
@@ -37,10 +38,12 @@ const Navigation = ({title = '', titleTKey = '', ...rest}: NavigationProps) => {
   const [isMenuVisible, setIsMenuVisible] = useState(false);
   const [isDialogVisible, setIsDialogVisible] = useState(false);
 
-  const authenticatedLinks = currentUser()?.id
-    ? pages
-    : pages.filter((page) => authenticatedPages.includes(page));
+  const pageLinkPaths = currentUser()?.id
+    ? authenticatedPageLinks
+    : pages.filter((page) => !authenticatedPageLinks.includes(page));
 
+  const getPageLinkPath = (path: Pages) =>
+    (path !== Pages.HOME ? path : '').toLowerCase();
   return (
     <NavigationSt
       data-testid="main-nav"
@@ -55,17 +58,17 @@ const Navigation = ({title = '', titleTKey = '', ...rest}: NavigationProps) => {
       >
         <LanguageSwitch />
 
-        <List<string>
+        <List<Pages>
           $p={0}
           $mv={20}
-          data={authenticatedLinks}
-          renderItem={({item}: {item: string}) => {
+          data={pageLinkPaths}
+          renderItem={({item: path}) => {
             return (
               <Link
                 $color={GRAPE_EXTRA_DARK}
                 $txt-deco="none"
-                to={`/${item}`}
-                tKey={`${item.toLowerCase()}:navTitle`}
+                to={`/${getPageLinkPath(path)}`}
+                tKey={`${path.toLowerCase()}:navTitle`}
               />
             );
           }}

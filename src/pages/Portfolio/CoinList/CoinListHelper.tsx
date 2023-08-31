@@ -97,10 +97,10 @@ export interface CoinListProps {
 }
 
 export const HOLDING_TYPES_T_KEY_PATH =
-  'welcome:coinlist.input.options.holdingTypes';
-const ADD_COIN_OPTIONS_T_KEY_PATH = 'welcome:coinlist.input.options.newCoin';
-const REMOVE_COIN_DIALOG_T_KEY_PATH = 'welcome:coinlist.dialog.removeCoin';
-const REMOVE_HOLDING_DIALOG_T_KEY_PATH = 'welcome:coinlist.dialog.removeCoin';
+  'portfolio:coinlist.input.options.holdingTypes';
+const ADD_COIN_OPTIONS_T_KEY_PATH = 'portfolio:coinlist.input.options.newCoin';
+const REMOVE_COIN_DIALOG_T_KEY_PATH = 'portfolio:coinlist.dialog.removeCoin';
+const REMOVE_HOLDING_DIALOG_T_KEY_PATH = 'portfolio:coinlist.dialog.removeCoin';
 
 export const currencies = Object.values(Currencies);
 export const holdingTypes = Object.values(StorageOptionTypes);

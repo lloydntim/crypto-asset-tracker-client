@@ -43,7 +43,7 @@ const CoinListStorageOptions = ({
             <Headline $m={0} $p={0} $pb={12} size="h5">
               <Span tKey={`${HOLDING_TYPES_T_KEY_PATH}.${type}`} />{' '}
               <Span
-                tKey="welcome:coinlist.text.totalValue"
+                tKey="portfolio:coinlist.text.totalValue"
                 tOptions={{
                   total: formatAmount(total, location),
                 }}

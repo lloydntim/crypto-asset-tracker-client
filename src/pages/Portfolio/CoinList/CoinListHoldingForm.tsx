@@ -25,7 +25,7 @@ const CoinListHoldingForm = ({
         $flex-row
         $mv={8}
         $font-sz={14}
-        tKey="welcome:coinlist.form.addHolding.name"
+        tKey="portfolio:coinlist.form.addHolding.name"
       />
 
       <InputField
@@ -38,7 +38,7 @@ const CoinListHoldingForm = ({
         $mv={8}
         $flex-row
         $font-sz={14}
-        tKey="welcome:coinlist.form.addHolding.amount"
+        tKey="portfolio:coinlist.form.addHolding.amount"
       />
       <InputField
         name="amount"
@@ -50,7 +50,7 @@ const CoinListHoldingForm = ({
         $mv={8}
         $flex-row
         $font-sz={14}
-        tKey="welcome:coinlist.form.addHolding.type"
+        tKey="portfolio:coinlist.form.addHolding.type"
       />
 
       <Select

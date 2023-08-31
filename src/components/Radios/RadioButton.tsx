@@ -1,10 +1,9 @@
 import React, {ChangeEventHandler} from 'react';
-import styled from 'styled-components';
 
 import {GRAPE_DARK, WHITE} from '../../constants/colors';
 import {StyledProps} from '../../helpers/createStyledProps';
 
-import Label from '../Label/Label';
+import RadioButtonConainter from '../Label/Label';
 import InputField from '../InputField/InputField';
 import Span from '../Span/Span';
 
@@ -18,8 +17,6 @@ interface RadioButtonProps extends StyledProps {
   onChange: ChangeEventHandler<HTMLInputElement>;
 }
 
-const RadioButtonConainterSt = styled(Label)``;
-
 const RadioButton = ({
   name,
   value,
@@ -29,7 +26,7 @@ const RadioButton = ({
   checked,
   onChange,
 }: RadioButtonProps) => (
-  <RadioButtonConainterSt
+  <RadioButtonConainter
     $color={labelColor}
     className="radio-button"
     htmlFor={name}
@@ -43,7 +40,7 @@ const RadioButton = ({
     $mr={8}
   >
     <InputField
-      $hidden
+      $hide
       id={name}
       value={value}
       className="radio-input"
@@ -61,7 +58,7 @@ const RadioButton = ({
     >
       {label}
     </Span>
-  </RadioButtonConainterSt>
+  </RadioButtonConainter>
 );
 
 export default RadioButton;
