@@ -1,26 +1,27 @@
 import {TOptions} from 'i18next';
-import React, {ReactNode, ComponentType, ReactElement} from 'react';
+import React, {ReactNode, ComponentType} from 'react';
 import {useTranslation} from 'react-i18next';
 export interface LocalisationProps {
   tKey?: string;
   tOptions?: TOptions;
-  children?: JSX.Element | JSX.Element[] | ReactNode;
+  children?: ReactNode;
 }
 
 type LocalisationHOC = <T extends LocalisationProps>(
-  Component: ComponentType<T>,
-) => (props: T) => ReactElement | null;
+  // any is used here to allow i18n translation key properties
+  // to be excluded from DOM element to avoid erros
+  Component: ComponentType<any>,
+) => (props: T) => ReactNode;
 
 /* eslint-disable  */
 const withLocalisation: LocalisationHOC = (Component) => {
-  return (props) => {
+  return ({tKey = '', tOptions = {}, children, ...rest}) => {
     const {t} = useTranslation();
-    const {tKey = '', tOptions = {}, children} = props;
     const content = tKey ? t(tKey, tOptions) : children;
 
     if (!content) return null;
 
-    return <Component {...props}>{content}</Component>;
+    return <Component {...rest}>{content}</Component>;
   };
 };
 

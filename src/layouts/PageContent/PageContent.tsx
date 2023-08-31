@@ -38,7 +38,7 @@ const PageContent = ({
         $align-m
         $flex="1"
         $h="auto"
-        {...(bodyWidth && {$w: bodyWidth, 'align-self-c': true})}
+        {...(bodyWidth && {$w: bodyWidth, '$align-self-c': true})}
       >
         {!isAuthorised && <Logo $flex-row $align-c $w="100%" $mv={60} />}
 
