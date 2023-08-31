@@ -100,7 +100,6 @@ export const getUnit = (value: string | number | undefined) =>
 const createStylesProps = <T extends ComponentType>(
   element:
     | T
-    // | any
     | 'aside'
     | 'nav'
     | 'header'

@@ -3,7 +3,7 @@ import {Button, Input, Message, Form, Link} from '../../components';
 import {Page, PageContent} from '../../layouts';
 import {useForm} from '../../hooks';
 import {useMutation} from '@apollo/client';
-import {CREATE_PASSWORD_TOKEN} from '../../graphql';
+import {CREATE_PASSWORD_TOKEN} from '../../graphql/operations';
 import {WHITE} from '../../constants/colors';
 import {displayResponseErrorMessage} from '../../helpers/displayResponseErrorMessage';
 import {FORM_WIDTH} from '../../constants';

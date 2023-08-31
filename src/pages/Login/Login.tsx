@@ -2,7 +2,7 @@ import React, {MouseEventHandler} from 'react';
 import {useMutation} from '@apollo/client';
 import {useNavigate} from 'react-router-dom';
 
-import {LOGIN} from '../../graphql';
+import {LOGIN} from '../../graphql/operations';
 import {useForm} from '../../hooks';
 import {useAuthentication} from '../../providers/AuthenticationProvider';
 import {Page, PageContent} from '../../layouts';

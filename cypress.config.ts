@@ -3,7 +3,7 @@ import {configurePlugin} from 'cypress-mongodb';
 
 const MONGODB_URI = 'mongodb://localhost:27017';
 const MONGODB_NAME = 'lncd-crypto-tracker-development';
-const MAILHOG_URL = 'http://localhost:3001/graphql';
+const MAILHOG_URL = 'http://localhost:8025';
 const CLIENT_BASE_URL = 'http://localhost:4001';
 
 export default defineConfig({
@@ -22,6 +22,7 @@ export default defineConfig({
       },
       mailHogUrl: MAILHOG_URL,
     },
+    viewportHeight: 720, //Default height in pixels for the application under tests' viewport.
     supportFile: 'cypress/support/index.{js,jsx,ts,tsx}', // Path to file to load before spec files load. This file is compiled and bundled. (Pass false to disable)
     testIsolation: true, // Ensure a clean browser context between tests. Tests should always be able to be run independently from one another and still pass.
     experimentalRunAllSpecs: true, // Enables the "Run All Specs" UI feature, allowing the execution of multiple specs sequentially.

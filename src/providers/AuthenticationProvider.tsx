@@ -7,7 +7,7 @@ export interface User {
 }
 
 interface AuthenticationContextProps {
-  currentUser: () => User | null;
+  currentUser: () => User;
   setLoginToken: (token: string) => void;
 }
 
@@ -16,21 +16,19 @@ interface AuthenticationProviderProps {
 }
 
 const AuthenticationContext = createContext<AuthenticationContextProps>({
-  currentUser: () => null,
+  currentUser: () => ({}),
   setLoginToken: () => null,
 });
 
-const AuthenticationProvider: FC<AuthenticationProviderProps> = ({
-  children,
-}: AuthenticationProviderProps) => (
+const AuthenticationProvider = ({children}: AuthenticationProviderProps) => (
   <AuthenticationContext.Provider
     value={{
       currentUser: () => {
         const token = localStorage.getItem('token');
 
-        return token ? jwtDecode(token) : null;
+        return token ? jwtDecode(token) : {};
       },
-      setLoginToken: (token) => localStorage.setItem('token', token),
+      setLoginToken: (token: string) => localStorage.setItem('token', token),
     }}
   >
     {children}

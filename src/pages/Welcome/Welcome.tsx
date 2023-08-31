@@ -1,140 +1,130 @@
-import React, {useMemo, useState} from 'react';
+import React, {useState} from 'react';
 import {Message} from '../../components';
 import {Page, PageContent} from '../../layouts';
 import CoinList from './CoinList/CoinList';
-import {useMutation, useQuery} from '@apollo/client';
+import {InMemoryCache, useMutation, useQuery} from '@apollo/client';
 import {
   ADD_COIN,
   ADD_COIN_HOLDING,
-  GET_COINS,
-  GET_COIN_LISTINGS,
+  GET_COIN_LIST,
   GET_SYMBOLS,
   REMOVE_COIN,
   REMOVE_COIN_HOLDING,
   UPDATE_COIN_HOLDING,
-} from '../../graphql';
+} from '../../graphql/operations';
 import {useAuthentication} from '../../providers/AuthenticationProvider';
-import {CoinData, currencies} from './CoinList/CoinListHelper';
+import {Currency, currencies} from './CoinList/CoinListHelper';
 import {displayResponseErrorMessage} from '../../helpers/displayResponseErrorMessage';
 
 const Welcome = () => {
   const {currentUser} = useAuthentication();
-  const [currency, setCurrency] = useState<string>(currencies[0] as string);
+  const [currency, setCurrency] = useState<Currency>(currencies[0]);
   const [editMode, setEditMode] = useState(false);
   const [selectedCoin, setSelectedCoin] = useState<number | undefined>();
 
-  const {
-    data: coins,
-    loading: getCoinsLoading,
-    error: getCoinsError,
-  } = useQuery(GET_COINS, {variables: {creatorId: currentUser()?.id || ''}});
+  const creatorId = currentUser().id;
+  const getCoinListQueryVariables = {creatorId, convert: currency};
+  const cacheQueryParams = {
+    query: GET_COIN_LIST,
+    variables: getCoinListQueryVariables,
+  };
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const updateGetCoinListQueryCache = (cache: InMemoryCache, {data}: any) => {
+    if (!data) return;
+
+    const existingCoins = cache.readQuery(cacheQueryParams);
+
+    cache.writeQuery({
+      ...cacheQueryParams,
+      data: {
+        getCoinList: [existingCoins],
+      },
+    });
+  };
 
   const {
-    data: getSymbolsData,
-    loading: getSymbolsLoading,
-    error: getSymbolsError,
-  } = useQuery(GET_SYMBOLS);
-
-  const coinSymbols = getSymbolsData?.getSymbols;
-  // Gets symbols from coin list and concatinates them
-  const symbols = coins?.getCoins
-    .map((coin: {symbol: string}) => coin.symbol)
-    .join(',');
-
-  const {
-    data: coinListings,
+    data,
     refetch,
-    loading: coinListingLoading,
-    error: coinListingsError,
-  } = useQuery(GET_COIN_LISTINGS, {
-    variables: {
-      symbols,
-      convert: currency,
-    },
+    loading: getCoinListQueryLoading,
+    error: getCoinListQueryError,
+  } = useQuery(GET_COIN_LIST, {
+    errorPolicy: 'all',
+    variables: getCoinListQueryVariables,
   });
 
-  const coinListData: {coins: CoinData[]} = useMemo(() => {
-    const processedData =
-      coins?.getCoins.map((coin: CoinData) => {
-        const listing = coinListings?.getCoinListings.find(
-          (listing: CoinData) => listing.symbol === coin.symbol,
-        );
-
-        const {price, id: coinId, name} = listing ?? {};
-
-        return {...coin, price, coinId, name};
-      }) || [];
-    return {
-      coins: processedData,
-    };
-  }, [coins, coinListings]);
+  const {
+    data: getSymbolsQueryData,
+    loading: getSymbolsLoading,
+    error: getSymbolsError,
+  } = useQuery(GET_SYMBOLS, {
+    // fetchPolicy: 'cache-first',
+    skip: getCoinListQueryLoading || !data?.getCoinList,
+  });
 
   const [addCoin, {loading: addCoinLoading, error: addCoinError}] = useMutation(
     ADD_COIN,
     {
       errorPolicy: 'all',
-      update: (cache, {data}) => {
-        const creatorId = currentUser()?.id ?? '';
-        const newCoin = data?.addCoin ?? false;
-        const existingCoins = creatorId
-          ? cache.readQuery({
-              query: GET_COINS,
-              variables: {creatorId},
-            })
-          : false;
-        if (newCoin && existingCoins && creatorId) {
-          cache.writeQuery({
-            query: GET_COINS,
-            variables: {creatorId},
-            data: {
-              getCoins: [existingCoins],
+      update: (cache: InMemoryCache, {data: {addCoin: newCoin}}: any) => {
+        if (!newCoin) return;
+
+        const existingCoins: any = cache.readQuery(cacheQueryParams);
+        const {balance, coins} = existingCoins.getCoinList;
+
+        cache.writeQuery({
+          ...cacheQueryParams,
+          data: {
+            getCoinList: {
+              balance,
+              coins: [...coins, newCoin],
             },
-          });
-        }
+          },
+        });
       },
     },
   );
 
   const [removeCoin, {loading: removeCoinLoading, error: removeCoinError}] =
     useMutation(REMOVE_COIN, {
-      update: (cache, {data}) => {
-        const creatorId = currentUser()?.id ?? '';
-        const newCoin = data?.removeCoin ?? false;
-        const existingCoins = creatorId
-          ? cache.readQuery({
-              query: GET_COINS,
-              variables: {creatorId},
-            })
-          : false;
+      update: (
+        cache: InMemoryCache,
+        {data: {removeCoin: removedCoin}}: any,
+      ) => {
+        if (!removedCoin) return;
 
-        if (newCoin && existingCoins && creatorId) {
-          cache.writeQuery({
-            query: GET_COINS,
-            variables: {creatorId},
-            data: {
-              getCoins: [existingCoins],
+        const existingCoins: any = cache.readQuery(cacheQueryParams);
+        const {balance, coins} = existingCoins.getCoinList;
+
+        cache.writeQuery({
+          ...cacheQueryParams,
+          data: {
+            getCoinList: {
+              balance,
+              coins: coins.filter((coin: any) => coin.id !== removedCoin.id),
             },
-          });
-        }
+          },
+        });
       },
     });
 
   const [
     addCoinHolding,
     {loading: addCoinHoldingLoading, error: addCoinHoldingError},
-  ] = useMutation(ADD_COIN_HOLDING);
+  ] = useMutation(ADD_COIN_HOLDING, {});
 
   const [
     updateCoinHolding,
     {loading: updateCoinHoldingLoading, error: updateCoinHoldingError},
-  ] = useMutation(UPDATE_COIN_HOLDING, {onCompleted: () => setEditMode(true)});
+  ] = useMutation(UPDATE_COIN_HOLDING, {
+    onCompleted: () => setEditMode(true),
+  });
   const [
     removeCoinHolding,
     {loading: removeCoinHoldingLoading, error: removeCoinHoldingError},
   ] = useMutation(REMOVE_COIN_HOLDING);
 
   const addCoinHandler = (args: {symbol?: string; slug?: string}) => {
-    addCoin({variables: {...args, creatorId: currentUser()?.id}});
+    addCoin({variables: {...args, creatorId}});
   };
 
   const removeCoinHandler = (id: string) => {
@@ -143,27 +133,48 @@ const Welcome = () => {
 
   const addCoinHoldingHandler = (
     id: string,
-    holding: {name: string; amount: number; type: string; currency: string},
+    holding: {name: string; amount: number; type: string},
   ) => {
     addCoinHolding({variables: {id, holding}});
+    refetch();
   };
   const updateCoinHoldingHandler = (
     holdingId: string,
     holding: {amount?: number; name?: string; type?: string},
   ) => {
     updateCoinHolding({variables: {holdingId, holding}});
+    refetch();
   };
 
   const removeCoinHoldingHandler = (holdingId: string) => {
     removeCoinHolding({variables: {holdingId}});
+    refetch();
   };
+
+  const changeCurrencyHandler = (value: Currency) => {
+    setCurrency(value);
+    refetch({convert: value});
+  };
+
+  const toggleEditHandler = (args: boolean) => setEditMode(args);
+
+  const coinListData = data?.getCoinList ?? {balance: 0, coins: []};
+  const {getSymbols: symbols = []} = getSymbolsQueryData ?? {};
+
+  const error =
+    getCoinListQueryError ||
+    getSymbolsError ||
+    addCoinError ||
+    removeCoinError ||
+    addCoinHoldingError ||
+    updateCoinHoldingError ||
+    removeCoinHoldingError;
 
   return (
     <Page name="welcome">
       <PageContent isAuthorised titleTKey="welcome:title">
-        {(getCoinsLoading ||
+        {(getCoinListQueryLoading ||
           getSymbolsLoading ||
-          coinListingLoading ||
           removeCoinLoading ||
           addCoinLoading ||
           addCoinHoldingLoading ||
@@ -171,32 +182,20 @@ const Welcome = () => {
           removeCoinHoldingLoading) && (
           <Message type="info" tKey="common:message.loading.text" />
         )}
-
-        {displayResponseErrorMessage(getCoinsError)}
-        {displayResponseErrorMessage(getSymbolsError)}
-        {displayResponseErrorMessage(addCoinError)}
-        {displayResponseErrorMessage(removeCoinError)}
-        {displayResponseErrorMessage(coinListingsError)}
-        {displayResponseErrorMessage(addCoinHoldingError)}
-        {displayResponseErrorMessage(updateCoinHoldingError)}
-        {displayResponseErrorMessage(removeCoinHoldingError)}
+        {displayResponseErrorMessage(error)}
 
         <CoinList
           data={coinListData}
-          onChange={() => console.log('test')}
           onAddCoin={addCoinHandler}
           onRemoveCoin={removeCoinHandler}
           onAddCoinHolding={addCoinHoldingHandler}
           onUpdateCoinHolding={updateCoinHoldingHandler}
           onRemoveCoinHolding={removeCoinHoldingHandler}
-          onToggleEditMode={(args: boolean) => setEditMode(args)}
-          onChangeCurrency={(value: string) => {
-            setCurrency(value);
-            refetch({convert: value});
-          }}
+          onToggleEditMode={toggleEditHandler}
+          onChangeCurrency={changeCurrencyHandler}
           editMode={editMode}
           convert={currency}
-          symbols={coinSymbols}
+          symbols={symbols}
           selectedCoin={selectedCoin}
           setSelectedCoin={setSelectedCoin}
         />

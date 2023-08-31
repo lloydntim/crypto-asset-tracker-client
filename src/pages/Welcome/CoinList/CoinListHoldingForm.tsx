@@ -1,13 +1,13 @@
 import React from 'react';
 import {Form, IconButton, InputField, Select, Text} from '../../../components';
 
-import {types} from './CoinListHelper';
+import {StorageOptionType, types} from './CoinListHelper';
 
 interface CoinListHoldingFormProps {
   holding: {
     name: string;
     amount: string;
-    type: string;
+    type: StorageOptionType;
   };
   onChange: (args: {field: string; value: string | number}) => void;
   onSubmit: () => void;

@@ -18,7 +18,7 @@ import {
   REMOVE_USER,
   RESEND_VERIFICATION_TOKEN,
   UPDATE_USER,
-} from '../../graphql';
+} from '../../graphql/operations';
 import {GRAPE_DARK, GRAPE_EXTRA_DARK} from '../../constants/colors';
 import Table, {TableCell, TableRow} from '../../components/Table';
 import {useForm} from '../../hooks';

@@ -1,11 +1,4 @@
-import i18n from '../../../locales/i18n';
 import {createSelectOptions} from '../../../helpers/createSelectOptions';
-
-enum HoldingTypes {
-  WALLET = 'wallet',
-  EXCHANGE = 'exchange',
-  STAKING = 'staking',
-}
 
 enum Currencies {
   USD = 'USD',
@@ -13,56 +6,72 @@ enum Currencies {
   EUR = 'EUR',
 }
 
-enum AddNewCoinOptions {
+export type Currency = `${Currencies}`;
+
+export type CurrencyOption = {
+  text: Currencies;
+  value: Currencies;
+};
+
+export enum AddNewCoinOptions {
   PRESET = 'preset',
   OTHER = 'other',
 }
 
-type HoldingType = HoldingTypes;
+export type StorageOptionType = `${StorageOptionTypes}`;
 
-interface HoldingsData {
+export interface Holding {
   id: string;
+  slug?: string;
   name: string;
-  type: HoldingType;
-  amount: number;
-}
-
-interface StorageTypeData {
-  staking: HoldingsData[];
-  wallet: HoldingsData[];
-  exchange: HoldingsData[];
-}
-
-const HOLDING_TYPES_T_KEY_PATH = 'welcome:coinlist.input.options.holdingTypes';
-const ADD_COIN_OPTIONS_T_KEY_PATH = 'welcome:coinlist.input.options.newCoin';
-const REMOVE_COIN_DIALOG_T_KEY_PATH = 'welcome:coinlist.dialog.removeCoin';
-const REMOVE_HOLDING_DIALOG_T_KEY_PATH = 'welcome:coinlist.dialog.removeCoin';
-export interface AssetData {
+  type: StorageOptionType;
   amount: number;
   value: number;
-  storageTypes: StorageTypeData;
+  holdingId?: string;
+  currency?: string;
+  ownerId?: string;
 }
-export interface CoinData {
+
+export interface Coin {
+  id: string;
+  symbol: string;
+  holdings: Holding[];
+  name: string;
+  creatorId: string;
+  coinId: string;
+}
+
+enum StorageOptionTypes {
+  WALLET = 'wallet',
+  EXCHANGE = 'exchange',
+  STAKING = 'staking',
+}
+
+export interface StorageOption {
+  type: StorageOptionType;
+  total: number;
+  holdings: Holding[];
+}
+
+export interface CoinListItem {
   id: string;
   coinId: string;
   name: string;
   symbol: string;
   price: number;
-  value: number;
   amount: number;
-  holdings?: HoldingsData[];
-  assets: AssetData;
-}
-
-export interface HoldingsListData {
-  name: HoldingType;
   total: number;
-  holdings: HoldingsData[];
+  value: number;
+  storageOptions: StorageOption[];
 }
 
+interface CoinList {
+  balance: number;
+  coins: CoinListItem[];
+}
 export interface CoinListProps {
-  data: {coins: CoinData[]};
-  onChange: () => void;
+  data: CoinList;
+  onChange?: () => void;
   onAddCoin: (args: {symbol?: string; slug?: string}) => void;
   onRemoveCoin: (id: string) => void;
   onAddCoinHolding: (
@@ -70,8 +79,7 @@ export interface CoinListProps {
     holding: {
       name: string;
       amount: number;
-      type: string;
-      currency: string;
+      type: StorageOptionType;
     },
   ) => void;
   onUpdateCoinHolding: (
@@ -84,12 +92,18 @@ export interface CoinListProps {
   selectedCoin: number | undefined;
   setSelectedCoin: (item: number) => void;
   editMode: boolean;
-  convert: string;
+  convert: Currency;
   symbols: {name: string; id: string}[];
 }
 
+export const HOLDING_TYPES_T_KEY_PATH =
+  'welcome:coinlist.input.options.holdingTypes';
+const ADD_COIN_OPTIONS_T_KEY_PATH = 'welcome:coinlist.input.options.newCoin';
+const REMOVE_COIN_DIALOG_T_KEY_PATH = 'welcome:coinlist.dialog.removeCoin';
+const REMOVE_HOLDING_DIALOG_T_KEY_PATH = 'welcome:coinlist.dialog.removeCoin';
+
 export const currencies = Object.values(Currencies);
-export const holdingTypes = Object.values(HoldingTypes);
+export const holdingTypes = Object.values(StorageOptionTypes);
 export const addNewCoinOptions = Object.values(AddNewCoinOptions);
 
 export const newCoinSelectOptions = createSelectOptions(
@@ -130,61 +144,12 @@ export const currencyFormatMapper: {
   EUR: {currency: Currencies.USD, location: 'de-DE'},
 };
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
-export const processCoinData = ({coins}: any) => {
-  return coins.reduce((a: any, b: any) => {
-    const {id, coinId, name, symbol, price} = b;
-    const assets = b.holdings.reduce((a: any, b: any) => {
-      const amount = (a?.amount || 0) + b.amount;
-      const total =
-        ((a.storageTypes && a.storageTypes[b.type]?.total) || 0) + b.amount;
-      const coinPrice = price ?? 0;
-
-      return {
-        ...a,
-        ...{
-          amount,
-          value: amount * coinPrice,
-          storageTypes: {
-            ...(a.storageTypes && a.storageTypes),
-            [b.type]: {
-              name: i18n.t(`${HOLDING_TYPES_T_KEY_PATH}.${b.type}`),
-              total,
-              value: total * coinPrice,
-              holdings: [
-                b,
-                ...((a.storageTypes && a.storageTypes[b.type]?.holdings) || []),
-              ],
-            },
-          },
-        },
-      };
-    }, {});
-
-    return {
-      portfolioTotal: (a?.portfolioTotal || 0) + (assets.value ?? 0),
-      coins: [
-        ...(a.coins ?? []),
-        {
-          id,
-          coinId,
-          name,
-          symbol,
-          price: price || 0,
-          amount: assets.amount,
-          value: assets.amount * b.price || 0,
-          assets,
-        },
-      ],
-    };
-  }, {});
-};
-
 export const formatAmount = (value: number = 0, location: string) => {
-  if (!value) {
-    return value.toFixed(2);
+  const v = typeof value === 'string' ? parseFloat(value) : value;
+  if (!v) {
+    return v.toFixed(2);
   }
-  return value < 1
-    ? value.toFixed(4)
-    : new Intl.NumberFormat(location, {minimumFractionDigits: 2}).format(value);
+  return v < 1
+    ? v.toFixed(4)
+    : new Intl.NumberFormat(location, {minimumFractionDigits: 2}).format(v);
 };

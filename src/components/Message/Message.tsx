@@ -52,7 +52,7 @@ const Message = ({
 
   const {bgColor, borderColor} = MessageStatusMapper[type];
   const content = tKey ? (
-    <Text font-sz={fontSz} color={borderColor} tKey={tKey} />
+    <Text m={0} font-sz={fontSz} color={borderColor} tKey={tKey} />
   ) : (
     children
   );

@@ -5,7 +5,10 @@ import {Page, PageContent} from '../../layouts';
 import {useForm} from '../../hooks';
 import {useAuthentication} from '../../providers/AuthenticationProvider';
 import {useMutation, useQuery} from '@apollo/client';
-import {GET_PASSWORD_TOKEN, UPDATE_PASSWORD_TOKEN} from '../../graphql';
+import {
+  GET_PASSWORD_TOKEN,
+  UPDATE_PASSWORD_TOKEN,
+} from '../../graphql/operations';
 import {displayResponseErrorMessage} from '../../helpers/displayResponseErrorMessage';
 import {FORM_WIDTH} from '../../constants';
 

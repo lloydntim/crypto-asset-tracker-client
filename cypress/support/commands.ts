@@ -18,11 +18,11 @@ addCommands();
 
 // -- This is a parent command --
 Cypress.Commands.add('dataCy', (value: string) => {
-  return cy.get(`[data-cy=${value}]`);
+  cy.get(`[data-cy=${value}]`);
 });
 
 Cypress.Commands.add('dataTestId', (value: string) => {
-  return cy.get(`[data-testid=${value}]`);
+  cy.get(`[data-testid=${value}]`);
 });
 
 Cypress.Commands.add('login', (username: string, password: string) => {
@@ -59,7 +59,7 @@ Cypress.Commands.add(
 
 // overrides Mailhog based request that deletes all emails, to ignore Mailhog related server error
 Cypress.Commands.overwrite('mhDeleteAll', () => {
-  return cy.request({
+  cy.request({
     method: 'DELETE',
     url: 'http://localhost:8025/api/v1/messages',
     failOnStatusCode: false,

@@ -1,5 +1,5 @@
-import React, {useState, FC} from 'react';
-import {GRAPE_EXTRA_LIGHT, TRANSPARENT, WHITE} from '../../constants/colors';
+import React, {useState} from 'react';
+import {GRAPE_EXTRA_LIGHT, WHITE} from '../../constants/colors';
 import {StyledProps} from '../../helpers/createStyledProps';
 import Box from '../Box/Box';
 import Button from '../Button/Button';
@@ -47,12 +47,12 @@ const SelectOption = ({
   );
 };
 
-const Select: FC<SelectProps> = ({
+const Select = ({
   name = 'standard',
   options,
   onChange,
   ...rest
-}) => {
+}: SelectProps) => {
   const [selectedOption, setSelectedOption] = useState(0);
   const [optionsVisible, setOptionsVisible] = useState(false);
   return (
