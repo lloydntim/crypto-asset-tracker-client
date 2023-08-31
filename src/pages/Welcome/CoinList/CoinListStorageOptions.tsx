@@ -30,17 +30,17 @@ const CoinListStorageOptions = ({
 }: CoinListStorageOptionsProps) => {
   return (
     <Box
-      bgcolor={LIGHTGREY}
-      color={DARKGREY}
-      pv={20}
-      ph={24}
-      br={8}
-      hide={!editMode && options.length === 0}
+      $bgcolor={LIGHTGREY}
+      $color={DARKGREY}
+      $pv={20}
+      $ph={24}
+      $br={8}
+      $hide={!editMode && options.length === 0}
     >
       {options.map(({total, type}, keyIndex: number) => {
         return (
-          <Box key={keyIndex} mb={12} className="holding">
-            <Headline m={0} p={0} pb={12} size="h5">
+          <Box key={keyIndex} $mb={12} className="holding">
+            <Headline $m={0} $p={0} $pb={12} size="h5">
               <Span tKey={`${HOLDING_TYPES_T_KEY_PATH}.${type}`} />{' '}
               <Span
                 tKey="welcome:coinlist.text.totalValue"

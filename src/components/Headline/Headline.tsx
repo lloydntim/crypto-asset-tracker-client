@@ -15,7 +15,7 @@ const Headline = ({children, size = 'h1', ...rest}: HeadlineProps) => {
   const HeadlineSt = createStylesProps(size);
 
   return (
-    <HeadlineSt m={0} p={0} {...rest}>
+    <HeadlineSt $m={0} $p={0} {...rest}>
       {children}
     </HeadlineSt>
   );

@@ -38,12 +38,12 @@ const LanguageSwitch = (props: LanguageSwitchProps) => {
   const isCurrentLanguage = languageCodes.indexOf(language);
 
   return (
-    <Box w="100%" {...props}>
+    <Box $w="100%" {...props}>
       <Radios
         isButton
         selectedItem={isCurrentLanguage}
-        flex-row
-        mv={12}
+        $flex-row
+        $mv={12}
         items={createLanguageOptions}
         onChange={onChangeHandler}
       />

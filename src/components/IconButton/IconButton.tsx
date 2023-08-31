@@ -53,8 +53,8 @@ const IconButton = ({
       className={`icon-button icon-type-${type} ${
         disabled ? 'is-disabled' : `icon-button-rank-${rank}`
       }`}
-      ph={4}
-      pv={4}
+      $ph={4}
+      $pv={4}
       type="button"
       tabIndex={tabIndex}
       disabled={disabled}
@@ -73,10 +73,10 @@ const IconButton = ({
     >
       <Icon
         type={type}
-        h={iconHeight}
-        w={iconWidth}
-        color={iconColor}
-        sz={iconSize}
+        $h={iconHeight}
+        $w={iconWidth}
+        $color={iconColor}
+        $sz={iconSize}
       />
     </Button>
   );

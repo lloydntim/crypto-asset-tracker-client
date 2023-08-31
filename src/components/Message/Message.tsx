@@ -41,18 +41,18 @@ const MessageStatusMapper: {
 /* eslint-disable react/jsx-props-no-spreading */
 const Message = ({
   type = 'info',
-  color = WHITE,
+  $color = WHITE,
   children = null,
   tKey = '',
   fontSz = 18,
-  mv = 16,
+  $mv = 16,
   ...rest
 }: MessageProps) => {
   if (!children && !tKey) return null;
 
   const {bgColor, borderColor} = MessageStatusMapper[type];
   const content = tKey ? (
-    <Text m={0} font-sz={fontSz} color={borderColor} tKey={tKey} />
+    <Text $m={0} $font-sz={fontSz} $color={borderColor} tKey={tKey} />
   ) : (
     children
   );
@@ -60,17 +60,17 @@ const Message = ({
   return (
     <Box
       role="alert"
-      w="100%"
-      flex-row
-      br={8}
-      bw={1}
-      bs="solid"
-      bcolor={borderColor}
-      bgcolor={bgColor}
-      mv={mv}
-      p={12}
-      color={borderColor}
-      align-c
+      $w="100%"
+      $flex-row
+      $br={8}
+      $bw={1}
+      $bs="solid"
+      $bcolor={borderColor}
+      $bgcolor={bgColor}
+      $mv={$mv}
+      $p={12}
+      $color={borderColor}
+      $align-c
       {...rest}
       className={`message message-${type}`}
     >

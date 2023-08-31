@@ -43,20 +43,20 @@ const AutoComplete = ({
     return (
       <Button
         key={index}
-        br={0}
-        h="100%"
-        pv={12}
-        ph="10%"
-        color={GRAPE_DARK}
-        align-l
-        align-c={false}
-        bgcolor={TRANSPARENT}
+        $br={0}
+        $h="100%"
+        $pv={12}
+        $ph="10%"
+        $color={GRAPE_DARK}
+        $align-l
+        $align-c={false}
+        $bgcolor={TRANSPARENT}
         type="button"
         data-testid="autocomplete-item"
         className="autocomplete-item-button"
         onClick={() => onListItemClick(item)}
       >
-        <Span font-wgt={700}>{boldText}</Span>
+        <Span $font-wgt={700}>{boldText}</Span>
         {normalText && <Span>{normalText}</Span>}
       </Button>
     );
@@ -64,13 +64,13 @@ const AutoComplete = ({
 
   return (
     <List<AutoCompleteItem>
-      pos-abs
-      pos-t={24}
-      lst-stl="none"
-      flex-col
-      p={0}
-      bgcolor={GRAPE_EXTRA_LIGHT}
-      w="100%"
+      $pos-abs
+      $pos-t={24}
+      $lst-stl="none"
+      $flex-col
+      $p={0}
+      $bgcolor={GRAPE_EXTRA_LIGHT}
+      $w="100%"
       data-testid="autocomplete"
       className="autocomplete"
       data={filteredItems}

@@ -20,20 +20,20 @@ const Tabs = ({children, titles, onTabClick}: PropsWithChildren<TabsProps>) => {
   const tabs = createTabs(children, selectedTab);
 
   return (
-    <Box w="100%" className="tabs">
-      <Box w="100%" ml={8} className="tab-titles">
+    <Box $w="100%" className="tabs">
+      <Box $w="100%" $ml={8} className="tab-titles">
         {titles.map((title, index) => {
           const isSelected = selectedTab === index;
           return (
             <Button
               key={index}
-              bgcolor={TRANSPARENT}
-              bw={0}
-              color={isSelected ? GRAPE_DARK : GREY}
-              pv={8}
-              ph={16}
-              pos-rel
-              pos-l={12}
+              $bgcolor={TRANSPARENT}
+              $bw={0}
+              $color={isSelected ? GRAPE_DARK : GREY}
+              $pv={8}
+              $ph={16}
+              $pos-rel
+              $pos-l={12}
               className={`tab-title ${isSelected && 'is-selected'}`}
               onClick={() => {
                 setSelectedTab(index);

@@ -43,36 +43,36 @@ const Button = ({
   onMouseDown,
   onTouchStart,
   onTouchEnd,
-  pv = 8,
-  ph = 24,
-  color = GRAPE_EXTRA_DARK,
-  bgcolor = GRAPE_LIGHT,
-  br = 8,
-  w = 'auto',
-  'align-c': alignC = true,
-  bcolor = TRANSPARENT,
-  'flex-row': flexRow = true,
-  'crsr-pointer': crsrPointer = true,
+  $pv = 8,
+  $ph = 24,
+  $color = GRAPE_EXTRA_DARK,
+  $bgcolor = GRAPE_LIGHT,
+  $br = 8,
+  $w = 'auto',
+  '$align-c': alignC = true,
+  $bcolor = TRANSPARENT,
+  '$flex-row': flexRow = true,
+  '$crsr-pointer': crsrPointer = true,
   ...rest
 }: ButtonProps) => {
   const navigate = useNavigate();
   return (
     /* eslint-disable react/button-has-type */
     <ButtonSt
-      pv={pv}
-      ph={ph}
-      flex-row={flexRow}
-      crsr-pointer={crsrPointer}
-      color={color}
-      bgcolor={bgcolor}
-      bcolor={bcolor}
-      br={br}
-      w={w}
+      $pv={$pv}
+      $ph={$ph}
+      $flex-row={flexRow}
+      $crsr-pointer={crsrPointer}
+      $color={$color}
+      $bgcolor={$bgcolor}
+      $bcolor={$bcolor}
+      $br={$br}
+      $w={$w}
       type={type}
       tabIndex={tabIndex}
       className={`button button-rank-${rank} ${disabled ? 'is-disabled' : ''}`}
       disabled={disabled}
-      align-c={alignC}
+      $align-c={alignC}
       onClick={(event: MouseEvent<HTMLButtonElement>) => {
         if (isLink) return navigate(to);
         if (type === 'submit') event.preventDefault();

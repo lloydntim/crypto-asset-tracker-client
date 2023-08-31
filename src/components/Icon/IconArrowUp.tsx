@@ -1,23 +1,19 @@
 import React from 'react';
 import {BLACK} from '../../constants/colors';
+import {IconProps} from './Icon';
 
 const IconArrowUp = ({
-  w = 22,
-  h = 14,
-  sz = 22,
-  color = BLACK,
-}: {
-  w?: number;
-  h?: number;
-  sz?: number;
-  color?: string;
-}) => {
+  $w = 22,
+  $h = 14,
+  $sz = 22,
+  $color = BLACK,
+}: IconProps) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width={sz || w}
-      height={sz || h}
-      fill={color}
+      width={$sz || $w}
+      height={$sz || $h}
+      fill={$color}
       viewBox="0 0 320 192"
       data-testid="icon-arrow-up"
     >

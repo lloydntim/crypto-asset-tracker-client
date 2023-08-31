@@ -30,20 +30,20 @@ const RadioButton = ({
   onChange,
 }: RadioButtonProps) => (
   <RadioButtonConainterSt
-    color={labelColor}
+    $color={labelColor}
     className="radio-button"
     htmlFor={name}
-    flex-row
-    align-m
-    bcolor={checked ? WHITE : GRAPE_DARK}
-    bgcolor={checked ? GRAPE_DARK : WHITE}
-    bs="solid"
-    bw={1}
-    br={8}
-    mr={8}
+    $flex-row
+    $align-m
+    $bcolor={checked ? WHITE : GRAPE_DARK}
+    $bgcolor={checked ? GRAPE_DARK : WHITE}
+    $bs="solid"
+    $bw={1}
+    $br={8}
+    $mr={8}
   >
     <InputField
-      hidden
+      $hidden
       id={name}
       value={value}
       className="radio-input"
@@ -52,12 +52,12 @@ const RadioButton = ({
       onChange={onChange}
     />
     <Span
-      flex-row
-      mv={8}
-      mh={24}
+      $flex-row
+      $mv={8}
+      $mh={24}
       className="radio-label"
       tKey={labelTKey}
-      color={checked ? WHITE : GRAPE_DARK}
+      $color={checked ? WHITE : GRAPE_DARK}
     >
       {label}
     </Span>

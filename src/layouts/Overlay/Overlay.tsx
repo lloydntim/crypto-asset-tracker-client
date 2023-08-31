@@ -27,30 +27,30 @@ const Overlay = ({
     <Box
       data-testid="overlay"
       className="overlay"
-      pos-fix
-      pos-t={0}
-      pos-l={0}
-      cover
-      bgcolor={WHITE}
-      z-idx={10}
-      flex-col
-      color={DARKGREY}
-      pv={12}
-      ph={28}
+      $pos-fix
+      $pos-t={0}
+      $pos-l={0}
+      $cover
+      $bgcolor={WHITE}
+      $z-idx={10}
+      $flex-col
+      $color={DARKGREY}
+      $pv={12}
+      $ph={28}
     >
       <IconButton
         type="close"
         rank="secondary"
         aria-label="close-button"
-        flex-row
-        align-self-r
+        $flex-row
+        $align-self-r
         onClick={onCloseButtonClick}
-        z-idx={1}
+        $z-idx={1}
       />
 
-      <Box pos-rel pos-b={48} className="overlay-content">
+      <Box $pos-rel $pos-b={48} className="overlay-content">
         {(titleTKey || title) && (
-          <Headline tKey={titleTKey} color={GRAPE_DARK} mv={16}>
+          <Headline tKey={titleTKey} $color={GRAPE_DARK} $mv={16}>
             {title}
           </Headline>
         )}

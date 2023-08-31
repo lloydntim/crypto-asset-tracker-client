@@ -34,11 +34,11 @@ const SelectOption = ({
   ...rest
 }: SelectOptionProps) => {
   return (
-    <Box className={className} pv={1} {...rest}>
+    <Box className={className} $pv={1} {...rest}>
       <Button
-        w="100%"
-        br={0}
-        bgcolor={selected ? GRAPE_EXTRA_LIGHT : WHITE}
+        $w="100%"
+        $br={0}
+        $bgcolor={selected ? GRAPE_EXTRA_LIGHT : WHITE}
         onClick={() => onClick(value)}
       >
         {text}
@@ -56,20 +56,20 @@ const Select = ({
   const [selectedOption, setSelectedOption] = useState(0);
   const [optionsVisible, setOptionsVisible] = useState(false);
   return (
-    <Box role="select" className={`select ${name}-select`} {...rest} pos-rel>
+    <Box role="select" className={`select ${name}-select`} {...rest} $pos-rel>
       <Button
         className="select-value"
-        align-m
-        ph={16}
+        $align-m
+        $ph={16}
         onClick={() => setOptionsVisible(!optionsVisible)}
       >
         {options[selectedOption].text}
-        <Span flex-row ml={4}>
-          <Icon type="arrow-down" sz={16} />
+        <Span $flex-row $ml={4}>
+          <Icon type="arrow-down" $sz={16} />
         </Span>
       </Button>
       {optionsVisible && (
-        <Box pos-abs pos-l={0} pos-t={40} className="select-options-group">
+        <Box $pos-abs $pos-l={0} $pos-t={40} className="select-options-group">
           {options.map(({text, value}, index) => (
             <SelectOption
               key={index}

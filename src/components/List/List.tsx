@@ -19,7 +19,7 @@ interface ListProps<ItemType> extends StyledProps {
 const List = <T,>({data, renderItem, ...rest}: ListProps<T>) => (
   <ListSt role="list" {...rest}>
     {data.map((item, index) => (
-      <ListItemSt flex-col role="listitem" key={index}>
+      <ListItemSt $flex-col role="listitem" key={index}>
         {renderItem({item, index})}
       </ListItemSt>
     ))}

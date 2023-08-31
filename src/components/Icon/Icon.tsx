@@ -26,16 +26,16 @@ import IconCopy from './IconCopy';
 import IconMove from './IconMove';
 import IconLogo from './IconLogo';
 
-interface IconProps {
-  type: string;
-  w?: number;
-  h?: number;
-  sz?: number;
-  color?: string;
+export interface IconProps {
+  type?: string;
+  $w?: number;
+  $h?: number;
+  $sz?: number;
+  $color?: string;
 }
 
-const Icon = ({type, w, h, sz, color}: IconProps) => {
-  const dimensions = sz ? {sz} : {h, w};
+const Icon = ({type, $w, $h, $sz, $color}: IconProps) => {
+  const dimensions = $sz ? {$sz, $color} : {$h, $w, $color};
   switch (type) {
     case 'view':
       return <IconView />;
@@ -52,21 +52,21 @@ const Icon = ({type, w, h, sz, color}: IconProps) => {
     case 'arrow-left':
       return <IconArrowLeft />;
     case 'arrow-up':
-      return <IconArrowUp {...dimensions} color={color} />;
+      return <IconArrowUp {...dimensions} />;
     case 'arrow-down':
-      return <IconArrowDown {...dimensions} color={color} />;
+      return <IconArrowDown {...dimensions} />;
     case 'delete':
-      return <IconDelete {...dimensions} color={color} />;
+      return <IconDelete {...dimensions} />;
     case 'edit':
-      return <IconEdit {...dimensions} color={color} />;
+      return <IconEdit {...dimensions} />;
     case 'plus':
-      return <IconPlus {...dimensions} color={color} />;
+      return <IconPlus {...dimensions} />;
     case 'logo':
-      return <IconLogo {...dimensions} color={color} />;
+      return <IconLogo {...dimensions} />;
     case 'menu':
       return <IconMenu />;
     case 'close':
-      return <IconClose {...dimensions} color={color} />;
+      return <IconClose {...dimensions} />;
     case 'clipboard':
       return <IconClipboard />;
     case 'cut':
