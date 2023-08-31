@@ -57,7 +57,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
       }`}
       htmlFor={name}
       pos-rel
-      w="100%"
+      $w="100%"
       m={m}
       mh={mh}
       mv={mv}
@@ -70,7 +70,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
       )}
       <Box
         flex-row
-        w="100%"
+        $w="100%"
         pos-rel
         bgcolor={WHITE}
         bcolor={GRAPE_DARK}

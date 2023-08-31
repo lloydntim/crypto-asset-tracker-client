@@ -36,7 +36,7 @@ const SelectOption = ({
   return (
     <Box className={className} pv={1} {...rest}>
       <Button
-        w="100%"
+        $w="100%"
         br={0}
         bgcolor={selected ? GRAPE_EXTRA_LIGHT : WHITE}
         onClick={() => onClick(value)}

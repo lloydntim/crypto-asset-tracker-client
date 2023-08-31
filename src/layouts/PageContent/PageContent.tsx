@@ -40,14 +40,14 @@ const PageContent = ({
         h="auto"
         {...(bodyWidth && {w: bodyWidth, 'align-self-c': true})}
       >
-        {!isAuthorised && <Logo flex-row align-c w="100%" mv={60} />}
+        {!isAuthorised && <Logo flex-row align-c $w="100%" mv={60} />}
 
         {(title || titleTKey) && (
           <Title mv={24} align-c align-self-l tKey={titleTKey}>
             {title}
           </Title>
         )}
-        <Box w="100%">{children}</Box>
+        <Box $w="100%">{children}</Box>
       </Body>
 
       <Footer startYear={COMPANY_START_YEAR} companyName="LNCD" />

@@ -70,7 +70,7 @@ const AutoComplete = ({
       flex-col
       p={0}
       bgcolor={GRAPE_EXTRA_LIGHT}
-      w="100%"
+      $w="100%"
       data-testid="autocomplete"
       className="autocomplete"
       data={filteredItems}

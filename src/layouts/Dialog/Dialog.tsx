@@ -45,7 +45,7 @@ const Dialog = ({
       <Box
         pos-rel
         z-idx={3}
-        w="calc(100% - 48px)"
+        $w="calc(100% - 48px)"
         max-w={408}
         flex-col
         p={28}
@@ -73,11 +73,11 @@ const Dialog = ({
           {children}
         </Box>
 
-        <Box align-r className="button-group" w="100%" flex-row>
+        <Box align-r className="button-group" $w="100%" flex-row>
           <Button rank="secondary" onClick={onContinueButtonClick} align-c>
             {continueButtonText}
           </Button>
-          <Button w="35%" p={8} ml={8} onClick={onCancelButtonClick} align-c>
+          <Button $w="35%" p={8} ml={8} onClick={onCancelButtonClick} align-c>
             {cancelButtonText}
           </Button>
         </Box>

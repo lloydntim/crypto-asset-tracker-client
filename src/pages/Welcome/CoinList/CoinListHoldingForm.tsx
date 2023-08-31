@@ -31,7 +31,7 @@ const CoinListHoldingForm = ({
       <InputField
         name="name"
         value={holding.name}
-        w={40}
+        $w={40}
         onChange={({target: {value}}) => onChange({value, field: 'name'})}
       />
       <Text
@@ -43,7 +43,7 @@ const CoinListHoldingForm = ({
       <InputField
         name="amount"
         value={holding.amount}
-        w={40}
+        $w={40}
         onChange={({target: {value}}) => onChange({value, field: 'amount'})}
       />
       <Text

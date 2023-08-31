@@ -60,7 +60,7 @@ const Message = ({
   return (
     <Box
       role="alert"
-      w="100%"
+      $w="100%"
       flex-row
       br={8}
       bw={1}

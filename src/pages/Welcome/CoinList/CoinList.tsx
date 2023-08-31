@@ -98,7 +98,7 @@ const CoinList = (props: CoinListProps) => {
 
         {editMode && (
           <Container flex-row align-m>
-            <Form ph={8} pt={12} flex-row w="100%" align-t>
+            <Form ph={8} pt={12} flex-row $w="100%" align-t>
               <Select
                 mh={8}
                 options={newCoinSelectOptions}

@@ -33,9 +33,9 @@ const CoinListHolding = ({
   index,
 }: CoinListHoldingProps) => {
   return (
-    <Table w="100%">
+    <Table $w="100%">
       <Box flex-row br={8} ph={8} align-m bgcolor={GRAPE_EXTRA_LIGHT} mv={2}>
-        <Box pl={8} br-tl={8} br-bl={8} w={44} pv={4} $valign-m>
+        <Box pl={8} br-tl={8} br-bl={8} $w={44} pv={4} $valign-m>
           <Box bgcolor={GREY} sz={24} br={12} flex-row />
         </Box>
 
@@ -51,7 +51,7 @@ const CoinListHolding = ({
         />
         <StorageOptionEditField
           flex-row
-          w={162}
+          $w={162}
           align-r
           ph={12}
           editMode={editMode}
@@ -62,7 +62,7 @@ const CoinListHolding = ({
           }}
         />
 
-        <Box w={100} flex-row align-r br-tr={8} br-br={8} pr={8}>
+        <Box $w={100} flex-row align-r br-tr={8} br-br={8} pr={8}>
           <Text $valign-m font-sz={14}>
             {formatToCurrency(value, convert, location)}
           </Text>

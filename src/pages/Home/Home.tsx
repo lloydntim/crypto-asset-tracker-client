@@ -22,7 +22,7 @@ const Home = () => {
 
       <Body flex-col flex="1">
         <Box flex-col flex="1" align-m>
-          <Box flex-col align-m align-c w="100%" mt={60} mb={120}>
+          <Box flex-col align-m align-c $w="100%" mt={60} mb={120}>
             <Title tKey="home:title" m={44} />
             <Icon type="logo" sz={220} color={WHITE} />
           </Box>

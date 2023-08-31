@@ -20,8 +20,8 @@ const Tabs = ({children, titles, onTabClick}: PropsWithChildren<TabsProps>) => {
   const tabs = createTabs(children, selectedTab);
 
   return (
-    <Box w="100%" className="tabs">
-      <Box w="100%" ml={8} className="tab-titles">
+    <Box $w="100%" className="tabs">
+      <Box $w="100%" ml={8} className="tab-titles">
         {titles.map((title, index) => {
           const isSelected = selectedTab === index;
           return (

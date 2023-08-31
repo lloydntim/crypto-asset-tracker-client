@@ -74,7 +74,7 @@ const IconButton = ({
       <Icon
         type={type}
         h={iconHeight}
-        w={iconWidth}
+        $w={iconWidth}
         color={iconColor}
         sz={iconSize}
       />

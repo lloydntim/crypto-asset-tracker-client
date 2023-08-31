@@ -27,7 +27,7 @@ const Footer = ({
       pos-l={0}
       pos-b={0}
       pv={20}
-      w="100%"
+      $w="100%"
       flex-row
       align-c
       {...rest}

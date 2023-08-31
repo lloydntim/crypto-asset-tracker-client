@@ -38,7 +38,7 @@ const LanguageSwitch = (props: LanguageSwitchProps) => {
   const isCurrentLanguage = languageCodes.indexOf(language);
 
   return (
-    <Box w="100%" {...props}>
+    <Box $w="100%" {...props}>
       <Radios
         isButton
         selectedItem={isCurrentLanguage}

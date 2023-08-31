@@ -46,7 +46,7 @@ const Navigation = ({title = '', titleTKey = '', ...rest}: NavigationProps) => {
       data-testid="main-nav"
       className="navigation"
       pv={32}
-      w="100%"
+      $w="100%"
       {...rest}
     >
       <Menu

@@ -11,7 +11,7 @@ interface PageProps {
 const Page = ({name, children}: PageProps) => {
   return (
     <Box
-      w="100%"
+      $w="100%"
       flex-col
       ph={12}
       pv={0}
