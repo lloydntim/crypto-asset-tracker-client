@@ -77,9 +77,7 @@ describe('EntryField', () => {
 
     await user.click(editButton);
 
-    const entryFieldInput = screen.getByDisplayValue(
-      'Edit me',
-    ) as HTMLInputElement;
+    const entryFieldInput = await screen.findByDisplayValue('Edit me');
 
     await user.type(entryFieldInput, '{backspace}{backspace}{backspace}ed');
     await user.tab();
@@ -92,7 +90,7 @@ describe('EntryField', () => {
       />,
     );
 
-    const entryField = screen.getByText('Edited');
+    const entryField = await screen.findByText('Edited');
 
     expect(mockBlurHandler).toHaveBeenCalled();
     expect(entryField).toBeInTheDocument();
@@ -111,16 +109,14 @@ describe('EntryField', () => {
 
     await user.click(editButton);
 
-    const entryFieldInput = screen.getByDisplayValue(
-      '2000000',
-    ) as HTMLInputElement;
+    const entryFieldInput = await screen.findByDisplayValue('2000000');
 
     await user.type(entryFieldInput, '{backspace}{backspace}');
     await user.tab();
 
     rerender(<EntryField value="20000" location="en-GB" />);
 
-    const entryField = screen.getByText('20,000.00');
+    const entryField = await screen.findByText('20,000.00');
 
     expect(entryField).toBeInTheDocument();
   });

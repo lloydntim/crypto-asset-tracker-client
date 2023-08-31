@@ -129,7 +129,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
             align-m
             pos-abs
             pos-r={4}
-            pos-t={6}
+            pos-t={isTypePassword ? 2 : 6}
             flex-row
             type={isTypePassword ? 'view' : 'close'}
             tabIndex={-1}

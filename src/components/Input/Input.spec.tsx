@@ -45,7 +45,7 @@ describe('Input', () => {
     await user.type(input, '1{backspace}');
     await user.tab();
 
-    const errorMessage = screen.getByText(/Please do not/i);
+    const errorMessage = await screen.findByText(/Please do not/i);
 
     expect(input).toHaveValue('');
     expect(errorMessage).toBeInTheDocument();

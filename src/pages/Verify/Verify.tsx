@@ -1,10 +1,12 @@
 import React, {useEffect} from 'react';
-import {Page} from '../../layouts';
-import {Text, Header, Body, Footer, Headline, Message} from '../../components';
+import {Page, PageContent} from '../../layouts';
+import {Message} from '../../components';
 import {useMutation} from '@apollo/client';
 import {VERIFY} from '../../graphql';
 import {useAuthentication} from '../../providers/AuthenticationProvider';
 import {useNavigate, useParams} from 'react-router-dom';
+import {displayResponseErrorMessage} from '../../helpers/displayResponseErrorMessage';
+import {FORM_WIDTH} from '../../constants';
 
 const Verify = () => {
   const navigate = useNavigate();
@@ -21,7 +23,6 @@ const Verify = () => {
   });
 
   useEffect(() => {
-    console.log('test');
     verify({variables: {token}}).catch((error) => {
       navigate('/');
       console.log(error);
@@ -30,14 +31,10 @@ const Verify = () => {
 
   return (
     <Page name="verify">
-      <Header />
-      <Body flex-col align-c flex="1">
-        <Headline tKey="verify:title" />
-
+      <PageContent titleTKey="verify:title" bodyWidth={FORM_WIDTH}>
         {loading && <Message type="info" tKey="common:message.loading.text" />}
-        {error && <Message type="error" tKey="common:message.error.text" />}
-      </Body>
-      <Footer startYear={2023} companyName="LNCD" />
+        {displayResponseErrorMessage(error, 'common:message.error.text')}
+      </PageContent>
     </Page>
   );
 };

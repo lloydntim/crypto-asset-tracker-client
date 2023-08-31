@@ -119,8 +119,8 @@ describe('Radios', () => {
 
     expect(mockChangeHandler).toHaveBeenCalled();
 
-    const firstRadio = screen.getByDisplayValue('1');
-    const thirdRadio = screen.getByDisplayValue('3');
+    const firstRadio = await screen.findByDisplayValue('1');
+    const thirdRadio = await screen.findByDisplayValue('3');
 
     expect(firstRadio).not.toBeChecked();
     expect(thirdRadio).toBeChecked();

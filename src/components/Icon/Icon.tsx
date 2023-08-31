@@ -24,6 +24,7 @@ import IconSearch from './IconSearch';
 import IconCut from './IconCut';
 import IconCopy from './IconCopy';
 import IconMove from './IconMove';
+import IconLogo from './IconLogo';
 
 interface IconProps {
   type: string;
@@ -60,6 +61,8 @@ const Icon = ({type, w, h, sz, color}: IconProps) => {
       return <IconEdit {...dimensions} color={color} />;
     case 'plus':
       return <IconPlus {...dimensions} color={color} />;
+    case 'logo':
+      return <IconLogo {...dimensions} color={color} />;
     case 'menu':
       return <IconMenu />;
     case 'close':

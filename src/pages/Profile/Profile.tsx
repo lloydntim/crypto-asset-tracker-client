@@ -1,14 +1,9 @@
 import React, {useState} from 'react';
-import {Dialog, Overlay, Page} from '../../layouts';
+import {Dialog, Overlay, Page, PageContent} from '../../layouts';
 import {useNavigate} from 'react-router-dom';
 import {
-  Header,
-  Body,
-  Footer,
-  Headline as Title,
   Message,
   Box,
-  Navigation,
   Button,
   Text,
   IconButton,
@@ -143,11 +138,7 @@ const Profile = () => {
         </Form>
       </Overlay>
 
-      <Header>
-        <Navigation />
-      </Header>
-      <Body flex-col flex="1">
-        <Title tKey="profile:title" />
+      <PageContent isAuthorised titleTKey="profile:title">
         {(loading ||
           sendVerificationMutationLoading ||
           updateUserMutationLoading ||
@@ -174,8 +165,9 @@ const Profile = () => {
             {updateUserMutationData.updateUser.message}
           </Message>
         )}
+
         {user?.getUser && (
-          <>
+          <Box flex-col>
             <Table mv={32}>
               <TableRow>
                 <TableCell valign-m col-w={40}>
@@ -249,10 +241,9 @@ const Profile = () => {
                 }}
               />
             </Box>
-          </>
+          </Box>
         )}
-      </Body>
-      <Footer startYear={2023} companyName="LNCD" />
+      </PageContent>
     </Page>
   );
 };

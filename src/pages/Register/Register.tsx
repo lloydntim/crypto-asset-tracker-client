@@ -5,21 +5,11 @@ import {useMutation} from '@apollo/client';
 
 import {REGISTER} from '../../graphql';
 import {useForm} from '../../hooks';
-import {Page} from '../../layouts';
-import {
-  Button,
-  Input,
-  Message,
-  Headline as Title,
-  Header,
-  Body,
-  Footer,
-  Link,
-  Form,
-  Navigation,
-} from '../../components';
+import {Page, PageContent} from '../../layouts';
+import {Button, Input, Message, Link, Form} from '../../components';
 import {useAuthentication} from '../../providers/AuthenticationProvider';
 import {WHITE} from '../../constants/colors';
+import {FORM_WIDTH} from '../../constants';
 
 const Register = () => {
   const navigate = useNavigate();
@@ -79,13 +69,8 @@ const Register = () => {
 
   return (
     <Page name="register">
-      <Header>
-        <Navigation />
-      </Header>
-      <Body flex-col align-c flex="1">
-        <Title tKey="register:title" />
-
-        <Form flex-col>
+      <PageContent titleTKey="register:title" bodyWidth={FORM_WIDTH}>
+        <Form>
           <Input
             name="username"
             labelTKey="common:input.label.username"
@@ -146,9 +131,7 @@ const Register = () => {
         </Form>
 
         <Link color={WHITE} to="/login" tKey="common:button.login" />
-      </Body>
-
-      <Footer startYear={2023} companyName="LNCD" />
+      </PageContent>
     </Page>
   );
 };

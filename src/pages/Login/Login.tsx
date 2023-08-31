@@ -5,21 +5,11 @@ import {useNavigate} from 'react-router-dom';
 import {LOGIN} from '../../graphql';
 import {useForm} from '../../hooks';
 import {useAuthentication} from '../../providers/AuthenticationProvider';
-import {Page} from '../../layouts';
-import {
-  Button,
-  Input,
-  Message,
-  Headline as Title,
-  Header,
-  Form,
-  Body,
-  Footer,
-  Link,
-  Navigation,
-} from '../../components';
+import {Page, PageContent} from '../../layouts';
+import {Button, Input, Message, Form, Link} from '../../components';
 import {WHITE} from '../../constants/colors';
 import {displayResponseErrorMessage} from '../../helpers/displayResponseErrorMessage';
+import {FORM_WIDTH} from '../../constants';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -32,7 +22,6 @@ const Login = () => {
   const {username, password} = hookedForm;
   const [login, {loading, error}] = useMutation(LOGIN, {
     onCompleted: (data) => {
-      /* eslint-disable no-undef */
       setLoginToken(data.login.token);
       navigate('/welcome');
     },
@@ -53,14 +42,8 @@ const Login = () => {
 
   return (
     <Page name="login">
-      <Header>
-        <Navigation />
-      </Header>
-
-      <Body flex-col align-c flex="1">
-        <Title tKey="login:title" />
-
-        <Form flex-col>
+      <PageContent titleTKey="login:title" bodyWidth={FORM_WIDTH}>
+        <Form>
           <Input
             name="username"
             labelTKey="input.label.username"
@@ -95,9 +78,7 @@ const Login = () => {
         <Link color={WHITE} to="/register" tKey="button.register" />
 
         <Link color={WHITE} to="/forgot" tKey="login:link.forgotPassword" />
-      </Body>
-
-      <Footer startYear={2023} companyName="LNCD" />
+      </PageContent>
     </Page>
   );
 };

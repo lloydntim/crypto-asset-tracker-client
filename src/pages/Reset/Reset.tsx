@@ -1,22 +1,13 @@
 import React from 'react';
 import {useNavigate, useParams} from 'react-router-dom';
-import {
-  Button,
-  Input,
-  Message,
-  Headline,
-  Header,
-  Body,
-  Footer,
-  Form,
-  Navigation,
-} from '../../components';
-import {Page} from '../../layouts';
+import {Button, Input, Message, Form} from '../../components';
+import {Page, PageContent} from '../../layouts';
 import {useForm} from '../../hooks';
 import {useAuthentication} from '../../providers/AuthenticationProvider';
 import {useMutation, useQuery} from '@apollo/client';
 import {GET_PASSWORD_TOKEN, UPDATE_PASSWORD_TOKEN} from '../../graphql';
 import {displayResponseErrorMessage} from '../../helpers/displayResponseErrorMessage';
+import {FORM_WIDTH} from '../../constants';
 
 const Reset = () => {
   const navigate = useNavigate();
@@ -44,20 +35,14 @@ const Reset = () => {
     },
   ] = useMutation(UPDATE_PASSWORD_TOKEN, {
     onCompleted: (data) => {
-      /* eslint-disable no-undef */
       setLoginToken(data.updatePassword.token);
       navigate('/welcome');
     },
   });
   return (
     <Page name="reset">
-      <Header>
-        <Navigation />
-      </Header>
-      <Body flex-col align-c flex="1">
-        <Headline tKey="reset:title" />
-
-        <Form flex-col align-c flex="1">
+      <PageContent titleTKey="reset:title" bodyWidth={FORM_WIDTH}>
+        <Form>
           <Input
             name="password"
             labelTKey="input.label.password"
@@ -99,8 +84,7 @@ const Reset = () => {
           {displayResponseErrorMessage(getPasswordTokenQueryError)}
           {displayResponseErrorMessage(updatePasswordMutationError)}
         </>
-      </Body>
-      <Footer startYear={2023} companyName="LNCD" />
+      </PageContent>
     </Page>
   );
 };
