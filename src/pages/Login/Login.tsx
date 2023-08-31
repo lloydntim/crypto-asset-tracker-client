@@ -6,7 +6,7 @@ import {LOGIN} from '../../graphql/operations';
 import {useForm} from '../../hooks';
 import {useAuthentication} from '../../providers/AuthenticationProvider';
 import {Page, PageContent} from '../../layouts';
-import {Button, Input, Message, Form, Link} from '../../components';
+import {Button, Input, Message, Form, Link, Box} from '../../components';
 import {WHITE} from '../../constants/colors';
 import {displayResponseErrorMessage} from '../../helpers/displayResponseErrorMessage';
 import {FORM_WIDTH} from '../../constants';
@@ -75,9 +75,10 @@ const Login = () => {
           )}
         </Form>
 
-        <Link $color={WHITE} to="/register" tKey="button.register" />
-
-        <Link $color={WHITE} to="/forgot" tKey="login:link.forgotPassword" />
+        <Box $spc-btw>
+          <Link $color={WHITE} to="/register" tKey="common:button.register" />
+          <Link $color={WHITE} to="/forgot" tKey="login:link.forgotPassword" />
+        </Box>
       </PageContent>
     </Page>
   );
