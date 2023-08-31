@@ -35,7 +35,7 @@ const Profile = () => {
     formFieldChangeHandler,
   } = useForm('email*');
 
-  const userId = currentUser()?.id || '';
+  const userId = currentUser()?.id;
   const {
     loading,
     error,
@@ -170,21 +170,21 @@ const Profile = () => {
           <Box $flex-col>
             <Table $mv={32}>
               <TableRow>
-                <TableCell valign-m col-w={40}>
+                <TableCell $valign-m $col-w={40}>
                   <Text $m={0} strong tKey="common:input.label.username" />
                 </TableCell>
-                <TableCell valign-m col-w={40}>
+                <TableCell $valign-m $col-w={40}>
                   <Text $m={0}>{user.getUser.username}</Text>
                 </TableCell>
               </TableRow>
               <TableRow>
-                <TableCell valign-m col-w={40}>
+                <TableCell $valign-m $col-w={40}>
                   <Text strong tKey="common:input.label.email" />
                 </TableCell>
-                <TableCell valign-m col-w={40}>
+                <TableCell $valign-m $col-w={40}>
                   <Text>{user.getUser.email}</Text>
                 </TableCell>
-                <TableCell valign-m col-w={40}>
+                <TableCell $valign-m $col-w={40}>
                   <IconButton
                     type="edit"
                     rank="secondary"
@@ -199,10 +199,10 @@ const Profile = () => {
                 </TableCell>
               </TableRow>
               <TableRow>
-                <TableCell valign-m col-w={40}>
+                <TableCell $valign-m $col-w={40}>
                   <Text strong tKey="profile:label_userStatus" />
                 </TableCell>
-                <TableCell valign-m col-w={40}>
+                <TableCell $valign-m $col-w={40}>
                   <Text
                     tKey={`common:label.${
                       JSON.parse(user.getUser.isVerified as string)
