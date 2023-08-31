@@ -34,10 +34,10 @@ const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
     onBlur,
     dataList = [],
     onDataListClick,
-    m,
-    mv,
-    mh,
-    bw = 1,
+    $m,
+    $mv,
+    $mh,
+    $bw = 1,
   } = props;
   const isTypePassword = type === 'password';
   const [dynamicInputType, setDynamicInputType] = useState(type);
@@ -56,36 +56,36 @@ const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
         inputMessage?.type !== 'error' ? 'valid' : 'invalid'
       }`}
       htmlFor={name}
-      pos-rel
+      $pos-rel
       $w="100%"
-      m={m}
-      mh={mh}
-      mv={mv}
-      bcolor={GRAPE_DARK}
+      $m={$m}
+      $mh={$mh}
+      $mv={$mv}
+      $bcolor={GRAPE_DARK}
     >
       {labelText && (
-        <Span mv={8} flex-row className="input-label" color={labelColor}>
-          <Text tKey={labelText} m={0} />
+        <Span $mv={8} $flex-row className="input-label" $color={labelColor}>
+          <Text tKey={labelText} $m={0} />
         </Span>
       )}
       <Box
-        flex-row
+        $flex-row
         $w="100%"
-        pos-rel
-        bgcolor={WHITE}
-        bcolor={GRAPE_DARK}
-        mh={0}
-        br={8}
+        $pos-rel
+        $bgcolor={WHITE}
+        $bcolor={GRAPE_DARK}
+        $mh={0}
+        $br={8}
       >
         <InputField
           data-testid="input"
-          flex="1"
-          flex-row
-          m={0}
-          pr={32}
-          pl={12}
-          bcolor={TRANSPARENT}
-          bw={bw}
+          $flex="1"
+          $flex-row
+          $m={0}
+          $pr={32}
+          $pl={12}
+          $bcolor={TRANSPARENT}
+          $bw={$bw}
           ref={ref}
           required={required}
           className="input-element"
@@ -124,13 +124,13 @@ const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
 
         {(isTypePassword || (value && value.length)) && (
           <IconButton
-            bgcolor={TRANSPARENT}
+            $bgcolor={TRANSPARENT}
             iconSize={14}
-            align-m
-            pos-abs
-            pos-r={4}
-            pos-t={isTypePassword ? 2 : 6}
-            flex-row
+            $align-m
+            $pos-abs
+            $pos-r={4}
+            $pos-t={isTypePassword ? 2 : 6}
+            $flex-row
             type={isTypePassword ? 'view' : 'close'}
             tabIndex={-1}
             onClick={() => {
@@ -163,7 +163,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
         />
       )}
 
-      <Message mv={8} type={inputMessage.type}>
+      <Message $mv={8} type={inputMessage.type}>
         {inputMessage.text}
       </Message>
     </Label>

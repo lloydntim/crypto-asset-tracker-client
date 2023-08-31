@@ -100,7 +100,7 @@ const Profile = () => {
           removeCoin({variables: {creatorId: userId}});
         }}
       >
-        <Text color={GRAPE_DARK} tKey="profile:dialog_deleteAccount_message" />
+        <Text $color={GRAPE_DARK} tKey="profile:dialog_deleteAccount_message" />
       </Dialog>
 
       <Overlay
@@ -122,7 +122,7 @@ const Profile = () => {
             placeholderTKey="common:input.placeholder.enterNewEmail"
             value={email.value}
             onChange={formFieldChangeHandler}
-            mv={12}
+            $mv={12}
           />
           <Button
             tKey="profile:form_button_updateEmail"
@@ -167,14 +167,14 @@ const Profile = () => {
         )}
 
         {user?.getUser && (
-          <Box flex-col>
-            <Table mv={32}>
+          <Box $flex-col>
+            <Table $mv={32}>
               <TableRow>
                 <TableCell valign-m col-w={40}>
-                  <Text m={0} strong tKey="common:input.label.username" />
+                  <Text $m={0} strong tKey="common:input.label.username" />
                 </TableCell>
                 <TableCell valign-m col-w={40}>
-                  <Text m={0}>{user.getUser.username}</Text>
+                  <Text $m={0}>{user.getUser.username}</Text>
                 </TableCell>
               </TableRow>
               <TableRow>
@@ -214,10 +214,10 @@ const Profile = () => {
               </TableRow>
             </Table>
 
-            <Box flex-row align-l>
+            <Box $flex-row $align-l>
               {!JSON.parse(user.getUser.isVerified) && (
                 <Button
-                  m={8}
+                  $m={8}
                   tKey="profile:button_resendVerificationEmail"
                   onClick={() => {
                     resendVerificationToken({
@@ -233,8 +233,8 @@ const Profile = () => {
               )}
 
               <Button
-                m={8}
-                color={GRAPE_EXTRA_DARK}
+                $m={8}
+                $color={GRAPE_EXTRA_DARK}
                 tKey="profile:button_deleteAccount_text"
                 onClick={() => {
                   setDialog('deleteAccount');

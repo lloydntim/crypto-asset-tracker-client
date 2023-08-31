@@ -7,7 +7,6 @@ import Text from '../Text/Text';
 import IconButton from '../IconButton/IconButton';
 import {InputChangeEventHandler} from '../Input/InputHelper';
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
 interface EntryFieldProps {
   value: string;
   onChange?: InputChangeEventHandler;
@@ -35,7 +34,7 @@ const EntryField = ({
   }, [entryEditMode, ref]);
 
   return (
-    <Box data-testid="entry-field" flex-row align-m spc-btw>
+    <Box data-testid="entry-field" $flex-row $align-m $spc-btw>
       {entryEditMode ? (
         <Input
           name={name}
@@ -52,14 +51,14 @@ const EntryField = ({
         />
       ) : (
         <>
-          <Text font-sz={14}>
+          <Text $font-sz={14}>
             {!Number.isNaN(parseFloat(entryValue)) && location
               ? formatAmount(parseFloat(entryValue), location)
               : entryValue}
           </Text>
           <IconButton
             aria-label="edit-button"
-            mh={8}
+            $mh={8}
             type="edit"
             iconSize={16}
             onClick={() => {

@@ -122,7 +122,7 @@ const Register = () => {
             tKey="common:button.register"
             type="submit"
             onClick={submitForm}
-            mv={16}
+            $mv={16}
           />
 
           <Message type={loading ? 'info' : message?.type ?? ''}>
@@ -130,7 +130,7 @@ const Register = () => {
           </Message>
         </Form>
 
-        <Link color={WHITE} to="/login" tKey="common:button.login" />
+        <Link $color={WHITE} to="/login" tKey="common:button.login" />
       </PageContent>
     </Page>
   );

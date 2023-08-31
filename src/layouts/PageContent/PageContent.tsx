@@ -28,22 +28,22 @@ const PageContent = ({
 }: PageContentProps) => {
   return (
     <>
-      <Header flex-row spc-btw align-m>
+      <Header $flex-row $spc-btw $align-m>
         <Navigation />
-        {isAuthorised && <Logo flex-row align-m size={24} showText />}
+        {isAuthorised && <Logo $flex-row $align-m size={24} showText />}
       </Header>
 
       <Body
-        flex-col
-        align-m
-        flex="1"
-        h="auto"
-        {...(bodyWidth && {w: bodyWidth, 'align-self-c': true})}
+        $flex-col
+        $align-m
+        $flex="1"
+        $h="auto"
+        {...(bodyWidth && {$w: bodyWidth, 'align-self-c': true})}
       >
-        {!isAuthorised && <Logo flex-row align-c $w="100%" mv={60} />}
+        {!isAuthorised && <Logo $flex-row $align-c $w="100%" $mv={60} />}
 
         {(title || titleTKey) && (
-          <Title mv={24} align-c align-self-l tKey={titleTKey}>
+          <Title $mv={24} $align-c $align-self-l tKey={titleTKey}>
             {title}
           </Title>
         )}

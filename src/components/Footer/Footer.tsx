@@ -24,12 +24,12 @@ const Footer = ({
   return (
     <FooterSt
       className="footer"
-      pos-l={0}
-      pos-b={0}
-      pv={20}
+      $pos-l={0}
+      $pos-b={0}
+      $pv={20}
       $w="100%"
-      flex-row
-      align-c
+      $flex-row
+      $align-c
       {...rest}
     >
       &copy; {companyYears} {companyName}. All rights reserved.

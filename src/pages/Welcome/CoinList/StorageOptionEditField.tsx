@@ -26,7 +26,7 @@ const StorageOptionEditField = ({
       {editMode ? (
         <EntryField {...{location, value, onBlur, editMode}} />
       ) : (
-        <Text $valign-m font-sz={14}>
+        <Text $valign-m $font-sz={14}>
           {staticValue}
         </Text>
       )}

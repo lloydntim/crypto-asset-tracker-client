@@ -1,22 +1,13 @@
 import React from 'react';
 import {BLACK} from '../../constants/colors';
+import {IconProps} from './Icon';
 
-const IconClose = ({
-  w = 22,
-  h = 22,
-  sz = 22,
-  color = BLACK,
-}: {
-  w?: number;
-  h?: number;
-  sz?: number;
-  color?: string;
-}) => (
+const IconClose = ({$w = 22, $h = 22, $sz = 22, $color = BLACK}: IconProps) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    width={sz || w}
-    height={sz || h}
-    fill={color}
+    width={$sz || $w}
+    height={$sz || $h}
+    fill={$color}
     viewBox="0 0 384.15 384.15"
     data-testid="icon-close"
   >

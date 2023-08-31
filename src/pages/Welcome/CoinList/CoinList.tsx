@@ -83,7 +83,7 @@ const CoinList = (props: CoinListProps) => {
           <Text tKey={coinListDialogMapper[dialog]?.messageTKey} />
         </Dialog>
       )}
-      <Container mv={32} align-c>
+      <Container $mv={32} $align-c>
         <CoinListTitleSection
           {...{
             balance,
@@ -97,16 +97,16 @@ const CoinList = (props: CoinListProps) => {
         />
 
         {editMode && (
-          <Container flex-row align-m>
-            <Form ph={8} pt={12} flex-row $w="100%" align-t>
+          <Container $flex-row $align-m>
+            <Form $ph={8} $pt={12} $flex-row $w="100%" $align-t>
               <Select
-                mh={8}
+                $mh={8}
                 options={newCoinSelectOptions}
                 onChange={(value) => setNewCoinSelectOption(value)}
               />
 
               <Input
-                mh={8}
+                $mh={8}
                 name={newCoin.name}
                 value={newCoin.value}
                 required={newCoin.required}
@@ -122,9 +122,9 @@ const CoinList = (props: CoinListProps) => {
 
               <IconButton
                 type="plus"
-                align-c
-                flex-row
-                mh={8}
+                $align-c
+                $flex-row
+                $mh={8}
                 onClick={() => {
                   if (typeof newCoin.value !== 'undefined' && symbols) {
                     const [symbol]: {id: string; name: string}[] =
@@ -145,9 +145,9 @@ const CoinList = (props: CoinListProps) => {
         )}
 
         <List<CoinListItem>
-          lst-stl="none"
-          mv={8}
-          p={0}
+          $lst-stl="none"
+          $mv={8}
+          $p={0}
           data={coinList}
           renderItem={({
             item: {id, coinId, name, price, value, total, storageOptions},

@@ -39,15 +39,15 @@ const Radio = ({
   onChange,
 }: RadioProps) => (
   <RadioContainer
-    color={labelColor}
+    $color={labelColor}
     className="radio"
     htmlFor={name}
-    flex-row
-    align-m
+    $flex-row
+    $align-m
     data-testid="radio"
   >
     <InputField
-      hidden
+      $hidden
       id={name}
       value={value}
       className="radio-input"
@@ -57,20 +57,20 @@ const Radio = ({
       data-testid="radio-element"
     />
     <RadioBackgroundSt
-      flex-row
-      br={10}
-      sz={20}
-      bgcolor={WHITE}
-      bcolor={WHITE}
-      bw={2}
-      bs="solid"
-      pos-rel
-      align-m
-      align-c
+      $flex-row
+      $br={10}
+      $sz={20}
+      $bgcolor={WHITE}
+      $bcolor={WHITE}
+      $bw={2}
+      $bs="solid"
+      $pos-rel
+      $align-m
+      $align-c
       className="radio-background"
       isChecked={checked}
     />
-    <Span tKey={labelTKey} flex-row mv={8} mh={24} className="radio-label">
+    <Span tKey={labelTKey} $flex-row $mv={8} $mh={24} className="radio-label">
       {label}
     </Span>
   </RadioContainer>

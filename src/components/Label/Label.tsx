@@ -10,7 +10,7 @@ interface LabelProps
     >,
     StyledProps,
     LocalisationProps {
-  color?: string;
+  $color?: string;
   children?: ReactNode;
   className?: string;
   htmlFor?: string;

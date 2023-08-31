@@ -24,9 +24,9 @@ const Logo = ({
 }: LogoProps) => {
   return (
     <Box {...rest}>
-      <Icon type="logo" color={WHITE} sz={size} />
+      <Icon type="logo" $color={WHITE} $sz={size} />
       {showText && (
-        <Text mh={textSize || size / 2} font-sz={textSize || size / 2}>
+        <Text $mh={textSize || size / 2} $font-sz={textSize || size / 2}>
           CryptoAssetTracker
         </Text>
       )}

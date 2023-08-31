@@ -24,10 +24,10 @@ const CoinListTitleSection = ({
 }: CoinListTitleSectionProps) => {
   return (
     <>
-      <Box flex-row mv={12}>
+      <Box $flex-row $mv={12}>
         <Button
-          mr={12}
-          color={GRAPE_EXTRA_DARK}
+          $mr={12}
+          $color={GRAPE_EXTRA_DARK}
           onClick={() => {
             onToggleEditMode(!editMode);
           }}
@@ -37,13 +37,13 @@ const CoinListTitleSection = ({
       </Box>
 
       <Container
-        bgcolor={WHITE}
-        color={BLACK}
-        br={8}
-        p={20}
-        mv={4}
-        flex-h
-        spc-btw
+        $bgcolor={WHITE}
+        $color={BLACK}
+        $br={8}
+        $p={20}
+        $mv={4}
+        $flex-h
+        $spc-btw
       >
         <Text strong tKey="welcome:coinlist.text.myPortfolio" />{' '}
         <Text

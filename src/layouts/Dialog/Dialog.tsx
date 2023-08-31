@@ -33,27 +33,27 @@ const Dialog = ({
     <Box
       className="dialog"
       data-testid="dialog"
-      pos-fix
-      pos-t={0}
-      pos-l={0}
-      cover
-      z-idx={4}
-      align-c
-      flex-col
-      bgcolor={BLACK_OPACITY_75PC}
+      $pos-fix
+      $pos-t={0}
+      $pos-l={0}
+      $cover
+      $z-idx={4}
+      $align-c
+      $flex-col
+      $bgcolor={BLACK_OPACITY_75PC}
     >
       <Box
-        pos-rel
-        z-idx={3}
+        $pos-rel
+        $z-idx={3}
         $w="calc(100% - 48px)"
-        max-w={408}
-        flex-col
-        p={28}
-        br={8}
-        bgcolor={WHITE}
-        align-self-c
+        $max-w={408}
+        $flex-col
+        $p={28}
+        $br={8}
+        $bgcolor={WHITE}
+        $align-self-c
         className="content"
-        color={GRAPE_DARK}
+        $color={GRAPE_DARK}
       >
         {(titleTKey || title) && (
           <Headline size="h3" tKey={titleTKey}>
@@ -64,20 +64,26 @@ const Dialog = ({
         <IconButton
           type="close"
           onClick={onCancelButtonClick}
-          pos-abs
-          pos-r={12}
-          pos-t={8}
+          $pos-abs
+          $pos-r={12}
+          $pos-t={8}
         />
 
-        <Box pv={24} className="dialog-content">
+        <Box $pv={24} className="dialog-content">
           {children}
         </Box>
 
-        <Box align-r className="button-group" $w="100%" flex-row>
-          <Button rank="secondary" onClick={onContinueButtonClick} align-c>
+        <Box $align-r className="button-group" $w="100%" $flex-row>
+          <Button rank="secondary" onClick={onContinueButtonClick} $align-c>
             {continueButtonText}
           </Button>
-          <Button $w="35%" p={8} ml={8} onClick={onCancelButtonClick} align-c>
+          <Button
+            $w="35%"
+            $p={8}
+            $ml={8}
+            onClick={onCancelButtonClick}
+            $align-c
+          >
             {cancelButtonText}
           </Button>
         </Box>

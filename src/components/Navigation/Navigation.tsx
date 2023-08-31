@@ -45,7 +45,7 @@ const Navigation = ({title = '', titleTKey = '', ...rest}: NavigationProps) => {
     <NavigationSt
       data-testid="main-nav"
       className="navigation"
-      pv={32}
+      $pv={32}
       $w="100%"
       {...rest}
     >
@@ -56,14 +56,14 @@ const Navigation = ({title = '', titleTKey = '', ...rest}: NavigationProps) => {
         <LanguageSwitch />
 
         <List<string>
-          p={0}
-          mv={20}
+          $p={0}
+          $mv={20}
           data={authenticatedLinks}
           renderItem={({item}: {item: string}) => {
             return (
               <Link
-                color={GRAPE_EXTRA_DARK}
-                txt-deco="none"
+                $color={GRAPE_EXTRA_DARK}
+                $txt-deco="none"
                 to={`/${item}`}
                 tKey={`${item.toLowerCase()}:navTitle`}
               />

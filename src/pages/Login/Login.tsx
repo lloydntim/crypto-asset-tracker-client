@@ -66,7 +66,7 @@ const Login = () => {
             tKey="button.login"
             type="submit"
             onClick={submitForm}
-            mv={16}
+            $mv={16}
           />
           {loading && <Message tKey="common:message:loading:text" />}
           {displayResponseErrorMessage(
@@ -75,9 +75,9 @@ const Login = () => {
           )}
         </Form>
 
-        <Link color={WHITE} to="/register" tKey="button.register" />
+        <Link $color={WHITE} to="/register" tKey="button.register" />
 
-        <Link color={WHITE} to="/forgot" tKey="login:link.forgotPassword" />
+        <Link $color={WHITE} to="/forgot" tKey="login:link.forgotPassword" />
       </PageContent>
     </Page>
   );

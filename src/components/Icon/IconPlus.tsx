@@ -1,23 +1,14 @@
 import React from 'react';
 import {BLACK} from '../../constants/colors';
+import {IconProps} from './Icon';
 
-const IconPlus = ({
-  w = 22,
-  h = 22,
-  sz = 22,
-  color = BLACK,
-}: {
-  w?: number;
-  h?: number;
-  sz?: number;
-  color?: string;
-}) => {
+const IconPlus = ({$w = 22, $h = 22, $sz = 22, $color = BLACK}: IconProps) => {
   return (
     <svg
       version="1.1"
-      width={sz || w}
-      height={sz || h}
-      fill={color}
+      width={$sz || $w}
+      height={$sz || $h}
+      fill={$color}
       viewBox="-4 3 32 16"
       xmlns="http://www.w3.org/2000/svg"
       data-testid="icon-plus"

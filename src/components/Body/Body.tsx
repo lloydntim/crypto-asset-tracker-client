@@ -9,7 +9,7 @@ interface BodyProps extends StyledProps {
 
 const Body = ({children, ...rest}: BodyProps) => {
   return (
-    <Box className="body" role="section" h="100%" {...rest}>
+    <Box className="body" role="section" $h="100%" {...rest}>
       {children}
     </Box>
   );

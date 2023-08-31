@@ -33,27 +33,27 @@ const CoinListItemSection = ({
   return (
     <Box
       className="coin-list-item"
-      flex-row
-      bgcolor={WHITE}
-      pv={16}
-      ph={16}
-      br={8}
-      mv={4}
+      $flex-row
+      $bgcolor={WHITE}
+      $pv={16}
+      $ph={16}
+      $br={8}
+      $mv={4}
     >
       <Button
-        bgcolor={TRANSPARENT}
-        bw={0}
-        m={0}
-        pv={0}
-        ph={0}
+        $bgcolor={TRANSPARENT}
+        $bw={0}
+        $m={0}
+        $pv={0}
+        $ph={0}
         onClick={onClick}
       >
         <Table>
           <TableRow>
             <TableCell $valign-m $col-w={40}>
               <Image
-                flex-row
-                sz={24}
+                $flex-row
+                $sz={24}
                 src={`https://s2.coinmarketcap.com/static/img/coins/64x64/${coinId}.png`}
               />
             </TableCell>
@@ -66,7 +66,7 @@ const CoinListItemSection = ({
             <TableCell $valign-m $col-w={160} $txt-align-r>
               {formatAmount(coinTotal, location)}
             </TableCell>
-            <TableCell $valign-m ph={12} $col-w={120} $txt-align-r>
+            <TableCell $valign-m $ph={12} $col-w={120} $txt-align-r>
               {formatToCurrency(value, convert, location)}
             </TableCell>
           </TableRow>
@@ -74,7 +74,7 @@ const CoinListItemSection = ({
       </Button>
       {editMode && (
         <IconButton
-          mh={8}
+          $mh={8}
           type="delete"
           iconSize={16}
           onClick={deleteButtonClickHandler}

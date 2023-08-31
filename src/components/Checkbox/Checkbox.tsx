@@ -53,25 +53,25 @@ const Checkbox = ({
 
   return (
     <Label
-      crsr-pointer
-      flex-row
-      align-r
-      align-m
-      opacity={disabled ? 0.33 : 1}
+      $crsr-pointer
+      $flex-row
+      $align-r
+      $align-m
+      $opacity={disabled ? 0.33 : 1}
       className={`checkbox ${asSwitch && 'as-switch'}`}
       data-testid="checkbox-label"
       htmlFor={name}
     >
       {label && (
-        <Span mr={8} color={isActiveColor} className="checkbox-label-text">
+        <Span $mr={8} $color={isActiveColor} className="checkbox-label-text">
           {label}
         </Span>
       )}
       <InputField
-        hidden
-        pos-abs
-        pos-l={0}
-        pos-r={0}
+        $hidden
+        $pos-abs
+        $pos-l={0}
+        $pos-r={0}
         id={name}
         disabled={disabled}
         className="checkbox-element"
@@ -81,22 +81,22 @@ const Checkbox = ({
         onChange={onChange}
       />
       <BackgroundSt
-        pos-rel
+        $pos-rel
         {...(asSwitch
           ? {
-              br: 10,
+              $br: 10,
               w: 36,
               h: 20,
             }
           : {
-              br: 6,
+              $br: 6,
               sz: 20,
             })}
-        bs="solid"
+        $bs="solid"
         checked={checked}
         asSwitch={asSwitch}
-        bgcolor={isActiveColor}
-        bcolor={isActiveColor}
+        $bgcolor={isActiveColor}
+        $bcolor={isActiveColor}
         className="checkbox-background"
       />
     </Label>

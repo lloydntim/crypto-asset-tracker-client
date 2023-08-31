@@ -54,7 +54,7 @@ const Reset = () => {
             required={password.required}
             value={password.value}
             onChange={formFieldChangeHandler}
-            mv={12}
+            $mv={12}
           />
 
           <Input
@@ -65,14 +65,14 @@ const Reset = () => {
             required={passwordConfirm.required}
             value={passwordConfirm.value}
             onChange={formFieldChangeHandler}
-            mv={12}
+            $mv={12}
           />
 
           <Button
             disabled={!isFormValid}
             tKey="common:button.submit"
             type="submit"
-            mv={12}
+            $mv={12}
             onClick={() => {
               updatePassword({
                 variables: {resetPasswordToken, password: password.value},

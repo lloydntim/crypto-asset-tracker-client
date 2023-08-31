@@ -26,22 +26,22 @@ const Menu = ({
   return (
     <Aside
       data-testid="menu"
-      animation="left 500ms"
-      bgcolor={WHITE}
-      pos-fix
-      z-idx={4}
-      h="100vh"
-      pv={20}
-      pl={40}
-      pr={20}
+      $animation="left 500ms"
+      $bgcolor={WHITE}
+      $pos-fix
+      $z-idx={4}
+      $h="100vh"
+      $pv={20}
+      $pl={40}
+      $pr={20}
       $w={MENU_WIDTH}
-      max-w={MENU_MAX_WIDTH}
-      pos-t={0}
-      pos-l={visible ? 0 : `-${MENU_WIDTH}`}
+      $max-w={MENU_MAX_WIDTH}
+      $pos-t={0}
+      $pos-l={visible ? 0 : `-${MENU_WIDTH}`}
       className={className}
       {...rest}
     >
-      <Box className="menu-button-close" align-r flex-row>
+      <Box className="menu-button-close" $align-r $flex-row>
         <IconButton
           role="button"
           type="close"

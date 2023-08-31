@@ -32,7 +32,7 @@ const Forgot = () => {
           />
 
           <Button
-            mv={16}
+            $mv={16}
             tKey="common:button.submit"
             type="submit"
             onClick={() => {
@@ -43,7 +43,7 @@ const Forgot = () => {
           />
         </Form>
 
-        <Link color={WHITE} to="/login" tKey="common:button:login" />
+        <Link $color={WHITE} to="/login" tKey="common:button:login" />
 
         {loading && <Message type="info" tKey="common:message:loading:text" />}
 
