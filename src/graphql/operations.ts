@@ -62,7 +62,8 @@ export const GET_COIN_LIST = gql`
         symbol
         total
         value
-        storageOptions {
+        creatorId
+        holdingStorages {
           type
           total
           holdings {

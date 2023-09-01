@@ -2,7 +2,7 @@ import React, {useState, useEffect, FocusEventHandler} from 'react';
 import Box from '../Box/Box';
 import Input from '../Input/Input';
 import useForm from '../../hooks/useForm';
-import {formatAmount} from '../../pages/Welcome/CoinList/CoinListHelper';
+import {formatAmount} from '../../pages/Portfolio/CoinList/CoinListHelper';
 import Text from '../Text/Text';
 import IconButton from '../IconButton/IconButton';
 import {InputChangeEventHandler} from '../Input/InputHelper';

@@ -4,7 +4,7 @@ import {RouteObject, useRoutes} from 'react-router-dom';
 const Home = lazy(() => import('../pages/Home/Home'));
 const Login = lazy(() => import('../pages/Login/Login'));
 const Register = lazy(() => import('../pages/Register/Register'));
-const Welcome = lazy(() => import('../pages/Welcome/Welcome'));
+const Portfolio = lazy(() => import('../pages/Portfolio/Portfolio'));
 const About = lazy(() => import('../pages/About/About'));
 const Verify = lazy(() => import('../pages/Verify/Verify'));
 const Forgot = lazy(() => import('../pages/Forgot/Forgot'));
@@ -31,8 +31,8 @@ export default () => {
       element: <Profile />,
     },
     {
-      path: 'welcome',
-      element: <AuthenticationRoute component={<Welcome />} />,
+      path: 'portfolio',
+      element: <AuthenticationRoute component={<Portfolio />} />,
     },
 
     {

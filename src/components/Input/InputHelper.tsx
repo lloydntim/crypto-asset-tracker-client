@@ -9,7 +9,7 @@ export type DataListItem = {
 
 export type InputChangeEvent = {
   name?: string;
-  value?: string | undefined;
+  value: string;
   files?: FileList | File[] | null;
   error?: string;
   required?: boolean;

@@ -1,36 +1,33 @@
-import React, {ReactNode} from 'react';
+import React from 'react';
 import {Box, Button, Container, Select, Text} from '../../../components';
-import {CoinListProps, CurrencyOption, StorageOption} from './CoinListHelper';
+import {Currency, currenciesOptions} from './CoinListHelper';
 import {BLACK, GRAPE_EXTRA_DARK, WHITE} from '../../../constants/colors';
 import {formatToCurrency} from '../../../utils';
 
-interface CoinListTitleSectionProps
-  extends Pick<CoinListProps, 'onChangeCurrency' | 'convert'> {
+interface CoinListHeaderProps {
   balance: number;
   editMode: boolean;
   location: string;
+  currency: Currency;
+  onChangeCurrency: (value: string) => void;
   onToggleEditMode: (editMode: boolean) => void;
-  currenciesOptions: CurrencyOption[];
 }
 
-const CoinListTitleSection = ({
+const CoinListHeader = ({
   balance,
   editMode,
-  currenciesOptions,
   onChangeCurrency,
-  convert,
+  currency,
   location,
   onToggleEditMode,
-}: CoinListTitleSectionProps) => {
+}: CoinListHeaderProps) => {
   return (
     <>
       <Box $flex-row $mv={12}>
         <Button
           $mr={12}
           $color={GRAPE_EXTRA_DARK}
-          onClick={() => {
-            onToggleEditMode(!editMode);
-          }}
+          onClick={() => onToggleEditMode(!editMode)}
           tKey={`common:button.${editMode ? 'save' : 'edit'}`}
         />
         <Select options={currenciesOptions} onChange={onChangeCurrency} />
@@ -45,11 +42,11 @@ const CoinListTitleSection = ({
         $flex-h
         $spc-btw
       >
-        <Text strong tKey="welcome:coinlist.text.myPortfolio" />{' '}
+        <Text strong tKey="portfolio:coinlist.text.myPortfolio" />
         <Text
-          tKey="welcome:coinlist.text.portfolioTotal"
+          tKey="portfolio:coinlist.text.portfolioTotal"
           tOptions={{
-            total: formatToCurrency(balance, convert, location),
+            total: formatToCurrency(balance, currency, location),
           }}
         />
       </Container>
@@ -57,4 +54,4 @@ const CoinListTitleSection = ({
   );
 };
 
-export default CoinListTitleSection;
+export default CoinListHeader;
