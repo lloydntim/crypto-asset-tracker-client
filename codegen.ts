@@ -11,16 +11,14 @@ const config: CodegenConfig = {
     },
     'src/hooks/graphql/index.ts': {
       schema: 'http://localhost:3001/graphql',
-      // preset: 'near-operation-file',
-      plugins: ['typescript', 'typescript-react-apollo'],
+      plugins: [
+        'typescript',
+        'typescript-operations',
+        'typescript-react-apollo',
+      ],
       config: {
         withHooks: true,
       },
-      // presetConfig: {
-      // extension: '.generated.ts',
-      // baseTypesPath: 'src/graphql/types.ts',
-      // folder: '../hooks/graphql',
-      // },
     },
   },
 };

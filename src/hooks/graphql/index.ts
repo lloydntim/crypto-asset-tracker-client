@@ -75,6 +75,12 @@ export type CoinListing = {
   symbol?: Maybe<Scalars['String']['output']>;
 };
 
+export type CoinSymbol = {
+  __typename?: 'CoinSymbol';
+  id?: Maybe<Scalars['ID']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+};
+
 export type Exchange = {
   __typename?: 'Exchange';
   id?: Maybe<Scalars['ID']['output']>;
@@ -209,10 +215,10 @@ export type Query = {
   getCoin?: Maybe<Coin>;
   getCoinList?: Maybe<CoinList>;
   getCoinListings?: Maybe<Array<Maybe<CoinListing>>>;
+  getCoinSymbols?: Maybe<Array<Maybe<CoinSymbol>>>;
   getCoins?: Maybe<Array<Maybe<Coin>>>;
   getExchanges?: Maybe<Array<Maybe<Exchange>>>;
   getPasswordToken?: Maybe<Auth>;
-  getSymbols?: Maybe<Array<Maybe<Symbol>>>;
   getUser?: Maybe<User>;
   getUsers?: Maybe<Array<Maybe<User>>>;
 };
@@ -245,12 +251,6 @@ export type QueryGetUserArgs = {
   username?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type Symbol = {
-  __typename?: 'Symbol';
-  id?: Maybe<Scalars['ID']['output']>;
-  name?: Maybe<Scalars['String']['output']>;
-};
-
 export type User = {
   __typename?: 'User';
   accessToken?: Maybe<Scalars['String']['output']>;
@@ -260,6 +260,260 @@ export type User = {
   password?: Maybe<Scalars['String']['output']>;
   refreshToken?: Maybe<Scalars['String']['output']>;
   username?: Maybe<Scalars['String']['output']>;
+};
+
+export type LoginMutationVariables = Exact<{
+  username?: InputMaybe<Scalars['String']['input']>;
+  password?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+export type LoginMutation = {
+  __typename?: 'Mutation';
+  login?: {__typename?: 'Auth'; token?: string | null} | null;
+};
+
+export type RegisterMutationVariables = Exact<{
+  username?: InputMaybe<Scalars['String']['input']>;
+  email?: InputMaybe<Scalars['String']['input']>;
+  password?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+export type RegisterMutation = {
+  __typename?: 'Mutation';
+  register?: {__typename?: 'Auth'; token?: string | null} | null;
+};
+
+export type CreatePasswordTokenMutationVariables = Exact<{
+  username?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+export type CreatePasswordTokenMutation = {
+  __typename?: 'Mutation';
+  createPasswordToken?: {__typename?: 'Auth'; message?: string | null} | null;
+};
+
+export type GetPasswordTokenQueryVariables = Exact<{
+  resetPasswordToken?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+export type GetPasswordTokenQuery = {
+  __typename?: 'Query';
+  getPasswordToken?: {__typename?: 'Auth'; token?: string | null} | null;
+};
+
+export type UpdatePasswordMutationVariables = Exact<{
+  resetPasswordToken?: InputMaybe<Scalars['String']['input']>;
+  password?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+export type UpdatePasswordMutation = {
+  __typename?: 'Mutation';
+  updatePassword?: {__typename?: 'Auth'; token?: string | null} | null;
+};
+
+export type VerifyMutationVariables = Exact<{
+  token?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+export type VerifyMutation = {
+  __typename?: 'Mutation';
+  verify?: {__typename?: 'Auth'; token?: string | null} | null;
+};
+
+export type GetCoinListQueryVariables = Exact<{
+  creatorId?: InputMaybe<Scalars['ID']['input']>;
+  convert?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+export type GetCoinListQuery = {
+  __typename?: 'Query';
+  getCoinList?: {
+    __typename?: 'CoinList';
+    balance?: number | null;
+    coins?: Array<{
+      __typename?: 'CoinListItem';
+      id: string;
+      coinId?: string | null;
+      price?: number | null;
+      name?: string | null;
+      symbol?: string | null;
+      total?: number | null;
+      value?: number | null;
+      creatorId?: string | null;
+      holdingStorages?: Array<{
+        __typename?: 'HoldingStorage';
+        type?: string | null;
+        total?: string | null;
+        holdings?: Array<{
+          __typename?: 'Holding';
+          id?: string | null;
+          amount?: number | null;
+          name?: string | null;
+          value?: number | null;
+        } | null> | null;
+      } | null> | null;
+    } | null> | null;
+  } | null;
+};
+
+export type GetCoinSymbolsQueryVariables = Exact<{[key: string]: never}>;
+
+export type GetCoinSymbolsQuery = {
+  __typename?: 'Query';
+  getCoinSymbols?: Array<{
+    __typename?: 'CoinSymbol';
+    name?: string | null;
+    id?: string | null;
+  } | null> | null;
+};
+
+export type AddCoinMutationVariables = Exact<{
+  symbol?: InputMaybe<Scalars['String']['input']>;
+  slug?: InputMaybe<Scalars['String']['input']>;
+  creatorId: Scalars['ID']['input'];
+}>;
+
+export type AddCoinMutation = {
+  __typename?: 'Mutation';
+  addCoin?: {
+    __typename?: 'Coin';
+    symbol?: string | null;
+    creatorId?: string | null;
+    id?: string | null;
+    holdings: Array<{__typename?: 'Holding'; name?: string | null}>;
+  } | null;
+};
+
+export type RemoveCoinMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['ID']['input']>;
+  creatorId?: InputMaybe<Scalars['ID']['input']>;
+}>;
+
+export type RemoveCoinMutation = {
+  __typename?: 'Mutation';
+  removeCoin?: {
+    __typename?: 'Coin';
+    creatorId?: string | null;
+    id?: string | null;
+    name?: string | null;
+  } | null;
+};
+
+export type AddCoinHoldingMutationVariables = Exact<{
+  id: Scalars['ID']['input'];
+  holding?: InputMaybe<HoldingInput>;
+}>;
+
+export type AddCoinHoldingMutation = {
+  __typename?: 'Mutation';
+  addCoinHolding?: {
+    __typename?: 'Coin';
+    symbol?: string | null;
+    id?: string | null;
+    holdings: Array<{
+      __typename?: 'Holding';
+      name?: string | null;
+      holdingId?: string | null;
+      id?: string | null;
+      currency?: string | null;
+      type?: string | null;
+    }>;
+  } | null;
+};
+
+export type UpdateCoinHoldingMutationVariables = Exact<{
+  holdingId: Scalars['ID']['input'];
+  holding?: InputMaybe<HoldingInput>;
+}>;
+
+export type UpdateCoinHoldingMutation = {
+  __typename?: 'Mutation';
+  updateCoinHolding?: {
+    __typename?: 'Coin';
+    id?: string | null;
+    symbol?: string | null;
+    coinId?: string | null;
+    holdings: Array<{
+      __typename?: 'Holding';
+      name?: string | null;
+      id?: string | null;
+      amount?: number | null;
+    }>;
+  } | null;
+};
+
+export type RemoveCoinHoldingMutationVariables = Exact<{
+  holdingId: Scalars['ID']['input'];
+}>;
+
+export type RemoveCoinHoldingMutation = {
+  __typename?: 'Mutation';
+  removeCoinHolding?: {
+    __typename?: 'Coin';
+    id?: string | null;
+    symbol?: string | null;
+    coinId?: string | null;
+    holdings: Array<{
+      __typename?: 'Holding';
+      name?: string | null;
+      id?: string | null;
+      currency?: string | null;
+    }>;
+  } | null;
+};
+
+export type ResendVerificationTokenMutationVariables = Exact<{
+  email?: InputMaybe<Scalars['String']['input']>;
+  username?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+export type ResendVerificationTokenMutation = {
+  __typename?: 'Mutation';
+  resendVerificationToken?: {
+    __typename?: 'Auth';
+    message?: string | null;
+  } | null;
+};
+
+export type GetUserQueryVariables = Exact<{
+  id?: InputMaybe<Scalars['ID']['input']>;
+  username?: InputMaybe<Scalars['String']['input']>;
+  email?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+export type GetUserQuery = {
+  __typename?: 'Query';
+  getUser?: {
+    __typename?: 'User';
+    username?: string | null;
+    email?: string | null;
+    isVerified?: string | null;
+  } | null;
+};
+
+export type UpdateUserMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['ID']['input']>;
+  username?: InputMaybe<Scalars['String']['input']>;
+  email?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+export type UpdateUserMutation = {
+  __typename?: 'Mutation';
+  updateUser?: {
+    __typename?: 'User';
+    username?: string | null;
+    email?: string | null;
+    isVerified?: string | null;
+  } | null;
+};
+
+export type RemoveUserMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['ID']['input']>;
+}>;
+
+export type RemoveUserMutation = {
+  __typename?: 'Mutation';
+  removeUser?: {__typename?: 'User'; id?: string | null} | null;
 };
 
 export const LoginDocument = gql`
@@ -645,9 +899,9 @@ export type GetCoinListQueryResult = Apollo.QueryResult<
   GetCoinListQuery,
   GetCoinListQueryVariables
 >;
-export const GetSymbolsDocument = gql`
-  query GetSymbols {
-    getSymbols {
+export const GetCoinSymbolsDocument = gql`
+  query GetCoinSymbols {
+    getCoinSymbols {
       name
       id
     }
@@ -655,51 +909,53 @@ export const GetSymbolsDocument = gql`
 `;
 
 /**
- * __useGetSymbolsQuery__
+ * __useGetCoinSymbolsQuery__
  *
- * To run a query within a React component, call `useGetSymbolsQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetSymbolsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useGetCoinSymbolsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetCoinSymbolsQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useGetSymbolsQuery({
+ * const { data, loading, error } = useGetCoinSymbolsQuery({
  *   variables: {
  *   },
  * });
  */
-export function useGetSymbolsQuery(
+export function useGetCoinSymbolsQuery(
   baseOptions?: Apollo.QueryHookOptions<
-    GetSymbolsQuery,
-    GetSymbolsQueryVariables
+    GetCoinSymbolsQuery,
+    GetCoinSymbolsQueryVariables
   >,
 ) {
   const options = {...defaultOptions, ...baseOptions};
-  return Apollo.useQuery<GetSymbolsQuery, GetSymbolsQueryVariables>(
-    GetSymbolsDocument,
+  return Apollo.useQuery<GetCoinSymbolsQuery, GetCoinSymbolsQueryVariables>(
+    GetCoinSymbolsDocument,
     options,
   );
 }
-export function useGetSymbolsLazyQuery(
+export function useGetCoinSymbolsLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<
-    GetSymbolsQuery,
-    GetSymbolsQueryVariables
+    GetCoinSymbolsQuery,
+    GetCoinSymbolsQueryVariables
   >,
 ) {
   const options = {...defaultOptions, ...baseOptions};
-  return Apollo.useLazyQuery<GetSymbolsQuery, GetSymbolsQueryVariables>(
-    GetSymbolsDocument,
+  return Apollo.useLazyQuery<GetCoinSymbolsQuery, GetCoinSymbolsQueryVariables>(
+    GetCoinSymbolsDocument,
     options,
   );
 }
-export type GetSymbolsQueryHookResult = ReturnType<typeof useGetSymbolsQuery>;
-export type GetSymbolsLazyQueryHookResult = ReturnType<
-  typeof useGetSymbolsLazyQuery
+export type GetCoinSymbolsQueryHookResult = ReturnType<
+  typeof useGetCoinSymbolsQuery
 >;
-export type GetSymbolsQueryResult = Apollo.QueryResult<
-  GetSymbolsQuery,
-  GetSymbolsQueryVariables
+export type GetCoinSymbolsLazyQueryHookResult = ReturnType<
+  typeof useGetCoinSymbolsLazyQuery
+>;
+export type GetCoinSymbolsQueryResult = Apollo.QueryResult<
+  GetCoinSymbolsQuery,
+  GetCoinSymbolsQueryVariables
 >;
 export const AddCoinDocument = gql`
   mutation AddCoin($symbol: String, $slug: String, $creatorId: ID!) {

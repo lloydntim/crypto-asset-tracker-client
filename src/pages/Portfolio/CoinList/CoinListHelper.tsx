@@ -37,7 +37,7 @@ export interface Holding {
   ownerId?: string;
 }
 
-export interface Coin {
+export interface CoinItem {
   id: string;
   symbol: string;
   holdings: Holding[];

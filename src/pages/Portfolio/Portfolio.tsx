@@ -67,7 +67,9 @@ const CoinList = () => {
             }}
           />
 
-          <CoinListItemForm {...{currency, visible: editMode}} />
+          <CoinListItemForm
+            {...{coins: coinList, currency, visible: editMode}}
+          />
 
           <List<Coin>
             $lst-stl="none"

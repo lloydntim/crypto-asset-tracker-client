@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useMemo, useState} from 'react';
 import {
   Container,
   IconButton,
@@ -7,24 +7,34 @@ import {
   Select,
   Message,
 } from '../../../components';
-import {CoinSymbol, NewCoinOptions, coinSelectOptions} from './CoinListHelper';
+import {
+  Coin,
+  CoinSymbol,
+  NewCoinOptions,
+  coinSelectOptions,
+} from './CoinListHelper';
 import {useForm} from '../../../hooks';
 import {InMemoryCache, useMutation, useQuery} from '@apollo/client';
 import {
   ADD_COIN,
   GET_COIN_LIST,
-  GET_SYMBOLS,
+  GET_COIN_SYMBOLS,
 } from '../../../graphql/operations';
 import {useAuthentication} from '../../../providers/AuthenticationProvider';
 import {displayResponseErrorMessage} from '../../../helpers/displayResponseErrorMessage';
 import {slugify} from '../../../utils';
 
 interface CoinListItemFormProps {
+  coins: Coin[];
   visible: boolean;
   currency: string;
 }
 
-const CoinListItemForm = ({visible, currency}: CoinListItemFormProps) => {
+const CoinListItemForm = ({
+  coins,
+  visible,
+  currency,
+}: CoinListItemFormProps) => {
   const {currentUser} = useAuthentication();
   const creatorId = currentUser().id;
   const getCoinListQueryVariables = {creatorId, convert: currency};
@@ -43,10 +53,13 @@ const CoinListItemForm = ({visible, currency}: CoinListItemFormProps) => {
   );
 
   const {
-    data: getSymbolsQueryData,
-    loading: getSymbolsQueryLoading,
-    error: getSymbolsQueryError,
-  } = useQuery(GET_SYMBOLS);
+    data: getCoinSymbolsQueryData,
+    loading: getCoinSymbolsQueryLoading,
+    error: getCoinSymbolsQueryError,
+  } = useQuery(GET_COIN_SYMBOLS, {
+    fetchPolicy: 'network-only',
+    nextFetchPolicy: 'cache-only',
+  });
 
   const [
     addCoin,
@@ -71,10 +84,20 @@ const CoinListItemForm = ({visible, currency}: CoinListItemFormProps) => {
     },
   });
 
-  const {getSymbols: symbols = []} = getSymbolsQueryData ?? {};
+  const {getCoinSymbols: symbols = []} = getCoinSymbolsQueryData ?? {};
+  const dataList = useMemo(() => {
+    const selectedSymbols = coins.map((coin) => coin.symbol);
 
-  const loading = getSymbolsQueryLoading || addCoinMutationLoading;
-  const error = getSymbolsQueryError || addCoinMutationError;
+    return symbols
+      .filter((symbol: CoinSymbol) => !selectedSymbols.includes(symbol.id))
+      .map(({id: value, name: text}: CoinSymbol) => ({
+        text,
+        value,
+      }));
+  }, [symbols, coins]);
+
+  const loading = getCoinSymbolsQueryLoading || addCoinMutationLoading;
+  const error = getCoinSymbolsQueryError || addCoinMutationError;
   const isPresetSelected =
     coinSelectOption === (NewCoinOptions.PRESET as string);
 
@@ -110,10 +133,7 @@ const CoinListItemForm = ({visible, currency}: CoinListItemFormProps) => {
           required={newCoin.required}
           onChange={formFieldChangeHandler}
           {...(isPresetSelected && {
-            dataList: symbols?.map(({id: value, name: text}: CoinSymbol) => ({
-              text,
-              value,
-            })),
+            dataList,
           })}
         />
 

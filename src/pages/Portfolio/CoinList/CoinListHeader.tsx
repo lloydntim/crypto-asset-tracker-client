@@ -3,6 +3,7 @@ import {Box, Button, Container, Select, Text} from '../../../components';
 import {Currency, currenciesOptions} from './CoinListHelper';
 import {BLACK, GRAPE_EXTRA_DARK, WHITE} from '../../../constants/colors';
 import {formatToCurrency} from '../../../utils';
+import {GetCoinListQuery} from '../../../hooks/graphql';
 
 interface CoinListHeaderProps {
   balance: number;

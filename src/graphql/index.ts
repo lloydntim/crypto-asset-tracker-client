@@ -14,12 +14,10 @@ export const createClient = () => {
 
   const errorLink = onError(({graphQLErrors, networkError}) => {
     if (graphQLErrors)
-      // graphQLErrors.forEach(({message, locations, path}) =>
       graphQLErrors.forEach((graphQLError) =>
         console.log(`[GraphQL error]`, graphQLError),
       );
     if (networkError) console.log('network', networkError);
-    // if (networkError) console.log(`[Network error]: ${networkError}`);
   });
 
   const authLink = setContext(

@@ -22,10 +22,10 @@ interface NavigationProps extends StyledProps {
 }
 
 enum Pages {
+  HOME = 'Home',
+  PORTFOLIO = 'Portfolio',
   PROFILE = 'Profile',
   ABOUT = 'About',
-  PORTFOLIO = 'Portfolio',
-  HOME = 'Home',
 }
 
 const pages = Object.values(Object.values(Pages));
