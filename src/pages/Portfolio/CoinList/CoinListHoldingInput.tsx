@@ -3,20 +3,20 @@ import {Box, EntryField, Text} from '../../../components';
 import {formatAmount} from './CoinListHelper';
 import {StyledProps} from '../../../helpers';
 
-interface StorageOptionEditFieldProps extends StyledProps {
+interface CoinListHoldingInputProps extends StyledProps {
   editMode: boolean;
   location: string;
   value: string;
   onBlur: FocusEventHandler<HTMLInputElement>;
 }
 
-const StorageOptionEditField = ({
+const CoinListHoldingInput = ({
   editMode,
   location,
   value,
   onBlur,
   ...rest
-}: StorageOptionEditFieldProps) => {
+}: CoinListHoldingInputProps) => {
   const staticValue = Number.isNaN(value)
     ? formatAmount(parseFloat(value), location)
     : value;
@@ -34,4 +34,4 @@ const StorageOptionEditField = ({
   );
 };
 
-export default StorageOptionEditField;
+export default CoinListHoldingInput;

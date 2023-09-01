@@ -1,46 +1,34 @@
 import React, {useState} from 'react';
-import {Message} from '../../components';
-import {Page, PageContent} from '../../layouts';
-import CoinList from './CoinList/CoinList';
-import {InMemoryCache, useMutation, useQuery} from '@apollo/client';
+import {Container, List, Message} from '../../components';
 import {
-  ADD_COIN,
-  ADD_COIN_HOLDING,
-  GET_COIN_LIST,
-  GET_SYMBOLS,
-  REMOVE_COIN,
-  REMOVE_COIN_HOLDING,
-  UPDATE_COIN_HOLDING,
-} from '../../graphql/operations';
+  Coin,
+  currencyFormatMapper,
+  Currency,
+  currencies,
+} from './CoinList/CoinListHelper';
+import CoinListItem from './CoinList/CoinListItem';
+import CoinListHoldingStorages, {
+  CoinListHoldingStorage,
+} from './CoinList/CoinListHoldingStorages';
+import CoinListHolding from './CoinList/CoinListHolding';
+import CoinListHeader from './CoinList/CoinListHeader';
+import CoinListItemForm from './CoinList/CoinListItemForm';
+import {GET_COIN_LIST} from '../../graphql/operations';
+import {useQuery} from '@apollo/client';
 import {useAuthentication} from '../../providers/AuthenticationProvider';
-import {Currency, currencies} from './CoinList/CoinListHelper';
 import {displayResponseErrorMessage} from '../../helpers/displayResponseErrorMessage';
+import CoinListHoldingForm from './CoinList/CoinListHoldingForm';
+import {Page, PageContent} from '../../layouts';
 
-const Portfolio = () => {
+const CoinList = () => {
   const {currentUser} = useAuthentication();
   const [currency, setCurrency] = useState<Currency>(currencies[0]);
   const [editMode, setEditMode] = useState(false);
-  const [selectedCoin, setSelectedCoin] = useState<number | undefined>();
+  const [selectedCoin, setSelectedCoin] = useState<number>();
+  const {location} = currencyFormatMapper[currency];
 
   const creatorId = currentUser().id;
   const getCoinListQueryVariables = {creatorId, convert: currency};
-  const cacheQueryParams = {
-    query: GET_COIN_LIST,
-    variables: getCoinListQueryVariables,
-  };
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const updateGetCoinListQueryCache = (cache: InMemoryCache, {data}: any) => {
-    if (!data) return;
-
-    const existingCoins = cache.readQuery(cacheQueryParams);
-
-    cache.writeQuery({
-      ...cacheQueryParams,
-      data: {
-        getCoinList: [existingCoins],
-      },
-    });
-  };
 
   const {
     data,
@@ -52,156 +40,90 @@ const Portfolio = () => {
     variables: getCoinListQueryVariables,
   });
 
-  const {
-    data: getSymbolsQueryData,
-    loading: getSymbolsLoading,
-    error: getSymbolsError,
-  } = useQuery(GET_SYMBOLS, {
-    // fetchPolicy: 'cache-first',
-    skip: getCoinListQueryLoading || !data?.getCoinList,
-  });
-
-  const [addCoin, {loading: addCoinLoading, error: addCoinError}] = useMutation(
-    ADD_COIN,
-    {
-      errorPolicy: 'all',
-      update: (cache: InMemoryCache, {data: {addCoin: newCoin}}: any) => {
-        if (!newCoin) return;
-
-        const existingCoins: any = cache.readQuery(cacheQueryParams);
-        const {balance, coins} = existingCoins.getCoinList;
-
-        cache.writeQuery({
-          ...cacheQueryParams,
-          data: {
-            getCoinList: {
-              balance,
-              coins: [...coins, newCoin],
-            },
-          },
-        });
-      },
-    },
-  );
-
-  const [removeCoin, {loading: removeCoinLoading, error: removeCoinError}] =
-    useMutation(REMOVE_COIN, {
-      update: (
-        cache: InMemoryCache,
-        {data: {removeCoin: removedCoin}}: any,
-      ) => {
-        if (!removedCoin) return;
-
-        const existingCoins: any = cache.readQuery(cacheQueryParams);
-        const {balance, coins} = existingCoins.getCoinList;
-
-        cache.writeQuery({
-          ...cacheQueryParams,
-          data: {
-            getCoinList: {
-              balance,
-              coins: coins.filter((coin: any) => coin.id !== removedCoin.id),
-            },
-          },
-        });
-      },
-    });
-
-  const [
-    addCoinHolding,
-    {loading: addCoinHoldingLoading, error: addCoinHoldingError},
-  ] = useMutation(ADD_COIN_HOLDING, {});
-
-  const [
-    updateCoinHolding,
-    {loading: updateCoinHoldingLoading, error: updateCoinHoldingError},
-  ] = useMutation(UPDATE_COIN_HOLDING, {
-    onCompleted: () => setEditMode(true),
-  });
-  const [
-    removeCoinHolding,
-    {loading: removeCoinHoldingLoading, error: removeCoinHoldingError},
-  ] = useMutation(REMOVE_COIN_HOLDING);
-
-  const addCoinHandler = (args: {symbol?: string; slug?: string}) => {
-    addCoin({variables: {...args, creatorId}});
-  };
-
-  const removeCoinHandler = (id: string) => {
-    removeCoin({variables: {id}});
-  };
-
-  const addCoinHoldingHandler = (
-    id: string,
-    holding: {name: string; amount: number; type: string},
-  ) => {
-    addCoinHolding({variables: {id, holding}});
-    refetch();
-  };
-  const updateCoinHoldingHandler = (
-    holdingId: string,
-    holding: {amount?: number; name?: string; type?: string},
-  ) => {
-    updateCoinHolding({variables: {holdingId, holding}});
-    refetch();
-  };
-
-  const removeCoinHoldingHandler = (holdingId: string) => {
-    removeCoinHolding({variables: {holdingId}});
-    refetch();
-  };
-
-  const changeCurrencyHandler = (value: Currency) => {
-    setCurrency(value);
-    refetch({convert: value});
+  const {balance, coins: coinList} = data?.getCoinList ?? {
+    balance: 0,
+    coins: [],
   };
 
   const toggleEditHandler = (args: boolean) => setEditMode(args);
+  const changeCurrencyHandler = (currency: Currency) => {
+    setCurrency(currency);
+    refetch({convert: currency});
+  };
 
-  const coinListData = data?.getCoinList ?? {balance: 0, coins: []};
-  const {getSymbols: symbols = []} = getSymbolsQueryData ?? {};
-
-  const error =
-    getCoinListQueryError ||
-    getSymbolsError ||
-    addCoinError ||
-    removeCoinError ||
-    addCoinHoldingError ||
-    updateCoinHoldingError ||
-    removeCoinHoldingError;
-
+  /////////// TODO : and aymbol filter
   return (
     <Page name="portfolio">
       <PageContent isAuthorised titleTKey="portfolio:title">
-        {(getCoinListQueryLoading ||
-          getSymbolsLoading ||
-          removeCoinLoading ||
-          addCoinLoading ||
-          addCoinHoldingLoading ||
-          updateCoinHoldingLoading ||
-          removeCoinHoldingLoading) && (
-          <Message type="info" tKey="common:message.loading.text" />
-        )}
-        {displayResponseErrorMessage(error)}
+        <Container $mv={32} $align-c>
+          <CoinListHeader
+            {...{
+              balance,
+              editMode,
+              currency,
+              location,
+              onToggleEditMode: toggleEditHandler,
+              onChangeCurrency: changeCurrencyHandler,
+            }}
+          />
 
-        <CoinList
-          data={coinListData}
-          onAddCoin={addCoinHandler}
-          onRemoveCoin={removeCoinHandler}
-          onAddCoinHolding={addCoinHoldingHandler}
-          onUpdateCoinHolding={updateCoinHoldingHandler}
-          onRemoveCoinHolding={removeCoinHoldingHandler}
-          onToggleEditMode={toggleEditHandler}
-          onChangeCurrency={changeCurrencyHandler}
-          editMode={editMode}
-          convert={currency}
-          symbols={symbols}
-          selectedCoin={selectedCoin}
-          setSelectedCoin={setSelectedCoin}
-        />
+          <CoinListItemForm {...{currency, visible: editMode}} />
+
+          <List<Coin>
+            $lst-stl="none"
+            $mv={8}
+            $p={0}
+            data={coinList}
+            renderItem={({item: coin, index}) => {
+              return (
+                <CoinListItem
+                  {...{
+                    ...coin,
+                    editMode,
+                    currency,
+                    location,
+                    expanded: selectedCoin === index,
+                  }}
+                  onClick={() => setSelectedCoin(index)}
+                >
+                  <CoinListHoldingStorages
+                    storages={coin.holdingStorages}
+                    renderStorage={(storage, index) => {
+                      return (
+                        <CoinListHoldingStorage
+                          {...storage}
+                          location={location}
+                          key={index}
+                          renderHolding={(holding, index) => {
+                            return (
+                              <CoinListHolding
+                                key={index}
+                                {...{
+                                  ...holding,
+                                  location,
+                                  editMode,
+                                  currency,
+                                }}
+                              />
+                            );
+                          }}
+                        />
+                      );
+                    }}
+                  />
+                  <CoinListHoldingForm coinId={coin.id} visible={editMode} />
+                </CoinListItem>
+              );
+            }}
+          />
+          {displayResponseErrorMessage(getCoinListQueryError)}
+          {getCoinListQueryLoading && (
+            <Message type="info" tKey="common:message.loading.text" />
+          )}
+        </Container>
       </PageContent>
     </Page>
   );
 };
 
-export default Portfolio;
+export default CoinList;

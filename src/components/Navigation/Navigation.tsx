@@ -39,7 +39,7 @@ const Navigation = ({title = '', titleTKey = '', ...rest}: NavigationProps) => {
   const [isDialogVisible, setIsDialogVisible] = useState(false);
 
   const pageLinkPaths = currentUser()?.id
-    ? authenticatedPageLinks
+    ? pages
     : pages.filter((page) => !authenticatedPageLinks.includes(page));
 
   const getPageLinkPath = (path: Pages) =>

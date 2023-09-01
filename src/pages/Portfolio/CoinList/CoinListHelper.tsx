@@ -13,18 +13,23 @@ export type CurrencyOption = {
   value: Currencies;
 };
 
-export enum AddNewCoinOptions {
+export type CoinSymbol = {
+  id: string;
+  name: string;
+};
+
+export enum NewCoinOptions {
   PRESET = 'preset',
   OTHER = 'other',
 }
 
-export type StorageOptionType = `${StorageOptionTypes}`;
+export type HoldingStorageType = `${HoldingStorageTypes}`;
 
 export interface Holding {
   id: string;
   slug?: string;
   name: string;
-  type: StorageOptionType;
+  type?: HoldingStorageType;
   amount: number;
   value: number;
   holdingId?: string;
@@ -41,19 +46,19 @@ export interface Coin {
   coinId: string;
 }
 
-enum StorageOptionTypes {
+enum HoldingStorageTypes {
   WALLET = 'wallet',
   EXCHANGE = 'exchange',
   STAKING = 'staking',
 }
 
-export interface StorageOption {
-  type: StorageOptionType;
+export interface HoldingStorage {
+  type: HoldingStorageType;
   total: number;
   holdings: Holding[];
 }
 
-export interface CoinListItem {
+export interface Coin {
   id: string;
   coinId: string;
   name: string;
@@ -62,38 +67,8 @@ export interface CoinListItem {
   amount: number;
   total: number;
   value: number;
-  storageOptions: StorageOption[];
-}
-
-interface CoinList {
-  balance: number;
-  coins: CoinListItem[];
-}
-export interface CoinListProps {
-  data: CoinList;
-  onChange?: () => void;
-  onAddCoin: (args: {symbol?: string; slug?: string}) => void;
-  onRemoveCoin: (id: string) => void;
-  onAddCoinHolding: (
-    id: string,
-    holding: {
-      name: string;
-      amount: number;
-      type: StorageOptionType;
-    },
-  ) => void;
-  onUpdateCoinHolding: (
-    holdingId: string,
-    {amount, name, type}: {amount?: number; name?: string; type?: string},
-  ) => void;
-  onRemoveCoinHolding: (holdingId: string) => void;
-  onToggleEditMode: (args: boolean) => void;
-  onChangeCurrency: (value: string) => void;
-  selectedCoin: number | undefined;
-  setSelectedCoin: (item: number) => void;
-  editMode: boolean;
-  convert: Currency;
-  symbols: {name: string; id: string}[];
+  creatorId: string;
+  holdingStorages: HoldingStorage[];
 }
 
 export const HOLDING_TYPES_T_KEY_PATH =
@@ -103,10 +78,10 @@ const REMOVE_COIN_DIALOG_T_KEY_PATH = 'portfolio:coinlist.dialog.removeCoin';
 const REMOVE_HOLDING_DIALOG_T_KEY_PATH = 'portfolio:coinlist.dialog.removeCoin';
 
 export const currencies = Object.values(Currencies);
-export const holdingTypes = Object.values(StorageOptionTypes);
-export const addNewCoinOptions = Object.values(AddNewCoinOptions);
+export const holdingTypes = Object.values(HoldingStorageTypes);
+export const addNewCoinOptions = Object.values(NewCoinOptions);
 
-export const newCoinSelectOptions = createSelectOptions(
+export const coinSelectOptions = createSelectOptions(
   addNewCoinOptions,
   ADD_COIN_OPTIONS_T_KEY_PATH,
 );

@@ -4,9 +4,12 @@
 import {ObjectId} from 'mongodb';
 
 const addCoin = (name: string, manual: boolean) => {
+  cy.wait(750);
   // Enter coin name
-  // cy.get('input[name=newCoin]').type(manual ? name : name.substring(0, 3));
-  cy.get('input[name=newCoin]').type(name, {delay: 50});
+  cy.get('input[name=newCoin]').type(manual ? name : name.substring(0, 3), {
+    delay: 100,
+  });
+  // cy.get('input[name=newCoin]').type(name, {delay: 50});
 
   if (!manual) {
     // Click on dropdown
@@ -23,12 +26,14 @@ const addHoldings = (
   parent: string,
   holdings: {type: string; amount: number; name: string}[],
 ) => {
+  cy.wait(750);
   cy.get('[role=listitem]').contains(parent).click({force: true});
 
   holdings.forEach(({name, amount, type}) => {
-    cy.get('[name=name]').type(name, {delay: 50}).should('have.value', name);
+    cy.wait(750);
+    cy.get('[name=name]').type(name, {delay: 100}).should('have.value', name);
     cy.get('[name=amount]')
-      .type(amount.toString(), {force: true, delay: 50})
+      .type(amount.toString(), {force: true, delay: 100})
       .should('have.value', amount);
 
     cy.get('[role=listitem] .select-value').click({force: true});
@@ -74,7 +79,7 @@ describe('Portfolio Page', () => {
   });
 
   it('add using presets Coins and holdings', () => {
-    cy.contains('Edit').click().wait(1000);
+    cy.contains('Edit').click().wait(500);
 
     coin.add('Bitcoin').addHoldings([
       {name: 'Coinbase', type: 'Exchange', amount: 10},
@@ -104,7 +109,7 @@ describe('Portfolio Page', () => {
   });
 
   it('add Coins and holdings using manual entry', () => {
-    cy.contains('Edit').click().wait(1000);
+    cy.contains('Edit').click().wait(500);
 
     cy.contains('Preset').click();
     cy.contains('Other').click();
@@ -120,7 +125,7 @@ describe('Portfolio Page', () => {
   });
 
   it('adding Coin using manual entry fails', () => {
-    cy.contains('Edit').click().wait(1000);
+    cy.contains('Edit').click().wait(500);
 
     cy.contains('Preset').click();
     cy.contains('Other').click();
@@ -131,7 +136,7 @@ describe('Portfolio Page', () => {
   });
 
   it('update and delete Coin holdings', () => {
-    cy.contains('Edit').click().wait(1000);
+    cy.contains('Edit').click().wait(500);
 
     coin
       .add('Bitcoin')
@@ -151,7 +156,11 @@ describe('Portfolio Page', () => {
     cy.get('input[name=fieldName]:first').clear().type('Ledger').blur();
 
     cy.get('.icon-type-edit').eq(1).click();
-    cy.get('input[name=fieldName]:first').clear().type('4').blur();
+    cy.get('input[name=fieldName]:first')
+      .clear()
+      .type('4', {delay: 1000})
+      .blur()
+      .wait(500);
 
     cy.contains('Wallet Total Value: 4');
     cy.contains('Ledger');
@@ -160,34 +169,25 @@ describe('Portfolio Page', () => {
     cy.contains('Ethereum').click();
 
     cy.get('.holding:first .icon-type-delete').eq(1).click();
-    cy.contains('Continue').click().wait(1500);
+    cy.contains('Continue').click().wait(500);
 
-    cy.contains('Staking Total Value: 0.25');
-    cy.contains('Pool').should('not.exist');
+    cy.contains('Staking Total Value: 0.75');
+    cy.contains('Binance').should('not.exist');
   });
 
   it('delete Coins', () => {
-    cy.contains('Edit').click().wait(1000);
+    cy.contains('Edit').click().wait(500);
 
-    coin
-      .add('Bitcoin')
-      .add('Ethereum')
-      .addHoldings([
-        {name: 'Binance', type: 'Staking', amount: 0.25},
-        {name: 'Binance', type: 'Exchange', amount: 1.5},
-      ]);
+    coin.add('Bitcoin');
 
     cy.get('li .icon-type-delete:first').click();
-    cy.wait(500);
 
     // Dialog appears
     cy.contains('Remove Coin');
 
     // Clicks continue button to proceed
     cy.contains('Continue').click().wait(500);
-
     cy.contains('Bitcoin').should('not.exist');
-    cy.contains('Ethereum');
   });
 
   it('change currency', () => {

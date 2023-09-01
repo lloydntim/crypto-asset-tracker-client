@@ -43,7 +43,7 @@ const PageContent = ({
         {!isAuthorised && <Logo $flex-row $align-c $w="100%" $mv={60} />}
 
         {(title || titleTKey) && (
-          <Title $mv={24} $align-c $align-self-l tKey={titleTKey}>
+          <Title $mv={0} $align-c $align-self-l tKey={titleTKey}>
             {title}
           </Title>
         )}

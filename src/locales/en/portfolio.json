@@ -6,7 +6,8 @@
     "text": {
       "myPortfolio": "My Portfolio",
       "portfolioTotal": "Total: {{total}}",
-      "totalValue": "Total Value: {{total}}"
+      "totalValue": " Total Value: {{total}}",
+      "emptyList": "This list is empty"
     },
     "dialog": {
       "removeCoin": {
