@@ -209,7 +209,7 @@ export type Query = {
   getCoins?: Maybe<Array<Maybe<Coin>>>;
   getExchanges?: Maybe<Array<Maybe<Exchange>>>;
   getPasswordToken?: Maybe<Auth>;
-  getSymbols?: Maybe<Array<Maybe<Symbol>>>;
+  getSymbols?: Maybe<Array<Maybe<symbol>>>;
   getUser?: Maybe<User>;
   getUsers?: Maybe<Array<Maybe<User>>>;
 };
