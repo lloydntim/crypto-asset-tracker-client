@@ -30,6 +30,10 @@ interface CoinListItemFormProps {
   currency: string;
 }
 
+export const NEW_COIN_INPUT_PATTERN = /[a-zA-Z]$/g;
+export const NEW_COIN_INPUT_MIN_LENGTH = 3;
+export const NEW_COIN_INPUT_MAX_LENGTH = 25;
+
 const CoinListItemForm = ({
   coins,
   visible,
@@ -45,6 +49,8 @@ const CoinListItemForm = ({
 
   const {
     form: {newCoin},
+    resetForm,
+    isFormValid,
     formFieldChangeHandler,
   } = useForm('newCoin*');
 
@@ -111,7 +117,7 @@ const CoinListItemForm = ({
         : {slug: slugify(newCoin.value)};
 
       addCoin({variables: {...args, creatorId}});
-      formFieldChangeHandler({name: 'newCoin', value: ''});
+      resetForm();
     }
   };
 
@@ -123,7 +129,10 @@ const CoinListItemForm = ({
         <Select
           $mh={8}
           options={coinSelectOptions}
-          onChange={(value) => setCoinSelectOption(value)}
+          onChange={(value) => {
+            setCoinSelectOption(value);
+            resetForm();
+          }}
         />
 
         <Input
@@ -132,12 +141,16 @@ const CoinListItemForm = ({
           value={newCoin.value}
           required={newCoin.required}
           onChange={formFieldChangeHandler}
+          pattern={NEW_COIN_INPUT_PATTERN}
+          minLength={NEW_COIN_INPUT_MIN_LENGTH}
+          maxLength={NEW_COIN_INPUT_MAX_LENGTH}
           {...(isPresetSelected && {
             dataList,
           })}
         />
 
         <IconButton
+          disabled={!isFormValid}
           type="plus"
           $align-c
           $flex-row

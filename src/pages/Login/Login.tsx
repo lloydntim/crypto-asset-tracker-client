@@ -9,7 +9,15 @@ import {Page, PageContent} from '../../layouts';
 import {Button, Input, Message, Form, Link, Box} from '../../components';
 import {WHITE} from '../../constants/colors';
 import {displayResponseErrorMessage} from '../../helpers/displayResponseErrorMessage';
-import {FORM_WIDTH} from '../../constants';
+import {
+  FORM_WIDTH,
+  PASSWORD_INPUT_MAX_LENGTH,
+  PASSWORD_INPUT_MIN_LENGTH,
+  PASSWORD_INPUT_PATTERN,
+  USERNAME_INPUT_MAX_LENGTH,
+  USERNAME_INPUT_MIN_LENGTH,
+  USERNAME_INPUT_PATTERN,
+} from '../../constants';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -43,11 +51,14 @@ const Login = () => {
   return (
     <Page name="login">
       <PageContent titleTKey="login:title" bodyWidth={FORM_WIDTH}>
-        <Form>
+        <Form $mv={24}>
           <Input
             name="username"
             labelTKey="input.label.username"
             placeholderTKey="input.placeholder.enterUsername"
+            pattern={USERNAME_INPUT_PATTERN}
+            minLength={USERNAME_INPUT_MIN_LENGTH}
+            maxLength={USERNAME_INPUT_MAX_LENGTH}
             required={username.required}
             value={username.value}
             onChange={formFieldChangeHandler}
@@ -56,6 +67,9 @@ const Login = () => {
             name="password"
             labelTKey="input.label.password"
             placeholderTKey="input.placeholder.enterPassword"
+            pattern={PASSWORD_INPUT_PATTERN}
+            minLength={PASSWORD_INPUT_MIN_LENGTH}
+            maxLength={PASSWORD_INPUT_MAX_LENGTH}
             type="password"
             required={password.required}
             value={password.value}

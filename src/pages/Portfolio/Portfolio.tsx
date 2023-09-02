@@ -51,7 +51,6 @@ const CoinList = () => {
     refetch({convert: currency});
   };
 
-  /////////// TODO : and aymbol filter
   return (
     <Page name="portfolio">
       <PageContent isAuthorised titleTKey="portfolio:title">

@@ -47,6 +47,11 @@ export interface InputProps extends StyledProps {
   onDataListClick?: (item: DataListItem) => void;
 }
 
+export type InputValidationMessage = {
+  text: string;
+  type: string;
+};
+
 export type MockFile = {
   name: string;
 };
@@ -56,8 +61,10 @@ export type InputChangeEventTarget = {
   files?: FileList | MockFile[] | null;
 };
 
-export const emailPattern =
+export const EMAIL_INPUT_PATTERN =
   /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+export const validationMessageDefaultProps = {text: '', type: ''};
 
 export const validateInput = (
   eventTarget: InputChangeEventTarget,
@@ -78,8 +85,7 @@ export const validateInput = (
 
   const file = files?.[0]?.name;
   const input = type === 'file' ? file : value;
-  const inputPattern = type === 'email' ? emailPattern : pattern;
-
+  const inputPattern = type === 'email' ? EMAIL_INPUT_PATTERN : pattern;
   if (required && !input?.length)
     return requiredErrorMessage || `${type} input is required`;
   else if (inputPattern && !input?.match(inputPattern))

@@ -236,9 +236,7 @@ const Profile = () => {
                 $m={8}
                 $color={GRAPE_EXTRA_DARK}
                 tKey="profile:button_deleteAccount_text"
-                onClick={() => {
-                  setDialog('deleteAccount');
-                }}
+                onClick={() => setDialog('deleteAccount')}
               />
             </Box>
           </Box>
