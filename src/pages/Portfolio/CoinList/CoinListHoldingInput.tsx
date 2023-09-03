@@ -2,19 +2,22 @@ import React, {FocusEventHandler} from 'react';
 import {Box, EntryField, Text} from '../../../components';
 import {formatAmount} from './CoinListHelper';
 import {StyledProps} from '../../../helpers';
+import {InputProps} from '../../../components/Input/InputHelper';
 
-interface CoinListHoldingInputProps extends StyledProps {
+interface CoinListHoldingInputProps extends InputProps, StyledProps {
   editMode: boolean;
   location: string;
-  value: string;
-  onBlur: FocusEventHandler<HTMLInputElement>;
 }
 
 const CoinListHoldingInput = ({
   editMode,
   location,
-  value,
+  value = '',
   onBlur,
+  pattern,
+  minLength,
+  maxLength,
+  patternErrorMessageTKey,
   ...rest
 }: CoinListHoldingInputProps) => {
   const staticValue = Number.isNaN(value)
@@ -24,7 +27,18 @@ const CoinListHoldingInput = ({
   return (
     <Box {...rest}>
       {editMode ? (
-        <EntryField {...{location, value, onBlur, editMode}} />
+        <EntryField
+          {...{
+            location,
+            value,
+            onBlur,
+            pattern,
+            minLength,
+            maxLength,
+            patternErrorMessageTKey,
+            editMode,
+          }}
+        />
       ) : (
         <Text $valign-m $font-sz={14}>
           {staticValue}

@@ -28,7 +28,7 @@ enum Pages {
   ABOUT = 'About',
 }
 
-const pages = Object.values(Object.values(Pages));
+const pages = Object.values(Pages);
 const authenticatedPageLinks = [Pages.PORTFOLIO, Pages.PROFILE];
 const NavigationSt = createStylesProps('nav');
 

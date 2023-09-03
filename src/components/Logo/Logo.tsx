@@ -27,7 +27,7 @@ const Logo = ({
       <Icon type="logo" $color={WHITE} $sz={size} />
       {showText && (
         <Text $mh={textSize || size / 2} $font-sz={textSize || size / 2}>
-          CryptoAssetTracker
+          Crypto Asset Tracker
         </Text>
       )}
     </Box>

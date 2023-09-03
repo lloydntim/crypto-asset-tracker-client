@@ -116,15 +116,12 @@ const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
               target: {value, files},
             } = event;
 
-            if (!dataList?.length) setIsDataListVisible(false);
-            if (
-              (dataList.length && required && !value.length) ||
-              !dataList?.length
-            ) {
-              const error = validateInput({value, files}, validationProps);
-              setInputMessage({text: error, type: 'error'});
-            }
             if (onBlur) onBlur(event);
+
+            if (!dataList?.length) setIsDataListVisible(false);
+
+            const error = validateInput({value, files}, validationProps);
+            setInputMessage({text: error, type: 'error'});
           }}
         />
 

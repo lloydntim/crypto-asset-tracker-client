@@ -1,3 +1,4 @@
+import {InputProps} from '../../../components/Input/InputHelper';
 import {createSelectOptions} from '../../../helpers/createSelectOptions';
 
 enum Currencies {
@@ -98,6 +99,25 @@ export const coinListDialogMapper: {
     titleTKey: `${REMOVE_HOLDING_DIALOG_T_KEY_PATH}.title`,
     messageTKey: `${REMOVE_HOLDING_DIALOG_T_KEY_PATH}.message`,
     callback: 'onRemoveCoinHolding',
+  },
+};
+
+export const coinListInputValidationMapper: {
+  [key: string]: InputProps;
+} = {
+  name: {
+    pattern: /^[a-zA-Z ]+$/,
+    minLength: 3,
+    maxLength: 20,
+    patternErrorMessageTKey:
+      'portfolio:coinlist.form.addHolding.message.error.patternName',
+  },
+  amount: {
+    pattern: /^[0-9.,/]+$/,
+    minLength: 1,
+    maxLength: 12,
+    patternErrorMessageTKey:
+      'portfolio:coinlist.form.addHolding.message.error.patternAmount',
   },
 };
 

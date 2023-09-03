@@ -1,6 +1,7 @@
 import React from 'react';
 
 import createStylesProps, {StyledProps} from '../../helpers/createStyledProps';
+import Text from '../Text/Text';
 
 interface FooterProps extends StyledProps {
   className?: string;
@@ -32,7 +33,7 @@ const Footer = ({
       $align-c
       {...rest}
     >
-      &copy; {companyYears} {companyName}. All rights reserved.
+      <Text tKey="common:footer" tOptions={{companyYears, companyName}} />
     </FooterSt>
   );
 };

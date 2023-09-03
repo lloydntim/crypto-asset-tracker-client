@@ -20,6 +20,11 @@
       }
     },
     "input": {
+      "placeholder": {
+        "addCoin": "Bitte wählen Sie einen Coin",
+        "enterName": "Bitte wählen Sie Namen",
+        "enterAmount": "Bitte wählen Sie eine Menge"
+      },
       "options": {
         "holdingTypes": {
           "wallet": "Wallet",
@@ -36,7 +41,13 @@
       "addHolding": {
         "name": "Name",
         "amount": "Menge",
-        "type": "Art"
+        "type": "Art",
+        "message": {
+          "error": {
+            "patternName": "Name sollte nur Buchstaben enthalten",
+            "patternAmount": "Name sollte nur Zahlen enthalten"
+          }
+        }
       }
     }
   }

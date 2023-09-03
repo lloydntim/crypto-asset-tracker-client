@@ -30,7 +30,7 @@ Cypress.Commands.add('login', (username: string, password: string) => {
 
   cy.get('[name=password]').type(password).should('have.value', password);
 
-  cy.get('button[type=submit]').click().wait(500);
+  cy.get('button[type=submit]').click({force: true}).wait(500);
 });
 
 Cypress.Commands.add(

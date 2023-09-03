@@ -20,6 +20,11 @@
       }
     },
     "input": {
+      "placeholder": {
+        "addCoin": "Please add a coin",
+        "enterName": "Please add a name",
+        "enterAmount": "Please add an amount"
+      },
       "options": {
         "holdingTypes": {
           "wallet": "Wallet",
@@ -36,7 +41,13 @@
       "addHolding": {
         "name": "Name",
         "amount": "Amount",
-        "type": "Type"
+        "type": "Type",
+        "message": {
+          "error": {
+            "patternName": "Name should only contain letters",
+            "patternAmount": "Name should only contain numbers"
+          }
+        }
       }
     }
   }

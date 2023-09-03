@@ -24,6 +24,11 @@ import Table, {TableCell, TableRow} from '../../components/Table';
 import {useForm} from '../../hooks';
 import {displayResponseErrorMessage} from '../../helpers/displayResponseErrorMessage';
 
+const PROFILE_TABLE_WIDTH = 520;
+const PROFILE_TABLE_COLUMN_1_WIDTH = 28;
+const PROFILE_TABLE_COLUMN_2_WIDTH = 40;
+const PROFILE_TABLE_COLUMN_3_WIDTH = 28;
+
 const Profile = () => {
   const [dialog, setDialog] = useState('');
   const [overlay, setOverlay] = useState(false);
@@ -37,8 +42,8 @@ const Profile = () => {
 
   const userId = currentUser()?.id;
   const {
-    loading,
-    error,
+    loading: getUserQueryLoading,
+    error: getUserQueryError,
     data: user,
   } = useQuery(GET_USER, {
     variables: {id: userId},
@@ -88,6 +93,18 @@ const Profile = () => {
       navigate('/', {replace: true});
     },
   });
+  const loading =
+    getUserQueryLoading ||
+    sendVerificationMutationLoading ||
+    updateUserMutationLoading ||
+    removeUserMutationLoading ||
+    removeCoinMutationLoading;
+  const error =
+    getUserQueryError ||
+    removeUserMutationError ||
+    updateUserMutationError ||
+    removeCoinMutationError ||
+    sendVerificationMutationError;
 
   return (
     <Page name="profile">
@@ -139,21 +156,8 @@ const Profile = () => {
       </Overlay>
 
       <PageContent isAuthorised titleTKey="profile:title">
-        {(loading ||
-          sendVerificationMutationLoading ||
-          updateUserMutationLoading ||
-          removeUserMutationLoading ||
-          removeCoinMutationLoading) && (
-          <Message type="info" tKey="common:message:loading:text" />
-        )}
-        {displayResponseErrorMessage(
-          error ||
-            removeUserMutationError ||
-            updateUserMutationError ||
-            removeCoinMutationError ||
-            sendVerificationMutationError,
-          'common:message.error.text',
-        )}
+        {loading && <Message type="info" tKey="common:message:loading:text" />}
+        {displayResponseErrorMessage(error, 'common:message.error.text')}
 
         {sendVerificationMutationData && (
           <Message type="info">
@@ -167,24 +171,25 @@ const Profile = () => {
         )}
 
         {user?.getUser && (
-          <Box $flex-col>
-            <Table $mv={32}>
+          <Box $flex-col $w={PROFILE_TABLE_WIDTH}>
+            <Table $tbl-br-spc={12} $mv={32}>
               <TableRow>
-                <TableCell $valign-m $col-w={40}>
+                <TableCell $valign-m $col-w={PROFILE_TABLE_COLUMN_1_WIDTH}>
                   <Text $m={0} strong tKey="common:input.label.username" />
                 </TableCell>
-                <TableCell $valign-m $col-w={40}>
+                <TableCell $valign-m $col-w={PROFILE_TABLE_COLUMN_2_WIDTH}>
                   <Text $m={0}>{user.getUser.username}</Text>
                 </TableCell>
+                <TableCell $valign-m $col-w={PROFILE_TABLE_COLUMN_3_WIDTH} />
               </TableRow>
               <TableRow>
-                <TableCell $valign-m $col-w={40}>
-                  <Text strong tKey="common:input.label.email" />
+                <TableCell $valign-m $col-w={PROFILE_TABLE_COLUMN_1_WIDTH}>
+                  <Text $m={0} strong tKey="common:input.label.email" />
                 </TableCell>
-                <TableCell $valign-m $col-w={40}>
-                  <Text>{user.getUser.email}</Text>
+                <TableCell $valign-m $col-w={PROFILE_TABLE_COLUMN_2_WIDTH}>
+                  <Text $m={0}>{user.getUser.email}</Text>
                 </TableCell>
-                <TableCell $valign-m $col-w={40}>
+                <TableCell $valign-m $col-w={PROFILE_TABLE_COLUMN_3_WIDTH}>
                   <IconButton
                     type="edit"
                     rank="secondary"
@@ -199,11 +204,12 @@ const Profile = () => {
                 </TableCell>
               </TableRow>
               <TableRow>
-                <TableCell $valign-m $col-w={40}>
-                  <Text strong tKey="profile:label_userStatus" />
+                <TableCell $valign-m $col-w={PROFILE_TABLE_COLUMN_1_WIDTH}>
+                  <Text $m={0} strong tKey="profile:label_userStatus" />
                 </TableCell>
-                <TableCell $valign-m $col-w={40}>
+                <TableCell $valign-m $col-w={PROFILE_TABLE_COLUMN_2_WIDTH}>
                   <Text
+                    $m={0}
                     tKey={`common:label.${
                       JSON.parse(user.getUser.isVerified as string)
                         ? 'verified'
@@ -211,6 +217,7 @@ const Profile = () => {
                     }`}
                   />
                 </TableCell>
+                <TableCell $valign-m $col-w={PROFILE_TABLE_COLUMN_3_WIDTH} />
               </TableRow>
             </Table>
 

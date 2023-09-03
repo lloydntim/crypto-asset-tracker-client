@@ -13,13 +13,13 @@ describe('Logo', () => {
     render(<Logo />);
 
     expect(screen.getByTestId('icon-logo')).toBeInTheDocument();
-    expect(screen.queryByText('CryptoAssetTracker')).not.toBeInTheDocument();
+    expect(screen.queryByText('Crypto Asset Tracker')).not.toBeInTheDocument();
   });
 
   test('renders Logo with test ', () => {
     render(<Logo showText />);
 
     expect(screen.getByTestId('icon-logo')).toBeInTheDocument();
-    expect(screen.getByText('CryptoAssetTracker')).toBeInTheDocument();
+    expect(screen.getByText('Crypto Asset Tracker')).toBeInTheDocument();
   });
 });

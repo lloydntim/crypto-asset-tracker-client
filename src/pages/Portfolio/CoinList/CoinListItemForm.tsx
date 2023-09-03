@@ -141,6 +141,7 @@ const CoinListItemForm = ({
           value={newCoin.value}
           required={newCoin.required}
           onChange={formFieldChangeHandler}
+          placeholderTKey="portfolio:coinlist.input.placeholder.addCoin"
           pattern={NEW_COIN_INPUT_PATTERN}
           minLength={NEW_COIN_INPUT_MIN_LENGTH}
           maxLength={NEW_COIN_INPUT_MAX_LENGTH}

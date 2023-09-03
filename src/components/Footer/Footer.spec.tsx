@@ -7,10 +7,16 @@ import {render, screen} from '@testing-library/react';
 import '@testing-library/jest-dom';
 
 import Footer from './Footer';
+import {I18nextProvider} from 'react-i18next';
+import i18n from '../../locales/i18n';
 
 describe('Footer', () => {
   test('renders with company name', () => {
-    render(<Footer startYear={2019} companyName="LNCD" />);
+    render(
+      <I18nextProvider i18n={i18n}>
+        <Footer startYear={2019} companyName="LNCD" />
+      </I18nextProvider>,
+    );
 
     expect(screen.getByText(/LNCD/));
   });

@@ -5,20 +5,18 @@ import useForm from '../../hooks/useForm';
 import {formatAmount} from '../../pages/Portfolio/CoinList/CoinListHelper';
 import Text from '../Text/Text';
 import IconButton from '../IconButton/IconButton';
-import {InputChangeEventHandler} from '../Input/InputHelper';
+import {InputChangeEventHandler, InputProps} from '../Input/InputHelper';
 
-interface EntryFieldProps {
-  value: string;
-  onChange?: InputChangeEventHandler;
-  onBlur?: FocusEventHandler<HTMLInputElement>;
+interface EntryFieldProps extends InputProps {
   location?: string;
 }
 
 const EntryField = ({
-  value: entryValue,
+  value: entryValue = '',
   onChange,
   onBlur,
   location = '',
+  ...rest
 }: EntryFieldProps) => {
   const [entryEditMode, setEntryEditMode] = useState(false);
 
@@ -40,6 +38,7 @@ const EntryField = ({
           name={name}
           ref={ref}
           value={value}
+          {...rest}
           onChange={(props) => {
             formFieldChangeHandler(props);
             if (onChange) onChange(props);
