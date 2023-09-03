@@ -53,7 +53,7 @@ const CoinList = () => {
 
   return (
     <Page name="portfolio">
-      <PageContent isAuthorised titleTKey="portfolio:title">
+      <PageContent hasHeaderLogo titleTKey="portfolio:title">
         <Container $mv={32} $align-c>
           <CoinListHeader
             {...{
