@@ -52,7 +52,7 @@
     "error": {
       "validation": {
         "minLength": "Die minimale Eingabelänge von {{type}} ist {{minLength }}",
-        "maxLength": "Die minimale Eingabelänge von {{type}} beträgt {{maxLength}}",
+        "maxLength": "Die maximale Eingabelänge von {{type}} beträgt {{maxLength}}",
         "pattern": "Eingabemuster von{{type}} ist ungültig",
         "required": "{{type}}-Eingabe ist erforderlich"
       }
