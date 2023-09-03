@@ -66,6 +66,7 @@ const Button = ({
       $color={$color}
       $bgcolor={$bgcolor}
       $bcolor={$bcolor}
+      $opacity={disabled ? 0.5 : 1}
       $br={$br}
       $w={$w}
       type={type}

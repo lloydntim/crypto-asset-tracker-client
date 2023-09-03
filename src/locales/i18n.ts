@@ -45,10 +45,11 @@ i18n
   .use(initReactI18next)
   .use(LanguageDetector)
   .init({
+    returnNull: false,
     resources: {
       en: {
         common: commonEn,
-        home: homeDe,
+        home: homeEn,
         login: loginEn,
         register: registerEn,
         portfolio: portfolioEn,

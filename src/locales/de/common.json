@@ -13,6 +13,7 @@
       "text": "Wollen Sie sich wirklich ausloggen?"
     }
   },
+  "footer": "© {{companyYears}} {{companyName}}. Alle Rechte vorbehalten.",
   "link": {
     "back": "Zurück"
   },
@@ -24,18 +25,20 @@
       "de": "Deutsch"
     }
   },
+  "message": {
+    "loading": {
+      "text": "Am Laden..."
+    },
+    "error": {
+      "text": "Ein Fehler ist aufgetreten."
+    }
+  },
   "input": {
     "label": {
       "username": "Benutzername",
       "password": "Passwort",
       "passwordConfirm": "Passwort Bestätigen",
       "email": "E-Mail"
-    },
-    "message": {
-      "loading": "Am Laden...",
-      "error": {
-        "text": "Ein Fehler ist aufgetreten."
-      }
     },
     "placeholder": {
       "enterUsername": "Bitte Benutzername eingeben",
@@ -45,6 +48,14 @@
       "confirmNewPassword": "Bitte neues Passwort bestätigen",
       "enterEmail": "Bitte E-Mail eingeben",
       "enterNewEmail": "Bitte neue E-Mail eingeben"
+    },
+    "error": {
+      "validation": {
+        "minLength": "Die minimale Eingabelänge von {{type}} ist {{minLength }}",
+        "maxLength": "Die maximale Eingabelänge von {{type}} beträgt {{maxLength}}",
+        "pattern": "Eingabemuster von{{type}} ist ungültig",
+        "required": "{{type}}-Eingabe ist erforderlich"
+      }
     }
   }
 }

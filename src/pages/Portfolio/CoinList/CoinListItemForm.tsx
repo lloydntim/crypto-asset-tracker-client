@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useMemo, useState} from 'react';
 import {
   Container,
   IconButton,
@@ -7,24 +7,38 @@ import {
   Select,
   Message,
 } from '../../../components';
-import {CoinSymbol, NewCoinOptions, coinSelectOptions} from './CoinListHelper';
+import {
+  Coin,
+  CoinSymbol,
+  NewCoinOptions,
+  coinSelectOptions,
+} from './CoinListHelper';
 import {useForm} from '../../../hooks';
 import {InMemoryCache, useMutation, useQuery} from '@apollo/client';
 import {
   ADD_COIN,
   GET_COIN_LIST,
-  GET_SYMBOLS,
+  GET_COIN_SYMBOLS,
 } from '../../../graphql/operations';
 import {useAuthentication} from '../../../providers/AuthenticationProvider';
 import {displayResponseErrorMessage} from '../../../helpers/displayResponseErrorMessage';
 import {slugify} from '../../../utils';
 
 interface CoinListItemFormProps {
+  coins: Coin[];
   visible: boolean;
   currency: string;
 }
 
-const CoinListItemForm = ({visible, currency}: CoinListItemFormProps) => {
+export const NEW_COIN_INPUT_PATTERN = /[a-zA-Z]$/g;
+export const NEW_COIN_INPUT_MIN_LENGTH = 3;
+export const NEW_COIN_INPUT_MAX_LENGTH = 25;
+
+const CoinListItemForm = ({
+  coins,
+  visible,
+  currency,
+}: CoinListItemFormProps) => {
   const {currentUser} = useAuthentication();
   const creatorId = currentUser().id;
   const getCoinListQueryVariables = {creatorId, convert: currency};
@@ -35,6 +49,8 @@ const CoinListItemForm = ({visible, currency}: CoinListItemFormProps) => {
 
   const {
     form: {newCoin},
+    resetForm,
+    isFormValid,
     formFieldChangeHandler,
   } = useForm('newCoin*');
 
@@ -43,10 +59,13 @@ const CoinListItemForm = ({visible, currency}: CoinListItemFormProps) => {
   );
 
   const {
-    data: getSymbolsQueryData,
-    loading: getSymbolsQueryLoading,
-    error: getSymbolsQueryError,
-  } = useQuery(GET_SYMBOLS);
+    data: getCoinSymbolsQueryData,
+    loading: getCoinSymbolsQueryLoading,
+    error: getCoinSymbolsQueryError,
+  } = useQuery(GET_COIN_SYMBOLS, {
+    fetchPolicy: 'network-only',
+    nextFetchPolicy: 'cache-only',
+  });
 
   const [
     addCoin,
@@ -71,10 +90,20 @@ const CoinListItemForm = ({visible, currency}: CoinListItemFormProps) => {
     },
   });
 
-  const {getSymbols: symbols = []} = getSymbolsQueryData ?? {};
+  const {getCoinSymbols: symbols = []} = getCoinSymbolsQueryData ?? {};
+  const dataList = useMemo(() => {
+    const selectedSymbols = coins.map((coin) => coin.symbol);
 
-  const loading = getSymbolsQueryLoading || addCoinMutationLoading;
-  const error = getSymbolsQueryError || addCoinMutationError;
+    return symbols
+      .filter((symbol: CoinSymbol) => !selectedSymbols.includes(symbol.id))
+      .map(({id: value, name: text}: CoinSymbol) => ({
+        text,
+        value,
+      }));
+  }, [symbols, coins]);
+
+  const loading = getCoinSymbolsQueryLoading || addCoinMutationLoading;
+  const error = getCoinSymbolsQueryError || addCoinMutationError;
   const isPresetSelected =
     coinSelectOption === (NewCoinOptions.PRESET as string);
 
@@ -88,7 +117,7 @@ const CoinListItemForm = ({visible, currency}: CoinListItemFormProps) => {
         : {slug: slugify(newCoin.value)};
 
       addCoin({variables: {...args, creatorId}});
-      formFieldChangeHandler({name: 'newCoin', value: ''});
+      resetForm();
     }
   };
 
@@ -100,7 +129,10 @@ const CoinListItemForm = ({visible, currency}: CoinListItemFormProps) => {
         <Select
           $mh={8}
           options={coinSelectOptions}
-          onChange={(value) => setCoinSelectOption(value)}
+          onChange={(value) => {
+            setCoinSelectOption(value);
+            resetForm();
+          }}
         />
 
         <Input
@@ -109,15 +141,17 @@ const CoinListItemForm = ({visible, currency}: CoinListItemFormProps) => {
           value={newCoin.value}
           required={newCoin.required}
           onChange={formFieldChangeHandler}
+          placeholderTKey="portfolio:coinlist.input.placeholder.addCoin"
+          pattern={NEW_COIN_INPUT_PATTERN}
+          minLength={NEW_COIN_INPUT_MIN_LENGTH}
+          maxLength={NEW_COIN_INPUT_MAX_LENGTH}
           {...(isPresetSelected && {
-            dataList: symbols?.map(({id: value, name: text}: CoinSymbol) => ({
-              text,
-              value,
-            })),
+            dataList,
           })}
         />
 
         <IconButton
+          disabled={!isFormValid}
           type="plus"
           $align-c
           $flex-row

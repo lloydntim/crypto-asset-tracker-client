@@ -51,7 +51,6 @@ const CoinList = () => {
     refetch({convert: currency});
   };
 
-  /////////// TODO : and aymbol filter
   return (
     <Page name="portfolio">
       <PageContent isAuthorised titleTKey="portfolio:title">
@@ -67,7 +66,9 @@ const CoinList = () => {
             }}
           />
 
-          <CoinListItemForm {...{currency, visible: editMode}} />
+          <CoinListItemForm
+            {...{coins: coinList, currency, visible: editMode}}
+          />
 
           <List<Coin>
             $lst-stl="none"

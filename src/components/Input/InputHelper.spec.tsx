@@ -1,4 +1,9 @@
+// import i18next from 'i18next';
+import i18n from '../../locales/i18n';
 import {InputProps, InputChangeEventTarget, validateInput} from './InputHelper';
+
+// Ref: https://stackoverflow.com/questions/68218799/mock-i18next-with-jest
+i18n.changeLanguage('en');
 
 const inputValidationDefaultProps: InputProps = {
   type: 'text',

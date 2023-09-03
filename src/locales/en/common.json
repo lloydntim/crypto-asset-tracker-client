@@ -13,6 +13,7 @@
       "text": " Do you really want to to log out?"
     }
   },
+  "footer": "© {{companyYears}} {{companyName}}. All rights reserved.",
   "link": {
     "back": "Back"
   },
@@ -47,6 +48,14 @@
       "confirmNewPassword": "Please confirm new password",
       "enterEmail": "Please enter email",
       "enterNewEmail": "Please new enter email"
+    },
+    "error": {
+      "validation": {
+        "minLength": "{{type}} input min length is {{minLength}}",
+        "maxLength": "{{type}} input max length is {{maxLength}}",
+        "pattern": "{{type}} input pattern not valid",
+        "required": "{{type}} input is required"
+      }
     }
   }
 }

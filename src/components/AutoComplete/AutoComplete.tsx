@@ -14,6 +14,8 @@ import {DataListItem as AutoCompleteItem} from '../Input/InputHelper';
 interface AutoCompleteProps {
   value: string | undefined;
   items: AutoCompleteItem[];
+  // Uses (onMouseDown) instead of onClick to avoid parents onBlur event being called before click event happens
+  // see ref: https://stackoverflow.com/questions/17769005/onclick-and-onblur-ordering-issue
   onListItemClick: (item: AutoCompleteItem) => void;
 }
 
@@ -54,7 +56,7 @@ const AutoComplete = ({
         type="button"
         data-testid="autocomplete-item"
         className="autocomplete-item-button"
-        onClick={() => onListItemClick(item)}
+        onMouseDown={() => onListItemClick(item)}
       >
         <Span $font-wgt={700}>{boldText}</Span>
         {normalText && <Span>{normalText}</Span>}

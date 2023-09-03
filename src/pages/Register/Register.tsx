@@ -9,7 +9,15 @@ import {Page, PageContent} from '../../layouts';
 import {Button, Input, Message, Link, Form} from '../../components';
 import {useAuthentication} from '../../providers/AuthenticationProvider';
 import {WHITE} from '../../constants/colors';
-import {FORM_WIDTH} from '../../constants';
+import {
+  FORM_WIDTH,
+  PASSWORD_INPUT_MAX_LENGTH,
+  PASSWORD_INPUT_MIN_LENGTH,
+  PASSWORD_INPUT_PATTERN,
+  USERNAME_INPUT_MAX_LENGTH,
+  USERNAME_INPUT_MIN_LENGTH,
+  USERNAME_INPUT_PATTERN,
+} from '../../constants';
 
 const Register = () => {
   const navigate = useNavigate();
@@ -26,7 +34,6 @@ const Register = () => {
   const {username, email, password, passwordConfirm} = hookedForm;
 
   const passwordsMatching = password.value === passwordConfirm.value;
-  const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*[0-9])/;
 
   const [register, {loading}] = useMutation(REGISTER, {
     onCompleted: (data) => {
@@ -70,11 +77,14 @@ const Register = () => {
   return (
     <Page name="register">
       <PageContent titleTKey="register:title" bodyWidth={FORM_WIDTH}>
-        <Form>
+        <Form $mv={24}>
           <Input
             name="username"
             labelTKey="common:input.label.username"
             placeholderTKey="input.placeholder.enterUsername"
+            pattern={USERNAME_INPUT_PATTERN}
+            minLength={USERNAME_INPUT_MIN_LENGTH}
+            maxLength={USERNAME_INPUT_MAX_LENGTH}
             required={username.required}
             value={username.value}
             onChange={formFieldChangeHandler}
@@ -99,9 +109,9 @@ const Register = () => {
             type="password"
             required={password.required}
             value={password.value}
-            minLength={7}
-            maxLength={30}
-            pattern={passwordPattern}
+            pattern={PASSWORD_INPUT_PATTERN}
+            minLength={PASSWORD_INPUT_MIN_LENGTH}
+            maxLength={PASSWORD_INPUT_MAX_LENGTH}
             onChange={formFieldChangeHandler}
             onFocus={formFieldFocusHandler}
           />
@@ -113,12 +123,15 @@ const Register = () => {
             type="password"
             required={passwordConfirm.required}
             value={passwordConfirm.value}
+            pattern={PASSWORD_INPUT_PATTERN}
+            minLength={PASSWORD_INPUT_MIN_LENGTH}
+            maxLength={PASSWORD_INPUT_MAX_LENGTH}
             onChange={formFieldChangeHandler}
             onFocus={formFieldFocusHandler}
           />
 
           <Button
-            disabled={!isFormValid}
+            disabled={!isFormValid && !passwordsMatching}
             tKey="common:button.register"
             type="submit"
             onClick={submitForm}

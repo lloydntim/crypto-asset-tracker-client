@@ -1,5 +1,4 @@
 import React, {FocusEvent, forwardRef, useState} from 'react';
-import {useTranslation} from 'react-i18next';
 
 import AutoComplete from '../../components/AutoComplete/AutoComplete';
 import IconButton from '../../components/IconButton/IconButton';
@@ -11,7 +10,12 @@ import Text from '../../components/Text/Text';
 
 import {GRAPE_DARK, TRANSPARENT, WHITE} from '../../constants/colors';
 import Label from '../Label/Label';
-import {validateInput, InputProps} from './InputHelper';
+import {
+  validateInput,
+  InputProps,
+  InputValidationMessage,
+  validationMessageDefaultProps,
+} from './InputHelper';
 
 /* eslint-disable react/jsx-props-no-spreading, react/display-name */
 const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
@@ -42,12 +46,10 @@ const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
   const isTypePassword = type === 'password';
   const [dynamicInputType, setDynamicInputType] = useState(type);
   const [isDataListVisible, setIsDataListVisible] = useState(false);
-  const [inputMessage, setInputMessage] = useState<{
-    type: string;
-    text: string;
-  }>({type: '', text: ''});
+  const [inputMessage, setInputMessage] = useState<InputValidationMessage>(
+    validationMessageDefaultProps,
+  );
   const validationProps = {...props, type: dynamicInputType};
-
   const labelText = label || labelTKey;
 
   return (
@@ -99,7 +101,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
           value={value}
           defaultValue={defaultValue}
           onChange={({target: {value, files = null}}) => {
-            setInputMessage({text: '', type: 'error'});
+            if (!dataList.length) setInputMessage({text: '', type: 'error'});
             const error = validateInput({value, files}, validationProps);
 
             if (files) setInputMessage({text: files[0].name, type: 'info'});
@@ -113,12 +115,13 @@ const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
             const {
               target: {value, files},
             } = event;
-            const error = validateInput({value, files}, validationProps);
-
-            if (!dataList?.length) setIsDataListVisible(false);
-            if (error) setInputMessage({text: error, type: 'error'});
 
             if (onBlur) onBlur(event);
+
+            if (!dataList?.length) setIsDataListVisible(false);
+
+            const error = validateInput({value, files}, validationProps);
+            setInputMessage({text: error, type: 'error'});
           }}
         />
 
@@ -139,11 +142,13 @@ const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
                   dynamicInputType === 'password' ? 'text' : 'password',
                 );
               }
-              if (onChange) onChange({name, value: ''});
+              if (onChange) {
+                setInputMessage(validationMessageDefaultProps);
+                onChange({name, value: ''});
+              }
             }}
           />
         )}
-
         {/* {type === 'search' && <Icon type="search" />} */}
       </Box>
       {isDataListVisible && (
@@ -151,11 +156,10 @@ const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
           items={dataList}
           value={value}
           onListItemClick={(item) => {
-            const error = validateInput({value}, validationProps);
-            if (error) setInputMessage({text: error, type: 'error'});
-            if (onChange) {
-              onChange({name, value: item.text, error, required});
-            }
+            const error = validateInput({value: item.text}, validationProps);
+
+            setInputMessage({text: error, type: 'error'});
+            if (onChange) onChange({name, value: item.text, error, required});
             if (onDataListClick) onDataListClick(item);
 
             setIsDataListVisible(false);

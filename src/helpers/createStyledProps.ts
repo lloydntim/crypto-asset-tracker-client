@@ -89,6 +89,8 @@ export interface StyledProps {
 
   '$txt-deco'?: string | undefined;
   '$lst-stl'?: string | undefined;
+
+  '$tbl-br-spc'?: string | number;
 }
 
 export const isDefined = (prop: unknown) => typeof prop !== 'undefined';
@@ -256,6 +258,9 @@ const createStylesProps = <T extends ComponentType>(
       props['$lst-stl'] && `list-style: ${props['$lst-stl']};`}
     ${(props: StyledProps) =>
       props['$txt-deco'] && `text-decoration: ${props['$txt-deco']};`}
+    ${(props: StyledProps) =>
+      props['$tbl-br-spc'] &&
+      ` border-spacing: ${getUnit(props['$tbl-br-spc'])};`}
   `;
 };
 

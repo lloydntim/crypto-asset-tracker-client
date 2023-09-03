@@ -10,7 +10,12 @@ import {
   UPDATE_PASSWORD_TOKEN,
 } from '../../graphql/operations';
 import {displayResponseErrorMessage} from '../../helpers/displayResponseErrorMessage';
-import {FORM_WIDTH} from '../../constants';
+import {
+  FORM_WIDTH,
+  PASSWORD_INPUT_MAX_LENGTH,
+  PASSWORD_INPUT_MIN_LENGTH,
+  PASSWORD_INPUT_PATTERN,
+} from '../../constants';
 
 const Reset = () => {
   const navigate = useNavigate();
@@ -42,6 +47,10 @@ const Reset = () => {
       navigate('/portfolio');
     },
   });
+
+  const error = getPasswordTokenQueryError || updatePasswordMutationError;
+  const loading = getPasswordTokenQueryLoading || updatePasswordMutationLoading;
+
   return (
     <Page name="reset">
       <PageContent titleTKey="reset:title" bodyWidth={FORM_WIDTH}>
@@ -51,6 +60,9 @@ const Reset = () => {
             labelTKey="input.label.password"
             placeholderTKey="input.placeholder.enterPassword"
             type="password"
+            pattern={PASSWORD_INPUT_PATTERN}
+            minLength={PASSWORD_INPUT_MIN_LENGTH}
+            maxLength={PASSWORD_INPUT_MAX_LENGTH}
             required={password.required}
             value={password.value}
             onChange={formFieldChangeHandler}
@@ -62,6 +74,9 @@ const Reset = () => {
             labelTKey="input.label.passwordConfirm"
             placeholderTKey="input.placeholder.confirmPassword"
             type="password"
+            pattern={PASSWORD_INPUT_PATTERN}
+            minLength={PASSWORD_INPUT_MIN_LENGTH}
+            maxLength={PASSWORD_INPUT_MAX_LENGTH}
             required={passwordConfirm.required}
             value={passwordConfirm.value}
             onChange={formFieldChangeHandler}
@@ -80,13 +95,9 @@ const Reset = () => {
             }}
           />
         </Form>
-        <>
-          {(getPasswordTokenQueryLoading || updatePasswordMutationLoading) && (
-            <Message type="info" tKey="common:message.loading.text" />
-          )}
-          {displayResponseErrorMessage(getPasswordTokenQueryError)}
-          {displayResponseErrorMessage(updatePasswordMutationError)}
-        </>
+
+        {loading && <Message type="info" tKey="common:message.loading.text" />}
+        {displayResponseErrorMessage(error)}
       </PageContent>
     </Page>
   );

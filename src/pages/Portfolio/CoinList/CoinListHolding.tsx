@@ -3,7 +3,12 @@ import {Box, IconButton, Message, Text} from '../../../components';
 import Table from '../../../components/Table';
 import {GRAPE_MEDIUM_DARK, GREY} from '../../../constants/colors';
 import CoinListHoldingInput from './CoinListHoldingInput';
-import {Currency, Holding, coinListDialogMapper} from './CoinListHelper';
+import {
+  Currency,
+  Holding,
+  coinListDialogMapper,
+  coinListInputValidationMapper,
+} from './CoinListHelper';
 import {formatToCurrency} from '../../../utils';
 import {useMutation} from '@apollo/client';
 import {
@@ -20,6 +25,9 @@ interface CoinListHoldingProps extends Holding {
   currency: Currency;
 }
 
+const {amount: amountInputValidationProps, name: nameInputValidationProps} =
+  coinListInputValidationMapper;
+
 const CoinListHolding = ({
   id: holdingId,
   value,
@@ -32,7 +40,6 @@ const CoinListHolding = ({
   const {titleTKey: dialogTitleTKey, messageTKey: dialogMessageTKey} =
     coinListDialogMapper.removeCoinHolding;
   const [dialog, setDialog] = useState(false);
-
   const [
     updateCoinHolding,
     {
@@ -105,6 +112,7 @@ const CoinListHolding = ({
             value={name}
             location={location}
             onBlur={updateCoinHoldingHandler('name')}
+            {...nameInputValidationProps}
           />
           <CoinListHoldingInput
             $flex-row
@@ -115,6 +123,7 @@ const CoinListHolding = ({
             value={amount.toString()}
             location={location}
             onBlur={updateCoinHoldingHandler('amount')}
+            {...amountInputValidationProps}
           />
 
           <Box $w={100} $flex-row $align-r $br-tr={8} $br-br={8} $pr={8}>

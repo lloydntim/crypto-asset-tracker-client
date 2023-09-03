@@ -25,6 +25,5 @@ root.render(
       <GlobalCSS />
       <App />
     </ApolloProvider>
-    ,
   </ErrorBoundary>,
 );

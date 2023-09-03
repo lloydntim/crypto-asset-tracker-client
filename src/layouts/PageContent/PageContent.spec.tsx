@@ -10,21 +10,6 @@ import PageContent from './PageContent';
 import {AuthenticationProvider} from '../../providers';
 import {BrowserRouter} from 'react-router-dom';
 
-jest.mock('react-i18next', () => ({
-  useTranslation: () => {
-    return {
-      t: (key: string) => key,
-      i18n: {
-        changeLanguage: () => new Promise(() => null),
-      },
-    };
-  },
-  initReactI18next: {
-    type: '3rdParty',
-    init: () => null,
-  },
-}));
-
 describe('PageContent', () => {
   test('renders title content, logo and footer', () => {
     render(
@@ -48,7 +33,7 @@ describe('PageContent', () => {
       {wrapper: BrowserRouter},
     );
 
-    expect(screen.getByText('CryptoAssetTracker'));
+    expect(screen.getByText('Crypto Asset Tracker'));
     expect(screen.getByText(/All rights reserved/));
   });
 });

@@ -79,9 +79,9 @@ export const GET_COIN_LIST = gql`
   }
 `;
 
-export const GET_SYMBOLS = gql`
-  query GetSymbols {
-    getSymbols {
+export const GET_COIN_SYMBOLS = gql`
+  query GetCoinSymbols {
+    getCoinSymbols {
       name
       id
     }

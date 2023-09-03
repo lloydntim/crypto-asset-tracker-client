@@ -72,6 +72,12 @@ export type CoinListing = {
   symbol?: Maybe<Scalars['String']['output']>;
 };
 
+export type CoinSymbol = {
+  __typename?: 'CoinSymbol';
+  id?: Maybe<Scalars['ID']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+};
+
 export type Exchange = {
   __typename?: 'Exchange';
   id?: Maybe<Scalars['ID']['output']>;
@@ -206,10 +212,10 @@ export type Query = {
   getCoin?: Maybe<Coin>;
   getCoinList?: Maybe<CoinList>;
   getCoinListings?: Maybe<Array<Maybe<CoinListing>>>;
+  getCoinSymbols?: Maybe<Array<Maybe<CoinSymbol>>>;
   getCoins?: Maybe<Array<Maybe<Coin>>>;
   getExchanges?: Maybe<Array<Maybe<Exchange>>>;
   getPasswordToken?: Maybe<Auth>;
-  getSymbols?: Maybe<Array<Maybe<symbol>>>;
   getUser?: Maybe<User>;
   getUsers?: Maybe<Array<Maybe<User>>>;
 };
@@ -240,12 +246,6 @@ export type QueryGetUserArgs = {
   email?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['ID']['input']>;
   username?: InputMaybe<Scalars['String']['input']>;
-};
-
-export type Symbol = {
-  __typename?: 'Symbol';
-  id?: Maybe<Scalars['ID']['output']>;
-  name?: Maybe<Scalars['String']['output']>;
 };
 
 export type User = {
