@@ -43,6 +43,8 @@ export interface StyledProps {
 
   $cover?: boolean | undefined;
   $crop?: boolean | undefined;
+  '$crop-x-scrl'?: boolean | undefined;
+  '$crop-y-scrl'?: boolean | undefined;
   $hide?: boolean | undefined;
   $hidden?: boolean | undefined;
 
@@ -194,6 +196,8 @@ const createStylesProps = <T extends ComponentType>(
     ${({$opacity}: StyledProps) => $opacity && `opacity: ${$opacity};`}
 
     ${({$crop}: StyledProps) => $crop && 'overflow: hidden;'}
+    ${({'$crop-x-scrl': sp}: StyledProps) => sp && 'overflow-x: scroll;'}
+    ${({'$crop-y-scrl': sp}: StyledProps) => sp && 'overflow-y: scroll;'}
     ${({$cover}: StyledProps) => $cover && 'width: 100%; height: 100%;'}
     ${({$hide}: StyledProps) => $hide && 'display: none;'}
     ${({$hidden}: StyledProps) => $hidden && 'visibility: hidden;'}

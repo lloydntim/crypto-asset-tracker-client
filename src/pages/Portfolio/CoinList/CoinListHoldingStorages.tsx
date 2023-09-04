@@ -32,7 +32,9 @@ export const CoinListHoldingStorage = ({
           }}
         />
       </Headline>
-      {holdings.map((holding, index) => renderHolding(holding, index))}
+      <Box $crop-x-scrl>
+        {holdings.map((holding, index) => renderHolding(holding, index))}
+      </Box>
     </Box>
   );
 };
@@ -51,7 +53,7 @@ const CoinListHoldingStorages = ({
       $bgcolor={LIGHTGREY}
       $color={DARKGREY}
       $pv={20}
-      $ph={24}
+      $ph={20}
       $mv={4}
       $br={8}
     >

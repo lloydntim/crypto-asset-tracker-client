@@ -24,7 +24,7 @@ import Table, {TableCell, TableRow} from '../../components/Table';
 import {useForm} from '../../hooks';
 import {displayResponseErrorMessage} from '../../helpers/displayResponseErrorMessage';
 
-const PROFILE_TABLE_WIDTH = 520;
+const PROFILE_TABLE_MAX_WIDTH = 520;
 const PROFILE_TABLE_COLUMN_1_WIDTH = 28;
 const PROFILE_TABLE_COLUMN_2_WIDTH = 40;
 const PROFILE_TABLE_COLUMN_3_WIDTH = 28;
@@ -165,13 +165,13 @@ const Profile = () => {
           </Message>
         )}
         {updateUserMutationData && (
-          <Message type="success  ">
+          <Message type="success">
             {updateUserMutationData.updateUser.message}
           </Message>
         )}
 
         {user?.getUser && (
-          <Box $flex-col $w={PROFILE_TABLE_WIDTH}>
+          <Box $flex-col $w="100%" $max-w={PROFILE_TABLE_MAX_WIDTH}>
             <Table $tbl-br-spc={12} $mv={32}>
               <TableRow>
                 <TableCell $valign-m $col-w={PROFILE_TABLE_COLUMN_1_WIDTH}>
