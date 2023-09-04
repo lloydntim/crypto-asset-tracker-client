@@ -81,6 +81,7 @@ const Login = () => {
             type="submit"
             onClick={submitForm}
             $mv={16}
+            $w="100%"
           />
           {loading && <Message tKey="common:message:loading:text" />}
           {displayResponseErrorMessage(

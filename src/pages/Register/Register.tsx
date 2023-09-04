@@ -136,6 +136,7 @@ const Register = () => {
             type="submit"
             onClick={submitForm}
             $mv={16}
+            $w="100%"
           />
 
           <Message type={loading ? 'info' : message?.type ?? ''}>

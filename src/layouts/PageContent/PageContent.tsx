@@ -37,10 +37,11 @@ const PageContent = ({
         $flex-col
         $align-m
         $flex="1"
+        $w="100%"
         $h="auto"
-        {...(bodyWidth && {$w: bodyWidth, '$align-self-c': true})}
+        {...(bodyWidth && {'$max-w': bodyWidth, '$align-self-c': true})}
       >
-        {!hasHeaderLogo && <Logo $flex-row $align-c $w="100%" $mv={60} />}
+        {!hasHeaderLogo && <Logo $flex-row $align-c $w="100%" $mv={52} />}
 
         {(title || titleTKey) && (
           <Title $mv={0} $align-c $align-self-l tKey={titleTKey}>

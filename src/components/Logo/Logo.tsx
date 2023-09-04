@@ -13,7 +13,7 @@ interface LogoProps extends StyledProps {
   showText?: boolean;
 }
 
-const LOGO_SIZE_DEFAULT = 220;
+const LOGO_SIZE_DEFAULT = 120;
 
 /* eslint-disable react/jsx-props-no-spreading */
 const Logo = ({

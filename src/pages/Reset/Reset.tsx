@@ -88,6 +88,7 @@ const Reset = () => {
             tKey="common:button.submit"
             type="submit"
             $mv={12}
+            $w="100%"
             onClick={() => {
               updatePassword({
                 variables: {resetPasswordToken, password: password.value},

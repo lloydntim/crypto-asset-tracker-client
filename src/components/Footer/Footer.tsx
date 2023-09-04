@@ -33,7 +33,11 @@ const Footer = ({
       $align-c
       {...rest}
     >
-      <Text tKey="common:footer" tOptions={{companyYears, companyName}} />
+      <Text
+        $m={0}
+        tKey="common:footer"
+        tOptions={{companyYears, companyName}}
+      />
     </FooterSt>
   );
 };

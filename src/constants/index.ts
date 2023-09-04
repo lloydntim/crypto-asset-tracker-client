@@ -1,4 +1,4 @@
-export const FORM_WIDTH = 480;
+export const FORM_WIDTH = 380;
 export const COMPANY_START_YEAR = 2023;
 
 export const PASSWORD_INPUT_PATTERN =
