@@ -64,7 +64,7 @@ const CoinListHoldingForm = ({coinId, visible}: CoinListHoldingFormProps) => {
 
   return (
     <FormCointainer $flex-col>
-      <Form $flex-row $align-t $crop-x-scrl>
+      <Form $flex-row $align-t>
         {inputKeys.map(
           (key: keyof Pick<Holding, 'amount' | 'name' | 'type'>, index) => {
             const fieldProps = form[key];
