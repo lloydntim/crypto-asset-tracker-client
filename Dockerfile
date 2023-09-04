@@ -5,7 +5,7 @@ WORKDIR /app
 
 ENV PATH /app/node_modules/.bin:$PATH
 
-ARG APOLLO_SERVER_URL http://localhost:3001/graphql
+ARG APOLLO_SERVER_URL=http://localhost:3001/graphql
 
 ENV APOLLO_SERVER_URL=$APOLLO_SERVER_URL
 
