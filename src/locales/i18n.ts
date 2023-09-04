@@ -13,6 +13,7 @@ import resetEn from './en/reset.json';
 import verifyEn from './en/verify.json';
 import aboutEn from './en/about.json';
 import forgotEn from './en/forgot.json';
+import notfoundEn from './en/notfound.json';
 
 import commonDe from './de/common.json';
 import homeDe from './de/home.json';
@@ -24,6 +25,7 @@ import resetDe from './de/reset.json';
 import verifyDe from './de/verify.json';
 import aboutDe from './de/about.json';
 import forgotDe from './de/forgot.json';
+import notfoundDe from './de/notfound.json';
 
 export const defaultNS = 'common';
 
@@ -38,6 +40,7 @@ export const resources = {
     verify: 'verify',
     about: 'about',
     forgot: 'forgot',
+    notfound: 'notfound',
   },
 } as const;
 
@@ -58,6 +61,7 @@ i18n
         verify: verifyEn,
         about: aboutEn,
         forgot: forgotEn,
+        notfound: notfoundEn,
       },
       de: {
         common: commonDe,
@@ -70,6 +74,7 @@ i18n
         verify: verifyDe,
         about: aboutDe,
         forgot: forgotDe,
+        notfound: notfoundDe,
       },
     },
     detection: {
@@ -100,6 +105,7 @@ i18n
       'verify',
       'about',
       'forgot',
+      'notfound',
     ],
     fallbackLng: 'en',
     debug: true,

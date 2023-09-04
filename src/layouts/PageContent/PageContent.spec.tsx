@@ -28,7 +28,7 @@ describe('PageContent', () => {
   test('renders logo with text when authorised view is selected', () => {
     render(
       <AuthenticationProvider>
-        <PageContent isAuthorised>Content</PageContent>
+        <PageContent hasHeaderLogo>Content</PageContent>
       </AuthenticationProvider>,
       {wrapper: BrowserRouter},
     );

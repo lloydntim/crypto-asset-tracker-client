@@ -155,17 +155,17 @@ const Profile = () => {
         </Form>
       </Overlay>
 
-      <PageContent isAuthorised titleTKey="profile:title">
+      <PageContent hasHeaderLogo titleTKey="profile:title">
         {loading && <Message type="info" tKey="common:message:loading:text" />}
         {displayResponseErrorMessage(error, 'common:message.error.text')}
 
         {sendVerificationMutationData && (
-          <Message type="info">
+          <Message type="success">
             {sendVerificationMutationData.resendVerificationToken.message}
           </Message>
         )}
         {updateUserMutationData && (
-          <Message type="info">
+          <Message type="success  ">
             {updateUserMutationData.updateUser.message}
           </Message>
         )}

@@ -14,7 +14,7 @@ import {COMPANY_START_YEAR} from '../../constants';
 interface PageContentProps {
   title?: string;
   titleTKey?: string;
-  isAuthorised?: boolean;
+  hasHeaderLogo?: boolean;
   bodyWidth?: number;
   children?: ReactNode;
 }
@@ -23,14 +23,14 @@ const PageContent = ({
   title = '',
   titleTKey = '',
   children = null,
-  isAuthorised = false,
+  hasHeaderLogo = false,
   bodyWidth = 0,
 }: PageContentProps) => {
   return (
     <>
       <Header $flex-row $spc-btw $align-m>
         <Navigation />
-        {isAuthorised && <Logo $flex-row $align-m size={24} showText />}
+        {hasHeaderLogo && <Logo $flex-row $align-m size={24} showText />}
       </Header>
 
       <Body
@@ -40,7 +40,7 @@ const PageContent = ({
         $h="auto"
         {...(bodyWidth && {$w: bodyWidth, '$align-self-c': true})}
       >
-        {!isAuthorised && <Logo $flex-row $align-c $w="100%" $mv={60} />}
+        {!hasHeaderLogo && <Logo $flex-row $align-c $w="100%" $mv={60} />}
 
         {(title || titleTKey) && (
           <Title $mv={0} $align-c $align-self-l tKey={titleTKey}>

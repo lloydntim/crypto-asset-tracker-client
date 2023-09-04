@@ -20,7 +20,7 @@ export default {
   context: process.cwd(), // to automatically find tsconfig.json
   output: {
     path: resolve(__dirname, '../dist'),
-    // publicPath: '/',
+    publicPath: '/',
     filename: 'js/[name].js',
   },
   module: {
