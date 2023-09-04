@@ -135,9 +135,9 @@ const createStylesProps = <T extends ComponentType>(
     ${(props: StyledProps) =>
       props['$max-w'] && `max-width: ${getUnit(props['$max-w'])};`}
     ${(props: StyledProps) =>
-      props['$min-h'] && `height: ${getUnit(props['$min-h'])};`}
+      props['$min-h'] && `min-height: ${getUnit(props['$min-h'])};`}
     ${(props: StyledProps) =>
-      props['$min-w'] && `height: ${getUnit(props['$min-w'])};`}
+      props['$min-w'] && `min-width: ${getUnit(props['$min-w'])};`}
 
     ${({$br}: StyledProps) => `border-radius: ${getUnit($br)};`}
     ${(props: StyledProps) =>

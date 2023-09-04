@@ -41,6 +41,7 @@ const Forgot = () => {
 
           <Button
             $mv={16}
+            $w="100%"
             disabled={!isFormValid}
             tKey="common:button.submit"
             type="submit"
