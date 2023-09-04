@@ -12,7 +12,7 @@ import LanguageSwitch from './LanguageSwitch';
 jest.mock('react-i18next', () => ({
   useTranslation: () => ({
     t: (key: string) => key,
-    i18n: {changeLanguage: jest.fn()},
+    i18n: {changeLanguage: jest.fn(), language: 'en'},
   }),
 }));
 
