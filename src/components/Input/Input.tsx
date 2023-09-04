@@ -82,6 +82,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
         <InputField
           data-testid="input"
           $flex="1"
+          $w="100%"
           $flex-row
           $m={0}
           $pr={32}

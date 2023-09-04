@@ -98,18 +98,17 @@ const CoinListHolding = ({
         $align-m
         $bgcolor={GRAPE_MEDIUM_DARK}
         $mv={2}
-        $min-w={360}
+        $min-w={editMode ? 452 : 288}
       >
         <Box $pl={8} $br-tl={8} $br-bl={8} $w={44} $pv={4}>
           <Box $bgcolor={GREY} $sz={24} $br={12} $flex-row />
         </Box>
 
         <CoinListHoldingInput
-          $flex="1"
           $txt-align-l
           editMode={editMode}
           value={name}
-          $min-w={editMode ? 100 : 64}
+          $min-w={editMode ? 120 : 64}
           $mh={8}
           location={location}
           onBlur={updateCoinHoldingHandler('name')}
@@ -117,7 +116,7 @@ const CoinListHolding = ({
         />
         <CoinListHoldingInput
           $flex-row
-          $min-w={editMode ? 152 : 72}
+          $min-w={editMode ? 120 : 48}
           $mh={8}
           $align-r
           editMode={editMode}
@@ -131,7 +130,7 @@ const CoinListHolding = ({
           $flex-row
           $align-m
           $align-r
-          $min-w={editMode ? 148 : 108}
+          $min-w={editMode ? 124 : 88}
           $mh={8}
           $br-tr={8}
           $br-br={8}
