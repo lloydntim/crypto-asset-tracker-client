@@ -1,7 +1,6 @@
 import React, {ChangeEvent, useState} from 'react';
 import {Box, IconButton, Message, Text} from '../../../components';
-import Table from '../../../components/Table';
-import {GRAPE_MEDIUM_DARK, GREY} from '../../../constants/colors';
+import {GRAPE_MEDIUM_DARK, GREY, RED} from '../../../constants/colors';
 import CoinListHoldingInput from './CoinListHoldingInput';
 import {
   Currency,
@@ -92,45 +91,55 @@ const CoinListHolding = ({
       >
         <Text tKey={dialogMessageTKey} />
       </Dialog>
-      <Table $w="100%">
-        <Box
+      <Box
+        $flex-row
+        $ph={8}
+        $br={8}
+        $align-m
+        $bgcolor={GRAPE_MEDIUM_DARK}
+        $mv={2}
+        $min-w={360}
+      >
+        <Box $pl={8} $br-tl={8} $br-bl={8} $w={44} $pv={4}>
+          <Box $bgcolor={GREY} $sz={24} $br={12} $flex-row />
+        </Box>
+
+        <CoinListHoldingInput
+          $flex="1"
+          $txt-align-l
+          editMode={editMode}
+          value={name}
+          $min-w={editMode ? 100 : 64}
+          $mh={8}
+          location={location}
+          onBlur={updateCoinHoldingHandler('name')}
+          {...nameInputValidationProps}
+        />
+        <CoinListHoldingInput
           $flex-row
-          $br={8}
-          $ph={8}
+          $min-w={editMode ? 152 : 72}
+          $mh={8}
+          $align-r
+          editMode={editMode}
+          value={amount.toString()}
+          location={location}
+          onBlur={updateCoinHoldingHandler('amount')}
+          {...amountInputValidationProps}
+        />
+        <Box
+          $flex="1"
+          $flex-row
           $align-m
-          $bgcolor={GRAPE_MEDIUM_DARK}
-          $mv={2}
+          $align-r
+          $min-w={editMode ? 148 : 108}
+          $mh={8}
+          $br-tr={8}
+          $br-br={8}
         >
-          <Box $pl={8} $br-tl={8} $br-bl={8} $w={44} $pv={4} $valign-m>
-            <Box $bgcolor={GREY} $sz={24} $br={12} $flex-row />
-          </Box>
+          <Text $font-sz={14}>
+            {formatToCurrency(value, currency, location)}
+          </Text>
 
-          <CoinListHoldingInput
-            $flex="1"
-            $txt-align-l
-            editMode={editMode}
-            value={name}
-            location={location}
-            onBlur={updateCoinHoldingHandler('name')}
-            {...nameInputValidationProps}
-          />
-          <CoinListHoldingInput
-            $flex-row
-            $w={162}
-            $align-r
-            $ph={28}
-            editMode={editMode}
-            value={amount.toString()}
-            location={location}
-            onBlur={updateCoinHoldingHandler('amount')}
-            {...amountInputValidationProps}
-          />
-
-          <Box $w={100} $flex-row $align-r $br-tr={8} $br-br={8} $pr={8}>
-            <Text $valign-m $font-sz={14}>
-              {formatToCurrency(value, currency, location)}
-            </Text>
-          </Box>
           {editMode && (
             <IconButton
               $mh={8}
@@ -140,9 +149,10 @@ const CoinListHolding = ({
             />
           )}
         </Box>
+
         {displayResponseErrorMessage(error)}
         {loading && <Message type="info" tKey="common:message.loading.text" />}
-      </Table>
+      </Box>
     </>
   );
 };

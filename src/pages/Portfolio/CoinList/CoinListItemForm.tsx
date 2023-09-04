@@ -156,6 +156,7 @@ const CoinListItemForm = ({
           $align-c
           $flex-row
           $mh={8}
+          $mv={2}
           onClick={addCoinHandler}
         />
       </Form>

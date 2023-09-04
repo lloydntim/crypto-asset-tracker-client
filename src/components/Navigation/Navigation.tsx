@@ -57,7 +57,6 @@ const Navigation = ({title = '', titleTKey = '', ...rest}: NavigationProps) => {
         onCloseButtonClick={() => setIsMenuVisible(false)}
       >
         <LanguageSwitch />
-
         <List<Pages>
           $p={0}
           $mv={20}
@@ -73,7 +72,12 @@ const Navigation = ({title = '', titleTKey = '', ...rest}: NavigationProps) => {
             );
           }}
         />
-        <Button tKey="button.logout" onClick={() => setIsDialogVisible(true)} />
+        {currentUser()?.id && (
+          <Button
+            tKey="button.logout"
+            onClick={() => setIsDialogVisible(true)}
+          />
+        )}
       </Menu>
 
       <Headline tKey={titleTKey}>{title}</Headline>

@@ -13,7 +13,7 @@ const Page = ({name, children}: PageProps) => {
     <Box
       $w="100%"
       $flex-col
-      $ph={28}
+      $ph={20}
       $pv={0}
       $max-w={640}
       $mh="auto"

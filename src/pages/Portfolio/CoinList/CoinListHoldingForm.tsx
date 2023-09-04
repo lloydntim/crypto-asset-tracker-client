@@ -64,7 +64,7 @@ const CoinListHoldingForm = ({coinId, visible}: CoinListHoldingFormProps) => {
 
   return (
     <FormCointainer $flex-col $ph={12}>
-      <Form $flex-row $align-t>
+      <Form $flex-row $align-t $crop-x-scrl>
         {inputKeys.map(
           (key: keyof Pick<Holding, 'amount' | 'name' | 'type'>, index) => {
             const fieldProps = form[key];
@@ -74,6 +74,7 @@ const CoinListHoldingForm = ({coinId, visible}: CoinListHoldingFormProps) => {
               <>
                 {key !== 'type' ? (
                   <Input
+                    key={index}
                     labelTKey={`portfolio:coinlist.form.addHolding.${key}`}
                     {...{...fieldProps, ...validationProps}}
                     placeholderTKey={`portfolio:coinlist.input.placeholder.enter${capitalizeString(

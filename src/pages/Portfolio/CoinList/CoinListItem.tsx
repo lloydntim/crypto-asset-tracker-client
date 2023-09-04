@@ -112,6 +112,7 @@ const CoinListItem = ({
                 <Image
                   $flex-row
                   $sz={24}
+                  $mr={8}
                   src={`https://s2.coinmarketcap.com/static/img/coins/64x64/${coinId}.png`}
                 />
               </TableCell>
