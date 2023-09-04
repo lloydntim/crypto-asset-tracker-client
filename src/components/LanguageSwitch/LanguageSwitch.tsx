@@ -35,7 +35,8 @@ const LanguageSwitch = (props: LanguageSwitchProps) => {
     labelTKey: `common:label.language.${code}`,
   }));
 
-  const isCurrentLanguage = languageCodes.indexOf(language);
+  // get's the first two letters as default language code sometimes this format: en-GB
+  const isCurrentLanguage = languageCodes.indexOf(language.substring(0, 2));
 
   return (
     <Box $w="100%" {...props}>
