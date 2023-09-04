@@ -28,7 +28,6 @@ interface CoinListItemProps extends Coin {
   editMode: boolean;
   onClick: () => void;
   children: ReactNode;
-  expanded: boolean;
 }
 
 const CoinListItem = ({
@@ -42,9 +41,9 @@ const CoinListItem = ({
   currency,
   price,
   children,
-  expanded,
   onClick,
 }: CoinListItemProps) => {
+  const [expanded, setExpanded] = useState(false);
   const [dialog, setDialog] = useState(false);
   const {currentUser} = useAuthentication();
   const creatorId = currentUser().id;
@@ -104,7 +103,7 @@ const CoinListItem = ({
           $m={0}
           $pv={0}
           $ph={0}
-          onClick={onClick}
+          onClick={() => setExpanded(!expanded)}
         >
           <Table>
             <TableRow>

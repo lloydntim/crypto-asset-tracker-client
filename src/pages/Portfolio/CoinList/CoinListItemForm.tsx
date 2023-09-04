@@ -125,7 +125,7 @@ const CoinListItemForm = ({
 
   return (
     <Container $flex-col $align-m>
-      <Form $ph={8} $pt={12} $flex-row $w="100%" $align-t>
+      <Form $pt={12} $flex-row $w="100%" $align-t>
         <Select
           $mh={8}
           options={coinSelectOptions}
