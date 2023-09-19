@@ -90,6 +90,12 @@ export interface StyledProps {
   '$crsr-pointer'?: boolean | undefined;
 
   '$txt-deco'?: string | undefined;
+  '$txt-align-l'?: boolean | undefined;
+  '$txt-align-r'?: boolean | undefined;
+  '$txt-align-c'?: boolean | undefined;
+
+  $lh?: number | string | undefined;
+
   '$lst-stl'?: string | undefined;
 
   '$tbl-br-spc'?: string | number;
@@ -262,6 +268,12 @@ const createStylesProps = <T extends ComponentType>(
       props['$lst-stl'] && `list-style: ${props['$lst-stl']};`}
     ${(props: StyledProps) =>
       props['$txt-deco'] && `text-decoration: ${props['$txt-deco']};`}
+
+    ${(props: StyledProps) => props['$txt-align-l'] && 'text-align: left;'}
+    ${(props: StyledProps) => props['$txt-align-r'] && 'text-align: right;'}
+    ${(props: StyledProps) => props['$txt-align-c'] && 'text-align: center;'}
+
+    ${({$lh}: StyledProps) => $lh && `line-height: ${$lh};`}
     ${(props: StyledProps) =>
       props['$tbl-br-spc'] &&
       ` border-spacing: ${getUnit(props['$tbl-br-spc'])};`}
