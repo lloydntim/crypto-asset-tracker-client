@@ -8,6 +8,7 @@ import {
   Headline as Title,
   Logo,
   Navigation,
+  Text,
 } from '../../components';
 import {COMPANY_START_YEAR} from '../../constants';
 
@@ -41,7 +42,12 @@ const PageContent = ({
         $h="auto"
         {...(bodyWidth && {'$max-w': bodyWidth, '$align-self-c': true})}
       >
-        {!hasHeaderLogo && <Logo $flex-row $align-c $w="100%" $mv={52} />}
+        {!hasHeaderLogo && (
+          <>
+            <Text $font-sz={36}>Crypto Asset Tracker</Text>
+            <Logo $flex-row $align-c $w="100%" $mv={52} />
+          </>
+        )}
 
         {(title || titleTKey) && (
           <Title $mv={0} $align-c $align-self-l tKey={titleTKey}>
